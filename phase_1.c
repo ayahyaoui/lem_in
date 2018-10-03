@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/30 19:00:34 by anyahyao          #+#    #+#             */
-/*   Updated: 2018/09/30 21:04:03 by anyahyao         ###   ########.fr       */
+/*   Updated: 2018/10/03 18:36:09 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,10 @@ void	test_map(t_graphe *g)
 	g->map[5][4] = 1;
 	g->map[2][5] = 1;
 	g->map[5][2] = 1;
-
+	g->map[0][2] = 1;
+	g->map[2][0] = 1;
+	g->map[1][2] = 1;
+	g->map[2][1] = 1;
 }
 
 int main(int argc, const char *argv[])
@@ -114,15 +117,22 @@ int main(int argc, const char *argv[])
 	int j;
 
 	g = (t_graphe*)malloc(sizeof(t_graphe) * 2);
-	g->taille = 6;
-	g->map = create_double_tab(g->taille, 0);
+	g->taille = 1024;
+	g->map = create_double_tab(g->taille,1);
+	g->color = create_tab(g->taille, 0);
 	test_map(g);
 	t_big_tab *bt = new_big_tab(g);
 	if (argc == 1)
-		printf("%d", short_path(g, bt, 0, 5));
+	{
+		printf("%d", short_path(g, bt, 1023, 0));
+	//	test_init_all_path(g, g->taille-1);
+	}
 	else if (argc == 3)
 	{
-		printf("%d", short_path(g, bt, ft_atoi(argv[1]), ft_atoi(argv[2])));
+		i = ft_atoi(argv[1]);
+		j = ft_atoi(argv[2]);
+		printf("%d", short_path(g, bt, i, j));
+		test_init_all_path(g, 5);
 	}
 	free_graphe(g);
 	return 0;

@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/30 20:46:40 by anyahyao          #+#    #+#             */
-/*   Updated: 2018/09/30 21:22:00 by anyahyao         ###   ########.fr       */
+/*   Updated: 2018/10/03 18:35:09 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,12 +72,14 @@ int				short_path(t_graphe *g, t_big_tab *bt, int begin, int end)
 		ft_mem_set_int(bt->t2, -1, bt->taille);
 		while (bt->t1[j] != -1)
 		{
-			k = ajout_voisin(g, bt, k, bt->t1[j]);
+			k = check_path_len(g, bt, k, bt->t1[j]);
 			j++;
 		}
 		tab_swap(&bt->t1, &bt->t2);
 		i++;
 	}
+	ft_affichetab(bt->tab,bt->taille,' ');
+	printf("\n");
 	return (bt->tab[end]);
 }
 
