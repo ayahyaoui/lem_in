@@ -16,8 +16,14 @@
 
 #include "libft/includes/libft.h"
 
+typedef struct		s_chemins
+{
+	unsigned char	*path;
+	unsigned char	**all_path;
+	unsigned int	nb_path;
+}					t_chemins;
 
-typedef struct	s_graphe
+typedef struct		s_graphe
 {
 	int			taille;
 	int			**map;

@@ -72,7 +72,7 @@ int				short_path(t_graphe *g, t_big_tab *bt, int begin, int end)
 		ft_mem_set_int(bt->t2, -1, bt->taille);
 		while (bt->t1[j] != -1)
 		{
-			k = ajout_voisin(g, bt, k, bt->t1[j]);
+			k = check_path_len(g, bt, k, bt->t1[j]);
 			j++;
 		}
 		tab_swap(&bt->t1, &bt->t2);
