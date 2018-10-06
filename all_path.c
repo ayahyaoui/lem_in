@@ -40,12 +40,12 @@ int			degre_graphe(t_graphe *g)
 **	test pour tout les graphe dont le nombre de noeud est inerieure a 32
 **
 */
+
 void		test_parcours_recursif(t_graphe *g, t_path *path, int node
 		, unsigned long long p)
 {
 	int i;
 
-	//printf(" mon chemins%llu\n", p);
 	if (node == g->end)
 	{
 		i = -1;
@@ -69,6 +69,60 @@ void		test_parcours_recursif(t_graphe *g, t_path *path, int node
 	g->color[node] = BLACK;
 }
 
+int			degre(t_graphe *g, int node)
+{
+	int i;
+	int res;
+
+	i = -1;
+	res = 0;
+	while (++i < g->taille)
+		if (g->map[node][i])
+			res++;
+	return (res);
+}
+
+int		number_active_bit(unsigned long p, int max)
+{
+	int i;
+	int res;
+
+	res = 0;
+	i = -1;
+	while (++i < max)
+		if (p & 1 << i)
+			res++;
+	return (res);
+}
+
+t_way	*convertpath_to_way(t_graphe *g, unsigned long p)
+{
+	t_way *way;
+	int i;
+	int len;
+	int j;
+	int node;
+
+	len =  number_active_bit(p, g->taille);
+	way = malloc(sizeof(t_way) * len);
+	i = -1;
+
+	while (++i < len)
+	{
+		j = -1;
+	//	while (++j < g->)
+	}
+	return (way);
+}
+
+
+void	my_best_tab(t_graphe *g, t_path *p)
+{
+	t_path	*tmp;
+
+
+}
+
 void		test_init_all_path(t_graphe *g, int end)
 {
 	t_path	*p;
@@ -85,6 +139,7 @@ void		test_init_all_path(t_graphe *g, int end)
 	g->end = end;
 	test_parcours_recursif(g, p, 0, 0);
 	printf("il y'a %d chemins different\n", p->nb_path);
+	my_best_tab(g, p);
 /*	for (i = 0; i < p->nb_path; i++)
 	{
 		ft_printnbit((int)p->path[i], 6);
