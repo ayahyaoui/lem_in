@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/30 19:00:27 by anyahyao          #+#    #+#             */
-/*   Updated: 2018/10/03 21:44:44 by anyahyao         ###   ########.fr       */
+/*   Updated: 2018/10/20 23:51:03 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,50 @@
 #define WHITE 0
 #define GREY 1
 #define BLACK 2
+#define VALUE 0
+#define NBNODE 1
+#define COST 1
+#define MIN(a, b) (a > b ? b : a)
 #include "libft/includes/libft.h"
 #include "libft/includes/ft_printf.h"
 
+
+/*
+** t_path contiendra tout les chemin different possible en binaire
+**					-path est le tableau de chemin termine tailleMax (2^13)
+**					-nb_path est la taille du tableau path
+**					-nb_next_node
+*/
+
+typedef struct				s_point
+{
+	int						value;
+	int						len;
+}							t_point;
+
 typedef struct				s_path
 {
-	unsigned long long int	*path;
-	int						next_node;  
+	unsigned int			path[9000][2];
 	unsigned int			nb_path;
-	int						nb_next_node;
+//	int						next_node;  
+//	int						nb_next_node;
 }							t_path;
+
+typedef struct				s_breakdown
+{
+	unsigned int			value;
+	unsigned int			cost;
+	unsigned int			*breakdown;
+	unsigned int			len;
+}							t_breakdown;
+
+typedef struct				s_fusion
+{
+	t_breakdown				**fusion;// taille a calculer 
+	unsigned int			nb_path;
+	unsigned int			altern;
+
+}							t_fusion;
 
 typedef struct		s_chemins
 {
