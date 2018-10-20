@@ -1,38 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_beyond_limiti.c                                 :+:      :+:    :+:   */
+/*   display.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/10 19:31:32 by emuckens          #+#    #+#             */
-/*   Updated: 2018/10/20 17:28:29 by emuckens         ###   ########.fr       */
+/*   Created: 2018/10/20 15:04:49 by emuckens          #+#    #+#             */
+/*   Updated: 2018/10/20 16:55:22 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include "limits.h"
+#include "lemin.h"
 
-int				ft_beyond_limiti(char *str)
+void		display_anthill(t_list *anthill)
 {
-	long	num;
-	int		len;
-	int		coef;
-	int		i;
+	t_list *tmp;
 
-	len = ft_strlen(str);
-	num = 0;
-	coef = (str[0] == '-' ? -1 : 1);
-	i = (str[0] == '-' ? 1 : 0);
-	while (i < len)
+	tmp = anthill;
+	while (tmp)
 	{
-		num += (str[i] - '0');
-		if (num * coef > INT_MAX)
-			return (1);
-		else if (num * coef < INT_MIN)
-			return (-1);
-		num *= 10;
-		++i;
+		ft_printf("%s\n", (char *)(tmp->content));
+		tmp = tmp->next;
 	}
-	return (0);
 }

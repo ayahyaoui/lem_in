@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/10 17:40:04 by emuckens          #+#    #+#             */
-/*   Updated: 2018/10/20 02:22:03 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/10/20 17:02:22 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,9 @@ static t_room	*create_room(ENV *e, char *name, char *x, char *y)
 	if (!(room = (t_room *)ft_memalloc(sizeof(t_room))) && (e->err = ERR_ALLOC))
 		return (NULL);
 	room->name = ft_strdup(name);
-	room->y = ft_atoi(x);
-	room->x = ft_atoi(y);
+	room->x = ft_atoi(x);
+	room->y = ft_atoi(y);
+	ft_bzero(room->mark, sizeof(room->mark));
 	tmp = e->ins->special;
 	while (tmp && tmp->content_size == UNDEALT)
 	{
@@ -98,6 +99,7 @@ static t_room	*create_room(ENV *e, char *name, char *x, char *y)
 		tmp->content_size = DEALT;
 		tmp = tmp->next;
 	}
+//	ft_printf("check room content: name = %s x = %d y = %d mark0 = %d mark1 = %d\n", room->name, room->x, room->y, room->mark[0], room->mark[1]);
 	return (room);
 }
 
@@ -111,24 +113,19 @@ int				get_room(ENV *e, char **str)
 {
 	t_room		*details;
 	t_list		*room;
-//	static int	it;
 
 	if (str[1] && str[2] && !str[3])
 	{
 		if (!valid_room_input(e, str[0], str[1], str[2]))
-			return (0);
+			return (INVALID_INPUT);
 		if (is_dup(e->ins->rooms, str[0]) && (e->err = ERR_DUP))
-			return (0);
+			return (INVALID_INPUT);
 		details = create_room(e, str[0], str[1], str[2]);	
 		room = ft_lstnew(details, sizeof(details));
 		if (!room && (e->err = ERR_LIB))
-			return (0);
+			return (INVALID_INPUT);
 		ft_lstadd(&e->ins->rooms, room);
-//		e->graphe->start = (e->graphe->start == -2) ? it : e->graphe->start;
-//		e->graphe->end = (e->graphe->end == -2) ? it : e->graphe->end;
-//		++it;
-		return (1);
+		return (VALID_INPUT);
 	}
-	e->err = ERR_ROOM;
-	return (0);
+	return (INVALID_INPUT && (e->err = ERR_ROOM));
 }

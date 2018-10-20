@@ -6,13 +6,13 @@
 #    By: emuckens <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/20 17:52:27 by emuckens          #+#    #+#              #
-#    Updated: 2018/10/20 02:21:51 by emuckens         ###   ########.fr        #
+#    Updated: 2018/10/20 17:26:37 by emuckens         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME := lem_in
+NAME := lem-in
 
-SRCS := main.c read.c env.c error.c  get_room.c get_tube.c get_comment.c \
+SRCS := main.c display.c read.c env.c error.c  get_room.c get_tube.c get_comment.c \
 	get_ants.c
 
 BIN := $(addprefix srcs/, $(patsubst %.c, %.o, $(SRCS)))

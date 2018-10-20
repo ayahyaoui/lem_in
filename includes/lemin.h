@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 14:48:09 by emuckens          #+#    #+#             */
-/*   Updated: 2018/10/20 02:22:01 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/10/20 17:35:37 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,12 +74,15 @@ typedef struct 		s_input
 
 typedef struct		s_environment
 {
+	t_list			*anthill;
 	t_input			*ins;
 	t_graphe		*graphe;
 	int				options;
 	int				err;
 	int				type;
 	int				tmpprev[2];
+	int				fd;
+
 }					t_environment;
 
 enum				e_type
@@ -97,6 +100,10 @@ enum				e_status
 	DEALT, UNDEALT
 };
 
+enum				e_input
+{
+	INVALID_INPUT, VALID_INPUT
+};	
 
 
 enum				e_error
@@ -114,6 +121,7 @@ char		*get_errmsg(int code);
 */
 
 int			display(ENV *e, char *str);
+void		display_anthill(t_list *anthill);
 void		printlist(ENV *e, t_list *l);
 
 /*

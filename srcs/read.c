@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 14:48:52 by emuckens          #+#    #+#             */
-/*   Updated: 2018/10/20 02:21:57 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/10/20 17:38:34 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ int				dispatch_ins(ENV *e, char **words, int nb, int endrooms)
 {
 	int ret;
 
-	ft_printf("dispatch ins, nbline = %d\n", nb);
+	ret = NO_ERR;
+//	ft_printf("dispatch ins, nbline = %d\n", nb);
 	if (nb == 1)
 		ret = get_ants(e, words, e->type);
 	else if (e->type == ROOM && !endrooms)
@@ -41,8 +42,7 @@ int				dispatch_ins(ENV *e, char **words, int nb, int endrooms)
 	else if (e->type == TUBE && (endrooms = 1))
 		ret = get_tube(e, words);
 	else
-		return (0);
-	ft_printf("valid input\n");
+		return (ERR_ORDER);
 	return (ret);
 }
 
@@ -52,21 +52,29 @@ int				read_instructions(ENV *e, char *str)
 	char			**words;
 	int				ret;
 	int				nbline;
+	t_list			*line;
 
-	ret = 1;
+	ret = 0;
 	nbline = 0;
-	while (ret && get_next_line2(STDIN, &str) > 0 && str)
+	e->fd = 2;
+	while (!ret && get_next_line2(STDIN, &str) > 0 && str)
 	{
-		ft_printf("while\n");
+//		ft_printf("{FD!}while | len str = %d size str = %zu\n{EOO}", &e->fd, ft_strlen(str), sizeof(str));
 		if (!(ret = get_special_line(e, str)) && ++nbline)
 		{
 			words = ft_strsplit(str, sep(str, &e->type));
+//			ft_printf("type = %d\n", e->type);
 			if (!words && (e->err = ERR_READ))
-				return (0);
-			if (!(ret = dispatch_ins(e, words, nbline, endrooms)))
-				e->err = ERR_ORDER;
+				return (INVALID_INPUT);
+			if ((ret = dispatch_ins(e, words, nbline, endrooms)) && ft_printf("ret = %d\n", ret))
+				return (ret);
 		}
-		ft_printf("..continue reading...\n");
+		line = ft_lstnew(ft_strdup(str), ft_strlen(str));
+		ft_lstaddend(&e->anthill, line);
+//		ft_printf("..continue reading...\n");
+		ft_strdel(&str);
 	}
-	return (ret);
+//	if (e->err == NO_ERR)
+		display_anthill(e->anthill);
+	return (NO_ERR);
 }

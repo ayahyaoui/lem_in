@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/10 13:50:19 by emuckens          #+#    #+#             */
-/*   Updated: 2018/10/20 02:10:06 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/10/20 15:39:37 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int		set_env(ENV *e)
 		return (0);
 	}
 	e->ins->nb_ants = 0;
+	e->anthill = NULL;
 	e->options = 2;
 	e->err = NO_ERR;
 	e->graphe->start = -1;

@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/20 20:31:05 by emuckens          #+#    #+#             */
-/*   Updated: 2018/06/26 19:46:19 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/10/20 16:32:33 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,13 @@ void	ft_lstaddend(t_list **alst, t_list *new)
 		return ;
 	if (*alst == NULL)
 	{
-//		if (*alst == NULL)
-//			ft_printf("tjr null??\n");
 		new->next = *(alst);
-//		ft_printf("no ele in lst\n");
 		*alst = new;
 		return ;
 	}
 	tmp = *alst;
 	while (tmp->next)
 		tmp = tmp->next;
+	new->prev = tmp;
 	tmp->next = new;
-	ft_printf("tmp val = %d tmp next val %d\n", *(int *)tmp->content, *(int *)tmp->next->content);
 }

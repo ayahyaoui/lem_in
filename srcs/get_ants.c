@@ -6,12 +6,25 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/10 18:03:30 by emuckens          #+#    #+#             */
-/*   Updated: 2018/10/20 02:21:53 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/10/20 17:49:37 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lemin.h"
 #include "limits.h"
+
+int		is_number(char *str)
+{
+	if (*str == '-')
+		++str;
+	while (*str)
+	{
+		if (!ft_isdigit(*str))
+			return (0);
+		str++;
+	}
+	return (1);
+}
 
 /*
 ** Checks ant format and stores ant number
@@ -22,15 +35,11 @@
 
 int				get_ants(ENV *e, char **str, int type)
 {
-	if (ft_beyond_limiti(str[0]) == 1 && (e->err = ERR_INTMAX))
-		return (0);
-	if (((type == TUBE) || str[1]) && (e->err = ERR_ANT_INPUT))
-		return (0);
-	if ((e->ins->nb_ants = ft_atoi(str[0])) <= 0)
-	{
-		e->err = ERR_ANT_NB;
-		return (0);
-	}
-	ft_printf("nb ants: %d\n", e->ins->nb_ants);
-	return (1);
+	if (str[1] || !is_number(str[0]) || type == TUBE)
+		return (ERR_ANT_INPUT);
+	if (ft_beyond_limiti(str[0]) == 1) 
+		return (ERR_INTMAX);
+	if (!(e->ins->nb_ants = ft_atoi(str[0])))
+		return (ERR_ANT_NB);
+	return (NO_ERR);
 }
