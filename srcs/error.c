@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/10 11:42:01 by emuckens          #+#    #+#             */
-/*   Updated: 2018/10/20 01:51:26 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/10/21 00:17:02 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void	printlist(ENV *e, t_list *l)
 		ft_printf("%s\t", (char *)(tmp->content));
 		tmp = tmp->next;
 	}
-
 }
 
 int		display(ENV *e, char *str)

@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 14:48:09 by emuckens          #+#    #+#             */
-/*   Updated: 2018/10/20 22:59:10 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/10/21 01:41:13 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@
 
 typedef struct		s_graphe
 {
-	int				taille;
+	int				nb_rooms; // anciennement taille
+	int				nb_tubes;
 	int				**map;
 	int				start;
 	int				end;
@@ -52,6 +53,7 @@ typedef struct		s_graphe
 typedef struct		s_special
 {
 	int				status;
+	int				index;
 	int				dest[2];
 	char			*str;
 }					t_special;
@@ -61,7 +63,6 @@ typedef struct		s_room
 	char			*name;
 	int				x;
 	int				y;
-	int				mark[NB_COMMANDS];
 }					t_room;
 
 typedef struct 		s_input
@@ -80,7 +81,6 @@ typedef struct		s_environment
 	int				options;
 	int				type;
 	int				fd;
-
 }					t_environment;
 
 enum				e_type
@@ -126,11 +126,13 @@ void		printlist(ENV *e, t_list *l);
 ** Read and store instructions
 */
 
+void		apply_commands(ENV *e);
 int			get_ants(ENV *e, char **str, int type);
-int			get_special_line(ENV *e, char *str);
+int			get_command(ENV *e, char *str);
 int			get_room(ENV *e, char **str);
 int			get_tube(ENV *e, char **str, int endrooms);
-int			read_instructions(ENV *e, char *str);
+void			link_command(ENV *e, int type, int index);
+int			read_instructions(ENV *e, char *str, int nbline, int ret);
 char		sep(char *line, int *type);
 
 /*

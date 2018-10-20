@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/10 17:50:41 by emuckens          #+#    #+#             */
-/*   Updated: 2018/10/20 22:59:17 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/10/21 01:40:56 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,20 +24,14 @@ static int		setup_room_mtrx(ENV *e, int size)
 
 	i = 0;
 	if (!(e->graphe->map = (int **)ft_memalloc(sizeof(int *) * size)))
-	{
-		e->err = ERR_ALLOC;
-		return (0);
-	}
+		return (ERR_ALLOC);
 	while (i < size)
 	{
 		if (!(e->graphe->map[i] = (int *)ft_memalloc(sizeof(int) * size)))
-		{
-			e->err = ERR_ALLOC;
-			return (0);
-		}
+			return (ERR_ALLOC);
 		++i;
 	}
-	return (1);
+	return (NO_ERR);
 }
 
 /*
@@ -73,7 +67,7 @@ int				get_tube(ENV *e, char **str, int endrooms)
 
 	if (str[1] && !is_number(str[1]) && endrooms == 1)
 		return (ERR_ROOM_CONF);
-	if (!it && ++it && !setup_room_mtrx(e, ft_lstsize(e->ins->rooms)))
+	if (!it && ++it && setup_room_mtrx(e, ft_lstsize(e->ins->rooms)))
 		return (ERR_ALLOC);
 	if (!str[1] || (check = ft_strsplit(str[1], ' '))[1]) // si rajout de longueur de tube, c'est ici
 		return (ERR_TUBE);
@@ -83,5 +77,6 @@ int				get_tube(ENV *e, char **str, int endrooms)
 		return (ERR_NOROOM);
 	e->graphe->map[i][j] = 1;
 	e->graphe->map[j][i] = 1;
+	++e->graphe->nb_tubes;
 	return (NO_ERR);
 }

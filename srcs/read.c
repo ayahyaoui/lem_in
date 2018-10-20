@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 14:48:52 by emuckens          #+#    #+#             */
-/*   Updated: 2018/10/20 21:14:05 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/10/21 01:41:15 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,31 +46,26 @@ int				dispatch_ins(ENV *e, char **words, int nb)
 	return (ret);
 }
 
-int				read_instructions(ENV *e, char *str)
+int				read_instructions(ENV *e, char *str, int nbline, int ret)
 {
 	char			**words;
-	int				ret;
-	int				nbline;
 	t_list			*line;
 
-	ret = 0;
-	nbline = 0;
-	e->fd = 2;
 	while (!ret && get_next_line2(STDIN, &str) > 0 && str)
 	{
-		if (!(get_special_line(e, str)) && ++nbline)
+		if ((str[0] != '#' || !(get_command(e, str))) && ++nbline)
 		{
 			words = ft_strsplit(str, sep(str, &e->type));
-			if (!words && (e->err = ERR_READ))
-				return (INVALID_INPUT);
+			if (!words)
+				return (ERR_READ);
 			if ((ret = dispatch_ins(e, words, nbline)))
 				return (ret);
 		}
 		line = ft_lstnew(ft_strdup(str), ft_strlen(str));
-		ft_printf("check line = %s\n", line->content);
 		ft_lstaddend(&e->anthill, line);
 		ft_strdel(&str);
 	}
+	apply_commands(e);
 	display_anthill(e->anthill);
 	return (NO_ERR);
 }
