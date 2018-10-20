@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 14:48:09 by emuckens          #+#    #+#             */
-/*   Updated: 2018/10/20 17:35:37 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/10/20 18:31:41 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 # define ANT_NB			"not enough ants!"
 # define ROOM_INPUT		"invalid room format"
 # define ROOM_DUP		"duplicate room name"
-# define COORD			"non numerical values as coordinates"
+# define COORD			"non numerical values as room coordinates"
 # define TUBE_INPUT		"invalid tube input"
 # define TUBE_NOROOM	 "linking non-nexistant room"
 # define ORDER			"invalid input order"
@@ -131,8 +131,14 @@ void		printlist(ENV *e, t_list *l);
 int			get_ants(ENV *e, char **str, int type);
 int			get_special_line(ENV *e, char *str);
 int			get_room(ENV *e, char **str);
-int			get_tube(ENV *e, char **str);
+int			get_tube(ENV *e, char **str, int endrooms);
 int			read_instructions(ENV *e, char *str);
 char		sep(char *line, int *type);
+
+/*
+** Utils
+*/
+
+int			is_number(char *str);
 
 #endif

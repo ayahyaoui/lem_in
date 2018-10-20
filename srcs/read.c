@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 14:48:52 by emuckens          #+#    #+#             */
-/*   Updated: 2018/10/20 17:38:34 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/10/20 18:33:48 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ char			sep(char *line, int *type)
 	len = ft_strlen(line);
 	while (++i < len)
 	{
+		ft_printf("line i = %c\n", line[i]);
 		if (line[i] == '-' && (*type = TUBE))
 			return ('-');
 	}
@@ -34,13 +35,12 @@ int				dispatch_ins(ENV *e, char **words, int nb, int endrooms)
 	int ret;
 
 	ret = NO_ERR;
-//	ft_printf("dispatch ins, nbline = %d\n", nb);
 	if (nb == 1)
 		ret = get_ants(e, words, e->type);
 	else if (e->type == ROOM && !endrooms)
 		ret = get_room(e, words);
-	else if (e->type == TUBE && (endrooms = 1))
-		ret = get_tube(e, words);
+	else if (e->type == TUBE && ++endrooms)
+		ret = get_tube(e, words, endrooms);
 	else
 		return (ERR_ORDER);
 	return (ret);
@@ -63,7 +63,7 @@ int				read_instructions(ENV *e, char *str)
 		if (!(ret = get_special_line(e, str)) && ++nbline)
 		{
 			words = ft_strsplit(str, sep(str, &e->type));
-//			ft_printf("type = %d\n", e->type);
+			ft_printf("type = %d\n", e->type);
 			if (!words && (e->err = ERR_READ))
 				return (INVALID_INPUT);
 			if ((ret = dispatch_ins(e, words, nbline, endrooms)) && ft_printf("ret = %d\n", ret))

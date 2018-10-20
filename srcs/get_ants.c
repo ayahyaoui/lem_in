@@ -6,25 +6,12 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/10 18:03:30 by emuckens          #+#    #+#             */
-/*   Updated: 2018/10/20 17:49:37 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/10/20 18:44:15 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lemin.h"
 #include "limits.h"
-
-int		is_number(char *str)
-{
-	if (*str == '-')
-		++str;
-	while (*str)
-	{
-		if (!ft_isdigit(*str))
-			return (0);
-		str++;
-	}
-	return (1);
-}
 
 /*
 ** Checks ant format and stores ant number

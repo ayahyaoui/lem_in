@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/10 17:50:41 by emuckens          #+#    #+#             */
-/*   Updated: 2018/10/20 02:21:49 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/10/20 18:44:17 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,17 +64,17 @@ static int		get_room_index(t_list *l, char *str)
 ** otherwise
 */
 
-int				get_tube(ENV *e, char **str)
+int				get_tube(ENV *e, char **str, int endrooms)
 {
 	static int	it;
 	int			i;
 	int			j;
 
 	if (!it && ++it && !setup_room_mtrx(e, ft_lstsize(e->ins->rooms)))
-		return (0);
-	if ((e->graphe->start < 0 && (e->err = ERR_START))
-			|| (e->graphe->end < 0 && (e->err = ERR_END)))
-		return (0);
+		return (ERR_ALLOC);
+	ft_printf("endrooms = %d\n");
+	if (str[1] && !is_number(str[1]) && endrooms == 1)
+		return (ERR_ROOM_CONF);
 	if (str[1] && !str[2])
 	{
 		i = get_room_index(e->ins->rooms, str[0]);
@@ -83,8 +83,7 @@ int				get_tube(ENV *e, char **str)
 			return (0);
 		e->graphe->map[i][j] = 1;
 		e->graphe->map[j][i] = 1;
-		return (1);
+		return (NO_ERR);
 	}
-	e->err = ERR_TUBE;
-	return (0);
+	return (ERR_TUBE);
 }

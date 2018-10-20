@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/10 17:40:04 by emuckens          #+#    #+#             */
-/*   Updated: 2018/10/20 17:02:22 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/10/20 18:41:00 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,41 +26,10 @@ static int		is_dup(t_list *l, char *str)
 	tmp = l;
 	while (tmp)
 	{
-		if (ft_strequ(str, (char *)tmp->content))
+		if (ft_strequ(str, ((t_room *)(tmp->content))->name))
 			return (1);
 		tmp = tmp->next;
 	}
-	return (0);
-}
-
-static int		is_number(char *name)
-{
-	char *s;
-
-	s = name;
-	while (*s)
-		if (ft_isdigit(*s++) == 0)
-			return (0);
-	return (1);
-}
-
-/*
-** Check value of room name and coordinates
-** Input: room name and coordinates read on stdin
-** Returns true if coordinates are numerical and if name has no '-' to avoid
-** confusion with tube instructions | false otherwise
-*/
-
-static int		valid_room_input(ENV *e, char *name, char *x, char *y)
-{
-	int		ignore;
-
-	if (!is_number(x) || !is_number(y))
-		e->err = ERR_COORD;
-	else if (sep(name, &ignore) == '-')
-		e->err = ERR_ROOM_CONF;
-	else
-		return (1);
 	return (0);
 }
 
@@ -113,19 +82,21 @@ int				get_room(ENV *e, char **str)
 {
 	t_room		*details;
 	t_list		*room;
+	int			ret;
+
+	ret = NO_ERR;
 
 	if (str[1] && str[2] && !str[3])
 	{
-		if (!valid_room_input(e, str[0], str[1], str[2]))
-			return (INVALID_INPUT);
-		if (is_dup(e->ins->rooms, str[0]) && (e->err = ERR_DUP))
-			return (INVALID_INPUT);
+		if (!is_number(str[1]) || !is_number(str[2]))
+			return (ERR_COORD);
+		if (is_dup(e->ins->rooms, str[0]))
+			return (ERR_DUP);
 		details = create_room(e, str[0], str[1], str[2]);	
-		room = ft_lstnew(details, sizeof(details));
-		if (!room && (e->err = ERR_LIB))
-			return (INVALID_INPUT);
+		if (!(room = ft_lstnew(details, sizeof(details))))
+			return (ERR_LIB);
 		ft_lstadd(&e->ins->rooms, room);
-		return (VALID_INPUT);
+		return (NO_ERR);
 	}
-	return (INVALID_INPUT && (e->err = ERR_ROOM));
+	return (ERR_ROOM);
 }
