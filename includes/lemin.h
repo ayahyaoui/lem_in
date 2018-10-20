@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 14:48:09 by emuckens          #+#    #+#             */
-/*   Updated: 2018/10/20 18:31:41 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/10/20 22:59:10 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ typedef struct		s_graphe
 
 typedef struct		s_special
 {
-	int				type;
+	int				status;
 	int				dest[2];
 	char			*str;
 }					t_special;
@@ -78,9 +78,7 @@ typedef struct		s_environment
 	t_input			*ins;
 	t_graphe		*graphe;
 	int				options;
-	int				err;
 	int				type;
-	int				tmpprev[2];
 	int				fd;
 
 }					t_environment;

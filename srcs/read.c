@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 14:48:52 by emuckens          #+#    #+#             */
-/*   Updated: 2018/10/20 18:33:48 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/10/20 21:14:05 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ char			sep(char *line, int *type)
 	len = ft_strlen(line);
 	while (++i < len)
 	{
-		ft_printf("line i = %c\n", line[i]);
 		if (line[i] == '-' && (*type = TUBE))
 			return ('-');
 	}
@@ -30,9 +29,10 @@ char			sep(char *line, int *type)
 	return (' ');
 }
 
-int				dispatch_ins(ENV *e, char **words, int nb, int endrooms)
+int				dispatch_ins(ENV *e, char **words, int nb)
 {
 	int ret;
+	static int		endrooms;
 
 	ret = NO_ERR;
 	if (nb == 1)
@@ -48,7 +48,6 @@ int				dispatch_ins(ENV *e, char **words, int nb, int endrooms)
 
 int				read_instructions(ENV *e, char *str)
 {
-	static int		endrooms;
 	char			**words;
 	int				ret;
 	int				nbline;
@@ -59,22 +58,19 @@ int				read_instructions(ENV *e, char *str)
 	e->fd = 2;
 	while (!ret && get_next_line2(STDIN, &str) > 0 && str)
 	{
-//		ft_printf("{FD!}while | len str = %d size str = %zu\n{EOO}", &e->fd, ft_strlen(str), sizeof(str));
-		if (!(ret = get_special_line(e, str)) && ++nbline)
+		if (!(get_special_line(e, str)) && ++nbline)
 		{
 			words = ft_strsplit(str, sep(str, &e->type));
-			ft_printf("type = %d\n", e->type);
 			if (!words && (e->err = ERR_READ))
 				return (INVALID_INPUT);
-			if ((ret = dispatch_ins(e, words, nbline, endrooms)) && ft_printf("ret = %d\n", ret))
+			if ((ret = dispatch_ins(e, words, nbline)))
 				return (ret);
 		}
 		line = ft_lstnew(ft_strdup(str), ft_strlen(str));
+		ft_printf("check line = %s\n", line->content);
 		ft_lstaddend(&e->anthill, line);
-//		ft_printf("..continue reading...\n");
 		ft_strdel(&str);
 	}
-//	if (e->err == NO_ERR)
-		display_anthill(e->anthill);
+	display_anthill(e->anthill);
 	return (NO_ERR);
 }

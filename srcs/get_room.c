@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/10 17:40:04 by emuckens          #+#    #+#             */
-/*   Updated: 2018/10/20 18:41:00 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/10/20 22:59:07 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static t_room	*create_room(ENV *e, char *name, char *x, char *y)
 	t_room	*room;
 	t_list	*tmp;
 	int		i;
-	static char	ref[NB_COMMANDS][7] = {"##START", "##END"};
+	static char	ref[NB_COMMANDS + 1][8] = {"##START", "##END"};
 
 	if (!(room = (t_room *)ft_memalloc(sizeof(t_room))) && (e->err = ERR_ALLOC))
 		return (NULL);
@@ -55,20 +55,20 @@ static t_room	*create_room(ENV *e, char *name, char *x, char *y)
 	room->y = ft_atoi(y);
 	ft_bzero(room->mark, sizeof(room->mark));
 	tmp = e->ins->special;
-	while (tmp && tmp->content_size == UNDEALT)
+	while (tmp && ((t_special *)(tmp->content))->status == UNDEALT)
 	{
 		i = -1;
 		while (++i < NB_COMMANDS)
 		{
 			if (ft_strequ(((t_special *)(tmp->content))->str, ref[i]))
-				room->mark[i] = i;
+				room->mark[i] = 1;
 		}
 		((t_special *)(tmp->content))->dest[0] = ROOM;
 		((t_special *)(tmp->content))->dest[1] = ft_lstsize(e->ins->rooms);
 		tmp->content_size = DEALT;
 		tmp = tmp->next;
 	}
-//	ft_printf("check room content: name = %s x = %d y = %d mark0 = %d mark1 = %d\n", room->name, room->x, room->y, room->mark[0], room->mark[1]);
+	ft_printf("{FD!}|check room content: name = %s x = %d y = %d mark0 = %d mark1 = %d\n", &e->fd, room->name, room->x, room->y, room->mark[0], room->mark[1]);
 	return (room);
 }
 
@@ -93,9 +93,9 @@ int				get_room(ENV *e, char **str)
 		if (is_dup(e->ins->rooms, str[0]))
 			return (ERR_DUP);
 		details = create_room(e, str[0], str[1], str[2]);	
-		if (!(room = ft_lstnew(details, sizeof(details))))
+		if (!(room = ft_lstnew(details, sizeof(*details))))
 			return (ERR_LIB);
-		ft_lstadd(&e->ins->rooms, room);
+		ft_lstaddend(&e->ins->rooms, room);
 		return (NO_ERR);
 	}
 	return (ERR_ROOM);
