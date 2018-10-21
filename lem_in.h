@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/30 19:00:27 by anyahyao          #+#    #+#             */
-/*   Updated: 2018/10/20 23:51:03 by anyahyao         ###   ########.fr       */
+/*   Updated: 2018/10/21 23:17:36 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ typedef struct		s_big_tab
 	int				*t2;
 }					t_big_tab;
 
+int				**ft_tri_fusion_recursivecouple(unsigned int t1[][2], int len);
 void				test_init_all_path(t_graphe *g, int end);
 void				free_graphe(t_graphe *g);
 void				ft_mem_set_int(int *tab, int val, int taille);

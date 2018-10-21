@@ -6,23 +6,26 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/22 16:58:37 by anyahyao          #+#    #+#             */
-/*   Updated: 2018/10/20 17:19:08 by anyahyao         ###   ########.fr       */
+/*   Updated: 2018/10/21 16:04:52 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+
+#include "lem_in.h"
+
 /*
 **	fait pour une utilisation raisonable
 **
 */
-static int		setTab(int **t1, int **t2, int i, int j)
+static int		setTab(unsigned int t1[][2], unsigned int t2[][2], int i, int j)
 {
 	t1[i][0] = t2[j][0];
 	t1[i][1] = t2[j][1];
 	return (1);
 }
 
-static void		fusion(int **t1, int **t2, int **tmp, int fin)
+static void		fusion(unsigned int t1[][2],unsigned int t2[][2],
+		 unsigned int tmp[][2], int fin)
 {
 	int len1;
 	int len2;
@@ -36,14 +39,14 @@ static void		fusion(int **t1, int **t2, int **tmp, int fin)
 	j = 0;
 	k = 0;
 	while (++i < fin)
-		if ((j < len1 && t1[j][1] < t2[k][1]) || k == len2)
+		if ((j < len1 && t1[j][COST] < t2[k][COST]) || k == len2)
 		{
 			setTab(tmp, t1, i, j);
 			j++;
 		}
 		else
 		{
-			setTab(tmp, t1, i, j);
+			setTab(tmp, t2, i, k);
 			k++;
 		}
 	i = -1;
@@ -51,7 +54,7 @@ static void		fusion(int **t1, int **t2, int **tmp, int fin)
 		setTab(t1, tmp, i, i);
 }
 
-static void		tri_fusion(int **t1, int **t2, int fin)
+static void		tri_fusion(unsigned int t1[][2], unsigned int t2[][2], int fin)
 {
 	if (fin > 1)
 	{
@@ -61,11 +64,10 @@ static void		tri_fusion(int **t1, int **t2, int fin)
 	}
 }
 
-int				**ft_tri_fusion_recursivecouple(int **t1, int len)
+int				**ft_tri_fusion_recursivecouple(unsigned int t1[][2], int len)
 {
-	int t2[9000][2];
+	unsigned int t2[9000][2];
 
-	//t2 = malloc(sizeof(int) * (len + 1));
-	tri_fusion(t1, (int **)t2, len);
-	return (t1);
+	tri_fusion(t1, t2, len);
+	return ((int**)t1);
 }

@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 14:31:00 by anyahyao          #+#    #+#             */
-/*   Updated: 2018/10/21 00:52:25 by anyahyao         ###   ########.fr       */
+/*   Updated: 2018/10/21 23:17:35 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,7 @@ t_way	*convertpath_to_way(t_graphe *g, unsigned long p)
 
 
 
-t_fusion		*create_fusion(t_path *p)
+t_fusion		*create_fusion(t_path *p, int max)
 {
 	t_fusion *fusion;
 	int i;
@@ -149,8 +149,9 @@ t_fusion		*create_fusion(t_path *p)
 		fusion->fusion[i] = (t_breakdown*)malloc(sizeof(t_breakdown));
 		fusion->fusion[i]->value = p->path[i][VALUE];
 		fusion->fusion[i]->cost = p->path[i][COST];
-		fusion->fusion[i]->breakdown = malloc(20); // juste pour le test
-		fusion->fusion[i]->len = 0;
+		fusion->fusion[i]->breakdown = malloc(sizeof(int) * max);
+		fusion->fusion[i]->breakdown[0] = p->path[i][VALUE];
+		fusion->fusion[i]->len = 1;
 	}
 	return (fusion);
 }
@@ -166,8 +167,8 @@ void	ft_swapPointeur(t_fusion **a, t_fusion **b)
 
 int		fusion_path(t_fusion *fusion, unsigned int tab[2], t_breakdown *copy)
 {
-	t_breakdown *src;
-	int i;
+	t_breakdown	*src;
+	int			i;
 
 	i = -1;
 	src = fusion->fusion[fusion->nb_path];
@@ -182,29 +183,50 @@ int		fusion_path(t_fusion *fusion, unsigned int tab[2], t_breakdown *copy)
 }
 
 
-int		getfusionpath(t_fusion *fusion, int *res)
+int		getfusionpath(t_breakdown *b, int *res, unsigned int val, int cost)
 {
 	int		i;
-	t_breakdown *b;
 
 	i = -1;
-	b = fusion->fusion[fusion->nb_path];
+	//ft_printf("//%d et %d", b->value, val);
 	while (++i < b->len)
+	{
+		//ft_printf("getfusionpath  %d",b->breakdown[i]);
 		res[i] = b->breakdown[i];
-	return (1);
+	}
+		res[i] = val;
+	return (cost);
 }
 
 void		infos(t_fusion *f)
 {
-	ft_putstr("fus\n");
-	ft_printf("f->nb_path = %u, et nombre en parallele %u\n", f->nb_path,f->altern);
+	int j;
+	ft_putstr("                       fus\n");
+	ft_printf("nombre de chemin <%u>, et nombre de voie en parallele (%u)\n",
+			f->nb_path,f->altern);
 	int i = -1;
 	while (++i < f->nb_path)
-		ft_printf("val = %u cout = %u et taille %u\n",
+	{
+		ft_printf("val = %u cout = %u et taille %u",
 				f->fusion[i]->value, f->fusion[i]->cost, f->fusion[i]->len);
-
+		j = -1;
+		while (++j < f->fusion[i]->len)
+			ft_printf("(%d)", f->fusion[i]->breakdown[j]);
+		ft_printf("\n");
+	}
 }
 
+int			valueisinfusion(t_fusion *fusion, int value)
+{
+	int i;
+	i = -1;
+	if (!fusion)
+		return (0);
+	while (++i < fusion->nb_path)
+		if (value == fusion->fusion[i]->value)
+			return (1);
+	return (0);
+}
 
 int		searchNpath(t_path *p, t_fusion *prev, t_fusion *next, int *res)
 {
@@ -212,31 +234,62 @@ int		searchNpath(t_path *p, t_fusion *prev, t_fusion *next, int *res)
 	int j;
 	t_fusion *tmp;
 	int min;
+	int cost;
 
-	min = -1;
+	min = 32; // 32 > au cout maximale
 	i = -1;
 	while (++i < p->nb_path)
 	{
 		j = -1;
 		while (++j < prev->nb_path)
-			if (!(p->path[i][VALUE] & prev->fusion[j]->value))
-				if (prev->altern > 1 || j > i)
-				{
-					ft_printf("%u et %u\n",p->path[i][VALUE] , prev->fusion[j]->value);
-					fusion_path(next, p->path[i], prev->fusion[j]);
-					//if (min == -1 || min > (p->path[i][COST] + prev->fusion[j]->cost))
-					//	getfusionpath(next, res);
-				}
+			if (!(p->path[i][VALUE] & prev->fusion[j]->value)
+			&& (prev->altern > 1 || j > i) &&
+			(!valueisinfusion(next,p->path[i][VALUE] + prev->fusion[j]->value)))
+			{
+				cost = (p->path[i][COST] + prev->fusion[j]->cost);
+				if (min > cost)
+					min = getfusionpath(prev->fusion[j], res,
+					p->path[i][VALUE], cost);
+				fusion_path(next, p->path[i], prev->fusion[j]);
+			}
 	}
-	infos(prev);
-	infos(next);
 	next->altern++;
+	infos(next);
 	return 1;
 }
 
 /*
- * considere p non vide (au moins 2 chemins trouve)
+ ** considere p non vide (au moins 2 chemins trouve)
  */
+
+void		printMultypath(int *res, int len)
+{
+	int i;
+	int j;
+	int k;
+
+	i = 0;
+	k = 0;
+	len = len * (len + 1) / 2;
+	while (i < len)
+	{
+		k++;
+		j = -1;
+		ft_printf("plus petit ensemble de chemin taille <%d>\n", i + 1 );
+		while (++j < k)
+		{
+			if (res[i +j] == 0)
+			{
+				i = len + 1;
+				break;
+			}
+			ft_printnbit(res[i + j], 8);
+			ft_printf(" <%d> => %d\n", i + j, res[i+j]);
+		}
+		i+=j;
+	}
+}
+
 int		*my_best_tab(t_graphe *g, t_path *p, int lenMax)
 {
 	int			*res;
@@ -244,40 +297,31 @@ int		*my_best_tab(t_graphe *g, t_path *p, int lenMax)
 	t_fusion	*fus;
 	t_fusion	*fus2;
 
-	ft_printf("debut, %d\n", lenMax);
-	res = (int*)malloc(sizeof(int) * (lenMax * (lenMax + 1) / 2));
-	fus = create_fusion(p);
-	fus2 = create_fusion(p);
+	res = (int*)ft_memalloc(sizeof(int) * (lenMax * (lenMax + 1) / 2));
+	fus = create_fusion(p, lenMax);
+	fus2 = create_fusion(p, lenMax);
 	t = res + 1;
 	*res = p->path[0][VALUE];
-//	infos(fus);
-//	infos(fus2);
+	infos(fus); // pour le test
 	while (fus->altern < lenMax)
 	{
 		fus2->nb_path = 0;
 		searchNpath(p, fus, fus2, t);
 		ft_swapPointeur(&fus, &fus2);
 		if (fus->nb_path == 0)
+		{
+			printf("ouou======\n\n");
 			break;
+		}
 		else
 			t += fus->altern;
 	}
 	//free_path(p);
-	//free_path
+	//free_patha
+	printMultypath(res, lenMax);
 	return (res);
 }
 
-/*
-int			countmaxCombination(int len, int fusion)
-{
-	if (fusion == 1)
-		return (len);
-	else if (fusion < 1)
-		exit(printf("Gros pb combination\n"));
-	else
-		return (countmaxCombination( , fusion - 1));
-
-*/
 void		affiche_path(t_path *p)
 {
 	int i;
@@ -285,7 +329,7 @@ void		affiche_path(t_path *p)
 	for (i = 0; i < p->nb_path; i++)
 	{
 		ft_printnbit((int)p->path[i][VALUE], 6);
-		printf("==>%d\n", p->path[i][VALUE]);
+		printf("==>%u = %u\n", p->path[i][VALUE], p->path[i][COST]);
 	}
 }
 
@@ -303,10 +347,19 @@ void		test_init_all_path(t_graphe *g, int end)
 	p->nb_path = 0;
 	g->end = end;
 	test_parcours_recursif(g, p, 0, 0);
-	// p->path = ft_tri_fusion_recursivecouple(p->path, p->nb_path);
-	printf("il y'a %d chemins different\n", p->nb_path);
+	printf("====il y'a %d chemins different==\n", p->nb_path);
+	ft_tri_fusion_recursivecouple(p->path, p->nb_path);
+	i = 0;
+	if (0 < p->nb_path && p->path[0][COST] == 0)
+	{
+		p->path[i][VALUE] = 255;
+		p->path[i][COST] = 8;
+		i = 1;
+	}
 	affiche_path(p);
-	my_best_tab(g, p, MIN(degre(g, 0), degre(g, g->end)));
+	my_best_tab(g, p, MIN(degre(g, 0) , degre(g, g->end)) - i);
+	
+	ft_printf("bien jouer\n");
 	//	free(p->path);
 	//free(p);
 }
@@ -323,17 +376,17 @@ void		init_all_path(t_graphe *g)
 }
 
 /*
-int main(int argc, const char *argv[])
-{
-	char *test = malloc(5);
-	test[0] = 'b';
-	test[1] = 'c';
-	test[2] = 'd';
-	test[3] = '\0';
-	test[4] = '\0';
-	printf("%d, %d et %s\n",*test, test[1], test);
-	*test = *test >> 8;
-	printf("%d, %det %s\n",*test, test[1], test);
-	free(test);
-	return 0;
-}*/
+   int main(int argc, const char *argv[])
+   {
+   char *test = malloc(5);
+   test[0] = 'b';
+   test[1] = 'c';
+   test[2] = 'd';
+   test[3] = '\0';
+   test[4] = '\0';
+   printf("%d, %d et %s\n",*test, test[1], test);
+ *test = *test >> 8;
+ printf("%d, %det %s\n",*test, test[1], test);
+ free(test);
+ return 0;
+ }*/
