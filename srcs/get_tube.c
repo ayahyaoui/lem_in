@@ -45,8 +45,9 @@ static int		get_room_index(t_list *l, char *str)
 	int i;
 
 	i = -1;
-	while (l && !ft_strequ(str, ((t_room *)(l->content))->name) && ++i)
+	while (l && ++i >= 0 && !ft_strequ(str, ((t_room *)(l->content))->name))
 		l = l->next;
+	ft_printf("room exists in %d\n", i);
 	return (i);
 }
 

@@ -33,6 +33,21 @@ static int		is_dup(t_list *l, char *str)
 	return (0);
 }
 
+void			print_rooms(t_list *l)
+{
+	t_list *room;
+
+	room = l;
+	ft_printf("list of rooms: ");
+	while (room)
+	{	
+		ft_printf("%s ", ((t_room *)room->content)->name);
+		room = room->next;
+	}
+	ft_printf("\n");
+}
+
+
 /*
 ** ### Check room info, store in list, # mark start and end
 ** Input: line read on stdin, broken up by space
@@ -43,9 +58,7 @@ int				get_room(ENV *e, char **str)
 {
 	t_room		*details;
 	t_list		*room;
-	int			ret;
 
-	ret = NO_ERR;
 	if (str[1] && str[2] && !str[3])
 	{
 		if (!is_number(str[1]) || !is_number(str[2]))

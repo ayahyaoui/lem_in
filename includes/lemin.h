@@ -114,6 +114,12 @@ enum				e_error
 int			set_env(ENV *e);
 char		*get_errmsg(int code);
 
+
+//TEMP
+void		display_adj_mtrx(int **tab, int size);
+
+
+
 /*
 ** Display
 */

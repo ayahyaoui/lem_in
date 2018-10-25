@@ -20,7 +20,6 @@ void	ft_lstaddend(t_list **alst, t_list *new)
 		return ;
 	if (*alst == NULL)
 	{
-		new->next = *(alst);
 		*alst = new;
 		return ;
 	}

@@ -13,29 +13,16 @@
 #include "lemin.h"
 #include "libft.h"
 
-void		ft_swaprooms(t_room **r1, t_room **r2)
-{
-	char *tmp;
-
-	ft_swap(&(*r1)->x, &(*r2)->x);
-	ft_swap(&(*r1)->y, &(*r2)->y);
-	tmp = (*r1)->name;
-	(*r1)->name = (*r2)->name;
-	(*r2)->name = tmp;
-}
-
 void			c_start(ENV *e, void **item, int index)
 {
-	t_list	*room;
-	int		i;
-
 	(void)item;
-	i = -1;
-	room = e->ins->rooms;
-	while (i < index)
-		room = room->next;
-	ft_swaprooms(((t_room**)(&e->ins->rooms->content), (t_room **)(&room->content)));
-	ft_printf("new first room content: name = %s x = %d y = %d\n", ((t_room *)(e->ins->rooms->content))->name, ((t_room *)(e->ins->rooms->content))->x, ((t_room *)(e->ins->rooms->content))->y);
+	e->graphe->start = index;
+}
+
+void			c_end(ENV *e, void **item, int index)
+{
+	(void)item;
+	e->graphe->end = index;
 }
 
 /*
@@ -47,26 +34,23 @@ void			c_start(ENV *e, void **item, int index)
 void			apply_commands(ENV *e)
 {
 	static void	 (*f[NB_COMMANDS])(ENV *e, void **item, int index)
-		= {&c_start, &c_start}; 
+		= {&c_start, &c_end}; 
 	t_list		*command;
 	t_list		*dest;
-	int			i;
+	int			index;
 
 	dest = e->ins->rooms;
 	command = e->ins->special;
 	while (command)
 	{
 		if (((t_special *)(command->content))->dest[0] == ROOM)
-		{
-				ft_printf("add command type = %d index = %d\n", ((t_special *)(command->content))->dest[0],
-				((t_special *)(command->content))->dest[1]);
-			i = -1;
-			while (++i < ((t_special *)(command->content))->dest[1])
-				dest = dest->next;
-			f[((t_special *)(command->content))->index](e, (void **)&dest, -1);
+		{	
+			index = ((t_special *)command->content)->dest[1];
+			f[((t_special *)(command->content))->index](e, (void **)&dest, index);
 		}
 		command = command->next;
 	}
+	ft_printf("start in %d end in %d\n", e->graphe->start, e->graphe->end);
 }
 
 void			link_command(ENV *e, int type, int index)
@@ -85,7 +69,6 @@ void			link_command(ENV *e, int type, int index)
 			{
 				((t_special *)(tmp->content))->dest[0] = type;
 				((t_special *)(tmp->content))->dest[1] = index;
-			
 			}
 		}
 		tmp->content_size = DEALT;

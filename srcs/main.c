@@ -22,5 +22,7 @@ int		main(int argc, char **argv)
 	set_env(&e);
 	if ((err = read_instructions(&e, NULL, 0, 0)))
 		return (display(&e, get_errmsg(err)));
+	e.graphe->nb_rooms = ft_lstsize(e.ins->rooms);
+	display_adj_mtrx(e.graphe->map, e.graphe->nb_rooms); 
 	return (0);
 }
