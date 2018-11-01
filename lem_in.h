@@ -13,8 +13,26 @@
 #ifndef __LEM_IN__
 #define __LEM_IN__
 #include <stdio.h>
+#define WHITE 0
+#define BLACK 1
+#define GREY 2
 
 #include "libft/includes/libft.h"
+#include "libft/includes/ft_printf.h"
+
+typedef struct		s_path
+{
+	unsigned long	*path;
+	unsigned int	nb_path;
+
+
+}					t_path;
+
+typedef struct		s_way
+{
+	int				path;
+	int				len;
+}					t_way;
 
 typedef struct		s_chemins
 {
@@ -27,6 +45,9 @@ typedef struct		s_graphe
 {
 	int			taille;
 	int			**map;
+	int			*color;
+	int			end;
+	int			sum_degre;
 }				t_graphe;
 
 typedef struct	s_big_tab
