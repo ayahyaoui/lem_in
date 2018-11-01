@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   phase_1.c                                          :+:      :+:    :+:   */
+/*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/09/30 19:00:34 by anyahyao          #+#    #+#             */
-/*   Updated: 2018/10/03 18:36:09 by anyahyao         ###   ########.fr       */
+/*   Created: 2018/11/01 19:39:32 by anyahyao          #+#    #+#             */
+/*   Updated: 2018/11/01 22:07:03 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,47 +20,12 @@
  */
 
 
-int		**create_double_tab(int taille, int val)
-{
-	int **map;
-	int i;
-	int j;
-
-	i = 0;
-	map = (int **)malloc(sizeof(int *) * taille);
-	while (i < taille)
-	{
-		map[i] = (int *)malloc(sizeof(int) * taille);
-		j = 0;
-		while (j < taille)
-		{
-			map[i][j] = val;
-			j++;
-		}
-		i++;
-	}
-	return (map);
-}
-
 void	tab_swap(int **a, int **b)
 {
 	int *c;
 	c = *a;
 	*a = *b;
 	*b = c;
-}
-
-int		*create_tab(int taille, int val)
-{
-	int		*tab;
-	int		i;
-
-
-	tab = (int *)malloc(sizeof(int) * taille);
-	i = -1;
-	while (++i < taille)
-		tab[i] = val;
-	return (tab);
 }
 
 void			ft_mem_set_int(int *tab, int val, int taille)
@@ -73,22 +38,20 @@ void			ft_mem_set_int(int *tab, int val, int taille)
 	while (++i < taille)
 		tab[i] = val;
 }
-
-void	free_graphe(t_graphe *g)
+/*
+void	free_path(t_path *p)
 {
-	int i;
-
-	i = -1;
-	while (++i < g->taille)
+	if (p)
 	{
-		free(g->map[i]);
-		g->map[i] = 0x0;
+		if(p->path)
+		{
+			free(p->path);
+			p->path = 0x0;
+		}
+		free(p);
+		p = 0x0;
 	}
-	free(g->map);
-	g->map = 0x0;
-	free(g);
-	g = 0x0;
-}
+}*/
 
 void	test_map(t_graphe *g)
 {
@@ -110,30 +73,38 @@ void	test_map(t_graphe *g)
 	g->map[2][1] = 1;
 }
 
+int			choisemethod(t_graphe *g)
+{
+	//ft_printf("choisemethodse\n");
+	if (g->taille < 16)
+		test_multipathbinary(g);
+	else
+		dijistra(g);
+	return (1);
+}
+
+
 int main(int argc, const char *argv[])
 {
 	t_graphe *g;
 	int i;
 	int j;
 
-	g = (t_graphe*)malloc(sizeof(t_graphe) * 2);
-	g->taille = 1024;
-	g->map = create_double_tab(g->taille,1);
-	g->color = create_tab(g->taille, 0);
-	test_map(g);
-	t_big_tab *bt = new_big_tab(g);
-	if (argc == 1)
-	{
-		printf("%d", short_path(g, bt, 1023, 0));
-	//	test_init_all_path(g, g->taille-1);
+	g = new_graphe(8);
+
+	g->begin = 0;
+	g->end = 7;
+
+	for (i = 0; i < g->taille ;i++) {
+		g->map[g->end][i] = 0;
+		g->map[i][i] = 0;
+		g->map[i][g->end] = 0;
 	}
-	else if (argc == 3)
-	{
-		i = ft_atoi(argv[1]);
-		j = ft_atoi(argv[2]);
-		printf("%d", short_path(g, bt, i, j));
-		test_init_all_path(g, 5);
-	}
+
+	g->map[g->end][g->begin + 1] = 1;
+	g->map[g->begin + 1][g->end] = 1;
+
+	choisemethod(g);
 	free_graphe(g);
-	return 0;
+	return (0);
 }

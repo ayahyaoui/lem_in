@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/30 20:46:40 by anyahyao          #+#    #+#             */
-/*   Updated: 2018/10/03 18:35:09 by anyahyao         ###   ########.fr       */
+/*   Updated: 2018/11/01 18:36:35 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,21 +82,3 @@ int				short_path(t_graphe *g, t_big_tab *bt, int begin, int end)
 	printf("\n");
 	return (bt->tab[end]);
 }
-
-t_big_tab		*new_big_tab(t_graphe *g)
-{
-	int			i;
-	t_big_tab	*s;
-	int			j;
-	int			k;
-
-	if (g == 0x0 || g->taille == 0)
-		return (0x0);
-	s = malloc(sizeof(t_big_tab));
-	s->taille = g->taille;
-	s->tab = create_tab(g->taille, -1);
-	s->t2 = create_tab(g->taille, -1);
-	s->t1 = create_tab(g->taille, -1);
-	return (s);
-}
-
