@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 14:31:00 by anyahyao          #+#    #+#             */
-/*   Updated: 2018/10/21 23:17:35 by anyahyao         ###   ########.fr       */
+/*   Updated: 2018/11/01 20:10:23 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,29 +132,6 @@ t_way	*convertpath_to_way(t_graphe *g, unsigned long p)
 }
 */
 
-
-
-t_fusion		*create_fusion(t_path *p, int max)
-{
-	t_fusion *fusion;
-	int i;
-
-	fusion = (t_fusion *)malloc(sizeof(t_fusion));
-	fusion->nb_path = p->nb_path;
-	fusion->altern = 1;
-	fusion->fusion  = (t_breakdown **)malloc(sizeof(t_breakdown*) * (p->nb_path * 2));
-	i = -1;
-	while (++i < p->nb_path)
-	{
-		fusion->fusion[i] = (t_breakdown*)malloc(sizeof(t_breakdown));
-		fusion->fusion[i]->value = p->path[i][VALUE];
-		fusion->fusion[i]->cost = p->path[i][COST];
-		fusion->fusion[i]->breakdown = malloc(sizeof(int) * max);
-		fusion->fusion[i]->breakdown[0] = p->path[i][VALUE];
-		fusion->fusion[i]->len = 1;
-	}
-	return (fusion);
-}
 
 void	ft_swapPointeur(t_fusion **a, t_fusion **b)
 {
@@ -320,17 +297,6 @@ int		*my_best_tab(t_graphe *g, t_path *p, int lenMax)
 	//free_patha
 	printMultypath(res, lenMax);
 	return (res);
-}
-
-void		affiche_path(t_path *p)
-{
-	int i;
-
-	for (i = 0; i < p->nb_path; i++)
-	{
-		ft_printnbit((int)p->path[i][VALUE], 6);
-		printf("==>%u = %u\n", p->path[i][VALUE], p->path[i][COST]);
-	}
 }
 
 void		test_init_all_path(t_graphe *g, int end)
