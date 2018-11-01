@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/01 19:39:32 by anyahyao          #+#    #+#             */
-/*   Updated: 2018/11/01 20:24:05 by anyahyao         ###   ########.fr       */
+/*   Updated: 2018/11/01 22:07:03 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,42 +73,38 @@ void	test_map(t_graphe *g)
 	g->map[2][1] = 1;
 }
 
+int			choisemethod(t_graphe *g)
+{
+	//ft_printf("choisemethodse\n");
+	if (g->taille < 16)
+		test_multipathbinary(g);
+	else
+		dijistra(g);
+	return (1);
+}
+
+
 int main(int argc, const char *argv[])
 {
 	t_graphe *g;
 	int i;
 	int j;
 
-	g = new_graphe(50000);
-	g->map[0][0] = 0;
-	g->map[1][1] = 0;
-	g->map[2][2] = 0;
-	g->map[3][3] = 0;
-	g->map[0][3] = 0;
+	g = new_graphe(8);
+
 	g->begin = 0;
 	g->end = 7;
+
 	for (i = 0; i < g->taille ;i++) {
 		g->map[g->end][i] = 0;
+		g->map[i][i] = 0;
 		g->map[i][g->end] = 0;
 	}
-	
+
 	g->map[g->end][g->begin + 1] = 1;
 	g->map[g->begin + 1][g->end] = 1;
-	//test_map(g);
-/*	t_big_tab *bt = new_big_tab(g);
-	if (argc == 1)
-	{
-		printf("%d", short_path(g, bt, 1023, 0));
-	//	test_init_all_path(g, g->taille-1);
-	}
-	else*/ /*if (argc == 3)
-	{
-	//	i = ft_atoi(argv[1]);
-	//	j = ft_atoi(argv[2]);
-		//printf("%d", short_path(g, bt, i, j));
-		test_init_all_path(g, 3);
-	}*/
-	dijistra(g);
+
+	choisemethod(g);
 	free_graphe(g);
-	return 0;
+	return (0);
 }

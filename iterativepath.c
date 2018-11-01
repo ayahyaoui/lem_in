@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/01 18:30:35 by anyahyao          #+#    #+#             */
-/*   Updated: 2018/11/01 20:28:11 by anyahyao         ###   ########.fr       */
+/*   Updated: 2018/11/01 20:59:57 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ int				iterative_path(t_graphe *g, int *tab, t_file *file)
 			break;
 		}
 		g->color[node] = BLACK;
-		ft_putstr("first\n");
 	}
 	return (find);
 }
@@ -81,8 +80,8 @@ int				dijistra(t_graphe *g)
 	if (iterative_path(g, tab, file))
 		displaypath(g, tab);
 	else
-		ft_putstr("Il est impossible de trouver un cheimin arrivant a la fin\n");
+		ft_putstr("Il est impossible de trouver un chemin arrivant a la fin\n");
 	free_file(&file);
-	free(tab);
+	ft_memdel((void**)&tab);
 	return(1);
 }

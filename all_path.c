@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 14:31:00 by anyahyao          #+#    #+#             */
-/*   Updated: 2018/11/01 20:10:23 by anyahyao         ###   ########.fr       */
+/*   Updated: 2018/11/01 22:05:38 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int			degre_graphe(t_graphe *g)
 
 int		number_active_bit(unsigned long p, int max);
 
-void		test_parcours_recursif(t_graphe *g, t_path *path, int node
+void		getallpath(t_graphe *g, t_path *path, int node
 		, unsigned int p)
 {
 	int i;
@@ -69,7 +69,7 @@ void		test_parcours_recursif(t_graphe *g, t_path *path, int node
 		if (g->map[node][i])
 		{
 			if (!(p & (1 << i)))
-				test_parcours_recursif(g, path, i, p);
+				getallpath(g, path, i, p);
 		}
 	}
 	g->color[node] = BLACK;
@@ -234,40 +234,7 @@ int		searchNpath(t_path *p, t_fusion *prev, t_fusion *next, int *res)
 	infos(next);
 	return 1;
 }
-
-/*
- ** considere p non vide (au moins 2 chemins trouve)
- */
-
-void		printMultypath(int *res, int len)
-{
-	int i;
-	int j;
-	int k;
-
-	i = 0;
-	k = 0;
-	len = len * (len + 1) / 2;
-	while (i < len)
-	{
-		k++;
-		j = -1;
-		ft_printf("plus petit ensemble de chemin taille <%d>\n", i + 1 );
-		while (++j < k)
-		{
-			if (res[i +j] == 0)
-			{
-				i = len + 1;
-				break;
-			}
-			ft_printnbit(res[i + j], 8);
-			ft_printf(" <%d> => %d\n", i + j, res[i+j]);
-		}
-		i+=j;
-	}
-}
-
-int		*my_best_tab(t_graphe *g, t_path *p, int lenMax)
+int		*my_best_tab(t_graphe *g, t_path *p, int lenMax, t_tab **best_tab)
 {
 	int			*res;
 	int			*t;
@@ -299,37 +266,97 @@ int		*my_best_tab(t_graphe *g, t_path *p, int lenMax)
 	return (res);
 }
 
-void		test_init_all_path(t_graphe *g, int end)
+static int goodneig(t_graphe *g, int node, int path)
+{
+	int i;
+
+	i = -1;
+	while (++i < g->taille)
+		if (g->map[i][node] == 1 && path & (1 << i))
+			return (i);
+	ft_putstr("pb on a pas de voisin qui correspond au chemin decrit\n");
+	exit(0);
+}
+
+
+t_tab	*addpath(t_graphe *g, int path)
+{
+	t_tab	*t;
+	int		len;
+	int		node;
+	int		i;
+
+	i = -1;
+	if (!(t = (t_tab*)malloc(sizeof(t_tab))))
+		exit(3);
+	len = number_active_bit(path, sizeof(int) * 8) + 1;
+	if (!(t->tab = (int *)ft_memalloc(sizeof(int) * len)))
+		exit(3);
+	t->length = len;
+
+	while (++i < len - 1)
+	{
+		node = goodneig(g, g->begin, path);
+		t->tab[i] = node;
+	}
+	t->tab[i] = g->end;
+	return (t);
+}
+
+int		get_all_separpath(t_graphe *g, t_path *p)
+{
+	int		max_separpath;
+	t_tab	**best_tab;
+	t_tab	**tmp;
+
+	max_separpath = MIN(degre(g, 0) , degre(g, g->end));
+	if (!(best_tab = (t_tab**)malloc(sizeof(t_tab*) * max_separpath)))
+		exit(3);
+	tmp = best_tab;
+	if (p->nb_path > 0 && p->path[0][COST] == 0)
+	{
+		p->path[0][VALUE] = 255;
+		p->path[0][COST] = 8;
+		max_separpath--;
+		best_tab[0] = addpath(g, 0);
+	}
+	affiche_path(p);
+	my_best_tab(g, p, max_separpath, best_tab);
+	return (1);
+}
+
+
+void		test_multipathbinary(t_graphe *g)
 {
 	t_path	*p;
 	int		i;
 
+	ft_printf("debut MULTI PATH\n");
 	if (!g || g->taille > 32)
 	{
 		ft_printf("graphe trop grand pour les test\n");
 		exit(1);
 	}
-	p = malloc(sizeof(t_path));
+	if (!(p = malloc(sizeof(t_path))))
+			exit(3);
 	p->nb_path = 0;
-	g->end = end;
-	test_parcours_recursif(g, p, 0, 0);
+	getallpath(g, p, 0, 0);
 	printf("====il y'a %d chemins different==\n", p->nb_path);
 	ft_tri_fusion_recursivecouple(p->path, p->nb_path);
 	i = 0;
-	if (0 < p->nb_path && p->path[0][COST] == 0)
-	{
-		p->path[i][VALUE] = 255;
-		p->path[i][COST] = 8;
-		i = 1;
-	}
-	affiche_path(p);
-	my_best_tab(g, p, MIN(degre(g, 0) , degre(g, g->end)) - i);
-	
+	get_all_separpath(g, p);
+
 	ft_printf("bien jouer\n");
 	//	free(p->path);
 	//free(p);
 }
 
+
+
+
+
+
+/*
 void		init_all_path(t_graphe *g)
 {
 	t_chemins	*chemins;
@@ -339,20 +366,4 @@ void		init_all_path(t_graphe *g)
 	chemins = (t_chemins*)malloc(sizeof(chemins));
 	degre = degre_graphe(g);
 	len = (degre * g->taille / 8) + 1;
-}
-
-/*
-   int main(int argc, const char *argv[])
-   {
-   char *test = malloc(5);
-   test[0] = 'b';
-   test[1] = 'c';
-   test[2] = 'd';
-   test[3] = '\0';
-   test[4] = '\0';
-   printf("%d, %d et %s\n",*test, test[1], test);
- *test = *test >> 8;
- printf("%d, %det %s\n",*test, test[1], test);
- free(test);
- return 0;
- }*/
+}*/

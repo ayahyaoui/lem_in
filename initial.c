@@ -6,13 +6,13 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/01 18:20:23 by anyahyao          #+#    #+#             */
-/*   Updated: 2018/11/01 20:02:29 by anyahyao         ###   ########.fr       */
+/*   Updated: 2018/11/01 21:14:08 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 t_file			*new_file(t_graphe *g);
-t_big_tab		*new_big_tab(t_graphe *g);
+//t_big_tab		*new_big_tab(t_graphe *g);
 t_fusion		*create_fusion(t_path *p, int max);
 int				*create_tab(int taille, int val);
 int				**create_double_tab(int taille, int val);
