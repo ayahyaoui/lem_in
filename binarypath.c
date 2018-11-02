@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/02 18:03:25 by anyahyao          #+#    #+#             */
-/*   Updated: 2018/11/02 18:07:40 by anyahyao         ###   ########.fr       */
+/*   Updated: 2018/11/03 00:01:58 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,9 @@ void		test_multipathbinary(t_graphe *g)
 	if (!(p = malloc(sizeof(t_path))))
 			exit(3);
 	p->nb_path = 0;
+	ft_putstr("getallpath\n");
 	getallpath(g, p, 0, 0);
-	printf("====il y'a %d chemins different==\n", p->nb_path);
+	ft_printf("====il y'a %d chemins different==\n", p->nb_path);
 	ft_tri_fusion_recursivecouple(p->path, p->nb_path);
 	i = 0;
 	get_all_separpath(g, p);

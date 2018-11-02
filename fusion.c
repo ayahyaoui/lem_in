@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/02 17:52:48 by anyahyao          #+#    #+#             */
-/*   Updated: 2018/11/02 18:07:39 by anyahyao         ###   ########.fr       */
+/*   Updated: 2018/11/02 23:02:03 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,24 +58,6 @@ int		getfusionpath(t_breakdown *b, int *res, unsigned int val, int cost)
 	}
 		res[i] = val;
 	return (cost);
-}
-
-void		infos(t_fusion *f)
-{
-	int j;
-	ft_putstr("                       fus\n");
-	ft_printf("nombre de chemin <%u>, et nombre de voie en parallele (%u)\n",
-			f->nb_path,f->altern);
-	int i = -1;
-	while (++i < f->nb_path)
-	{
-		ft_printf("val = %u cout = %u et taille %u",
-				f->fusion[i]->value, f->fusion[i]->cost, f->fusion[i]->len);
-		j = -1;
-		while (++j < f->fusion[i]->len)
-			ft_printf("(%d)", f->fusion[i]->breakdown[j]);
-		ft_printf("\n");
-	}
 }
 
 int			valueisinfusion(t_fusion *fusion, int value)

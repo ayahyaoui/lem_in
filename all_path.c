@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 14:31:00 by anyahyao          #+#    #+#             */
-/*   Updated: 2018/11/02 18:53:59 by anyahyao         ###   ########.fr       */
+/*   Updated: 2018/11/03 00:01:54 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 
 
 int		get_all_separpath(t_graphe *g, t_path *p);
-t_tab	**addpaths(t_graphe *g, t_tab *paths, int nb_path);
+t_tab	**addpaths(t_graphe *g, t_breakdown *paths, int nb_path);
 t_tab	*addpath(t_graphe *g, int path);
-int		*my_best_tab(t_graphe *g, t_path *p, int lenMax, t_tab **best_tab);
-int		searchNpath(t_path *p, t_fusion *prev, t_fusion *next, int *res);
+int		*my_best_tab(t_graphe *g, t_path *p, int lenMax, t_tab ***best_tab);
+//int		searchNpath(t_path *p, t_fusion *prev, t_fusion *next);
 
 void		parcours_recursif();
 
@@ -51,13 +51,13 @@ t_way	*convertpath_to_way(t_graphe *g, unsigned long p)
 */
 
 
-int		searchNpath(t_path *p, t_fusion *prev, t_fusion *next, int *res)
+t_breakdown	*searchNpath(t_path *p, t_fusion *prev, t_fusion *next, t_tab **res)
 {
 	int i;
 	int j;
-	t_fusion *tmp;
 	int min;
 	int cost;
+	t_breakdown  *b = 0x0;
 
 	min = 32; // 32 > au cout maximale
 	i = -1;
@@ -70,47 +70,48 @@ int		searchNpath(t_path *p, t_fusion *prev, t_fusion *next, int *res)
 			(!valueisinfusion(next,p->path[i][VALUE] + prev->fusion[j]->value)))
 			{
 				cost = (p->path[i][COST] + prev->fusion[j]->cost);
-				if (min > cost)
-					min = getfusionpath(prev->fusion[j], res,
-					p->path[i][VALUE], cost);
 				fusion_path(next, p->path[i], prev->fusion[j]);
+				if (min > cost)
+				{
+					min = cost;
+					b = next->fusion[next->nb_path - 1];
+	//min = getfusionpath(prev->fusion[j], res,p->path[i][VALUE], cost);
+				}
 			}
 	}
 	next->altern++;
 	infos(next);
-	return 1;
+	return b;
 }
 
-int		*my_best_tab(t_graphe *g, t_path *p, int lenMax, t_tab **best_tab)
+int		*my_best_tab(t_graphe *g, t_path *p, int lenMax, t_tab ***best_tab)
 {
-	int			*res;
-	int			*t;
+//	int			*res;
+//	int			*t;
 	t_fusion	*fus;
 	t_fusion	*fus2;
 
-	res = (int*)ft_memalloc(sizeof(int) * (lenMax * (lenMax + 1) / 2));
+	//res = (int*)ft_memalloc(sizeof(int) * (lenMax * (lenMax + 1) / 2));
 	fus = create_fusion(p, lenMax);
 	fus2 = create_fusion(p, lenMax);
-	t = res + 1;
-	*res = p->path[0][VALUE];
+//	t = res + 1;
+//	*res = p->path[0][VALUE];
 	infos(fus); // pour le test
 	while (fus->altern < lenMax)
 	{
 		fus2->nb_path = 0;
-		searchNpath(p, fus, fus2, t);
+		addpaths(g, searchNpath(p, fus, fus2, best_tab[fus->altern]), fus->altern + 1);
 		ft_swapPointeur(&fus, &fus2);
 		if (fus->nb_path == 0)
 		{
 			printf("ouou======\n\n");
 			break;
 		}
-		else
-			t += fus->altern;
 	}
 	//free_path(p);
 	//free_patha
-	printMultypath(res, lenMax);
-	return (res);
+	//printMultypath(res, lenMax);
+	return (0x0);
 }
 
 static int goodneig(t_graphe *g, int node, int path)
@@ -133,57 +134,63 @@ t_tab	*addpath(t_graphe *g, int path)
 	int		node;
 	int		i;
 
-	i = -1;
+	i = 0;
 	if (!(t = (t_tab*)malloc(sizeof(t_tab))))
 		exit(3);
-	len = number_active_bit(path, sizeof(int) * 8) + 1;
-	if (!(t->tab = (int *)ft_memalloc(sizeof(int) * len)))
+	len = number_active_bit(path, sizeof(int) * 8) + 2;
+	if (!(t->tab = (int *)ft_memalloc(sizeof(int) * (len))))
 		exit(3);
 	t->length = len;
-
+	t->tab[0] = g->begin;
 	while (++i < len - 1)
-	{
-		node = goodneig(g, g->begin, path);
-		t->tab[i] = node;
-	}
+		t->tab[i] = goodneig(g, t->tab[i], path);
 	t->tab[i] = g->end;
 	return (t);
 }
-t_tab	**addpaths(t_graphe *g, t_tab *paths, int nb_path)
+
+t_tab	**addpaths(t_graphe *g, t_breakdown *br, int nb_path)
 {
 	t_tab	**t;
 	int		i;
 
 	i = -1;
+	ft_printf("OHOH %d\n", nb_path);
+	affichebreak(br);
+	if (!br)
+		return (0x0);
 	if (!(t = (t_tab**)malloc(sizeof(t_tab *) * (nb_path + 1))))
 		exit(3);
 	t[nb_path] = 0x0;
 	while (++i < nb_path)
-		t[i] = addpath(g, paths->tab[i]);
+		t[i] = addpath(g, br->breakdown[i]);
 	return t;
 }
 
 int		get_all_separpath(t_graphe *g, t_path *p)
-{/*
+{
 	int		max_separpath;
 	t_tab	***best_tab;
-	t_tab	**tmp;
+	t_fusion	*fus;
 
 	max_separpath = MIN(degre(g, 0) , degre(g, g->end));
+	fus = create_fusion(p, max_separpath);
 	if (!(best_tab = (t_tab***)malloc(sizeof(t_tab**) * (max_separpath + 1))))
 		exit(3);
 	best_tab[max_separpath] = 0x0;
-	tmp = best_tab;
+	best_tab[0] = addpaths(g, fus->fusion[0], 1); // trouve un moyen paths
 	if (p->nb_path > 0 && p->path[0][COST] == 0)
 	{
 		p->path[0][VALUE] = 255;
 		p->path[0][COST] = 8;
 		max_separpath--;
-		best_tab[0] = addpath(g, 0);
+		fus->fusion[0]->value = 255;
+		//best_tab[0] = addpath(g, 0);
 	}
-	affiche_path(p);
-	my_best_tab(g, p, max_separpath, best_tab);
-*/	return (1);
+	affiche_path(g, p);
+	if (max_separpath > 0)
+		my_best_tab(g, p, max_separpath, &best_tab[1]);
+	displayallpath(g, best_tab);
+	return (1);
 }
 
 

@@ -6,11 +6,14 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/02 17:43:57 by anyahyao          #+#    #+#             */
-/*   Updated: 2018/11/02 17:52:31 by anyahyao         ###   ########.fr       */
+/*   Updated: 2018/11/02 21:09:41 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
+
+int			degre_graphe(t_graphe *g);
+int			degre(t_graphe *g, int node);
 
 int			degre_graphe(t_graphe *g)
 {

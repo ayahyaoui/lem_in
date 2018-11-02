@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/30 19:00:27 by anyahyao          #+#    #+#             */
-/*   Updated: 2018/11/02 18:53:58 by anyahyao         ###   ########.fr       */
+/*   Updated: 2018/11/03 00:01:56 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 **					-nb_next_node
 */
 
-typedef struct				s_point
+typedef struct			s_point
 {
 	int						value;
 	int						len;
@@ -40,113 +40,130 @@ typedef struct				s_point
 
 typedef struct				s_path
 {
-	unsigned int			path[9000][2];
-	unsigned int			nb_path;
-//	int						next_node;  
-//	int						nb_next_node;
-}							t_path;
+	unsigned int		path[9000][2];
+	unsigned int		nb_path;
+//	int					next_node;  
+//	int					nb_next_node;
+}						t_path;
 
-typedef struct				s_breakdown
+typedef struct			s_breakdown
 {
-	unsigned int			value;
-	unsigned int			cost;
-	unsigned int			*breakdown;
-	unsigned int			len;
-}							t_breakdown;
+	unsigned int		value;
+	unsigned int		cost;
+	unsigned int		*breakdown;
+	unsigned int		len;
+}						t_breakdown;
 
-typedef struct				s_fusion
+typedef struct			s_fusion
 {
-	t_breakdown				**fusion;// taille a calculer 
-	unsigned int			nb_path;
-	unsigned int			altern;
+	t_breakdown		**fusion;// taille a calculer 
+	unsigned int	nb_path;
+	unsigned int	altern;
+}					t_fusion;
 
-}							t_fusion;
 /*
-typedef struct				s_chemins
+typedef struct			s_chemins
 {
-	unsigned char			*path;
+	unsigned char	*path;
 	unsigned char			**all_path;
 	unsigned int			nb_path;
 	unsigned int			nb_max;
 }							t_chemins;
 */
-typedef struct				s_graphe
-{
-	int						taille;
-	char						**map;
-	int						*color;
-	int						end;
-	int						begin;
-}							t_graphe;
 
-typedef struct				s_tab
+typedef struct		s_graphe
 {
-	int						length;
-	int						*tab;
-	//int						nb_ant;
-}							t_tab;
+	int				taille;
+	char			**map;
+	int				*color;
+	int				end;
+	int				begin;
+}					t_graphe;
 
-typedef struct				s_file
+typedef struct		s_tab
 {
-	int						begin;
-	int						end;
-	int						*tab;
-}							t_file;
+	int				length;
+	int				*tab;
+	//int					nb_ant;
+}					t_tab;
 
-typedef struct				s_big_tab
+typedef struct		s_file
 {
-	int						taille;
-	int						*tab;
-	int						*t1;
-	int						*t2;
-}							t_big_tab;
+	int				begin;
+	int				end;
+	int				*tab;
+}					t_file;
+
+typedef struct		s_big_tab
+{
+	int				taille;
+	int				*tab;
+	int				*t1;
+	int				*t2;
+}					t_big_tab;
 
 // new initial
 
-//t_big_tab		*new_big_tab(t_graphe *g);
-t_fusion		*create_fusion(t_path *p, int max);
-int				*create_tab(int taille, int val);
+//t_big_tab			*new_big_tab(t_graphe *g);
+t_fusion			*create_fusion(t_path *p, int max);
+int					*create_tab(int taille, int val);
 char				**create_double_tab(int taille, int val);
-t_graphe		*new_graphe(int taille);
+t_graphe			*new_graphe(int taille);
 
 // file.c
-int				addfile(t_file *file, int value);
-int				removefile(t_file *file);
-int				isemptyfile(t_file *file);
-t_file			*new_file(t_graphe *g);
+int					addfile(t_file *file, int value);
+int					removefile(t_file *file);
+int					isemptyfile(t_file *file);
+t_file				*new_file(t_graphe *g);
 
 // free.c
-void			free_file(t_file **file);
+void				free_file(t_file **file);
 void				free_graphe(t_graphe *g);
 
 //affiche
 
-int			displaypath(t_graphe *g, int *tab);
-void		affiche_path(t_path *p);
-void		printMultypath(int *res, int len);
+void				affichebreak(t_breakdown *bp);
+void				infos(t_fusion *f);
+int					displaypath(t_graphe *g, int *tab);
+void				affiche_path(t_graphe *g, t_path *p);
+void				printMultypath(int *res, int len);
+int					displayallpath(t_graphe *g, t_tab ***t);
 
 // fusion.c
 
-int			valueisinfusion(t_fusion *fusion, int value);
-void		infos(t_fusion *f);
-int		getfusionpath(t_breakdown *b, int *res, unsigned int val, int cost);
-int		fusion_path(t_fusion *fusion, unsigned int tab[2], t_breakdown *copy);
-void	ft_swapPointeur(t_fusion **a, t_fusion **b);
+int					valueisinfusion(t_fusion *fusion, int value);
+int					getfusionpath(t_breakdown *b, int *res, unsigned int val,
+					int cost);
+int					fusion_path(t_fusion *f, unsigned int t[2], t_breakdown *c);
+void				ft_swapPointeur(t_fusion **a, t_fusion **b);
 
 // binarypath
 
-int		number_active_bit(unsigned long p, int max);
-void		test_multipathbinary(t_graphe *g);
-void		getallpath(t_graphe *g, t_path *path, int node
-		, unsigned int p);
+int					number_active_bit(unsigned long p, int max);
+void				test_multipathbinary(t_graphe *g);
+void				getallpath(t_graphe *g, t_path *path, int node
+					, unsigned int p);
 
 // all_path
 
-int		get_all_separpath(t_graphe *g, t_path *p);
-t_tab	**addpaths(t_graphe *g, t_tab *paths, int nb_path);
-t_tab	*addpath(t_graphe *g, int path);
-int		*my_best_tab(t_graphe *g, t_path *p, int lenMax, t_tab **best_tab);
-int		searchNpath(t_path *p, t_fusion *prev, t_fusion *next, int *res);
+int					get_all_separpath(t_graphe *g, t_path *p);
+t_tab				**addpaths(t_graphe *g, t_breakdown *paths, int nb_path);
+t_tab				*addpath(t_graphe *g, int path);
+int					*my_best_tab(t_graphe *g, t_path *p, int le,
+					t_tab ***best_tab);
+t_breakdown			*searchNpath(t_path *p, t_fusion *pr, t_fusion *n, t_tab **r);
+
+
+
+//getgraphe
+
+int					degre_graphe(t_graphe *g);
+int					degre(t_graphe *g, int node);
+
+
+
+
+
 
 int				dijistra(t_graphe *g);
 int				**ft_tri_fusion_recursivecouple(unsigned int t1[][2], int len);
