@@ -78,6 +78,7 @@ typedef struct		s_environment
 	t_list			*anthill;
 	t_input			*ins;
 	t_graphe		*graphe;
+	int			nb_paths;
 	int				options;
 	int				type;
 	int				fd;
@@ -125,6 +126,7 @@ void		display_adj_mtrx(int **tab, int size);
 */
 
 int			display(ENV *e, char *str);
+void		display_moves(ENV *e, int **tab, char **names, int total);
 void		display_anthill(t_list *anthill);
 void		printlist(ENV *e, t_list *l);
 
@@ -140,6 +142,7 @@ int			get_tube(ENV *e, char **str, int endrooms);
 void			link_command(ENV *e, int type, int index);
 int			read_instructions(ENV *e, char *str, int nbline, int ret);
 char		sep(char *line, int *type);
+char		**room_names(t_list *l, int nb_rooms, int **paths, int nb_paths);
 
 /*
 ** Utils

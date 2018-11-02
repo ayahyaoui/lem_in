@@ -65,9 +65,10 @@ int				get_tube(ENV *e, char **str, int endrooms)
 	char		**check;
 	int			i;
 	int			j;
-
-	if (str[1] && !is_number(str[1]) && endrooms == 1)
-		return (ERR_ROOM_CONF);
+	
+	(void)endrooms;
+//	if (str[1] && !is_number(str[1]) && endrooms == 1)
+//		return (ERR_ROOM_CONF);
 	if (!it && ++it && setup_room_mtrx(e, ft_lstsize(e->ins->rooms)))
 		return (ERR_ALLOC);
 	if (!str[1] || (check = ft_strsplit(str[1], ' '))[1]) // si rajout de longueur de tube, c'est ici

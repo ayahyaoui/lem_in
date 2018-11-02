@@ -1,0 +1,71 @@
+room exists in 0
+room exists in 2
+room exists in 3
+room exists in 4
+start in 0 end in 0
+11
+un 2 3
+deux 3 4
+trois 4 5
+quatre 5 6
+cinq 6 7
+six 7 8
+un-trois
+quatre-cinq
+	 | 0 1 2 3 4 5 
+0	 | 0 0 1 0 0 0 
+1	 | 0 0 0 0 0 0 
+2	 | 1 0 0 0 0 0 
+3	 | 0 0 0 0 1 0 
+4	 | 0 0 0 1 0 0 
+5	 | 0 0 0 0 0 0 
+room code = 5
+L1-six room code = 3
+L2-quatre room code = 2
+L3-trois 
+arrived = 0
+5 -1 5 -1 -1 -1 
+4 4 3 -1 -1 
+2 0 2 
+room code = -1
+room code = 4
+L2-cinq room code = 0
+L3-un room code = 5
+L4-six room code = 3
+L5-quatre room code = 2
+L6-trois 
+arrived = 1
+5 -1 -1 5 -1 -1 
+4 -1 4 3 -1 
+2 1 0 
+room code = -1
+room code = -1
+room code = 1
+L3-deux room code = -1
+room code = 4
+L5-cinq room code = 0
+L6-un room code = 5
+L7-six room code = 3
+L8-quatre 
+arrived = 4
+5 -1 -1 -1 5 -1 
+4 -1 -1 4 3 
+2 -1 1 
+room code = -1
+room code = -1
+room code = -1
+room code = -1
+room code = -1
+room code = 1
+L6-deux room code = -1
+room code = 4
+L8-cinq room code = 5
+L10-six room code = 3
+L11-quatre 
+arrived = 10
+5 -1 -1 -1 -1 5 
+4 -1 -1 -1 4 
+2 -1 -1 
+room code = -1
+
+arrived = 11
