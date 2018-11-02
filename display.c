@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/01 19:29:03 by anyahyao          #+#    #+#             */
-/*   Updated: 2018/11/01 21:01:47 by anyahyao         ###   ########.fr       */
+/*   Updated: 2018/11/02 18:54:00 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,5 +77,29 @@ int			displaypath(t_graphe *g, int *tab)
 		node = tab[node];
 	}
 	ft_printf("%d\n", node);
+	return (1);
+}
+
+int			displayallpath(t_graphe *g, t_tab ***t)
+{
+	int i;
+	int j;
+	int k;
+
+
+	i = -1;
+	while (t[++i])
+	{
+		j = -1;
+		ft_putstr("=======================================\n");
+		ft_printf(" nb chemin en parrallele %d (normalement)\n", i + 1);
+		while (t[i][++j])
+		{
+		//	ft_printf("%d fourmis vont passer par la\n", t[i][j]->nb_ant);
+			ft_affichetab(t[i][j]->tab, t[i][j]->length, '>');
+		}
+		ft_putstr("=======================================\n");
+		ft_putstr("\n\n\n");
+	}
 	return (1);
 }

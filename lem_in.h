@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/30 19:00:27 by anyahyao          #+#    #+#             */
-/*   Updated: 2018/11/01 21:20:34 by anyahyao         ###   ########.fr       */
+/*   Updated: 2018/11/02 18:53:58 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ typedef struct				s_chemins
 typedef struct				s_graphe
 {
 	int						taille;
-	int						**map;
+	char						**map;
 	int						*color;
 	int						end;
 	int						begin;
@@ -83,6 +83,7 @@ typedef struct				s_tab
 {
 	int						length;
 	int						*tab;
+	//int						nb_ant;
 }							t_tab;
 
 typedef struct				s_file
@@ -105,7 +106,7 @@ typedef struct				s_big_tab
 //t_big_tab		*new_big_tab(t_graphe *g);
 t_fusion		*create_fusion(t_path *p, int max);
 int				*create_tab(int taille, int val);
-int				**create_double_tab(int taille, int val);
+char				**create_double_tab(int taille, int val);
 t_graphe		*new_graphe(int taille);
 
 // file.c
@@ -123,6 +124,29 @@ void				free_graphe(t_graphe *g);
 int			displaypath(t_graphe *g, int *tab);
 void		affiche_path(t_path *p);
 void		printMultypath(int *res, int len);
+
+// fusion.c
+
+int			valueisinfusion(t_fusion *fusion, int value);
+void		infos(t_fusion *f);
+int		getfusionpath(t_breakdown *b, int *res, unsigned int val, int cost);
+int		fusion_path(t_fusion *fusion, unsigned int tab[2], t_breakdown *copy);
+void	ft_swapPointeur(t_fusion **a, t_fusion **b);
+
+// binarypath
+
+int		number_active_bit(unsigned long p, int max);
+void		test_multipathbinary(t_graphe *g);
+void		getallpath(t_graphe *g, t_path *path, int node
+		, unsigned int p);
+
+// all_path
+
+int		get_all_separpath(t_graphe *g, t_path *p);
+t_tab	**addpaths(t_graphe *g, t_tab *paths, int nb_path);
+t_tab	*addpath(t_graphe *g, int path);
+int		*my_best_tab(t_graphe *g, t_path *p, int lenMax, t_tab **best_tab);
+int		searchNpath(t_path *p, t_fusion *prev, t_fusion *next, int *res);
 
 int				dijistra(t_graphe *g);
 int				**ft_tri_fusion_recursivecouple(unsigned int t1[][2], int len);

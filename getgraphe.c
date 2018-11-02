@@ -1,44 +1,52 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   getgraphe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/01 18:22:17 by anyahyao          #+#    #+#             */
-/*   Updated: 2018/11/02 18:42:53 by anyahyao         ###   ########.fr       */
+/*   Created: 2018/11/02 17:43:57 by anyahyao          #+#    #+#             */
+/*   Updated: 2018/11/02 17:52:31 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void			free_graphe(t_graphe *g);
-void			free_file(t_file **file);
-
-void			free_graphe(t_graphe *g)
+int			degre_graphe(t_graphe *g)
 {
 	int i;
+	int res;
+	int j;
 
+	if (g == 0X0)
+		return (-1);
 	i = -1;
+	res = 0;
 	while (++i < g->taille)
 	{
-		free(g->map[i]);
-		g->map[i] = 0x0;
+		j = -1;
+		while (++j < g->taille)
+			if(g->map[i][j])
+				res++;
 	}
-	free(g->map);
-	g->map = 0x0;
-	ft_memdel((void**)&g->color);
-	free(g);
-	g = 0x0;
+	return (res / 2);
 }
 
+/*
+**	renvois le nombre de voisin d'un noeud
+*/
 
-void			free_file(t_file **file)
+int			degre(t_graphe *g, int node)
 {
-	if (*file)
-	{
-		if ((*file)->tab)
-			ft_memdel((void**)&(*file)->tab);
-		ft_memdel((void**)file);
-	}
+	int i;
+	int res;
+
+	i = -1;
+	res = 0;
+	while (++i < g->taille)
+		if (g->map[node][i])
+			res++;
+	return (res);
 }
+
+
