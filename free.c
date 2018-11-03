@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/01 18:22:17 by anyahyao          #+#    #+#             */
-/*   Updated: 2018/11/01 19:48:54 by anyahyao         ###   ########.fr       */
+/*   Updated: 2018/11/02 18:42:53 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ void			free_graphe(t_graphe *g)
 	g = 0x0;
 }
 
-
 void			free_file(t_file **file)
 {
 	if (*file)
@@ -40,5 +39,51 @@ void			free_file(t_file **file)
 		if ((*file)->tab)
 			ft_memdel((void**)&(*file)->tab);
 		ft_memdel((void**)file);
+	}
+}
+
+void			free_breakdown(t_breakdown *br)
+{
+	if (br)
+		ft_memdel((void**)&(br->breakdown));
+	ft_memdel((void**)&br);
+}
+
+void			free_fusion(t_fusion *f)
+{
+	int i;
+
+	i =-1;
+	if (f)
+	{
+		while (f->fusion[++i])
+			free_breakdown(f->fusion[i]);
+		ft_memdel((void**)&f);
+	}
+}
+
+void			free_t_tab(t_tab *t)
+{
+	if (t)
+	{
+		ft_memdel((void**)&t->tab);
+		ft_memdel((void**)&t);
+	}
+}
+
+void			free_besttab(t_tab ***best_tab)
+{
+	int i;
+	int j;
+
+	if (best_tab)
+	{
+		i = -1;
+		while (best_tab[++i])
+		{
+			j = -1;
+			while (best_tab[i][++j])
+				ft_memdel((void**)(&best_tab[i][j]->tab));
+		}
 	}
 }

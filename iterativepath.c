@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/01 18:30:35 by anyahyao          #+#    #+#             */
-/*   Updated: 2018/11/01 20:59:57 by anyahyao         ###   ########.fr       */
+/*   Updated: 2018/11/02 18:32:11 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,13 @@
 int		addneighbour(t_graphe *g, t_file *file, int node, int *tab)
 {
 	int i;
+	int j;
+	int k;
 
 	i = -1;
 	while (++i < g->taille)
 	{
+		//k = MIN(node, );
 		if (g->color[i] == WHITE && g->map[i][node] == 1)
 		{
 			g->color[i] = GREY;
@@ -76,7 +79,7 @@ int				dijistra(t_graphe *g)
 
 	file = new_file(g);
 	if(!(tab = (int *)ft_memalloc(sizeof(int) * g->taille)))
-		exit (3);
+		return (-1);
 	if (iterative_path(g, tab, file))
 		displaypath(g, tab);
 	else
@@ -85,3 +88,4 @@ int				dijistra(t_graphe *g)
 	ft_memdel((void**)&tab);
 	return(1);
 }
+

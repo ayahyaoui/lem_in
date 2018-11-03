@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/01 19:39:32 by anyahyao          #+#    #+#             */
-/*   Updated: 2018/11/01 22:07:03 by anyahyao         ###   ########.fr       */
+/*   Updated: 2018/11/03 00:01:55 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	test_map(t_graphe *g)
 	g->map[2][1] = 1;
 }
 
-int			choisemethod(t_graphe *g)
+int			choosemethod(t_graphe *g)
 {
 	//ft_printf("choisemethodse\n");
 	if (g->taille < 16)
@@ -96,15 +96,16 @@ int main(int argc, const char *argv[])
 	g->end = 7;
 
 	for (i = 0; i < g->taille ;i++) {
-		g->map[g->end][i] = 0;
+//		g->map[g->end][i] = 0;
 		g->map[i][i] = 0;
-		g->map[i][g->end] = 0;
+//		g->map[i][g->end] = 0;
 	}
 
-	g->map[g->end][g->begin + 1] = 1;
-	g->map[g->begin + 1][g->end] = 1;
+//	g->map[g->end][2] = 1;
+//	g->map[2][g->end] = 1;
 
-	choisemethod(g);
+	choosemethod(g);
 	free_graphe(g);
+	//exit(1);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 14:31:00 by anyahyao          #+#    #+#             */
-/*   Updated: 2018/11/01 22:05:38 by anyahyao         ###   ########.fr       */
+/*   Updated: 2018/11/03 00:01:54 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,101 +14,19 @@
 
 
 
+int		get_all_separpath(t_graphe *g, t_path *p);
+t_tab	**addpaths(t_graphe *g, t_breakdown *paths, int nb_path);
+t_tab	*addpath(t_graphe *g, int path);
+int		*my_best_tab(t_graphe *g, t_path *p, int lenMax, t_tab ***best_tab);
+//int		searchNpath(t_path *p, t_fusion *prev, t_fusion *next);
 
 void		parcours_recursif();
-int			degre_graphe(t_graphe *g)
-{
-	int i;
-	int res;
-	int j;
-
-	if (g == 0X0)
-		return (-1);
-	i = -1;
-	res = 0;
-	while (++i < g->taille)
-	{
-		j = -1;
-		while (++j < g->taille)
-			if(g->map[i][j])
-				res++;
-	}
-	return (res / 2);
-}
 
 /**
 **	test pour tout les graphe dont le nombre de noeud est inerieure a 32
 **
 */
 
-int		number_active_bit(unsigned long p, int max);
-
-void		getallpath(t_graphe *g, t_path *path, int node
-		, unsigned int p)
-{
-	int i;
-
-	if (node == g->end)
-	{
-		i = -1;
-		while (++i < path->nb_path)
-			if (path->path[i][0] == p)
-				return;
-		path->path[path->nb_path][VALUE] = p;
-		path->path[path->nb_path][NBNODE] = number_active_bit(p, 32);
-		path->nb_path = path->nb_path + 1;
-		return ;
-	}
-	if (node == 0 && p != 0)
-		return;
-	if (node != 0)
-		p += (1 << node);
-	i = -1;
-	while (++i < g->taille)
-	{
-		if (g->map[node][i])
-		{
-			if (!(p & (1 << i)))
-				getallpath(g, path, i, p);
-		}
-	}
-	g->color[node] = BLACK;
-}
-
-/*
-**	renvois le nombre de voisin d'un noeud
-*/
-
-int			degre(t_graphe *g, int node)
-{
-	int i;
-	int res;
-
-	i = -1;
-	res = 0;
-	while (++i < g->taille)
-		if (g->map[node][i])
-			res++;
-	return (res);
-}
-
-
-/*
-** renvois le nombre de bit actif (soit le nombre de noeud sur un chemins)
-*/
-
-int		number_active_bit(unsigned long p, int max)
-{
-	int i;
-	int res;
-
-	res = 0;
-	i = -1;
-	while (++i < max)
-		if (p & 1 << i)
-			res++;
-	return (res);
-}
 
 /*
 t_way	*convertpath_to_way(t_graphe *g, unsigned long p)
@@ -133,85 +51,13 @@ t_way	*convertpath_to_way(t_graphe *g, unsigned long p)
 */
 
 
-void	ft_swapPointeur(t_fusion **a, t_fusion **b)
-{
-	t_fusion *tmp;
-
-	tmp = *a;
-	*a = *b;
-	*b = tmp;
-}
-
-int		fusion_path(t_fusion *fusion, unsigned int tab[2], t_breakdown *copy)
-{
-	t_breakdown	*src;
-	int			i;
-
-	i = -1;
-	src = fusion->fusion[fusion->nb_path];
-	src->value = tab[VALUE] + copy->value;
-	src->cost = tab[COST] + copy->cost;
-	src->len = copy->len + 1;
-	while (++i < copy->len)
-		src->breakdown[i] = copy->breakdown[i];
-	src->breakdown[copy->len] = tab[VALUE];
-	fusion->nb_path++;
-	return (1);
-}
-
-
-int		getfusionpath(t_breakdown *b, int *res, unsigned int val, int cost)
-{
-	int		i;
-
-	i = -1;
-	//ft_printf("//%d et %d", b->value, val);
-	while (++i < b->len)
-	{
-		//ft_printf("getfusionpath  %d",b->breakdown[i]);
-		res[i] = b->breakdown[i];
-	}
-		res[i] = val;
-	return (cost);
-}
-
-void		infos(t_fusion *f)
-{
-	int j;
-	ft_putstr("                       fus\n");
-	ft_printf("nombre de chemin <%u>, et nombre de voie en parallele (%u)\n",
-			f->nb_path,f->altern);
-	int i = -1;
-	while (++i < f->nb_path)
-	{
-		ft_printf("val = %u cout = %u et taille %u",
-				f->fusion[i]->value, f->fusion[i]->cost, f->fusion[i]->len);
-		j = -1;
-		while (++j < f->fusion[i]->len)
-			ft_printf("(%d)", f->fusion[i]->breakdown[j]);
-		ft_printf("\n");
-	}
-}
-
-int			valueisinfusion(t_fusion *fusion, int value)
-{
-	int i;
-	i = -1;
-	if (!fusion)
-		return (0);
-	while (++i < fusion->nb_path)
-		if (value == fusion->fusion[i]->value)
-			return (1);
-	return (0);
-}
-
-int		searchNpath(t_path *p, t_fusion *prev, t_fusion *next, int *res)
+t_breakdown	*searchNpath(t_path *p, t_fusion *prev, t_fusion *next, t_tab **res)
 {
 	int i;
 	int j;
-	t_fusion *tmp;
 	int min;
 	int cost;
+	t_breakdown  *b = 0x0;
 
 	min = 32; // 32 > au cout maximale
 	i = -1;
@@ -224,46 +70,49 @@ int		searchNpath(t_path *p, t_fusion *prev, t_fusion *next, int *res)
 			(!valueisinfusion(next,p->path[i][VALUE] + prev->fusion[j]->value)))
 			{
 				cost = (p->path[i][COST] + prev->fusion[j]->cost);
-				if (min > cost)
-					min = getfusionpath(prev->fusion[j], res,
-					p->path[i][VALUE], cost);
 				fusion_path(next, p->path[i], prev->fusion[j]);
+				if (min > cost)
+				{
+					min = cost;
+					b = next->fusion[next->nb_path - 1];
+	//min = getfusionpath(prev->fusion[j], res,p->path[i][VALUE], cost);
+				}
 			}
 	}
 	next->altern++;
-	infos(next);
-	return 1;
+	ft_printf("nouvelle conbinaison %d\n\n\n", next->altern);
+	//infos(next);
+	return b;
 }
-int		*my_best_tab(t_graphe *g, t_path *p, int lenMax, t_tab **best_tab)
+
+int		*my_best_tab(t_graphe *g, t_path *p, int lenMax, t_tab ***best_tab)
 {
-	int			*res;
-	int			*t;
+	int i = -1;
 	t_fusion	*fus;
 	t_fusion	*fus2;
 
-	res = (int*)ft_memalloc(sizeof(int) * (lenMax * (lenMax + 1) / 2));
 	fus = create_fusion(p, lenMax);
 	fus2 = create_fusion(p, lenMax);
-	t = res + 1;
-	*res = p->path[0][VALUE];
 	infos(fus); // pour le test
+	//best_tab[0] = addpaths(g, , fus->altern + 1);
 	while (fus->altern < lenMax)
-	{
+	{++i;
 		fus2->nb_path = 0;
-		searchNpath(p, fus, fus2, t);
+		ft_printf("=========%d=======\n", fus->altern);
+		best_tab[i] = addpaths(g, searchNpath(p, fus, fus2, best_tab[i]), fus->altern + 1);
 		ft_swapPointeur(&fus, &fus2);
+		fus2->altern = fus->altern;
+		ft_printf("nb_path = <<%d>>\n",fus->nb_path);
 		if (fus->nb_path == 0)
 		{
 			printf("ouou======\n\n");
 			break;
 		}
-		else
-			t += fus->altern;
 	}
-	//free_path(p);
-	//free_patha
-	printMultypath(res, lenMax);
-	return (res);
+	ft_putstr("finit la premiere parti\n");
+	free_fusion(fus);
+	free_fusion(fus2);
+	return (0x0);
 }
 
 static int goodneig(t_graphe *g, int node, int path)
@@ -286,74 +135,73 @@ t_tab	*addpath(t_graphe *g, int path)
 	int		node;
 	int		i;
 
-	i = -1;
+	i = 0;
 	if (!(t = (t_tab*)malloc(sizeof(t_tab))))
 		exit(3);
-	len = number_active_bit(path, sizeof(int) * 8) + 1;
-	if (!(t->tab = (int *)ft_memalloc(sizeof(int) * len)))
+	len = number_active_bit(path, sizeof(int) * 8) + 2;
+	if (!(t->tab = (int *)ft_memalloc(sizeof(int) * (len))))
 		exit(3);
 	t->length = len;
-
+	t->tab[0] = g->begin;
 	while (++i < len - 1)
-	{
-		node = goodneig(g, g->begin, path);
-		t->tab[i] = node;
-	}
+		t->tab[i] = goodneig(g, t->tab[i], path);
 	t->tab[i] = g->end;
 	return (t);
 }
 
+t_tab	**addpaths(t_graphe *g, t_breakdown *br, int nb_path)
+{
+	t_tab	**t;
+	int		i;
+
+	i = -1;
+	ft_printf("OHOH %d\n", nb_path);
+	affichebreak(br);
+	if (!br)
+		return (0x0);
+	if (!(t = (t_tab**)malloc(sizeof(t_tab *) * (nb_path + 1))))
+		exit(3);
+	t[nb_path] = 0x0;
+	while (++i < nb_path)
+		t[i] = addpath(g, br->breakdown[i]);
+	ft_printf("OHOHfini\n", nb_path);
+	return t;
+}
+
 int		get_all_separpath(t_graphe *g, t_path *p)
 {
+	int		boolean = 0;
 	int		max_separpath;
-	t_tab	**best_tab;
-	t_tab	**tmp;
+	t_tab	***best_tab;
+	t_fusion	*fus;
 
 	max_separpath = MIN(degre(g, 0) , degre(g, g->end));
-	if (!(best_tab = (t_tab**)malloc(sizeof(t_tab*) * max_separpath)))
+	fus = create_fusion(p, max_separpath);
+	if (!(best_tab = (t_tab***)malloc(sizeof(t_tab**) * (max_separpath + 1))))
 		exit(3);
-	tmp = best_tab;
+	best_tab[max_separpath] = 0x0;
+	best_tab[0] = addpaths(g, fus->fusion[0], 1); // trouve un moyen paths
 	if (p->nb_path > 0 && p->path[0][COST] == 0)
 	{
 		p->path[0][VALUE] = 255;
 		p->path[0][COST] = 8;
 		max_separpath--;
-		best_tab[0] = addpath(g, 0);
+		fus->fusion[0]->value = 255;
+		if (p->nb_path > 1)
+		{
+			boolean = 1;
+			best_tab[1] = addpaths(g, fus->fusion[2], 1); // trouve un moyen paths
+		}
+		//best_tab[0] = addpath(g, 0);
 	}
-	affiche_path(p);
-	my_best_tab(g, p, max_separpath, best_tab);
+	free_fusion(fus);
+	affiche_path(g, p);
+	if (max_separpath > 0)
+		my_best_tab(g, p, max_separpath, &best_tab[1 + boolean]);
+	displayallpath(g, best_tab);
+	free_besttab(best_tab);
 	return (1);
 }
-
-
-void		test_multipathbinary(t_graphe *g)
-{
-	t_path	*p;
-	int		i;
-
-	ft_printf("debut MULTI PATH\n");
-	if (!g || g->taille > 32)
-	{
-		ft_printf("graphe trop grand pour les test\n");
-		exit(1);
-	}
-	if (!(p = malloc(sizeof(t_path))))
-			exit(3);
-	p->nb_path = 0;
-	getallpath(g, p, 0, 0);
-	printf("====il y'a %d chemins different==\n", p->nb_path);
-	ft_tri_fusion_recursivecouple(p->path, p->nb_path);
-	i = 0;
-	get_all_separpath(g, p);
-
-	ft_printf("bien jouer\n");
-	//	free(p->path);
-	//free(p);
-}
-
-
-
-
 
 
 /*
@@ -366,4 +214,5 @@ void		init_all_path(t_graphe *g)
 	chemins = (t_chemins*)malloc(sizeof(chemins));
 	degre = degre_graphe(g);
 	len = (degre * g->taille / 8) + 1;
-}*/
+}
+*/
