@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/02 18:03:25 by anyahyao          #+#    #+#             */
-/*   Updated: 2018/11/03 20:22:06 by anyahyao         ###   ########.fr       */
+/*   Updated: 2018/11/03 23:19:28 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,8 @@ void		getallpath(t_graphe *g, t_path *path, int node
 {
 	int i;
 
-	ft_printf("%d >", node);
 	if (node == g->end)
 	{
-		exit(1);
 		i = -1;
 		while (++i < path->nb_path)
 			if (path->path[i][0] == p)
@@ -42,13 +40,16 @@ void		getallpath(t_graphe *g, t_path *path, int node
 	i = -1;
 	while (++i < g->taille)
 	{
-		if (g->map[node][i])
+		if (g->map[node][i] && i != g->begin)
 		{
-			if (!(p & (1 << i)))
-				getallpath(g, path, i, p);
+			if (!(p & (1 << i))){
+				ft_printf("%d=>%d  ", node, i);
+
+				getallpath(g, path, i, p);}
 		}
 	}
 	g->color[node] = BLACK;
+	ft_printf("finin%d >", node);
 }
 
 /*

@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/01 18:20:23 by anyahyao          #+#    #+#             */
-/*   Updated: 2018/11/03 20:22:09 by anyahyao         ###   ########.fr       */
+/*   Updated: 2018/11/03 23:19:10 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ t_graphe		*new_graphe(int taille)
 	if(!(g = (t_graphe*)malloc(sizeof(t_graphe))))
 		exit(3);
 	g->taille = taille;
-	g->map = create_double_tab(g->taille, 1);
+	g->map = create_double_tab(g->taille, 0);
 	g->color = create_tab(g->taille, 0);
 	return (g);
 }
