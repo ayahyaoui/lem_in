@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/01 18:20:23 by anyahyao          #+#    #+#             */
-/*   Updated: 2018/11/02 18:44:23 by anyahyao         ###   ########.fr       */
+/*   Updated: 2018/11/03 20:22:09 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ t_fusion		*create_fusion(t_path *p, int max)
 	fusion->nb_path = p->nb_path;
 	fusion->altern = 1;
 	if (!(fusion->fusion  = (t_breakdown **)malloc(sizeof(t_breakdown*) *
-					(p->nb_path * 2))))
+					(p->nb_path + 1))))
 		exit(3);
 	i = -1;
 	while (++i < p->nb_path)
@@ -74,6 +74,7 @@ t_fusion		*create_fusion(t_path *p, int max)
 		fusion->fusion[i]->breakdown[0] = p->path[i][VALUE];
 		fusion->fusion[i]->len = 1;
 	}
+	fusion->fusion[i] = 0x0;
 	return (fusion);
 }
 

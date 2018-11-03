@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/01 19:39:32 by anyahyao          #+#    #+#             */
-/*   Updated: 2018/11/03 00:01:55 by anyahyao         ###   ########.fr       */
+/*   Updated: 2018/11/03 19:47:12 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,38 @@ void	free_path(t_path *p)
 	}
 }*/
 
+int		addlink(t_graphe *g, int a, int b)
+{
+	if (g->taille > a && g->taille > b && a != b)
+	{
+		g->map[a][b] = 1;
+		g->map[b][a] = 1;
+		return (1);
+	}
+	return(0);
+}
+
+void	test_mapdemoniaque(t_graphe *g)
+{
+	if (g->taille < 12)
+		return;
+	addlink(g, 0, 1);
+	addlink(g, 0, 3);
+	addlink(g, 1, 2);
+	addlink(g, 1, 7);
+	addlink(g, 2, 6);
+	addlink(g, 2,10);
+	addlink(g, 3, 4);
+	addlink(g, 4, 5);
+	addlink(g, 5, 6);
+	addlink(g, 6, 2);
+	addlink(g, 7, 8);
+	addlink(g, 8, 9);
+	addlink(g, 9,10);
+	g->begin = 0;
+	g->end = 10;
+}
+
 void	test_map(t_graphe *g)
 {
 	g->map[0][1] = 1;
@@ -90,20 +122,14 @@ int main(int argc, const char *argv[])
 	int i;
 	int j;
 
-	g = new_graphe(8);
+	g = new_graphe(13);
 
 	g->begin = 0;
 	g->end = 7;
-
+	test_mapdemoniaque(g);
 	for (i = 0; i < g->taille ;i++) {
-//		g->map[g->end][i] = 0;
 		g->map[i][i] = 0;
-//		g->map[i][g->end] = 0;
 	}
-
-//	g->map[g->end][2] = 1;
-//	g->map[2][g->end] = 1;
-
 	choosemethod(g);
 	free_graphe(g);
 	//exit(1);

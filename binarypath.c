@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/02 18:03:25 by anyahyao          #+#    #+#             */
-/*   Updated: 2018/11/03 00:01:58 by anyahyao         ###   ########.fr       */
+/*   Updated: 2018/11/03 20:22:06 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,10 @@ void		getallpath(t_graphe *g, t_path *path, int node
 {
 	int i;
 
+	ft_printf("%d >", node);
 	if (node == g->end)
 	{
+		exit(1);
 		i = -1;
 		while (++i < path->nb_path)
 			if (path->path[i][0] == p)

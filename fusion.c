@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/02 17:52:48 by anyahyao          #+#    #+#             */
-/*   Updated: 2018/11/02 23:02:03 by anyahyao         ###   ########.fr       */
+/*   Updated: 2018/11/03 18:25:02 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ int		fusion_path(t_fusion *fusion, unsigned int tab[2], t_breakdown *copy)
 	fusion->nb_path++;
 	return (1);
 }
-
 
 int		getfusionpath(t_breakdown *b, int *res, unsigned int val, int cost)
 {

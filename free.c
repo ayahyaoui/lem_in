@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/01 18:22:17 by anyahyao          #+#    #+#             */
-/*   Updated: 2018/11/02 18:42:53 by anyahyao         ###   ########.fr       */
+/*   Updated: 2018/11/03 19:25:32 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void			free_fusion(t_fusion *f)
 	i =-1;
 	if (f)
 	{
+		if (f->fusion)
 		while (f->fusion[++i])
 			free_breakdown(f->fusion[i]);
 		ft_memdel((void**)&f);
