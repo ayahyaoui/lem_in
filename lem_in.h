@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/30 19:00:27 by anyahyao          #+#    #+#             */
-/*   Updated: 2018/11/03 00:01:56 by anyahyao         ###   ########.fr       */
+/*   Updated: 2018/11/04 17:59:11 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,10 @@ typedef struct		s_graphe
 {
 	int				taille;
 	char			**map;
-	int				*color;
+	int				*color; //ft_memalloc(sizeof(int) * nb_rooms);
 	int				end;
 	int				begin;
+//	t_tab			*begin
 }					t_graphe;
 
 typedef struct		s_tab
@@ -164,7 +165,9 @@ int					degre_graphe(t_graphe *g);
 int					degre(t_graphe *g, int node);
 
 
+//count_ant
 
+int			add_ant(t_graphe *g, t_tab ***best_tab, int nb_ant);
 
 
 

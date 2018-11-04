@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/01 19:39:32 by anyahyao          #+#    #+#             */
-/*   Updated: 2018/11/03 19:47:12 by anyahyao         ###   ########.fr       */
+/*   Updated: 2018/11/04 19:40:10 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,13 +105,6 @@ void	test_map(t_graphe *g)
 	g->map[2][1] = 1;
 }
 
-int			add_ant(t_graphe *g, t_tab ***best_tab, int nb_ant)
-{
-	
-
-	return (1);
-}
-
 int			choosemethod(t_graphe *g)
 {
 	t_tab ***best_tab = 0X0;
@@ -121,12 +114,11 @@ int			choosemethod(t_graphe *g)
 	else
 		dijistra(g);
 
-	add_ant(g, best_tab, 20);
+	add_ant(g, best_tab, 10);
 	displayallpath(g, best_tab);
 	free_besttab(best_tab);
 	return (1);
 }
-
 
 int main(int argc, const char *argv[])
 {

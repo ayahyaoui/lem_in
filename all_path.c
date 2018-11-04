@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 14:31:00 by anyahyao          #+#    #+#             */
-/*   Updated: 2018/11/03 20:22:08 by anyahyao         ###   ########.fr       */
+/*   Updated: 2018/11/04 14:57:42 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 
 
-int		get_all_separpath(t_graphe *g, t_path *p);
+t_tab	***get_all_separpath(t_graphe *g, t_path *p);
 t_tab	**addpaths(t_graphe *g, t_breakdown *paths, int nb_path);
 t_tab	*addpath(t_graphe *g, int path);
 int		*my_best_tab(t_graphe *g, t_path *p, int lenMax, t_tab ***best_tab);
