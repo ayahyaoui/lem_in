@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 14:48:52 by emuckens          #+#    #+#             */
-/*   Updated: 2018/10/21 01:41:15 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/11/04 20:01:28 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,10 @@ int				dispatch_ins(ENV *e, char **words, int nb)
 	else if (e->type == ROOM && !endrooms)
 		ret = get_room(e, words);
 	else if (e->type == TUBE && ++endrooms)
-		ret = get_tube(e, words, endrooms);
+	{
+		if (!(ret = store_rooms(e)))
+			ret = get_tube(e, words);
+	}
 	else
 		return (ERR_ORDER);
 	return (ret);
@@ -52,7 +55,7 @@ int				read_instructions(ENV *e, char *str, int nbline, int ret)
 
 	while (!ret && get_next_line2(STDIN, &str) > 0 && str)
 	{
-		if ((str[0] != '#' || !(get_command(e, str))) && ++nbline)
+		if (str[0] != '#' && ++nbline)
 		{
 			if (!(words = ft_strsplit(str, sep(str, &e->type))))
 				return (ERR_READ);
@@ -62,11 +65,12 @@ int				read_instructions(ENV *e, char *str, int nbline, int ret)
 				ft_strdel(&str);
 				return (ret);
 			}
-			else
-				free_strtab(&words);
 		}
+		else if (str[1] == '#')
+			++e->ins->nb_commands;
 		line = ft_lstnew(str, ft_strlen(str));
 		ft_lstaddend(&e->anthill, line);
+		free_strtab(&words);
 		ft_strdel(&str);
 	}
 	apply_commands(e);

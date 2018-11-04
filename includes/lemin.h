@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 14:48:09 by emuckens          #+#    #+#             */
-/*   Updated: 2018/10/21 01:41:13 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/11/04 20:00:41 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,28 +50,14 @@ typedef struct		s_graphe
 	int				end;
 }					t_graphe;
 
-typedef struct		s_special
-{
-	int				status;
-	int				index;
-	int				dest[2];
-	char			*str;
-}					t_special;
-
-typedef struct		s_room
-{
-	char			*name;
-	int				x;
-	int				y;
-}					t_room;
-
 typedef struct 		s_input
 {
 	int 			nb_ants;
 	t_graphe 		*links;
 	char			**room;
-	t_list	 		*rooms;
-	t_list			*special;
+	char			**commands;
+	int				**commands_dest;
+	int				nb_commands;
 }					t_input;
 
 typedef struct		s_environment
@@ -118,9 +104,11 @@ void			free_strtab(char ***tab);
 void			del_rooms(t_list *l);
 char			*get_errmsg(int code);
 
+int			is_dup(ENV *e, char *str, int max_index);
 
 //TEMP
 void		display_adj_mtrx(int **tab, int size);
+void		print_rooms(ENV *e, char **rooms);
 
 
 
@@ -129,7 +117,7 @@ void		display_adj_mtrx(int **tab, int size);
 */
 
 int			display(ENV *e, char *str);
-void		display_moves(ENV *e, int **tab, char **names, int total);
+void		display_moves(ENV *e, int **tab, int total);
 void		display_anthill(t_list *anthill);
 void		printlist(ENV *e, t_list *l);
 
@@ -141,7 +129,8 @@ void		apply_commands(ENV *e);
 int			get_ants(ENV *e, char **str, int type);
 int			get_command(ENV *e, char *str);
 int			get_room(ENV *e, char **str);
-int			get_tube(ENV *e, char **str, int endrooms);
+int			get_tube(ENV *e, char **str);
+int			store_rooms(ENV *e);
 void			link_command(ENV *e, int type, int index);
 int			read_instructions(ENV *e, char *str, int nbline, int ret);
 char		sep(char *line, int *type);

@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/10 13:50:19 by emuckens          #+#    #+#             */
-/*   Updated: 2018/10/21 01:02:52 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/11/04 20:01:38 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void		free_strtab(char ***tab)
 	}
 	ft_memdel((void **)tab);
 }
-
+/*
 void		del_rooms(t_list *l)
 {
 	t_list *tmp;
@@ -39,7 +39,7 @@ void		del_rooms(t_list *l)
 	}
 
 }
-
+*/
 int		set_env(ENV *e)
 {
 	if (!(e->ins = (t_input *)ft_memalloc(sizeof(t_input))))
@@ -49,5 +49,6 @@ int		set_env(ENV *e)
 	e->ins->nb_ants = 0;
 	e->anthill = NULL;
 	e->options = 2;
+	e->ins->nb_commands = 0;
 	return (1);
 }

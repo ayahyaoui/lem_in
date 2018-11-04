@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/10 17:40:04 by emuckens          #+#    #+#             */
-/*   Updated: 2018/10/21 01:41:09 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/11/04 20:01:24 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,31 +19,67 @@
 ** Returns true if name has already been stored | false otherwise
 */
 
-static int		is_dup(t_list *l, char *str)
+int		is_dup(ENV *e, char *str, int max_index)
 {
-	t_list *tmp;
+	int i;
 
-	tmp = l;
-	while (tmp)
-	{
-		if (ft_strequ(str, ((t_room *)(tmp->content))->name))
+	i = -1;
+	while (++i < max_index)
+		if (ft_strequ(str, e->ins->room[i]))
 			return (1);
-		tmp = tmp->next;
-	}
 	return (0);
 }
 
-void			print_rooms(t_list *l) // only for debug, delete
-{
-	t_list *room;
+/*
+** Scans anthill and stores room names in char **tab, while checking if
+** duplicate room names
+** returns err code if error, 0 if success
+*/
 
-	room = l;
-	ft_printf("list of rooms: ");
-	while (room)
-	{	
-		ft_printf("%s ", ((t_room *)room->content)->name);
-		room = room->next;
+int		store_rooms(ENV *e)
+{
+	int	i;
+	t_list	*tmp;
+	int	len;
+
+	i = 0;
+	tmp = e->anthill;
+	if (!(e->ins->room = (char **)malloc(sizeof(char *) * e->graphe->nb_rooms)))
+		return (ERR_ALLOC);
+	if (!(e->ins->commands = (char **)ft_memalloc(sizeof(char *) * e->ins->nb_commands)))
+		return (ERR_ALLOC);
+	if (!(e->ins->commands_dest = (int **)ft_memalloc(sizeof(int *) * e->ins->nb_commands)))
+		return (ERR_ALLOC);
+	while (((char *)tmp->content)[0] == '#')
+		tmp = tmp->next;
+	while ((tmp = tmp->next) && i < e->graphe->nb_rooms)
+	{
+		if (((char *)tmp->content)[0] != '#')
+		{
+			len = 0;
+			while (((char *)tmp->content)[len] != ' ')
+				++len;
+			e->ins->room[i] = (char *)ft_memalloc(len * sizeof(char));
+			link_command(e, ROOM, i);
+			ft_strncat(e->ins->room[i], (char *)tmp->content, len);
+			if (is_dup(e, e->ins->room[i], i))
+				return (ERR_DUP);
+			++i;
+		}
+		else if (((char *)tmp->content)[1] == '#')
+			get_command(e, ((char *)tmp->content));
 	}
+	return (NO_ERR);
+}
+
+void			print_rooms(ENV *e, char **room) // only for debug, delete
+{
+	int i;
+
+	i = -1;
+	ft_printf("list of %d rooms", e->graphe->nb_rooms);
+	while (++i < e->graphe->nb_rooms)
+		ft_printf("%s ", room[i]);
 	ft_printf("\n");
 }
 
@@ -56,25 +92,11 @@ void			print_rooms(t_list *l) // only for debug, delete
 
 int				get_room(ENV *e, char **str)
 {
-	t_room		*details;
-	t_list		*room;
-
 	if (str[1] && str[2] && !str[3])
 	{
 		if (!is_number(str[1]) || !is_number(str[2]))
 			return (ERR_COORD);
-		if (is_dup(e->ins->rooms, str[0]))
-			return (ERR_DUP);
-		if (!(details = (t_room *)ft_memalloc(sizeof(t_room))))
-			return (ERR_ALLOC);
 		++e->graphe->nb_rooms;
-		details->name = ft_strdup(str[0]);
-		details->x = ft_atoi(str[1]);
-		details->y = ft_atoi(str[2]);
-		if (!(room = ft_lstnew(details, sizeof(*details))))
-			return (ERR_LIB);
-		ft_lstaddend(&e->ins->rooms, room);
-		link_command(e, ROOM, ft_lstsize(e->ins->rooms));
 		return (NO_ERR);
 	}
 	return (ERR_ROOM);

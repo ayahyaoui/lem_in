@@ -6,12 +6,12 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 14:58:47 by emuckens          #+#    #+#             */
-/*   Updated: 2018/10/20 23:20:19 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/11/04 20:01:26 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lemin.h"
-/*
+
 static int	**get_pathstab()
 {
 	int **paths;
@@ -38,30 +38,26 @@ static int	**get_pathstab()
 	return (paths);
 }
 
-*/
-
 int		main(int argc, char **argv)
 {
 	(void)argc;
 	(void)argv;
 	static ENV	e;
 	int		err;
-//	int		**paths; //seulement pour tester display_moves
+	int		**paths; //seulement pour tester display_moves
 //	char 		**names; //idem	
 
 	set_env(&e);
 	if ((err = read_instructions(&e, NULL, 0, 0)))
 	{
-		del_rooms(e.ins->rooms);
 		ft_memdel((void **)&e.ins);
 		return (display(&e, get_errmsg(err)));
 	}
-	del_rooms(e.ins->rooms);
 	ft_memdel((void **)&e.ins);
-//	display_adj_mtrx(e.graphe->map, e.graphe->nb_rooms); 
-//	paths = get_pathstab();
 	e.nb_paths = 3;
+//	display_adj_mtrx(e.graphe->map, e.graphe->nb_rooms); 
+	paths = get_pathstab(); // seulement pour tester display moves, sur une combinaison de e.nb_paths chemins
 //	names = room_names(((t_input *)e.ins)->rooms, e.graphe->nb_rooms, (int **)paths, 3);
-//	display_moves(&e, (int **)paths, names, ((t_input *)e.ins)->nb_ants);
+	display_moves(&e, (int **)paths, ((t_input *)e.ins)->nb_ants);
 	return (0);
 }

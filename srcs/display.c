@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/20 15:04:49 by emuckens          #+#    #+#             */
-/*   Updated: 2018/10/21 00:51:34 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/11/04 20:01:32 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ t_list	*ft_lstval(t_list *l, int index)
 	return (tmp);
 }
 
-
+/*
 
 char		**room_names(t_list *l, int nbrooms, int **paths, int nbpaths)
 {
@@ -91,7 +91,7 @@ char		**room_names(t_list *l, int nbrooms, int **paths, int nbpaths)
 	}
 	return (names);
 }
-
+*/
 
 void		print_movestab(int **ants, int size)
 {
@@ -99,7 +99,6 @@ void		print_movestab(int **ants, int size)
 	int j;
 
 	i = -1;
-//	ft_printf("\nTAB size = %d\n", size);
 	while (++i < size)
 	{
 	j = -1;
@@ -134,7 +133,7 @@ void		move_next_room(int **paths, int ***ants, int nb_paths, int turn)
 }
 
 
-int		display_travelling(ENV *e, char **names, int **ants, int turn)
+int		display_travelling(ENV *e, int **ants, int turn)
 {
 	int i;
 	int j;
@@ -155,7 +154,7 @@ int		display_travelling(ENV *e, char **names, int **ants, int turn)
 			{
 //				ft_printf("room code = %d for ant # %d\n", ants[i][j], ant);
 				if (ants[i][j] != -1)
-					ft_printf("L%d-%s ", ant, names[ants[i][j]]);
+					ft_printf("L%d-%s ", ant, e->ins->room[ants[i][j]]);
 				else
 					++arrived;
 			
@@ -173,13 +172,12 @@ int		display_travelling(ENV *e, char **names, int **ants, int turn)
 
 
 
-void		display_moves(ENV *e, int **paths, char **names, int total)
+void		display_moves(ENV *e, int **paths, int total)
 {
 	int **ants;
 	int	i;
 	int 	j;
 
-//	static int arrived;
 	int turn;
 	(void)total;
 	i = -1;
@@ -194,15 +192,10 @@ void		display_moves(ENV *e, int **paths, char **names, int total)
 		while (++j < paths[i][0] + 1)
 			ants[i][j] = -1;
 	}
-//	ft_printf("display moves size = %d\n", size);
 //	print_movestab(ants, size);
-	while (display_travelling(e, names, ants, turn) < total)
+	while (display_travelling(e, ants, turn) < total)
 	{
 		move_next_room(paths, &ants, e->nb_paths, turn);
 		++turn;
-
 	}
-
-	
-
 }

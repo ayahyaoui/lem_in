@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/10 18:01:15 by emuckens          #+#    #+#             */
-/*   Updated: 2018/10/21 01:40:42 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/11/04 19:55:32 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,44 +35,28 @@ void			apply_commands(ENV *e)
 {
 	static void	 (*f[NB_COMMANDS])(ENV *e, void **item, int index)
 		= {&c_start, &c_end}; 
-	t_list		*command;
-	t_list		*dest;
 	int			index;
 
-	dest = e->ins->rooms;
-	command = e->ins->special;
-	while (command)
+	index = 0;
+	while (index < e->ins->nb_commands)
 	{
-		if (((t_special *)(command->content))->dest[0] == ROOM)
-		{	
-			index = ((t_special *)command->content)->dest[1];
-			f[((t_special *)(command->content))->index](e, (void **)&dest, index);
-		}
-		command = command->next;
+		if (e->ins->commands_dest[index][0] == ROOM)
+			f[index](e, NULL, e->ins->commands_dest[index][1]);
+		++index;
 	}
-	ft_printf("start in %d end in %d\n", e->graphe->start, e->graphe->end);
+//	ft_printf("start in %d end in %d\n", e->graphe->start, e->graphe->end);
 }
 
 void			link_command(ENV *e, int type, int index)
 {
-	static char	ref[NB_COMMANDS][8] = {"##START", "##END"};
-	t_list *tmp;
-	int		i;
+	static int	linked;
 
-	tmp = e->ins->special;
-	while (tmp && ((t_special *)(tmp->content))->status == UNDEALT)
+	while (e->ins->commands[linked] && linked < e->ins->nb_commands)
 	{
-		i = 0;
-		while (++i <= NB_COMMANDS)
-		{
-			if (ft_strequ(((t_special *)(tmp->content))->str, ref[i]))
-			{
-				((t_special *)(tmp->content))->dest[0] = type;
-				((t_special *)(tmp->content))->dest[1] = index;
-			}
-		}
-		tmp->content_size = DEALT;
-		tmp = tmp->next;
+		e->ins->commands_dest[linked] = (int *)ft_memalloc(sizeof(int) * 2);
+		e->ins->commands_dest[linked][0] = type;
+		e->ins->commands_dest[linked][1] = index;
+		++linked;
 	}
 }
 
@@ -83,30 +67,20 @@ void			link_command(ENV *e, int type, int index)
 
 int				get_command(ENV *e, char *str)
 {
+	static int	index;
 	static char	ref[NB_COMMANDS][8] = {"##START", "##END"};
-	t_special	*details;
-	t_list		*new;
 	int			i;
 
-	i = -1;
-	if (str[1] != '#')
-		return (1);
-	if (!(details = (t_special *)ft_memalloc(sizeof(details))))
-		return (ERR_ALLOC);
-	details->index = -1;
-	while (++i < NB_COMMANDS)
-		if (ft_strequ(str, ref[i]))
-			details->index = i;
-	ft_printf("details index = %d\n", details->index);
-	if (details->index >= 0)
+	i = 0;
+	while (i < NB_COMMANDS)
 	{
-		details->str = ft_strdup(str);
-		details->status = UNDEALT;
-		new = ft_lstnew(details, sizeof(*details));
-		ft_lstadd(&e->ins->special, new);
-		return (1);
+		if (ft_strequ(str, ref[i]))
+			break;
+		++i;
 	}
-	else
-		ft_memdel((void **)details);
-	return (0);
+	if (i == NB_COMMANDS)
+		return (0);
+	e->ins->commands[index] = ft_strdup(str);
+	++index;
+	return (i);
 }
