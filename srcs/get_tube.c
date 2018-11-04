@@ -22,17 +22,41 @@ static int		setup_room_mtrx(ENV *e, int size)
 {
 	int		i;
 
-	i = 0;
+	i = -1;
 	if (!(e->graphe->map = (int **)ft_memalloc(sizeof(int *) * size)))
 		return (ERR_ALLOC);
-	while (i < size)
-	{
+	while (++i < size)
 		if (!(e->graphe->map[i] = (int *)ft_memalloc(sizeof(int) * size)))
 			return (ERR_ALLOC);
-		++i;
-	}
 	return (NO_ERR);
 }
+
+/* IN CASE BETTER TO STORE ROOMS IN CHAR **
+static int		store_rooms(ENV *e)
+{
+	int	i;
+	t_list	*tmp;
+	int	len;
+
+	i = 0;
+	tmp = e->anthill;
+	if (!(e->ins->room = (char **)malloc(sizeof(char *) * e->graphe->nb_rooms)))
+		return (-1);
+	while (i < e->graphe->nb_rooms)
+	{
+		if (ft_isalpha(((char *)tmp->content)[0]))
+		{
+			len = 0;
+			while (((char *)tmp->content)[len] != ' ')
+				++len;
+			e->ins->room[i] = (char *)ft_memalloc(len);
+			ft_strlcat(e->ins->room[i], (char *)tmp->content, len);
+			++i;
+		}
+		tmp = tmp->next;
+	}
+}
+*/
 
 /*
 ** Determine index (i.e. place in list) of a given room
@@ -45,10 +69,12 @@ static int		get_room_index(t_list *l, char *str)
 	int i;
 
 	i = -1;
-	while (l && ++i >= 0 && !ft_strequ(str, ((t_room *)(l->content))->name))
+	while (l && !ft_strequ(str, ((t_room *)(l->content))->name) && ++i >= 0)
+	{
 		l = l->next;
-	ft_printf("room exists in %d\n", i);
-	return (i);
+	}
+	ft_printf("room %s exists in %d\n", str, i);
+	return (l? i : -1);
 }
 
 /*
@@ -73,6 +99,7 @@ int				get_tube(ENV *e, char **str, int endrooms)
 		return (ERR_ALLOC);
 	if (!str[1] || (check = ft_strsplit(str[1], ' '))[1]) // si rajout de longueur de tube, c'est ici
 		return (ERR_TUBE);
+	free_strtab(&check);
 	i = get_room_index(e->ins->rooms, str[0]);
 	j = get_room_index(e->ins->rooms, str[1]);
 	if ((i == -1 || j == -1))

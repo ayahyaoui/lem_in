@@ -33,7 +33,7 @@ static int		is_dup(t_list *l, char *str)
 	return (0);
 }
 
-void			print_rooms(t_list *l)
+void			print_rooms(t_list *l) // only for debug, delete
 {
 	t_list *room;
 
@@ -67,6 +67,7 @@ int				get_room(ENV *e, char **str)
 			return (ERR_DUP);
 		if (!(details = (t_room *)ft_memalloc(sizeof(t_room))))
 			return (ERR_ALLOC);
+		++e->graphe->nb_rooms;
 		details->name = ft_strdup(str[0]);
 		details->x = ft_atoi(str[1]);
 		details->y = ft_atoi(str[2]);

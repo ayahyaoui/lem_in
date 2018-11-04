@@ -69,6 +69,7 @@ typedef struct 		s_input
 {
 	int 			nb_ants;
 	t_graphe 		*links;
+	char			**room;
 	t_list	 		*rooms;
 	t_list			*special;
 }					t_input;
@@ -113,7 +114,9 @@ enum				e_error
 };
 
 int			set_env(ENV *e);
-char		*get_errmsg(int code);
+void			free_strtab(char ***tab);
+void			del_rooms(t_list *l);
+char			*get_errmsg(int code);
 
 
 //TEMP

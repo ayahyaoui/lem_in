@@ -12,6 +12,7 @@
 
 #include "lemin.h"
 #include "libft.h"
+#include <stdlib.h>
 
 char			sep(char *line, int *type)
 {
@@ -21,10 +22,8 @@ char			sep(char *line, int *type)
 	i = -1;
 	len = ft_strlen(line);
 	while (++i < len)
-	{
 		if (line[i] == '-' && (*type = TUBE))
 			return ('-');
-	}
 	*type = ROOM;
 	return (' ');
 }
@@ -55,13 +54,18 @@ int				read_instructions(ENV *e, char *str, int nbline, int ret)
 	{
 		if ((str[0] != '#' || !(get_command(e, str))) && ++nbline)
 		{
-			words = ft_strsplit(str, sep(str, &e->type));
-			if (!words)
+			if (!(words = ft_strsplit(str, sep(str, &e->type))))
 				return (ERR_READ);
 			if ((ret = dispatch_ins(e, words, nbline)))
+			{
+				free_strtab(&words);
+				ft_strdel(&str);
 				return (ret);
+			}
+			else
+				free_strtab(&words);
 		}
-		line = ft_lstnew(ft_strdup(str), ft_strlen(str));
+		line = ft_lstnew(str, ft_strlen(str));
 		ft_lstaddend(&e->anthill, line);
 		ft_strdel(&str);
 	}
