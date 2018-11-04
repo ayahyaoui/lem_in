@@ -124,5 +124,6 @@ int					log2_simp(int n);
 int					ft_max(int a, int b);
 int					ft_min(int a, int b);
 char				*ft_strcmerge(char **str, char c);
+int					ft_isintab(int *tab, int len, int value);
 
 #endif

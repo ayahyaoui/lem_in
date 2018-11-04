@@ -143,13 +143,13 @@ void				ft_swapPointeur(t_fusion **a, t_fusion **b);
 // binarypath
 
 int					number_active_bit(unsigned long p, int max);
-void				test_multipathbinary(t_graphe *g);
+t_tab				***test_multipathbinary(t_graphe *g);
 void				getallpath(t_graphe *g, t_path *path, int node
 					, unsigned int p);
 
 // all_path
 
-int					get_all_separpath(t_graphe *g, t_path *p);
+t_tab				***get_all_separpath(t_graphe *g, t_path *p);
 t_tab				**addpaths(t_graphe *g, t_breakdown *paths, int nb_path);
 t_tab				*addpath(t_graphe *g, int path);
 int					*my_best_tab(t_graphe *g, t_path *p, int le,
@@ -170,7 +170,7 @@ int					degre(t_graphe *g, int node);
 
 int				dijistra(t_graphe *g);
 int				**ft_tri_fusion_recursivecouple(unsigned int t1[][2], int len);
-void				test_multipathbinary(t_graphe *g);
+t_tab				***test_multipathbinary(t_graphe *g);
 void				ft_mem_set_int(int *tab, int val, int taille);
 void				tab_swap(int **a, int **b);
 int					short_path(t_graphe *g, t_big_tab *bt, int begin, int end);

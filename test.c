@@ -105,13 +105,25 @@ void	test_map(t_graphe *g)
 	g->map[2][1] = 1;
 }
 
+int			add_ant(t_graphe *g, t_tab ***best_tab, int nb_ant)
+{
+	
+
+	return (1);
+}
+
 int			choosemethod(t_graphe *g)
 {
+	t_tab ***best_tab = 0X0;
 	//ft_printf("choisemethodse\n");
 	if (g->taille < 16)
-		test_multipathbinary(g);
+		best_tab = test_multipathbinary(g);
 	else
 		dijistra(g);
+
+	add_ant(g, best_tab, 20);
+	displayallpath(g, best_tab);
+	free_besttab(best_tab);
 	return (1);
 }
 

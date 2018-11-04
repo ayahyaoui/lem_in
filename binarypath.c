@@ -13,7 +13,7 @@
 #include "lem_in.h"
 
 int		number_active_bit(unsigned long p, int max);
-void		test_multipathbinary(t_graphe *g);
+t_tab		***test_multipathbinary(t_graphe *g);
 void		getallpath(t_graphe *g, t_path *path, int node
 		, unsigned int p);
 
@@ -33,7 +33,7 @@ void		getallpath(t_graphe *g, t_path *path, int node
 		path->nb_path = path->nb_path + 1;
 		return ;
 	}
-	if (node == 0 && p != 0)
+	if (node == g->begin && p != 0)
 		return;
 	if (node != 0)
 		p += (1 << node);
@@ -43,13 +43,14 @@ void		getallpath(t_graphe *g, t_path *path, int node
 		if (g->map[node][i] && i != g->begin)
 		{
 			if (!(p & (1 << i))){
-				ft_printf("%d=>%d  ", node, i);
+				//ft_printf("%d=>%d  ", node, i);
 
 				getallpath(g, path, i, p);}
 		}
 	}
 	g->color[node] = BLACK;
-	ft_printf("finin%d >", node);
+	//ft_printf("finin%d\n", node);
+	//sleep(1);
 }
 
 /*
@@ -70,10 +71,11 @@ int		number_active_bit(unsigned long p, int max)
 }
 
 
-void		test_multipathbinary(t_graphe *g)
+t_tab	***test_multipathbinary(t_graphe *g)
 {
 	t_path	*p;
 	int		i;
+	t_tab	***res;
 
 	ft_printf("debut MULTI PATH\n");
 	if (!g || g->taille > 32)
@@ -89,9 +91,11 @@ void		test_multipathbinary(t_graphe *g)
 	ft_printf("====il y'a %d chemins different==\n", p->nb_path);
 	ft_tri_fusion_recursivecouple(p->path, p->nb_path);
 	i = 0;
-	get_all_separpath(g, p);
+	sleep(1);
+	res = get_all_separpath(g, p);
 	ft_printf("bien jouer\n");
 	ft_memdel((void**)&p);
+	return (res);
 }
 
 

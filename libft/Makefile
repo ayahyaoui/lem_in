@@ -34,10 +34,10 @@ LIBFT := ft_printbit ft_printbit_rev ft_printnbit ft_printnbit_rev\
 		ft_strncpy ft_issort ft_tri_fusion_iterative ft_tri_fusion_recursive\
 		ft_logarithme2 ft_strnstr ft_strrchr ft_strstr ft_isalnum ft_isinteger\
 		ft_min ft_strlen_dim2 ft_del_dim2 get_next_line ft_affiche_string_dim2\
-		ft_strcmerge
+		ft_strcmerge ft_isintab
 
 INCLUDES := includes/
-FLAGS := -g -Wall -Wextra
+FLAGS := -Wall -Wextra
 INCF := -I $(INCLUDES)
 
 _SLIBFT = $(addsuffix .c,$(LIBFT))

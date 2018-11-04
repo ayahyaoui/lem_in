@@ -143,4 +143,5 @@ void				ft_del_dim2(char **str, int len);
 size_t				ft_strlen_dim2(char **str);
 void				ft_affiche_string_dim2(char **str, int ac);
 char				*ft_strcmerge(char **str, char c);
+int					ft_isintab(int *tab, int len, int value);
 #endif

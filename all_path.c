@@ -96,10 +96,11 @@ int		*my_best_tab(t_graphe *g, t_path *p, int lenMax, t_tab ***best_tab)
 	infos(fus); // pour le test
 	//best_tab[0] = addpaths(g, , fus->altern + 1);
 	while (fus->altern < lenMax)
-	{++i;
+	{
 		fus2->nb_path = 0;
 		ft_printf("=========%d=======\n", fus->altern);
-		best_tab[i] = addpaths(g, searchNpath(p, fus, fus2, best_tab[i]), fus->altern + 1);
+		best_tab[fus->altern -1] = addpaths(g,
+			searchNpath(p, fus, fus2, best_tab[i]), fus->altern + 1);
 		ft_swapPointeur(&fus, &fus2);
 		fus2->altern = fus->altern;
 		ft_printf("nb_path = <<%d>>\n",fus->nb_path);
@@ -115,13 +116,17 @@ int		*my_best_tab(t_graphe *g, t_path *p, int lenMax, t_tab ***best_tab)
 	return (0x0);
 }
 
-static int goodneig(t_graphe *g, int node, int path)
+static int goodneig(t_graphe *g, int *tab, int path, int pos)
 {
 	int i;
+	int node;
 
 	i = -1;
+	node = tab[pos - 1];
+	ft_printf("node = %d et chemin = %d\n", node, path);
 	while (++i < g->taille)
-		if (g->map[i][node] == 1 && path & (1 << i))
+		if (g->map[i][node] == 1 && (path & (1 << i)) &&
+			ft_isintab(tab, pos - 1, i) == 0)
 			return (i);
 	ft_putstr("pb on a pas de voisin qui correspond au chemin decrit\n");
 	exit(0);
@@ -144,7 +149,7 @@ t_tab	*addpath(t_graphe *g, int path)
 	t->length = len;
 	t->tab[0] = g->begin;
 	while (++i < len - 1)
-		t->tab[i] = goodneig(g, t->tab[i], path);
+		t->tab[i] = goodneig(g, t->tab, path, i);
 	t->tab[i] = g->end;
 	return (t);
 }
@@ -168,7 +173,7 @@ t_tab	**addpaths(t_graphe *g, t_breakdown *br, int nb_path)
 	return t;
 }
 
-int		get_all_separpath(t_graphe *g, t_path *p)
+t_tab		***get_all_separpath(t_graphe *g, t_path *p)
 {
 	int		boolean = 0;
 	int		max_separpath;
@@ -199,8 +204,8 @@ int		get_all_separpath(t_graphe *g, t_path *p)
 	if (max_separpath > 0)
 		my_best_tab(g, p, max_separpath, &best_tab[1 + boolean]);
 	displayallpath(g, best_tab);
-	free_besttab(best_tab);
-	return (1);
+	//free_besttab(best_tab);
+	return (best_tab);
 }
 
 
