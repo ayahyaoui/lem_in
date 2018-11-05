@@ -67,7 +67,7 @@ int		store_rooms(ENV *e)
 			++i;
 		}
 		else if (((char *)tmp->content)[1] == '#')
-			get_command(e, ((char *)tmp->content));
+			get_command(e, ((char *)tmp->content), 1);
 	}
 	return (NO_ERR);
 }

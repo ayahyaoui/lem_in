@@ -132,7 +132,7 @@ void		printlist(ENV *e, t_list *l);
 
 int			apply_commands(ENV *e);
 int			get_ants(ENV *e, char **str, int type);
-int			get_command(ENV *e, char *str);
+int			get_command(ENV *e, char *str, int option);
 int			get_room(ENV *e, char **str);
 int			get_tube(ENV *e, char **str);
 int			store_rooms(ENV *e);
