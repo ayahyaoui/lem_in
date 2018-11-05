@@ -46,13 +46,11 @@ int		store_rooms(ENV *e)
 	tmp = e->anthill;
 	if (!(e->ins->room = (char **)ft_memalloc(sizeof(char *) * (e->graphe->nb_rooms + 1))))
 		return (ERR_ALLOC);
-	if (!(e->ins->commands = (char **)ft_memalloc(sizeof(char *) * (e->ins->nb_commands + 1))))
-		return (ERR_ALLOC);
-	if (!(e->ins->commands_dest = (int **)ft_memalloc(sizeof(int *) * (e->ins->nb_commands + 1))))
+	if (!(e->ins->commands = (int **)ft_memalloc(sizeof(int *) * (e->ins->nb_commands + 1))))
 		return (ERR_ALLOC);
 	while (((char *)tmp->content)[0] == '#')
 		tmp = tmp->next;
-	while ((tmp = tmp->next) && (unsigned int)i < e->graphe->nb_rooms)
+	while ((tmp = tmp->next) && ((unsigned int)i < e->graphe->nb_rooms))
 	{
 		if (((char *)tmp->content)[0] != '#')
 		{
@@ -66,7 +64,7 @@ int		store_rooms(ENV *e)
 				return (ERR_DUP);
 			++i;
 		}
-		else if (((char *)tmp->content)[1] == '#')
+		else if (((char *)tmp->content)[1] == '#' && (unsigned int)i != e->graphe->nb_rooms - 1)
 			get_command(e, ((char *)tmp->content), 1);
 	}
 	return (NO_ERR);

@@ -38,15 +38,15 @@ int			apply_commands(ENV *e)
 	int			index;
 	
 	index = -1;
-//	ft_printf("nb commands = %d\n", e->ins->nb_commands);
 	if (!e->graphe->map)
 		return (ERR_NOTUBE);
 	while (++index < e->ins->nb_commands)
 	{
-		if (e->ins->commands_dest[index][0] == ROOM)
-			f[index](e, NULL, e->ins->commands_dest[index][1]);
+//		if (!e->ins->commands[index])
+//			break;
+		if (e->ins->commands[index][1] == ROOM)
+			f[e->ins->commands[index][0]](e, NULL, e->ins->commands[index][1]);
 	}
-	ft_printf("start in %d end in %d\n", e->graphe->start, e->graphe->end);
 	if (e->graphe->start == -1)
 		return (ERR_START);
 	if (e->graphe->end == -1)
@@ -61,9 +61,8 @@ void			link_command(ENV *e, int type, int index)
 
 	while (e->ins->commands[linked] && linked < e->ins->nb_commands)
 	{
-		e->ins->commands_dest[linked] = (int *)ft_memalloc(sizeof(int) * 2);
-		e->ins->commands_dest[linked][0] = type;
-		e->ins->commands_dest[linked][1] = index;
+		e->ins->commands[linked][1] = type;
+		e->ins->commands[linked][2] = index;
 		++linked;
 	}
 }
@@ -87,11 +86,10 @@ int				get_command(ENV *e, char *str, int option)
 				return (1);
 			break;
 		}
-//	ft_printf("i get command = %d str = %s\n", i, str);
-	if (i == NB_COMMANDS)
+	if (i == NB_COMMANDS) 
 		return (0);
-	e->ins->commands[index] = ft_strdup(str);
-//	ft_printf("command in index %d = %s\n", index, e->ins->commands[index]);
+	e->ins->commands[index] = (int *)ft_memalloc(sizeof(int) * 3);
+	e->ins->commands[index][0] = i;
 	if (index < NB_COMMANDS)
 		++index;
 	return (i);

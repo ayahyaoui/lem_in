@@ -71,7 +71,6 @@ int				read_instructions(ENV *e, char *str, int nbline, int ret)
 		else if (str[1] == '#' && get_command(e, str, 0))
 			++e->ins->nb_commands;
 		line = ft_lstnew(tmp = ft_strdup(str), ft_strlen(str) + 1);
-		
 		ft_strdel(&tmp); //ajoute pour pouvoir free le contenu duplique
 		ft_lstaddend(&e->anthill, line);
 		ft_strdel(&str);

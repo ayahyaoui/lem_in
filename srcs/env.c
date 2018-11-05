@@ -17,10 +17,7 @@ void		free_strtab(char ***tab)
 	char **tmp;
 
 	if (!*tab)
-	{
-		ft_printf("coucou\n");
 		return ;
-	}
 	tmp = *tab;
 	while (tmp && *tmp)
 	{
@@ -66,8 +63,7 @@ void		free_env(ENV *e)
 {
 	free_graphe(e->graphe);
 	free_strtab(&e->ins->room);
-	free_strtab(&e->ins->commands);
-	free_inttab(&e->ins->commands_dest, e->ins->nb_commands);	
+	free_inttab(&e->ins->commands, e->ins->nb_commands);	
 	ft_memdel((void **)&e->ins);
 	del_anthill(e->anthill);
 }

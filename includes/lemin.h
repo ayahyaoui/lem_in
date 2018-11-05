@@ -39,7 +39,7 @@
 # define NOSTART		"missing start indicator"
 # define NOEND			"missing end indicator"
 # define ROOM_CONF		"confusing room name, please avoid use of '-'"
-# define MAXINT			"max number is 2 147 483 647"
+# define MAXINT			"max number of ants is 2 147 483 647"
 
 
 typedef struct		s_graphe
@@ -56,9 +56,8 @@ typedef struct 		s_input
 {
 	int 			nb_ants;
 	char			**room;
-	char			**commands;
-	int				**commands_dest;
-	int				nb_commands;
+	int			**commands;
+	int			nb_commands;
 }					t_input;
 
 typedef struct		s_environment
