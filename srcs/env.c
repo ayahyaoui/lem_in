@@ -16,6 +16,11 @@ void		free_strtab(char ***tab)
 {
 	char **tmp;
 
+	if (!*tab)
+	{
+		ft_printf("coucou\n");
+		return ;
+	}
 	tmp = *tab;
 	while (tmp && *tmp)
 	{
@@ -32,11 +37,39 @@ void		del_anthill(t_list *l)
 	while (l)
 	{
 		tmp = l;
-//		ft_strdel(l->content);
 		ft_memdel((void **)tmp);
 		l = l->next;
 	}
 
+}
+
+
+void		free_inttab(int ***tab, int size)
+{
+	int **tmp;
+	int i;
+
+	i = -1;
+	if (!*tab)
+		return ;
+	tmp = *tab;
+	while (++i < size)
+	{
+		ft_memdel((void **)tmp);
+		++tmp;
+	}
+	ft_memdel((void **)tab);
+}
+
+
+void		free_env(ENV *e)
+{
+	free_graphe(e->graphe);
+	free_strtab(&e->ins->room);
+	free_strtab(&e->ins->commands);
+	free_inttab(&e->ins->commands_dest, e->ins->nb_commands);	
+	ft_memdel((void **)&e->ins);
+	del_anthill(e->anthill);
 }
 
 int		set_env(ENV *e)

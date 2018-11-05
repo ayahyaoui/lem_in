@@ -50,20 +50,22 @@ int		main(int argc, char **argv)
 	set_env(&e);
 	if ((err = read_instructions(&e, NULL, 0, 0)))
 	{
-		ft_memdel((void **)&e.ins);
+		free_env(&e);
 		return (display(&e, get_errmsg(err)));
 	}
+	if ((err = apply_commands(&e)))
+	{
+		free_env(&e);
+		return (display(&e, get_errmsg(err)));
+	}
+	display_anthill(e.anthill);
 	e.graphe->color = (int *)ft_memalloc(e.graphe->nb_rooms * sizeof(int));
 	choose_method(e.graphe);
-	free_graphe(e.graphe);
-	free_strtab(&e.ins->room);
-	free_strtab(&e.ins->commands);
-//	ft_memdel((void **)&e.ins);
-	
-//	e.nb_paths = 3;
+
 //	display_adj_mtrx(e.graphe->map, e.graphe->nb_rooms); 
 //	paths = get_pathstab(); // seulement pour tester display moves, sur une combinaison de e.nb_paths chemins
 //	names = room_names(((t_input *)e.ins)->rooms, e.graphe->nb_rooms, (int **)paths, 3);
 //	display_moves(&e, (int **)paths, ((t_input *)e.ins)->nb_ants);
+	free_env(&e);
 	return (0);
 }

@@ -69,7 +69,10 @@ int				get_tube(ENV *e, char **str)
 	if (it == 1 && ++it)
 		store_rooms(e);
 	if (!str[1] || (check = ft_strsplit(str[1], ' '))[1]) // si rajout de longueur de tube, c'est ici
+	{
+		free_strtab(&check);
 		return (ERR_TUBE);
+	}
 	free_strtab(&check);
 	i = get_room_index(e, str[0]);
 	j = get_room_index(e, str[1]);

@@ -56,7 +56,10 @@ int				read_instructions(ENV *e, char *str, int nbline, int ret)
 		if (str[0] != '#' && ++nbline)
 		{
 			if (!(words = ft_strsplit(str, sep(str, &e->type))))
+			{
+				ft_strdel(&str);
 				return (ERR_READ);
+			}
 			if ((ret = dispatch_ins(e, words, nbline)))
 			{
 				free_strtab(&words);
@@ -74,9 +77,5 @@ int				read_instructions(ENV *e, char *str, int nbline, int ret)
 		ft_strdel(&str);
 	}
 	ft_strdel(&str);
-	if ((ret = apply_commands(e)))
-		return (ret);
-	display_anthill(e->anthill);
-	del_anthill(e->anthill);
 	return (NO_ERR);
 }

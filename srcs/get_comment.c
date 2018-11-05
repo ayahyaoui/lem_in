@@ -39,6 +39,8 @@ int			apply_commands(ENV *e)
 	
 	index = -1;
 //	ft_printf("nb commands = %d\n", e->ins->nb_commands);
+	if (!e->graphe->map)
+		return (ERR_NOTUBE);
 	while (++index < e->ins->nb_commands)
 	{
 		if (e->ins->commands_dest[index][0] == ROOM)
