@@ -20,11 +20,11 @@ t_file			*new_file(t_graphe *g)
 	t_file *file;
 
 	file = 0x0;
-	if (!(file = (t_file*)malloc(sizeof(t_file))) || !g || g->taille == 0)
+	if (!(file = (t_file*)malloc(sizeof(t_file))) || !g || g->nb_rooms == 0)
 		exit(3);
 	file->begin = 0;
 	file->end = 0;
-	if(!(file->tab = (int *)ft_memalloc(sizeof(int) * g->taille)))
+	if(!(file->tab = (int *)ft_memalloc(sizeof(int) * g->nb_rooms)))
 		exit(3);
 	return (file);
 }

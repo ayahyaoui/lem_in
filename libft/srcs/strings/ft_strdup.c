@@ -21,10 +21,10 @@ char	*ft_strdup(const char *src)
 	size_t	len;
 
 	ptr = (char *)(unsigned long)src;
-	if (!(dup = (char *)malloc(ft_strlen(ptr + 1) * sizeof(char))))
+	len = ft_strlen(ptr);
+	if (!(dup = ft_strnew(len)))
 		return (NULL);
 	i = 0;
-	len = ft_strlen(ptr);
 	while (len--)
 	{
 		dup[i] = src[i];

@@ -65,7 +65,7 @@ t_fusion		*create_fusion(t_path *p, int max)
 					(p->nb_path + 1))))
 		exit(3);
 	i = -1;
-	while (++i < p->nb_path)
+	while ((unsigned int)++i < p->nb_path)
 	{
 		fusion->fusion[i] = (t_breakdown*)malloc(sizeof(t_breakdown));
 		fusion->fusion[i]->value = p->path[i][VALUE];
@@ -80,30 +80,31 @@ t_fusion		*create_fusion(t_path *p, int max)
 
 t_big_tab		*new_big_tab(t_graphe *g)
 {
-	int			i;
+//	int			i;
 	t_big_tab	*s;
-	int			j;
-	int			k;
+//	int			j;
+//	int			k;
 
-	if (g == 0x0 || g->taille == 0)
+	if (g == 0x0 || g->nb_rooms == 0)
 		return (0x0);
 	if (!(s = malloc(sizeof(t_big_tab))))
 		exit(3);
-	s->taille = g->taille;
-	s->tab = create_tab(g->taille, -1);
-	s->t2 = create_tab(g->taille, -1);
-	s->t1 = create_tab(g->taille, -1);
+	s->taille = g->nb_rooms;
+	s->tab = create_tab(g->nb_rooms, -1);
+	s->t2 = create_tab(g->nb_rooms, -1);
+	s->t1 = create_tab(g->nb_rooms, -1);
 	return (s);
 }
-
+/*
 t_graphe		*new_graphe(int taille)
 {
 	t_graphe *g;
 
 	if(!(g = (t_graphe*)malloc(sizeof(t_graphe))))
 		exit(3);
-	g->taille = taille;
-	g->map = create_double_tab(g->taille, 0);
-	g->color = create_tab(g->taille, 0);
+	g->nb_rooms = taille;
+	g->map = create_double_tab(g->nb_rooms, 0);
+	g->color = create_tab(g->nb_rooms, 0);
 	return (g);
 }
+*/

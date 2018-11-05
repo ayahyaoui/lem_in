@@ -19,27 +19,26 @@ void		free_strtab(char ***tab)
 	tmp = *tab;
 	while (tmp && *tmp)
 	{
-		ft_memdel((void **)tmp);
+		ft_strdel(tmp);
 		++tmp;
 	}
 	ft_memdel((void **)tab);
 }
-/*
-void		del_rooms(t_list *l)
+
+void		del_anthill(t_list *l)
 {
 	t_list *tmp;
 	
 	while (l)
 	{
 		tmp = l;
-		ft_memdel((void **)&((t_room *)l->content)->name);
-		ft_memdel((void **)&l->content);
+//		ft_strdel(l->content);
 		ft_memdel((void **)tmp);
 		l = l->next;
 	}
 
 }
-*/
+
 int		set_env(ENV *e)
 {
 	if (!(e->ins = (t_input *)ft_memalloc(sizeof(t_input))))
@@ -49,6 +48,8 @@ int		set_env(ENV *e)
 	e->ins->nb_ants = 0;
 	e->anthill = NULL;
 	e->options = 2;
+	e->ins->room = NULL;
+	e->ins->commands = NULL;
 	e->ins->nb_commands = 0;
 	return (1);
 }

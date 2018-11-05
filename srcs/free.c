@@ -20,7 +20,7 @@ void			free_graphe(t_graphe *g)
 	int i;
 
 	i = -1;
-	while (++i < g->taille)
+	while ((unsigned int)++i < g->nb_rooms)
 	{
 		free(g->map[i]);
 		g->map[i] = 0x0;

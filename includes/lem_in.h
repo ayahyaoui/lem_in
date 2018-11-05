@@ -13,6 +13,9 @@
 #ifndef __LEM_IN__
 #define __LEM_IN__
 #include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include "lemin.h"
 
 #define WHITE 0
 #define GREY 1
@@ -21,8 +24,7 @@
 #define NBNODE 1
 #define COST 1
 #define MIN(a, b) (a > b ? b : a)
-#include "libft/includes/libft.h"
-#include "libft/includes/ft_printf.h"
+#include "libft.h"
 
 
 /*
@@ -70,17 +72,17 @@ typedef struct			s_chemins
 	unsigned int			nb_max;
 }							t_chemins;
 */
-
+/*
 typedef struct		s_graphe
 {
-	int				taille;
+	unsigned int				taille;
 	char			**map;
 	int				*color; //ft_memalloc(sizeof(int) * nb_rooms);
-	int				end;
-	int				begin;
+	unsigned int				end;
+	unsigned int				begin;
 //	t_tab			*begin
 }					t_graphe;
-
+*/
 typedef struct		s_tab
 {
 	int				length;
@@ -97,7 +99,7 @@ typedef struct		s_file
 
 typedef struct		s_big_tab
 {
-	int				taille;
+	unsigned  int				taille;
 	int				*tab;
 	int				*t1;
 	int				*t2;
@@ -135,7 +137,7 @@ int					displayallpath(t_graphe *g, t_tab ***t);
 
 // fusion.c
 
-int					valueisinfusion(t_fusion *fusion, int value);
+int					valueisinfusion(t_fusion *fusion, unsigned int value);
 int					getfusionpath(t_breakdown *b, int *res, unsigned int val,
 					int cost);
 int					fusion_path(t_fusion *f, unsigned int t[2], t_breakdown *c);
@@ -145,7 +147,7 @@ void				ft_swapPointeur(t_fusion **a, t_fusion **b);
 
 int					number_active_bit(unsigned long p, int max);
 t_tab				***test_multipathbinary(t_graphe *g);
-void				getallpath(t_graphe *g, t_path *path, int node
+void				getallpath(t_graphe *g, t_path *path, unsigned int node
 					, unsigned int p);
 
 // all_path
@@ -153,8 +155,7 @@ void				getallpath(t_graphe *g, t_path *path, int node
 t_tab				***get_all_separpath(t_graphe *g, t_path *p);
 t_tab				**addpaths(t_graphe *g, t_breakdown *paths, int nb_path);
 t_tab				*addpath(t_graphe *g, int path);
-int					*my_best_tab(t_graphe *g, t_path *p, int le,
-					t_tab ***best_tab);
+int					*my_best_tab(t_graphe *g, t_path *p, unsigned int len, t_tab ***best_tab);
 t_breakdown			*searchNpath(t_path *p, t_fusion *pr, t_fusion *n, t_tab **r);
 
 
@@ -172,11 +173,11 @@ int			add_ant(t_graphe *g, t_tab ***best_tab, int nb_ant);
 
 
 int				dijistra(t_graphe *g);
-int				**ft_tri_fusion_recursivecouple(unsigned int t1[][2], int len);
+int				**ft_tri_fusion_recursive_couple(unsigned int t1[][2], int len);
 t_tab				***test_multipathbinary(t_graphe *g);
 void				ft_mem_set_int(int *tab, int val, int taille);
 void				tab_swap(int **a, int **b);
-int					short_path(t_graphe *g, t_big_tab *bt, int begin, int end);
+int					short_path(t_graphe *g, t_big_tab *bt, unsigned int begin, unsigned int end);
 void				reboot_big_tab(t_big_tab *bt, int begin);
 int					ajout_voisin(t_graphe *g, t_big_tab *bt, int k, int node);
 

@@ -29,11 +29,11 @@
 int		addneighbour(t_graphe *g, t_file *file, int node, int *tab)
 {
 	int i;
-	int j;
-	int k;
+//	int j;
+//	int k;
 
 	i = -1;
-	while (++i < g->taille)
+	while ((unsigned int)++i < g->nb_rooms)
 	{
 		//k = MIN(node, );
 		if (g->color[i] == WHITE && g->map[i][node] == 1)
@@ -41,7 +41,7 @@ int		addneighbour(t_graphe *g, t_file *file, int node, int *tab)
 			g->color[i] = GREY;
 			addfile(file, i);
 			tab[i] = node;
-			if (i == g->end)
+			if ((unsigned int)i == g->end)
 				return (2);
 		}
 	}
@@ -50,14 +50,14 @@ int		addneighbour(t_graphe *g, t_file *file, int node, int *tab)
 
 int				iterative_path(t_graphe *g, int *tab, t_file *file)
 {
-	int			pathlen;
+//	int			pathlen;
 	int			node;
 	int			find;
 
-	pathlen = 0;
+//	pathlen = 0;
 	find = 0;
-	addfile(file, g->begin);
-	g->color[g->begin] = GREY;
+	addfile(file, g->start);
+	g->color[g->start] = GREY;
 	while (!isemptyfile(file))
 	{
 		node = removefile(file);
@@ -78,7 +78,7 @@ int				dijistra(t_graphe *g)
 	t_file		*file;
 
 	file = new_file(g);
-	if(!(tab = (int *)ft_memalloc(sizeof(int) * g->taille)))
+	if(!(tab = (int *)ft_memalloc(sizeof(int) * g->nb_rooms)))
 		return (-1);
 	if (iterative_path(g, tab, file))
 		displaypath(g, tab);

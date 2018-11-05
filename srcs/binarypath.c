@@ -14,10 +14,10 @@
 
 int		number_active_bit(unsigned long p, int max);
 t_tab		***test_multipathbinary(t_graphe *g);
-void		getallpath(t_graphe *g, t_path *path, int node
+void		getallpath(t_graphe *g, t_path *path, unsigned int node
 		, unsigned int p);
 
-void		getallpath(t_graphe *g, t_path *path, int node
+void		getallpath(t_graphe *g, t_path *path, unsigned int node
 		, unsigned int p)
 {
 	int i;
@@ -25,7 +25,7 @@ void		getallpath(t_graphe *g, t_path *path, int node
 	if (node == g->end)
 	{
 		i = -1;
-		while (++i < path->nb_path)
+		while ((unsigned int)++i < path->nb_path)
 			if (path->path[i][0] == p)
 				return;
 		path->path[path->nb_path][VALUE] = p;
@@ -33,14 +33,14 @@ void		getallpath(t_graphe *g, t_path *path, int node
 		path->nb_path = path->nb_path + 1;
 		return ;
 	}
-	if (node == g->begin && p != 0)
+	if (node == g->start && p != 0)
 		return;
 	if (node != 0)
 		p += (1 << node);
 	i = -1;
-	while (++i < g->taille)
+	while ((unsigned int)++i < g->nb_rooms)
 	{
-		if (g->map[node][i] && i != g->begin)
+		if (g->map[node][i] && (unsigned int)i != g->start)
 		{
 			if (!(p & (1 << i))){
 				//ft_printf("%d=>%d  ", node, i);
@@ -74,11 +74,11 @@ int		number_active_bit(unsigned long p, int max)
 t_tab	***test_multipathbinary(t_graphe *g)
 {
 	t_path	*p;
-	int		i;
+//	int		i;
 	t_tab	***res;
 
 	ft_printf("debut MULTI PATH\n");
-	if (!g || g->taille > 32)
+	if (!g || g->nb_rooms > 32)
 	{
 		ft_printf("graphe trop grand pour les test\n");
 		exit(1);
@@ -89,8 +89,8 @@ t_tab	***test_multipathbinary(t_graphe *g)
 	ft_putstr("getallpath\n");
 	getallpath(g, p, 0, 0);
 	ft_printf("====il y'a %d chemins different==\n", p->nb_path);
-	ft_tri_fusion_recursivecouple(p->path, p->nb_path);
-	i = 0;
+	ft_tri_fusion_recursive_couple(p->path, p->nb_path);
+//	i = 0;
 	sleep(1);
 	res = get_all_separpath(g, p);
 	ft_printf("bien jouer\n");

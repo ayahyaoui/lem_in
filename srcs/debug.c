@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   display.c                                          :+:      :+:    :+:   */
+/*   debug.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -43,7 +43,7 @@ void		printMultypath(int *res, int len)
 				i = len + 1;
 				break;
 			}
-			ft_printnbit(res[i + j], 8);
+			ft_printf("%8b\n", res[i + j]);
 			ft_printf(" <%d> => %d\n", i + j, res[i+j]);
 		}
 		i+=j;
@@ -54,11 +54,13 @@ void		printMultypath(int *res, int len)
 
 void		affiche_path(t_graphe *g, t_path *p)
 {
-	int i;
+	unsigned int i;
 
+	(void)g;
 	for (i = 0; i < p->nb_path; i++)
 	{
-		ft_printnbit((int)p->path[i][VALUE], g->taille - 1);
+		ft_printf("%(g->taille - 1)b\n", (int)p->path[i][VALUE]);
+//		ft_printnbit((int)p->path[i][VALUE], g->nb_rooms - 1);
 		printf("==>%u = %u\n", p->path[i][VALUE], p->path[i][COST]);
 	}
 }
@@ -71,7 +73,7 @@ void	affichebreak(t_breakdown *bp)
 		return;
 	}
 	ft_printf("value = %d, cost = %d, et len = %d\n", bp->value, bp->cost, bp->len);
-	ft_affichetab((int*)bp->breakdown, bp->len,'/');
+	ft_print_inttab((int*)bp->breakdown, bp->len,'/');
 
 }
 
@@ -81,11 +83,11 @@ void	affichebreak(t_breakdown *bp)
 
 int			displaypath(t_graphe *g, int *tab)
 {
-	int node;
+	unsigned int node;
 
 	node = g->end;
-	ft_printf("depart = %d\narriver = %d\n",g->begin, node);
-	while (node != g->begin)
+	ft_printf("depart = %d\narriver = %d\n",g->start, node);
+	while (node != g->start)
 	{
 		ft_printf("%d<-",node);
 		node = tab[node];
@@ -98,7 +100,7 @@ int			displayallpath(t_graphe *g, t_tab ***t)
 {
 	int i;
 	int j;
-	int k;
+//	int k;
 
 
 	i = -1;
@@ -108,11 +110,11 @@ int			displayallpath(t_graphe *g, t_tab ***t)
 		ft_putstr("=======================================\n");
 		ft_printf(" nb chemin en parrallele %d (normalement)\n", i + 1);
 		if (t[0][0]->length == 2 && i)
-			ft_printf("%d>%d\n", g->begin, g->end);
+			ft_printf("%d>%d\n", g->start, g->end);
 		while (t[i][++j])
 		{
 		//	ft_printf("%d fourmis vont passer par la\n", t[i][j]->nb_ant);
-			ft_affichetab(t[i][j]->tab, t[i][j]->length, '>');
+			ft_print_inttab(t[i][j]->tab, t[i][j]->length, '>');
 		}
 		ft_putstr("=======================================\n");
 		ft_putstr("\n\n\n");
@@ -127,12 +129,12 @@ void		infos(t_fusion *f)
 	ft_printf("nombre de chemin <%u>, et nombre de voie en parallele (%u)\n",
 			f->nb_path,f->altern);
 	int i = -1;
-	while (++i < f->nb_path)
+	while ((unsigned int)++i < f->nb_path)
 	{
 		ft_printf("val = %u cout = %u et taille %u",
 				f->fusion[i]->value, f->fusion[i]->cost, f->fusion[i]->len);
 		j = -1;
-		while (++j < f->fusion[i]->len)
+		while ((unsigned int)++j < f->fusion[i]->len)
 			ft_printf("(%d)", f->fusion[i]->breakdown[j]);
 		ft_printf("\n");
 	}

@@ -36,7 +36,7 @@ int		maxants_ntour(t_tab **best_tab, int nb_tour)
 	if (!best_tab)
 		return (-1);
 	while (best_tab[++i])
-		res += ft_max(0, nb_tour - (best_tab[i]->length - 2));
+		res += ft_maxint(0, nb_tour - (best_tab[i]->length - 2));
 	ft_printf("max = %d et len = %d en nb_tour %d ",res, best_tab[0]->length, nb_tour);
 	return (res);
 }
@@ -59,12 +59,13 @@ int		count_ants(t_graphe *g, t_tab ***best_tab, int nb_ant, int pos)
 {
 
 	int i;
-	int j;
+//	int j;
 
 //	i = maxant_ntour(best_tab[pos]);
 //	j = maxant_ntour(best_tab[pos - 1]);
 	i = 1;
-	j = 0;
+//	j = 0;
+	(void)g;
 	while (maxants_ntour(best_tab[pos], i) <=
 			maxants_ntour(best_tab[pos - 1], i) && i < nb_ant)
 	{

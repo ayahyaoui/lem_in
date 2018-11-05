@@ -6,72 +6,105 @@
 #    By: emuckens <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/20 17:52:27 by emuckens          #+#    #+#              #
-#    Updated: 2018/10/20 18:36:17 by emuckens         ###   ########.fr        #
+#    Updated: 2018/10/31 13:51:46 by emuckens         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+
 NAME := lem-in
 
-SRCS := main.c display.c read.c env.c error.c  get_room.c get_tube.c get_comment.c \
-	get_ants.c utils.c
+#==============================================================================#
+#					 		 	  COMPILATION								   
+#==============================================================================#
 
-BIN := $(addprefix srcs/, $(patsubst %.c, %.o, $(SRCS)))
-BIN_DIR := bin
+FLAGS		:= -Wall -Werror -Wextra -g
+FSANI		:= -fsanitize=address
+CC		:= gcc $(FLAGS)
+CCF		:= $(CC) $(FSANI)
 
-HEADDIR := includes
-HEAD	:= $(HEADDIR)/lemin.h
+#==============================================================================#
+#								DIRECTORIES									    
+#==============================================================================#
 
-LIBFTDIR := libft
-LIBFT := $(LIBFTDIR)/libft.a
+BIN_DIR 	:= bin
+HEAD_DIR 	:= includes
+SRC_DIR 	:= srcs
+EXE_DIR		:= programs
+LIB_DIR 	:= libft
 
-FLAGS := -Wall -Werror -Wextra
-FSANI := -fsanitize=address
+#==============================================================================#
+#								    FILES									   
+#==============================================================================#
 
-CC := gcc -g
+_SRC	= all_path.c binarypath.c count_ant.c debug.c display.c env.c error.c file.c free.c ft_tri_fusion_recursive.c \
+	fusion.c get_ants.c get_comment.c getgraphe.c get_room.c get_tube.c initial.c iterativepath.c \
+	short_path.c test.c main.c read.c utils.c \
+	
+_HEAD	= lemin.h lem_in.h
+
+SRC 	= $(patsubst %, $(SRC_DIR)/%, $(_SRC))
+HEAD	= $(patsubst %, $(HEAD_DIR)/$, $(_HEAD))
+BIN	= $(patsubst %.c, $(BIN_DIR)/%.o, $(_SRC))
+LIBFT	:= $(LIBDIR)/libft.a
+
+#==============================================================================#
+#							       MISC										    
+#==============================================================================#
+
+NB = $(words $(SRC))
+INDEX := 0
+
+#==============================================================================#
+#							       RULES									    
+#==============================================================================#
+
 
 .PHONY: all clean fclean re simple debug
 
-$(NAME): $(HEAD) $(BIN)
-	@echo "building $(NAME)..."
-	@$(CC) $(FLAGS) -o $(NAME) $(BIN) -lft -L $(LIBFTDIR)
-	@echo "$(NAME) READY ! Enjoy :)"
+all: 
+	@make $(NAME)
+#	cp $(NAME) test/
+
+$(NAME): $(BIN) $(LIBFT)
+	@$(CC) -o $(NAME) $(BIN) -lft -L $(LIB_DIR)
+	@echo "\r>>> \033[01;32m$(NAME) READY              \033[0m"
 
 $(LIBFT):
-	@make -s -C $(LIBFTDIR)
+	@make -C $(LIB_DIR)
 
-%.o: %.c
-	@echo "generating $@"
-	@$(CC) -I $(HEADDIR) -I $(LIBFTDIR)/$(HEADDIR) $(FLAGS) -o $@ -c $^
+$(BIN_DIR):
+	@mkdir -p $(BIN_DIR)
 
-all:
-	make -s -C $(LIBFTDIR)
-	make -s $(NAME)
+$(BIN_DIR)/%.o: $(SRC_DIR)/%.c $(HEAD) Makefile | $(BIN_DIR)
+	@$(eval PERCENT=$(shell echo $$(($(INDEX)*100/($(NB))))))
+	@$(CC) -I $(HEAD_DIR) -I $(LIB_DIR)/$(HEAD_DIR) -o $@ -c $<
+	@printf "\033[22;35mgenerating binary.... [ %d%% ]\033[0m\r" $(PERCENT) 
+	@$(eval INDEX=$(shell echo $$(($(INDEX)+1))))
 
 clean:
 	@echo "cleaning $(NAME) binaries..."
 	@rm -f $(BIN)
-	@make clean -C $(LIBFTDIR)
-	@echo "Binaries removed from all folders.\n"
+	@rm -rf $(BIN_DIR)
+	@make clean -C $(LIB_DIR)
+	@echo "\033[01;34mBinaries removed from all folders.\n\033[0m"
 
 fclean: clean
 	@echo "cleaning $(NAME) executable..."
 	@rm -f $(NAME)
 	@echo "cleaning $(LIBFT) executable..."
 	@rm -f $(LIBFT)
-	@echo "All directories now clean.\n"
+	@echo "\033[01;34mAll directories now clean.\n\033[0m"
 
 re:
 	@make -s fclean
 	@make -s all
 
-simple:
-	@echo "cleaning $(NAME) binaries..."
-	@rm -f $(BIN)
+remo:
 	@make all
-	@echo "Binaries removed from all folders.\n"
+	@rm -f $(BIN)
+	@echo "\033[01;34mBinaries removed from all folders.\n\033[0m"
 
-
-debug: $(BIN) $(HEAD) 
-	@echo "building $(NAME) in DEBUG MODE..."
-	@gcc $(FLAGS) $(FSANI) -o $(NAME) $(BIN) -lft -L $(LIBFTDIR)
-	@echo "$(NAME) READY ! Enjoy :)"
+debug: $(BIN) $(LIBFT)
+	@echo "\033[01;31mbuilding $(NAME) in DEBUG MODE...\033[0m"
+	@$(CCF) -o $(NAME) $(BIN) -lft -L $(LIB_DIR)
+	@echo "\033[01;32m$(NAME) READY\033[0m"

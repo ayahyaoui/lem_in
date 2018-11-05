@@ -53,9 +53,9 @@ void	free_path(t_path *p)
 	}
 }*/
 
-int		addlink(t_graphe *g, int a, int b)
+int		addlink(t_graphe *g, unsigned int a, unsigned int b)
 {
-	if (g->taille > a && g->taille > b && a != b)
+	if (g->nb_rooms > a && g->nb_rooms > b && a != b)
 	{
 		g->map[a][b] = 1;
 		g->map[b][a] = 1;
@@ -66,7 +66,7 @@ int		addlink(t_graphe *g, int a, int b)
 
 void	test_mapdemoniaque(t_graphe *g)
 {
-	if (g->taille < 12)
+	if (g->nb_rooms < 12)
 		return;
 	addlink(g, 0, 1);
 	addlink(g, 0, 3);
@@ -81,7 +81,7 @@ void	test_mapdemoniaque(t_graphe *g)
 	addlink(g, 7, 8);
 	addlink(g, 8, 9);
 	addlink(g, 9,10);
-	g->begin = 0;
+	g->start = 0;
 	g->end = 10;
 }
 
@@ -105,11 +105,11 @@ void	test_map(t_graphe *g)
 	g->map[2][1] = 1;
 }
 
-int			choosemethod(t_graphe *g)
+int			choose_method(t_graphe *g)
 {
 	t_tab ***best_tab = 0X0;
 	//ft_printf("choisemethodse\n");
-	if (g->taille < 16)
+	if (g->nb_rooms < 16)
 		best_tab = test_multipathbinary(g);
 	else
 		dijistra(g);
@@ -119,23 +119,25 @@ int			choosemethod(t_graphe *g)
 	free_besttab(best_tab);
 	return (1);
 }
-
+/*
 int main(int argc, const char *argv[])
 {
 	t_graphe *g;
-	int i;
-	int j;
+	unsigned int i;
+//	int j;
 
+	(void)argc;
+	(void)argv;
 	g = new_graphe(13);
 
-	g->begin = 0;
+	g->start = 0;
 	g->end = 7;
 	test_mapdemoniaque(g);
-	for (i = 0; i < g->taille ;i++) {
+	for (i = 0; i < g->nb_rooms ;i++) {
 		g->map[i][i] = 0;
 	}
 	choosemethod(g);
 	free_graphe(g);
 	//exit(1);
 	return (0);
-}
+}*/

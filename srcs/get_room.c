@@ -44,22 +44,22 @@ int		store_rooms(ENV *e)
 
 	i = 0;
 	tmp = e->anthill;
-	if (!(e->ins->room = (char **)malloc(sizeof(char *) * e->graphe->nb_rooms)))
+	if (!(e->ins->room = (char **)ft_memalloc(sizeof(char *) * (e->graphe->nb_rooms + 1))))
 		return (ERR_ALLOC);
-	if (!(e->ins->commands = (char **)ft_memalloc(sizeof(char *) * e->ins->nb_commands)))
+	if (!(e->ins->commands = (char **)ft_memalloc(sizeof(char *) * (e->ins->nb_commands + 1))))
 		return (ERR_ALLOC);
-	if (!(e->ins->commands_dest = (int **)ft_memalloc(sizeof(int *) * e->ins->nb_commands)))
+	if (!(e->ins->commands_dest = (int **)ft_memalloc(sizeof(int *) * (e->ins->nb_commands + 1))))
 		return (ERR_ALLOC);
 	while (((char *)tmp->content)[0] == '#')
 		tmp = tmp->next;
-	while ((tmp = tmp->next) && i < e->graphe->nb_rooms)
+	while ((tmp = tmp->next) && (unsigned int)i < e->graphe->nb_rooms)
 	{
 		if (((char *)tmp->content)[0] != '#')
 		{
 			len = 0;
 			while (((char *)tmp->content)[len] != ' ')
 				++len;
-			e->ins->room[i] = (char *)ft_memalloc(len * sizeof(char));
+			e->ins->room[i] = (char *)ft_strnew(len);
 			link_command(e, ROOM, i);
 			ft_strncat(e->ins->room[i], (char *)tmp->content, len);
 			if (is_dup(e, e->ins->room[i], i))
@@ -78,7 +78,7 @@ void			print_rooms(ENV *e, char **room) // only for debug, delete
 
 	i = -1;
 	ft_printf("list of %d rooms", e->graphe->nb_rooms);
-	while (++i < e->graphe->nb_rooms)
+	while ((unsigned int)++i < e->graphe->nb_rooms)
 		ft_printf("%s ", room[i]);
 	ft_printf("\n");
 }

@@ -1,0 +1,27 @@
+20
+##START
+zero 0 1
+one 1 2
+two 2 1
+three 3 4
+four 4 5
+five 5 6
+six 7 8
+seven 8 9
+eight 8 7
+nine 9 8
+##END
+ten 0 1
+zero-one
+zero-three
+one-two
+one-seven
+two-six
+two-ten
+three-four
+four-five
+five-six
+six-two
+seven-eight
+eight-nine
+nine-ten

@@ -74,13 +74,15 @@ int				get_command(ENV *e, char *str)
 	i = 0;
 	while (i < NB_COMMANDS)
 	{
-		if (ft_strequ(str, ref[i]))
+		if (ft_strnequ(str, ref[i], ft_strlen(str)))
 			break;
 		++i;
 	}
 	if (i == NB_COMMANDS)
 		return (0);
+//	ft_strdel(&e->ins->commands[index]);
 	e->ins->commands[index] = ft_strdup(str);
-	++index;
+	if (index < NB_COMMANDS)
+		++index;
 	return (i);
 }

@@ -20,7 +20,7 @@ int		check_path_len(t_graphe *g, t_big_tab *bt, int k, int node)
 	int i;
 
 	i = 0;
-	while (i < g->taille)
+	while ((unsigned int)i < g->nb_rooms)
 	{
 		if (g->map[node][i] != 0 && (bt->tab[i] == -1 || bt->tab[i] >
 					g->map[node][i] + bt->tab[node]))
@@ -40,7 +40,7 @@ void			reboot_big_tab(t_big_tab *bt, int begin)
 	int i;
 
 	i = 0;
-	while (i < bt->taille)
+	while ((unsigned int)i < bt->taille)
 	{
 		bt->tab[i] = -1;
 		bt->t1[i] = -1;
@@ -52,19 +52,19 @@ void			reboot_big_tab(t_big_tab *bt, int begin)
 }
 
 
-int				short_path(t_graphe *g, t_big_tab *bt, int begin, int end)
+int				short_path(t_graphe *g, t_big_tab *bt, unsigned int begin, unsigned int end)
 {
 	int i;
 	int j;
 	int k;
 
-	if (begin > g->taille || end > g->taille || begin < 0 || end < 0)
+	if (begin > g->nb_rooms || end > g->nb_rooms /*|| begin < 0 || end < 0*/)
 		return (-1);
 	if (begin == end)
 		return (0);
 	reboot_big_tab(bt, begin);
 	i = 0;
-	while (i < g->taille)
+	while ((unsigned int)i < g->nb_rooms)
 	{
 		j = 0;
 		k = 0;
@@ -78,7 +78,7 @@ int				short_path(t_graphe *g, t_big_tab *bt, int begin, int end)
 		tab_swap(&bt->t1, &bt->t2);
 		i++;
 	}
-	ft_affichetab(bt->tab,bt->taille,' ');
+	ft_print_inttab(bt->tab,bt->taille,' ');
 	printf("\n");
 	return (bt->tab[end]);
 }

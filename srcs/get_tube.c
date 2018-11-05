@@ -24,10 +24,10 @@ static int		setup_room_mtrx(ENV *e, int size)
 	int		i;
 
 	i = -1;
-	if (!(e->graphe->map = (int **)ft_memalloc(sizeof(int *) * size)))
+	if (!(e->graphe->map = (char **)ft_memalloc(sizeof(char *) * size)))
 		return (ERR_ALLOC);
 	while (++i < size)
-		if (!(e->graphe->map[i] = (int *)ft_memalloc(sizeof(int) * size)))
+		if (!(e->graphe->map[i] = (char *)ft_memalloc(sizeof(char) * size)))
 			return (ERR_ALLOC);
 	return (NO_ERR);
 }
@@ -43,7 +43,7 @@ static int		get_room_index(ENV *e, char *str)
 	int i;
 
 	i = -1;
-	while (++i < e->graphe->nb_rooms)
+	while ((unsigned int)++i < e->graphe->nb_rooms)
 		if (ft_strequ(e->ins->room[i], str))
 			return (i);
 	return (-1);
@@ -66,6 +66,8 @@ int				get_tube(ENV *e, char **str)
 
 	if (!it && ++it && setup_room_mtrx(e, e->graphe->nb_rooms))
 		return (ERR_ALLOC);
+	if (it == 1 && ++it)
+		store_rooms(e);
 	if (!str[1] || (check = ft_strsplit(str[1], ' '))[1]) // si rajout de longueur de tube, c'est ici
 		return (ERR_TUBE);
 	free_strtab(&check);

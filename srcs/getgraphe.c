@@ -25,10 +25,10 @@ int			degre_graphe(t_graphe *g)
 		return (-1);
 	i = -1;
 	res = 0;
-	while (++i < g->taille)
+	while ((unsigned int)++i < g->nb_rooms)
 	{
 		j = -1;
-		while (++j < g->taille)
+		while ((unsigned int)++j < g->nb_rooms)
 			if(g->map[i][j])
 				res++;
 	}
@@ -46,7 +46,7 @@ int			degre(t_graphe *g, int node)
 
 	i = -1;
 	res = 0;
-	while (++i < g->taille)
+	while ((unsigned int)++i < g->nb_rooms)
 		if (g->map[node][i])
 			res++;
 	return (res);

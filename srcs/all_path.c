@@ -17,7 +17,7 @@
 t_tab	***get_all_separpath(t_graphe *g, t_path *p);
 t_tab	**addpaths(t_graphe *g, t_breakdown *paths, int nb_path);
 t_tab	*addpath(t_graphe *g, int path);
-int		*my_best_tab(t_graphe *g, t_path *p, int lenMax, t_tab ***best_tab);
+int		*my_best_tab(t_graphe *g, t_path *p, unsigned int lenMax, t_tab ***best_tab);
 //int		searchNpath(t_path *p, t_fusion *prev, t_fusion *next);
 
 void		parcours_recursif();
@@ -37,7 +37,7 @@ t_way	*convertpath_to_way(t_graphe *g, unsigned long p)
 	int j;
 	int node;
 
-	len =  number_active_bit(p, g->taille);
+	len =  number_active_bit(p, g->nb_rooms);
 	way = malloc(sizeof(t_way) * len);
 	i = -1;
 
@@ -59,12 +59,13 @@ t_breakdown	*searchNpath(t_path *p, t_fusion *prev, t_fusion *next, t_tab **res)
 	int cost;
 	t_breakdown  *b = 0x0;
 
+	(void)res;
 	min = 32; // 32 > au cout maximale
 	i = -1;
-	while (++i < p->nb_path)
+	while ((unsigned int)++i < p->nb_path)
 	{
 		j = -1;
-		while (++j < prev->nb_path)
+		while ((unsigned int)++j < prev->nb_path)
 			if (!(p->path[i][VALUE] & prev->fusion[j]->value)
 			&& (prev->altern > 1 || j > i) &&
 			(!valueisinfusion(next,p->path[i][VALUE] + prev->fusion[j]->value)))
@@ -85,7 +86,7 @@ t_breakdown	*searchNpath(t_path *p, t_fusion *prev, t_fusion *next, t_tab **res)
 	return b;
 }
 
-int		*my_best_tab(t_graphe *g, t_path *p, int lenMax, t_tab ***best_tab)
+int		*my_best_tab(t_graphe *g, t_path *p, unsigned int lenMax, t_tab ***best_tab)
 {
 	int i = -1;
 	t_fusion	*fus;
@@ -124,7 +125,7 @@ static int goodneig(t_graphe *g, int *tab, int path, int pos)
 	i = -1;
 	node = tab[pos - 1];
 	ft_printf("node = %d et chemin = %d\n", node, path);
-	while (++i < g->taille)
+	while ((unsigned int)++i < g->nb_rooms)
 		if (g->map[i][node] == 1 && (path & (1 << i)) &&
 			ft_isintab(tab, pos - 1, i) == 0)
 			return (i);
@@ -141,13 +142,14 @@ t_tab	*addpath(t_graphe *g, int path)
 	int		i;
 
 	i = 0;
+	(void)node;
 	if (!(t = (t_tab*)malloc(sizeof(t_tab))))
 		exit(3);
 	len = number_active_bit(path, sizeof(int) * 8) + 2;
 	if (!(t->tab = (int *)ft_memalloc(sizeof(int) * (len))))
 		exit(3);
 	t->length = len;
-	t->tab[0] = g->begin;
+	t->tab[0] = g->start;
 	while (++i < len - 1)
 		t->tab[i] = goodneig(g, t->tab, path, i);
 	t->tab[i] = g->end;
@@ -218,6 +220,6 @@ void		init_all_path(t_graphe *g)
 
 	chemins = (t_chemins*)malloc(sizeof(chemins));
 	degre = degre_graphe(g);
-	len = (degre * g->taille / 8) + 1;
+	len = (degre * g->nb_rooms / 8) + 1;
 }
 */

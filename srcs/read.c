@@ -39,10 +39,7 @@ int				dispatch_ins(ENV *e, char **words, int nb)
 	else if (e->type == ROOM && !endrooms)
 		ret = get_room(e, words);
 	else if (e->type == TUBE && ++endrooms)
-	{
-		if (!(ret = store_rooms(e)))
-			ret = get_tube(e, words);
-	}
+		ret = get_tube(e, words);
 	else
 		return (ERR_ORDER);
 	return (ret);
@@ -51,6 +48,7 @@ int				dispatch_ins(ENV *e, char **words, int nb)
 int				read_instructions(ENV *e, char *str, int nbline, int ret)
 {
 	char			**words;
+	char			*tmp;
 	t_list			*line;
 
 	while (!ret && get_next_line2(STDIN, &str) > 0 && str)
@@ -68,12 +66,16 @@ int				read_instructions(ENV *e, char *str, int nbline, int ret)
 		}
 		else if (str[1] == '#')
 			++e->ins->nb_commands;
-		line = ft_lstnew(str, ft_strlen(str));
+		line = ft_lstnew(tmp = ft_strdup(str), ft_strlen(str) + 1);
+		
+		ft_strdel(&tmp); //ajoute pour pouvoir free le contenu duplique
 		ft_lstaddend(&e->anthill, line);
 		free_strtab(&words);
 		ft_strdel(&str);
 	}
+	ft_strdel(&str);
 	apply_commands(e);
 	display_anthill(e->anthill);
+	del_anthill(e->anthill);
 	return (NO_ERR);
 }

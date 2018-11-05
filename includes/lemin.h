@@ -20,7 +20,7 @@
 # define STDOUT			1
 # define STDERR			2
 # define ERR_NB			18
-# define NB_COMMANDS	2
+# define NB_COMMANDS		2
 
 # define SPLIT			"error strsplit" // remplacer par erreur + generique
 # define NOINS			"empty file"
@@ -43,11 +43,12 @@
 
 typedef struct		s_graphe
 {
-	int				nb_rooms; // anciennement taille
-	int				nb_tubes;
-	int				**map;
-	int				start;
-	int				end;
+	unsigned int			nb_rooms; // anciennement taille
+	unsigned int			nb_tubes;
+	int				*color;
+	char				**map;
+	unsigned int				start;
+	unsigned int				end;
 }					t_graphe;
 
 typedef struct 		s_input
@@ -70,6 +71,10 @@ typedef struct		s_environment
 	int				type;
 	int				fd;
 }					t_environment;
+
+int		choose_method(t_graphe *g);
+void		free_graphe(t_graphe *g);
+
 
 enum				e_type
 {
@@ -101,7 +106,7 @@ enum				e_error
 
 int			set_env(ENV *e);
 void			free_strtab(char ***tab);
-void			del_rooms(t_list *l);
+void			del_anthill(t_list *l);
 char			*get_errmsg(int code);
 
 int			is_dup(ENV *e, char *str, int max_index);

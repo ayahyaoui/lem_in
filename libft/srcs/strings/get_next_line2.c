@@ -86,7 +86,7 @@ int			get_next_line2(const int fd, char **line)
 	buffer = NULL;
 	if (BUFF_SIZE <= 0 || (ret = read(fd, "", 0)) == -1 || fd < 0)
 		return (ft_display_error("getting line from file"));
-	if (!(buffer = ft_strnew(BUFF_SIZE + 1)))
+	if (!(buffer = ft_strnew(BUFF_SIZE)))
 		return (ft_display_error("malloc getting line"));
 	if (!inner_gnl(fd, &ret, &remain, &buffer))
 		return (0);

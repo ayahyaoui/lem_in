@@ -18,7 +18,7 @@ size_t		ft_strlen(char *str)
 	size_t i;
 
 	i = 0;
-	if (!str)
+	if (!str && ft_printf("str i = %d\n", str[i]))
 		return (0);
 	while (str[i])
 		i++;

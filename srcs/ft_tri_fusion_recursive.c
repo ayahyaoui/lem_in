@@ -64,9 +64,11 @@ static void		tri_fusion(unsigned int t1[][2], unsigned int t2[][2], int fin)
 	}
 }
 
-int				**ft_tri_fusion_recursivecouple(unsigned int t1[][2], int len)
+int				**ft_tri_fusion_recursive_couple(unsigned int t1[][2], int len)
 {
 	unsigned int t2[9000][2];
+
+//	ft_bzero(t2, sizeof(t2));
 
 	tri_fusion(t1, t2, len);
 	return ((int**)t1);

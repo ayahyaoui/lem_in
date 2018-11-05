@@ -12,7 +12,7 @@
 
 #include "lem_in.h"
 
-int			valueisinfusion(t_fusion *fusion, int value);
+int			valueisinfusion(t_fusion *fusion, unsigned int value);
 void		infos(t_fusion *f);
 int		getfusionpath(t_breakdown *b, int *res, unsigned int val, int cost);
 int		fusion_path(t_fusion *fusion, unsigned int tab[2], t_breakdown *copy);
@@ -37,7 +37,7 @@ int		fusion_path(t_fusion *fusion, unsigned int tab[2], t_breakdown *copy)
 	src->value = tab[VALUE] + copy->value;
 	src->cost = tab[COST] + copy->cost;
 	src->len = copy->len + 1;
-	while (++i < copy->len)
+	while ((unsigned int)++i < copy->len)
 		src->breakdown[i] = copy->breakdown[i];
 	src->breakdown[copy->len] = tab[VALUE];
 	fusion->nb_path++;
@@ -50,7 +50,7 @@ int		getfusionpath(t_breakdown *b, int *res, unsigned int val, int cost)
 
 	i = -1;
 	//ft_printf("//%d et %d", b->value, val);
-	while (++i < b->len)
+	while ((unsigned int)++i < b->len)
 	{
 		//ft_printf("getfusionpath  %d",b->breakdown[i]);
 		res[i] = b->breakdown[i];
@@ -59,13 +59,13 @@ int		getfusionpath(t_breakdown *b, int *res, unsigned int val, int cost)
 	return (cost);
 }
 
-int			valueisinfusion(t_fusion *fusion, int value)
+int			valueisinfusion(t_fusion *fusion, unsigned int value)
 {
 	int i;
 	i = -1;
 	if (!fusion)
 		return (0);
-	while (++i < fusion->nb_path)
+	while ((unsigned int)++i < fusion->nb_path)
 		if (value == fusion->fusion[i]->value)
 			return (1);
 	return (0);
