@@ -87,7 +87,7 @@ int			displaypath(t_graphe *g, int *tab)
 
 	node = g->end;
 	ft_printf("depart = %d\narriver = %d\n",g->start, node);
-	while (node != g->start)
+	while (node != (unsigned int)g->start)
 	{
 		ft_printf("%d<-",node);
 		node = tab[node];

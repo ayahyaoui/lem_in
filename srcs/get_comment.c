@@ -31,20 +31,23 @@ void			c_end(ENV *e, void **item, int index)
 ** Prints comment and returns true if comment OK | false otherwise
 */
 
-void			apply_commands(ENV *e)
+int			apply_commands(ENV *e)
 {
 	static void	 (*f[NB_COMMANDS])(ENV *e, void **item, int index)
 		= {&c_start, &c_end}; 
 	int			index;
-
-	index = 0;
-	while (index < e->ins->nb_commands)
-	{
+	
+	index = -1;
+	while (++index < e->ins->nb_commands)
 		if (e->ins->commands_dest[index][0] == ROOM)
 			f[index](e, NULL, e->ins->commands_dest[index][1]);
-		++index;
-	}
-//	ft_printf("start in %d end in %d\n", e->graphe->start, e->graphe->end);
+	ft_printf("start in %d end in %d\n", e->graphe->start, e->graphe->end);
+	if (e->graphe->start == -1)
+		return (ERR_START);
+	if (e->graphe->end == -1)
+		return (ERR_END);
+	return (NO_ERR);
+
 }
 
 void			link_command(ENV *e, int type, int index)
@@ -68,20 +71,18 @@ void			link_command(ENV *e, int type, int index)
 int				get_command(ENV *e, char *str)
 {
 	static int	index;
-	static char	ref[NB_COMMANDS][8] = {"##START", "##END"};
+	static char	ref[NB_COMMANDS][8] = {"##start", "##end"};
 	int			i;
 
-	i = 0;
-	while (i < NB_COMMANDS)
-	{
+	i = -1;
+	while (++i < NB_COMMANDS)
 		if (ft_strnequ(str, ref[i], ft_strlen(str)))
 			break;
-		++i;
-	}
+ft_printf("i get command = %d str = %s\n", i, str);
 	if (i == NB_COMMANDS)
 		return (0);
-//	ft_strdel(&e->ins->commands[index]);
 	e->ins->commands[index] = ft_strdup(str);
+	ft_printf("command in index %d = %s\n", index, e->ins->commands[index]);
 	if (index < NB_COMMANDS)
 		++index;
 	return (i);

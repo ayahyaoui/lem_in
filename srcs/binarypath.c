@@ -14,10 +14,10 @@
 
 int		number_active_bit(unsigned long p, int max);
 t_tab		***test_multipathbinary(t_graphe *g);
-void		getallpath(t_graphe *g, t_path *path, unsigned int node
+void		getallpath(t_graphe *g, t_path *path, int node
 		, unsigned int p);
 
-void		getallpath(t_graphe *g, t_path *path, unsigned int node
+void		getallpath(t_graphe *g, t_path *path, int node
 		, unsigned int p)
 {
 	int i;
@@ -40,7 +40,7 @@ void		getallpath(t_graphe *g, t_path *path, unsigned int node
 	i = -1;
 	while ((unsigned int)++i < g->nb_rooms)
 	{
-		if (g->map[node][i] && (unsigned int)i != g->start)
+		if (g->map[node][i] && i != g->start)
 		{
 			if (!(p & (1 << i))){
 				//ft_printf("%d=>%d  ", node, i);

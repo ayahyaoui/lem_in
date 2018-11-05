@@ -147,7 +147,7 @@ void				ft_swapPointeur(t_fusion **a, t_fusion **b);
 
 int					number_active_bit(unsigned long p, int max);
 t_tab				***test_multipathbinary(t_graphe *g);
-void				getallpath(t_graphe *g, t_path *path, unsigned int node
+void				getallpath(t_graphe *g, t_path *path, int node
 					, unsigned int p);
 
 // all_path

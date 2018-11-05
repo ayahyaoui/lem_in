@@ -47,8 +47,8 @@ typedef struct		s_graphe
 	unsigned int			nb_tubes;
 	int				*color;
 	char				**map;
-	unsigned int				start;
-	unsigned int				end;
+	int				start;
+	int				end;
 }					t_graphe;
 
 typedef struct 		s_input
@@ -130,7 +130,7 @@ void		printlist(ENV *e, t_list *l);
 ** Read and store instructions
 */
 
-void		apply_commands(ENV *e);
+int			apply_commands(ENV *e);
 int			get_ants(ENV *e, char **str, int type);
 int			get_command(ENV *e, char *str);
 int			get_room(ENV *e, char **str);

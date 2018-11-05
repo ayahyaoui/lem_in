@@ -74,7 +74,8 @@ int				read_instructions(ENV *e, char *str, int nbline, int ret)
 		ft_strdel(&str);
 	}
 	ft_strdel(&str);
-	apply_commands(e);
+	if ((ret = apply_commands(e)))
+		return (ret);
 	display_anthill(e->anthill);
 	del_anthill(e->anthill);
 	return (NO_ERR);

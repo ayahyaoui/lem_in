@@ -51,5 +51,7 @@ int		set_env(ENV *e)
 	e->ins->room = NULL;
 	e->ins->commands = NULL;
 	e->ins->nb_commands = 0;
+	e->graphe->start = -1;
+	e->graphe->end = -1;
 	return (1);
 }

@@ -1,5 +1,5 @@
 20
-##START
+##start
 zero 0 1
 one 1 2
 two 2 1
@@ -10,7 +10,7 @@ six 7 8
 seven 8 9
 eight 8 7
 nine 9 8
-##END
+##end
 ten 0 1
 zero-one
 zero-three

@@ -41,7 +41,7 @@ int		addneighbour(t_graphe *g, t_file *file, int node, int *tab)
 			g->color[i] = GREY;
 			addfile(file, i);
 			tab[i] = node;
-			if ((unsigned int)i == g->end)
+			if (i == g->end)
 				return (2);
 		}
 	}
