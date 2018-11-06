@@ -50,6 +50,28 @@ static int		get_room_index(ENV *e, char *str)
 }
 
 /*
+** 
+*/
+
+static void		handle_way_spec(ENV *e, char **str1, char **str2, int *way)
+{
+	if (e->options & OPT_WAY)
+	{
+		if ((*str2)[0] == '>')
+		{
+			*way = FORWARD;
+			++(*str2);
+		}
+		if ((*str1)[ft_strlen(*str1) - 1] == '<')
+		{
+			*way = (*way == FORWARD ? BOTH : BACKWARD);
+			(*str1)[ft_strlen(*str1) - 1] = 0;
+		}
+			ft_printf("after handle zqy spec, str0 = %s str1 = %s way = %d\n", *str1, *str2, *way);
+	}
+}
+
+/*
 ** Read tube information, setup and fill adjacency matrix, check start and end
 ** existence
 ** Input: line read on stdin, broken up at '-'
@@ -57,7 +79,7 @@ static int		get_room_index(ENV *e, char *str)
 ** otherwise
 */
 
-int				get_tube(ENV *e, char **str)
+int				get_tube(ENV *e, char **str, int way)
 {
 	static int	it;
 	char		**check;
@@ -74,12 +96,17 @@ int				get_tube(ENV *e, char **str)
 		return (ERR_TUBE);
 	}
 	free_strtab(&check);
+	handle_way_spec(e, &str[0], &str[1], &way);
+			ft_printf("after handle zqy spec, str0 = %s str1 = %s way = %d\n", str[0], str[1], way);
+	
 	i = get_room_index(e, str[0]);
 	j = get_room_index(e, str[1]);
 	if ((i == -1 || j == -1))
 		return (ERR_NOROOM);
-	e->graphe->map[i][j] = 1;
-	e->graphe->map[j][i] = 1;
+	if ((way == FORWARD || way == BOTH) && (e->graphe->map[i][j] = 1))
+		--str[1];
+	if (way == BACKWARD || way == BOTH)
+		e->graphe->map[j][i] = 1;
 	++e->graphe->nb_tubes;
 	return (NO_ERR);
 }

@@ -45,6 +45,7 @@
 
 # define OPT_VERBOSE		1 << ('v' - 'a')
 # define OPT_COLOR		1 << ('c' - 'a')
+# define OPT_WAY		1 << ('w' - 'a')
 
 
 
@@ -102,6 +103,10 @@ enum				e_input
 	INVALID_INPUT, VALID_INPUT
 };	
 
+enum				e_direction
+{
+	FORWARD, BACKWARD, BOTH
+};
 
 enum				e_error
 {
@@ -147,7 +152,7 @@ int			apply_commands(ENV *e);
 int			get_ants(ENV *e, char **str, int type);
 int			get_command(ENV *e, char *str, int option);
 int			get_room(ENV *e, char **str);
-int			get_tube(ENV *e, char **str);
+int			get_tube(ENV *e, char **str, int way);
 int			store_rooms(ENV *e);
 void			link_command(ENV *e, int type, int index);
 int			read_instructions(ENV *e, char *str, int nbline, int ret);

@@ -39,7 +39,7 @@ int				dispatch_ins(ENV *e, char **words, int nb)
 	else if (e->type == ROOM && !endrooms)
 		ret = get_room(e, words);
 	else if (e->type == TUBE && ++endrooms)
-		ret = get_tube(e, words);
+		ret = get_tube(e, words, BOTH);
 	else
 		return (ERR_ORDER);
 	return (ret);

@@ -39,10 +39,10 @@ int		display(ENV *e, char *str)
 {
 	(void)e;
 	e->fd = STDERR;
-	ft_printf("{FD!}Error\n{EOO}", &e->fd);
-	//	if (options & OPT_COLOR)
-	//		e->options = 
+	ft_printf("{FD!}Error{EOO}", &e->fd);
 	if (e->options & OPT_VERBOSE)
 		ft_printf("{FD!}%s%s\n{EOO}", &e->fd, " | ", str);
+	else
+		ft_putchar_fd('\n', e->fd);
 	return (-1);
 }
