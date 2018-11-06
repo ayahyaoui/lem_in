@@ -20,13 +20,12 @@ void			free_graphe(t_graphe *g)
 	int i;
 
 	i = -1;
-	while ((unsigned int)++i < g->nb_rooms)
+	if (g->map)
 	{
-		free(g->map[i]);
-		g->map[i] = 0x0;
+		while ((unsigned int)++i < g->nb_rooms)
+			ft_memdel((void **)&g->map[i]);
+		ft_memdel((void **)&g->map);
 	}
-	free(g->map);
-	g->map = 0x0;
 	ft_memdel((void**)&g->color);
 	free(g);
 	g = 0x0;

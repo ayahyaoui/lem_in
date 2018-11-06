@@ -38,13 +38,15 @@ static int		setup_room_mtrx(ENV *e, int size)
 ** Returns index of room if found | -1 otherwise
 */
 
-static int		get_room_index(ENV *e, char *str)
+static int		get_room_index(ENV *e, char *str, int n)
 {
 	int i;
 
 	i = -1;
 	while ((unsigned int)++i < e->graphe->nb_rooms)
-		if (ft_strequ(e->ins->room[i], str))
+		if (!n && ft_strequ(e->ins->room[i], str))
+			return (i);
+		else if (ft_strnequ(e->ins->room[i], str, n))
 			return (i);
 	return (-1);
 }
@@ -69,9 +71,9 @@ static void		handle_way_spec(ENV *e, char **str1, char **str2, int *way)
 	}
 }
 
-static int		handle_tube_len(ENV *e, char ***str, int *len)
+static int		handle_tube_len(ENV *e, char ***str, char **room, int *len)
 {
-	if (!(e->options & OPT_LENGTH))
+	if (!(e->options & OPT_LENGTH) || !(*str)[1])
 	{
 		*len = 1;
 		return (NO_ERR);
@@ -83,6 +85,7 @@ static int		handle_tube_len(ENV *e, char ***str, int *len)
 		return (ERR_LENGTH);
 	}
 	*len = ft_atoi((*str)[1]);
+	(*room)[ft_strlen((*str)[0])] = 0;
 	return (NO_ERR);
 }
 
@@ -106,22 +109,32 @@ int				get_tube(ENV *e, char **str, int way, int len)
 		return (ERR_ALLOC);
 	if (it == 1 && ++it)
 		store_rooms(e);
-	if (!str[1] || ((check = ft_strsplit(str[1], ' '))[1] && !(e->options & OPT_LENGTH))
-		|| handle_tube_len(e, &check, &len))
+	if (!str[1] || str[2]
+		|| ((check = ft_strsplit(str[1], ' '))[1] && !(e->options & OPT_LENGTH)))
 	{
 		free_strtab(&check);
 		return (ERR_TUBE);
 	}
-	if (len > 1)
-		str[ft_strlen(check[0]) - 1] = 0;
-	free_strtab(&check);
+	if ((i = handle_tube_len(e, &check, &str[1], &len)))
+		return (i);
+	ft_printf("len = %d str1 = %s\n", len, str[1]);
+//	if (e->options & OPT_LENGTH && (check = ft_strsplit(str[1], '='))[1])
+//	{
+//		if (ft_beyondn(check[1], 255))
+//			return (ERR_LENGTH);
+//		else
+//			len = ft_atoi(check[1]);
+//	}
 	handle_way_spec(e, &str[0], &str[1], &way);
-	i = get_room_index(e, str[0]);
-	j = get_room_index(e, str[1]);
+	i = get_room_index(e, str[0], 0);
+	j = get_room_index(e, str[1], len > 1 ? ft_strlen(check[0]) : 0);
+//	if (len > 1)
+//		str[1][ft_strlen(str[1])] = 'a';
+	free_strtab(&check);
 	if ((i == -1 || j == -1))
 		return (ERR_NOROOM);
 	if ((way == FORWARD || way == BOTH) && (e->graphe->map[i][j] = len))
-		--str[1];
+		str[1] -= (e->options & OPT_WAY) ? 1 : 0;
 	if (way == BACKWARD || way == BOTH)
 		e->graphe->map[j][i] = len;
 	++e->graphe->nb_tubes;
