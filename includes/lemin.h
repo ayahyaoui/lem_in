@@ -19,7 +19,7 @@
 # define STDIN			0
 # define STDOUT			1
 # define STDERR			2
-# define ERR_NB			21
+# define ERR_NB			22
 # define NB_COMMANDS		2
 
 # define SPLIT			"error strsplit" // remplacer par erreur + generique
@@ -42,10 +42,12 @@
 # define MAXINT			"max number of ants is 2 147 483 647"
 # define OPTION			"unknown option"
 # define ARG			"unexpected argument, only options allowed"
+# define LENGTH			"please specify tube length below 255"
 
 # define OPT_VERBOSE		1 << ('v' - 'a')
 # define OPT_COLOR		1 << ('c' - 'a')
 # define OPT_WAY		1 << ('w' - 'a')
+# define OPT_LENGTH		1 << ('l' - 'a')
 
 
 
@@ -112,7 +114,7 @@ enum				e_error
 {
 	NO_ERR, ERR_NO_INS, ERR_READ, ERR_ANT_INPUT, ERR_ANT_NB, ERR_INTMAX,
    	ERR_ROOM, ERR_ROOM_CONF, ERR_COORD, ERR_TUBE, ERR_NOTUBE, ERR_NOROOM, ERR_DUP, ERR_ORDER,
-	ERR_START, ERR_END, ERR_LIB, ERR_ALLOC, ERR_HELP, ERR_OPTION, ERR_ARG 
+	ERR_START, ERR_END, ERR_LIB, ERR_ALLOC, ERR_HELP, ERR_OPTION, ERR_ARG, ERR_LENGTH 
 };
 
 int			set_env(ENV *e);
@@ -152,7 +154,7 @@ int			apply_commands(ENV *e);
 int			get_ants(ENV *e, char **str, int type);
 int			get_command(ENV *e, char *str, int option);
 int			get_room(ENV *e, char **str);
-int			get_tube(ENV *e, char **str, int way);
+int			get_tube(ENV *e, char **str, int way, int len);
 int			store_rooms(ENV *e);
 void			link_command(ENV *e, int type, int index);
 int			read_instructions(ENV *e, char *str, int nbline, int ret);

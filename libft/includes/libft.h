@@ -120,6 +120,7 @@ void			ft_putstr_fd(char const *s, int fd);
 size_t			ft_abs(int n);
 unsigned int	ft_base_to_deci(unsigned int num, int base);
 int				ft_beyond_limiti(char *str);
+int				ft_beyondn(char *str, int n);
 double			ft_dabs(double num);
 double			ft_dsqrt(double num);
 size_t			ft_endien_btl(size_t valbe);
