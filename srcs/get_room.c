@@ -64,7 +64,7 @@ int		store_rooms(ENV *e)
 				return (ERR_DUP);
 			++i;
 		}
-		else if (((char *)tmp->content)[1] == '#' && (unsigned int)i != e->graphe->nb_rooms - 1)
+		else if (((char *)tmp->content)[1] == '#' && (unsigned int)i != e->graphe->nb_rooms)
 			get_command(e, ((char *)tmp->content), 1);
 	}
 	return (NO_ERR);

@@ -78,7 +78,7 @@ static int		handle_tube_len(ENV *e, char ***str, char **room, int *len)
 		*len = 1;
 		return (NO_ERR);
 	}
-	ft_printf("check str0 = %s str1 = %s\n", (*str)[0], (*str)[1]);
+//	ft_printf("check str0 = %s str1 = %s\n", (*str)[0], (*str)[1]);
 	if (ft_beyondn((*str)[1], 255) || (*str)[2])
 	{
 		free_strtab(str);
@@ -117,19 +117,9 @@ int				get_tube(ENV *e, char **str, int way, int len)
 	}
 	if ((i = handle_tube_len(e, &check, &str[1], &len)))
 		return (i);
-	ft_printf("len = %d str1 = %s\n", len, str[1]);
-//	if (e->options & OPT_LENGTH && (check = ft_strsplit(str[1], '='))[1])
-//	{
-//		if (ft_beyondn(check[1], 255))
-//			return (ERR_LENGTH);
-//		else
-//			len = ft_atoi(check[1]);
-//	}
 	handle_way_spec(e, &str[0], &str[1], &way);
 	i = get_room_index(e, str[0], 0);
 	j = get_room_index(e, str[1], len > 1 ? ft_strlen(check[0]) : 0);
-//	if (len > 1)
-//		str[1][ft_strlen(str[1])] = 'a';
 	free_strtab(&check);
 	if ((i == -1 || j == -1))
 		return (ERR_NOROOM);

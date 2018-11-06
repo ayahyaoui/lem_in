@@ -42,8 +42,8 @@ int			apply_commands(ENV *e)
 		return (ERR_NOTUBE);
 	while (++index < e->ins->nb_commands)
 	{
-//		if (!e->ins->commands[index])
-//			break;
+		if (!e->ins->commands[index])
+			break;
 		if (e->ins->commands[index][1] == ROOM)
 			f[e->ins->commands[index][0]](e, NULL, e->ins->commands[index][1]);
 	}
@@ -61,10 +61,13 @@ void			link_command(ENV *e, int type, int index)
 
 	while (e->ins->commands[linked] && linked < e->ins->nb_commands)
 	{
+//	ft_printf("now try to link commands of index %d \n", linked);
 		e->ins->commands[linked][1] = type;
 		e->ins->commands[linked][2] = index;
+//		ft_printf("new command = %d %d %d\n", e->ins->commands[linked][0], type, index);
 		++linked;
 	}
+	ft_printf("start in %d end in %d\n", e->graphe->start, e->graphe->end);
 }
 
 /*
@@ -90,6 +93,7 @@ int				get_command(ENV *e, char *str, int option)
 		return (0);
 	e->ins->commands[index] = (int *)ft_memalloc(sizeof(int) * 3);
 	e->ins->commands[index][0] = i;
+//	ft_printf("commands of index %d exists\n", index);
 	if (index < NB_COMMANDS)
 		++index;
 	return (i);

@@ -37,9 +37,10 @@ void		getallpath(t_graphe *g, t_path *path, int node
 		return;
 	if (node != 0)
 		p += (1 << node);
-	i = -1;
-	while ((unsigned int)++i < g->nb_rooms)
+	i = 0;
+	while ((unsigned int)i < g->nb_rooms)
 	{
+//		ft_printf("i = %d nb rooms = %d\n", i, g->nb_rooms);
 		if (g->map[node][i] && i != g->start)
 		{
 			if (!(p & (1 << i))){
@@ -47,6 +48,7 @@ void		getallpath(t_graphe *g, t_path *path, int node
 
 				getallpath(g, path, i, p);}
 		}
+		++i;
 	}
 	g->color[node] = BLACK;
 	//ft_printf("finin%d\n", node);
