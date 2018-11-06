@@ -72,17 +72,7 @@ typedef struct			s_chemins
 	unsigned int			nb_max;
 }							t_chemins;
 */
-/*
-typedef struct		s_graphe
-{
-	unsigned int				taille;
-	char			**map;
-	int				*color; //ft_memalloc(sizeof(int) * nb_rooms);
-	unsigned int				end;
-	unsigned int				begin;
-//	t_tab			*begin
-}					t_graphe;
-*/
+
 typedef struct		s_tab
 {
 	int				length;

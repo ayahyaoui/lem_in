@@ -48,6 +48,9 @@ int		main(int argc, char **argv)
 //	char 		**names; //idem	
 
 	set_env(&e);
+	if ((err = read_options(&e, argv, argc)))
+		return (display(&e, get_errmsg(err)));
+	ft_printf("options %b\n", e.options);
 	if ((err = read_instructions(&e, NULL, 0, 0)))
 	{
 		free_env(&e);

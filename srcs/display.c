@@ -185,11 +185,11 @@ void		display_moves(ENV *e, int **paths, int total)
 	ants = (int **)ft_memalloc(sizeof(int *) * e->nb_paths);	
 	while (++i < e->nb_paths)
 	{
-		j = 1;
+		j = 0; // ancienemment 1
 		ants[i] = (int *)malloc(sizeof(int) * (paths[i][0] + 1));
 		ants[i][0] = paths[i][0];
 		ants[i][1] = paths[i][1];
-		while (++j < paths[i][0] + 1)
+		while (++j < paths[i][0]) // anciennement paths[i][0] + 1
 			ants[i][j] = -1;
 	}
 //	print_movestab(ants, size);

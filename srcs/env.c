@@ -76,7 +76,7 @@ int		set_env(ENV *e)
 		return (ERR_ALLOC);
 	e->ins->nb_ants = 0;
 	e->anthill = NULL;
-	e->options = 2;
+	e->options = 0;
 	e->ins->room = NULL;
 	e->ins->commands = NULL;
 	e->ins->nb_commands = 0;

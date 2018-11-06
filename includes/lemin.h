@@ -19,7 +19,7 @@
 # define STDIN			0
 # define STDOUT			1
 # define STDERR			2
-# define ERR_NB			19
+# define ERR_NB			21
 # define NB_COMMANDS		2
 
 # define SPLIT			"error strsplit" // remplacer par erreur + generique
@@ -40,6 +40,13 @@
 # define NOEND			"missing end indicator"
 # define ROOM_CONF		"confusing room name, please avoid use of '-'"
 # define MAXINT			"max number of ants is 2 147 483 647"
+# define OPTION			"unknown option"
+# define ARG			"unexpected argument, only options allowed"
+
+# define OPT_VERBOSE		1 << ('v' - 'a')
+# define OPT_COLOR		1 << ('c' - 'a')
+
+
 
 
 typedef struct		s_graphe
@@ -66,9 +73,9 @@ typedef struct		s_environment
 	t_input			*ins;
 	t_graphe		*graphe;
 	int			nb_paths;
-	int				options;
-	int				type;
-	int				fd;
+	int			options;
+	int			type;
+	int			fd;
 }					t_environment;
 
 int		choose_method(t_graphe *g);
@@ -100,7 +107,7 @@ enum				e_error
 {
 	NO_ERR, ERR_NO_INS, ERR_READ, ERR_ANT_INPUT, ERR_ANT_NB, ERR_INTMAX,
    	ERR_ROOM, ERR_ROOM_CONF, ERR_COORD, ERR_TUBE, ERR_NOTUBE, ERR_NOROOM, ERR_DUP, ERR_ORDER,
-	ERR_START, ERR_END, ERR_LIB, ERR_ALLOC, ERR_HELP 
+	ERR_START, ERR_END, ERR_LIB, ERR_ALLOC, ERR_HELP, ERR_OPTION, ERR_ARG 
 };
 
 int			set_env(ENV *e);
@@ -125,6 +132,12 @@ int			display(ENV *e, char *str);
 void		display_moves(ENV *e, int **tab, int total);
 void		display_anthill(t_list *anthill);
 void		printlist(ENV *e, t_list *l);
+
+
+int			read_options(ENV *e, char **argv, int argc);
+
+
+
 
 /*
 ** Read and store instructions
