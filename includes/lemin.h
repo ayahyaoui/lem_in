@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 14:48:09 by emuckens          #+#    #+#             */
-/*   Updated: 2018/11/04 20:00:41 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/11/07 15:48:55 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,6 +158,7 @@ int			get_tube(ENV *e, char **str, int way, int len);
 int			store_rooms(ENV *e);
 void			link_command(ENV *e, int type, int index);
 int			read_instructions(ENV *e, char *str, int nbline, int ret);
+int			setup_room_mtrx(ENV *e, int size);
 char		sep(char *line, int *type);
 char		**room_names(t_list *l, int nb_rooms, int **paths, int nb_paths);
 

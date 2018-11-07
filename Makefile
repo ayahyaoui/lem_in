@@ -6,7 +6,7 @@
 #    By: emuckens <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/20 17:52:27 by emuckens          #+#    #+#              #
-#    Updated: 2018/10/31 13:51:46 by emuckens         ###   ########.fr        #
+#    Updated: 2018/11/07 16:02:44 by emuckens         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,7 @@ _HEAD	= lemin.h lem_in.h
 SRC 	= $(patsubst %, $(SRC_DIR)/%, $(_SRC))
 HEAD	= $(patsubst %, $(HEAD_DIR)/$, $(_HEAD))
 BIN	= $(patsubst %.c, $(BIN_DIR)/%.o, $(_SRC))
-LIBFT	:= $(LIBDIR)/libft.a
+LIBFT	:= $(LIB_DIR)/libft.a
 
 #==============================================================================#
 #							       MISC										    

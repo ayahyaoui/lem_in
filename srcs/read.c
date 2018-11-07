@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 14:48:52 by emuckens          #+#    #+#             */
-/*   Updated: 2018/11/07 15:06:56 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/11/07 15:48:14 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,22 @@ int				dispatch_ins(ENV *e, char **words, int nb)
 
 	ret = NO_ERR;
 	if (nb == 1)
+	{
 		ret = get_ants(e, words, e->type);
+		return (ret);
+	}
 	else if (e->type == ROOM && !endrooms)
 		ret = get_room(e, words);
 	else if (e->type == TUBE && ++endrooms)
+	{
+		if (endrooms == 1)
+		{
+			ret = store_rooms(e);
+			if (ret || (ret = setup_room_mtrx(e, e->graphe->nb_rooms)))
+				return (ret);
+		}
 		ret = get_tube(e, words, BOTH, 1);
+	}
 	else
 		return (ERR_ORDER);
 	return (ret);
@@ -68,7 +79,7 @@ int				read_instructions(ENV *e, char *str, int nbline, int ret)
 			}
 			free_strtab(&words);
 		}
-		else if (str[1] == '#' && ft_printf("check str: %s\n", str) &&
+		else if (str[1] == '#' /*&& ft_printf("check str: %s\n", str) */&&
 get_command(e, str, 0))
 		{
 			++e->ins->nb_commands;

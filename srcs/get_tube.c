@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/10 17:50:41 by emuckens          #+#    #+#             */
-/*   Updated: 2018/11/07 15:11:26 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/11/07 16:00:10 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 ** Returns true for successful allocation | False otherwise
 */
 
-static int		setup_room_mtrx(ENV *e, int size)
+int		setup_room_mtrx(ENV *e, int size)
 {
 	int		i;
 
@@ -44,10 +44,14 @@ static int		get_room_index(ENV *e, char *str, int n)
 
 	i = -1;
 	while ((unsigned int)++i < e->graphe->nb_rooms)
+	{
 		if (!n && ft_strequ(e->ins->room[i], str))
+		{
 			return (i);
-		else if (ft_strnequ(e->ins->room[i], str, n))
+		}
+		else if (n && ft_strnequ(e->ins->room[i], str, n))
 			return (i);
+	}
 	return (-1);
 }
 
@@ -100,15 +104,10 @@ static int		handle_tube_len(ENV *e, char ***str, char **room, int *len)
 
 int				get_tube(ENV *e, char **str, int way, int len)
 {
-	static int	it;
 	char		**check;
 	int			i;
 	int			j;
 
-	if (!it && ++it && setup_room_mtrx(e, e->graphe->nb_rooms))
-		return (ERR_ALLOC);
-	if (it == 1 && ++it)
-		store_rooms(e);
 	if (!str[1] || str[2]
 		|| ((check = ft_strsplit(str[1], ' '))[1] && !(e->options & OPT_LENGTH)))
 	{

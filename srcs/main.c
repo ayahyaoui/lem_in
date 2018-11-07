@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 14:58:47 by emuckens          #+#    #+#             */
-/*   Updated: 2018/11/04 20:01:26 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/11/07 15:49:47 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ int		main(int argc, char **argv)
 	set_env(&e);
 	if ((err = read_options(&e, argv, argc)))
 		return (display(&e, get_errmsg(err)));
-	ft_printf("options %b\n", e.options);
 	if ((err = read_instructions(&e, NULL, 0, 0)))
 	{
 		free_env(&e);
