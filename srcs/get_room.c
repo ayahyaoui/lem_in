@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/10 17:40:04 by emuckens          #+#    #+#             */
-/*   Updated: 2018/11/04 20:01:24 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/11/07 15:06:58 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int		store_rooms(ENV *e)
 				return (ERR_DUP);
 			++i;
 		}
-		else if (((char *)tmp->content)[1] == '#' && (unsigned int)i != e->graphe->nb_rooms - 1)
+		else if (((char *)tmp->content)[1] == '#' /*&& (unsigned int)i != e->graphe->nb_rooms - 1*/)
 			get_command(e, ((char *)tmp->content), 1);
 	}
 	return (NO_ERR);

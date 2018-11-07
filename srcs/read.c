@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 14:48:52 by emuckens          #+#    #+#             */
-/*   Updated: 2018/11/04 20:01:28 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/11/07 15:06:56 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,11 @@ int				read_instructions(ENV *e, char *str, int nbline, int ret)
 			}
 			free_strtab(&words);
 		}
-		else if (str[1] == '#' && get_command(e, str, 0))
+		else if (str[1] == '#' && ft_printf("check str: %s\n", str) &&
+get_command(e, str, 0))
+		{
 			++e->ins->nb_commands;
+					}
 		line = ft_lstnew(tmp = ft_strdup(str), ft_strlen(str) + 1);
 		ft_strdel(&tmp); //ajoute pour pouvoir free le contenu duplique
 		ft_lstaddend(&e->anthill, line);

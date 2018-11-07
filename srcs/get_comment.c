@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/10 18:01:15 by emuckens          #+#    #+#             */
-/*   Updated: 2018/11/04 19:55:32 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/11/07 15:05:43 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,12 @@ int			apply_commands(ENV *e)
 		return (ERR_NOTUBE);
 	while (++index < e->ins->nb_commands)
 	{
-//		if (!e->ins->commands[index])
-//			break;
+		if (!e->ins->commands[index])
+			break;
 		if (e->ins->commands[index][1] == ROOM)
-			f[e->ins->commands[index][0]](e, NULL, e->ins->commands[index][1]);
+			f[e->ins->commands[index][0]](e, NULL, e->ins->commands[index][2]);
 	}
+//	ft_printf("start = %d end = %d\n", e->graphe->start, e->graphe->end);
 	if (e->graphe->start == -1)
 		return (ERR_START);
 	if (e->graphe->end == -1)
@@ -58,11 +59,14 @@ int			apply_commands(ENV *e)
 void			link_command(ENV *e, int type, int index)
 {
 	static int	linked;
-
+	
+//	ft_printf("linked = %d nb commands = %d\n", linked, e->ins->nb_commands);
 	while (e->ins->commands[linked] && linked < e->ins->nb_commands)
 	{
 		e->ins->commands[linked][1] = type;
 		e->ins->commands[linked][2] = index;
+//	ft_printf("commands[linkded] [0] = %d\n", e->ins->commands[linked][0]);
+//	ft_printf("commands[linkded] [1] = %d [2] = %d\n", type, index);
 		++linked;
 	}
 }
@@ -82,14 +86,17 @@ int				get_command(ENV *e, char *str, int option)
 	while (++i < NB_COMMANDS)
 		if (ft_strequ(str, ref[i]))
 		{
+//			ft_printf("string: %s match found! option = %d\n", str, option);
 			if (option == 0)
 				return (1);
 			break;
 		}
 	if (i == NB_COMMANDS) 
 		return (0);
+//	ft_printf("i = %d index = %d\n", i, index);
 	e->ins->commands[index] = (int *)ft_memalloc(sizeof(int) * 3);
 	e->ins->commands[index][0] = i;
+//	ft_printf("commands index 0 = %d\n", e->ins->commands[index][0]);
 	if (index < NB_COMMANDS)
 		++index;
 	return (i);
