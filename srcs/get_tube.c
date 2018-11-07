@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/10 17:50:41 by emuckens          #+#    #+#             */
-/*   Updated: 2018/11/07 16:00:10 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/11/07 16:44:45 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,9 @@ static int		get_room_index(ENV *e, char *str, int n)
 	i = -1;
 	while ((unsigned int)++i < e->graphe->nb_rooms)
 	{
-		if (!n && ft_strequ(e->ins->room[i], str))
-		{
+		if (!n && ft_strequ(e->ins->room[i].name, str))
 			return (i);
-		}
-		else if (n && ft_strnequ(e->ins->room[i], str, n))
+		else if (n && ft_strnequ(e->ins->room[i].name, str, n))
 			return (i);
 	}
 	return (-1);

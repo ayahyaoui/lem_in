@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 14:48:09 by emuckens          #+#    #+#             */
-/*   Updated: 2018/11/07 15:48:55 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/11/07 16:44:41 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,9 @@
 # define STDIN			0
 # define STDOUT			1
 # define STDERR			2
-# define ERR_NB			22
+# define ERR_NB			21
 # define NB_COMMANDS		2
 
-# define SPLIT			"error strsplit" // remplacer par erreur + generique
 # define NOINS			"empty file"
 # define ANT_INPUT		"invalid ant format"
 # define ANT_NB			"not enough ants!"
@@ -62,10 +61,16 @@ typedef struct		s_graphe
 	int				end;
 }					t_graphe;
 
+typedef struct		s_room
+{
+	char *name;
+	t_4ivect	pos; 
+}					t_room;
+
 typedef struct 		s_input
 {
 	int 			nb_ants;
-	char			**room;
+	t_room			*room;
 	int			**commands;
 	int			nb_commands;
 }					t_input;

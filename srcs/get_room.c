@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/10 17:40:04 by emuckens          #+#    #+#             */
-/*   Updated: 2018/11/07 15:50:34 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/11/07 16:44:39 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int		is_dup(ENV *e, char *str, int max_index)
 
 	i = -1;
 	while (++i < max_index)
-		if (ft_strequ(str, e->ins->room[i]))
+		if (ft_strequ(str, e->ins->room[i].name))
 			return (1);
 	return (0);
 }
@@ -40,11 +40,11 @@ int		store_rooms(ENV *e)
 {
 	int	i;
 	t_list	*tmp;
-	int	len;
+	char	**split;
 
 	i = 0;
 	tmp = e->anthill;
-	if (!(e->ins->room = (char **)ft_memalloc(sizeof(char *) * (e->graphe->nb_rooms + 1))))
+	if (!(e->ins->room = (t_room *)ft_memalloc(sizeof(t_room) * (e->graphe->nb_rooms + 1))))
 		return (ERR_ALLOC);
 	if (!(e->ins->commands = (int **)ft_memalloc(sizeof(int *) * (e->ins->nb_commands + 1))))
 		return (ERR_ALLOC);
@@ -54,13 +54,12 @@ int		store_rooms(ENV *e)
 	{
 		if (((char *)tmp->content)[0] != '#')
 		{
-			len = 0;
-			while (((char *)tmp->content)[len] != ' ')
-				++len;
-			e->ins->room[i] = (char *)ft_strnew(len);
+			split = ft_strsplit((char *)tmp->content, ' ');
+			e->ins->room[i].name = (char *)ft_strdup(split[0]);
+			ft_4ivinit(&e->ins->room[i].pos, ft_atoi(split[1]), ft_atoi(split[2]), 0); // put z to random for 3D
+			free_strtab(&split);
 			link_command(e, ROOM, i);
-			ft_strncat(e->ins->room[i], (char *)tmp->content, len);
-			if (is_dup(e, e->ins->room[i], i))
+			if (is_dup(e, e->ins->room[i].name, i))
 				return (ERR_DUP);
 			++i;
 		}

@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 14:31:00 by anyahyao          #+#    #+#             */
-/*   Updated: 2018/11/04 14:57:42 by anyahyao         ###   ########.fr       */
+/*   Updated: 2018/11/07 16:28:03 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_tab	*addpath(t_graphe *g, int path);
 int		*my_best_tab(t_graphe *g, t_path *p, unsigned int lenMax, t_tab ***best_tab);
 //int		searchNpath(t_path *p, t_fusion *prev, t_fusion *next);
 
-void		parcours_recursif();
+void		parcours_recursif(void);
 
 /**
 **	test pour tout les graphe dont le nombre de noeud est inerieure a 32
