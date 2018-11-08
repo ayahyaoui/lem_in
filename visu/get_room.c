@@ -6,12 +6,11 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/10 17:40:04 by emuckens          #+#    #+#             */
-/*   Updated: 2018/11/07 19:20:04 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/11/08 16:36:15 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lemin.h"
-#include "libft.h"
+#include "visu.h"
 #include <stdlib.h>
 
 /*
@@ -19,13 +18,13 @@
 ** Returns true if name has already been stored | false otherwise
 */
 
-int		is_dup(ENV *e, char *str, int max_index)
+int		is_dup(VISU *v, char *str, int max_index)
 {
 	int i;
 
 	i = -1;
 	while (++i < max_index)
-		if (ft_strequ(str, e->ins->room[i].name))
+		if (ft_strequ(str, v->ins->room[i].name))
 			return (1);
 	return (0);
 }
@@ -36,46 +35,47 @@ int		is_dup(ENV *e, char *str, int max_index)
 ** returns err code if error, 0 if success
 */
 
-int		store_rooms(ENV *e)
+int		store_rooms(VISU *v)
 {
 	int	i;
 	t_list	*tmp;
 	char	**split;
 
 	i = 0;
-	tmp = e->anthill;
-	if (!(e->ins->room = (t_room *)ft_memalloc(sizeof(t_room) * (e->graphe->nb_rooms + 1))))
+	tmp = v->anthill;
+	if (!(v->ins->room = (t_room *)ft_memalloc(sizeof(t_room) * (v->graphe->nb_rooms + 1))))
 		return (ERR_ALLOC);
-	if (!(e->ins->commands = (int **)ft_memalloc(sizeof(int *) * (e->ins->nb_commands + 1))))
+	if (!(v->ins->commands = (int **)ft_memalloc(sizeof(int *) * (v->ins->nb_commands + 1))))
 		return (ERR_ALLOC);
 	while (((char *)tmp->content)[0] == '#')
 		tmp = tmp->next;
-	while ((tmp = tmp->next) && ((unsigned int)i < e->graphe->nb_rooms))
+	while ((tmp = tmp->next) && ((unsigned int)i < v->graphe->nb_rooms))
 	{
 		if (((char *)tmp->content)[0] != '#')
 		{
 			split = ft_strsplit((char *)tmp->content, ' ');
-			e->ins->room[i].name = (char *)ft_strdup(split[0]);
-			ft_4vinit(&e->ins->room[i].pos, ft_atoi(split[1]), ft_atoi(split[2]), 0); // put z to random for 3D
+			v->ins->room[i].name = (char *)ft_strdup(split[0]);
+			ft_4ivinit(&v->ins->room[i].pos, ft_atoi(split[1]), ft_atoi(split[2]), rand() % 100); // put z to random for 3D
+			ft_printf("store room %s with coord %d %d %d\n", v->ins->room[i].name, v->ins->room[i].pos.x, v->ins->room[i].pos.y, v->ins->room[i].pos.z);
 			free_strtab(&split);
-			link_command(e, ROOM, i);
-			if (is_dup(e, e->ins->room[i].name, i))
+			link_command(v, ROOM, i);
+			if (is_dup(v, v->ins->room[i].name, i))
 				return (ERR_DUP);
 			++i;
 		}
 		else if (((char *)tmp->content)[1] == '#' /*&& (unsigned int)i != e->graphe->nb_rooms - 1*/)
-			get_command(e, ((char *)tmp->content), 1);
+			get_command(v, ((char *)tmp->content), 1);
 	}
 	return (NO_ERR);
 }
 
-void			print_rooms(ENV *e, char **room) // only for debug, delete
+void			print_rooms(VISU *v, char **room) // only for debug, delete
 {
 	int i;
 
 	i = -1;
-	ft_printf("list of %d rooms", e->graphe->nb_rooms);
-	while ((unsigned int)++i < e->graphe->nb_rooms)
+	ft_printf("list of %d rooms", v->graphe->nb_rooms);
+	while ((unsigned int)++i < v->graphe->nb_rooms)
 		ft_printf("%s ", room[i]);
 	ft_printf("\n");
 }
@@ -87,13 +87,13 @@ void			print_rooms(ENV *e, char **room) // only for debug, delete
 ** Returns true if room valid and successfully stored | false otherwise
 */
 
-int				get_room(ENV *e, char **str)
+int				get_room(VISU *v, char **str)
 {
 	if (str[1] && str[2] && !str[3])
 	{
 		if (!is_number(str[1]) || !is_number(str[2]))
 			return (ERR_COORD);
-		++e->graphe->nb_rooms;
+		++v->graphe->nb_rooms;
 		return (NO_ERR);
 	}
 	return (ERR_ROOM);

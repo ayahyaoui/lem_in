@@ -1,21 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_4vinit.c                                        :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/05/20 15:21:27 by emuckens          #+#    #+#             */
-/*   Updated: 2018/11/08 14:45:49 by emuckens         ###   ########.fr       */
+/*   Created: 2018/10/20 18:34:11 by emuckens          #+#    #+#             */
+/*   Updated: 2018/11/08 15:40:11 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "visu.h"
 
-void	ft_4vinit(t_4vect *v, double x, double y, double z)
+int		is_number(char *str)
 {
-	v->x = x;
-	v->y = y;
-	v->z = z;
-	v->w = 1;
+	while (*str)
+	{
+		if (!ft_isdigit(*str))
+			return (0);
+		++str;
+	}
+	return (1);
 }
+

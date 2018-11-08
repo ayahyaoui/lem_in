@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/09 12:08:15 by emuckens          #+#    #+#             */
-/*   Updated: 2018/10/20 02:02:09 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/11/08 16:35:26 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,6 +182,9 @@ char			*ft_strtrim(char const *s);
 /*
 ** Vectors & matrices
 */
+void			ft_44imtrxmtrx_mul(int (*dest)[4][4],
+				int m1[4][4], int m2[4][4]);
+t_4ivect		ft_4imtrxvect_mul(double (*m)[4][4], t_4ivect *ver);
 void			ft_44maddd(double (*m)[4][4], double val);
 void			ft_44maddrows(double (*m)[4][4], int row_dest, int row_add);
 void			ft_44mcpy(double (*dest)[4][4], double (src)[4][4]);

@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 14:48:09 by emuckens          #+#    #+#             */
-/*   Updated: 2018/11/07 19:20:12 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/11/08 15:31:30 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #define __LEMIN__
 
 #include "libft.h"
+#include "visu.h"
 
 # define ENV			t_environment
 # define STDIN			0
@@ -75,18 +76,7 @@ typedef struct 		s_input
 	int			nb_commands;
 }					t_input;
 
-typedef struct		s_environment
-{
-	t_list			*anthill;
-	t_input			*ins;
-	t_graphe		*graphe;
-	int			nb_paths;
-	int			options;
-	int			type;
-	int			fd;
-}					t_environment;
-
-int		choose_method(t_graphe *g);
+:nt		choose_method(t_graphe *g);
 void		free_graphe(t_graphe *g);
 
 
@@ -122,17 +112,17 @@ enum				e_error
 	ERR_START, ERR_END, ERR_LIB, ERR_ALLOC, ERR_HELP, ERR_OPTION, ERR_ARG, ERR_LENGTH 
 };
 
-int			set_env(ENV *e);
-void			free_env(ENV *e);
+int			set_env(VISU *v);
+void			free_env(VISU *v);
 void			free_strtab(char ***tab);
 void			del_anthill(t_list *l);
 char			*get_errmsg(int code);
 
-int			is_dup(ENV *e, char *str, int max_index);
+int			is_dup(VISU *v, char *str, int max_index);
 
 //TEMP
 void		display_adj_mtrx(int **tab, int size);
-void		print_rooms(ENV *e, char **rooms);
+void		print_rooms(VISU *v, char **rooms);
 
 
 
@@ -140,13 +130,13 @@ void		print_rooms(ENV *e, char **rooms);
 ** Display
 */
 
-int			display(ENV *e, char *str);
-void		display_moves(ENV *e, int **tab, int total);
+int			display(VISU *v, char *str);
+void		display_moves(VISU *v, int **tab, int total);
 void		display_anthill(t_list *anthill);
-void		printlist(ENV *e, t_list *l);
+void		printlist(VISU *v, t_list *l);
 
 
-int			read_options(ENV *e, char **argv, int argc);
+int			read_options(VISU *v, char **argv, int argc);
 
 
 
@@ -155,15 +145,15 @@ int			read_options(ENV *e, char **argv, int argc);
 ** Read and store instructions
 */
 
-int			apply_commands(ENV *e);
-int			get_ants(ENV *e, char **str, int type);
-int			get_command(ENV *e, char *str, int option);
-int			get_room(ENV *e, char **str);
-int			get_tube(ENV *e, char **str, int way, int len);
-int			store_rooms(ENV *e);
-void			link_command(ENV *e, int type, int index);
-int			read_instructions(ENV *e, char *str, int nbline, int ret);
-int			setup_room_mtrx(ENV *e, int size);
+int			apply_commands(VISU *v);
+int			get_ants(VISU *v, char **str, int type);
+int			get_command(VISU *v, char *str, int option);
+int			get_room(VISU *v, char **str);
+int			get_tube(VISU *v, char **str, int way, int len);
+int			store_rooms(VISU *e);
+void			link_command(VISU *v, int type, int index);
+int			read_instructions(VISU *v, char *str, int nbline, int ret);
+int			setup_room_mtrx(VISU *v, int size);
 char		sep(char *line, int *type);
 char		**room_names(t_list *l, int nb_rooms, int **paths, int nb_paths);
 

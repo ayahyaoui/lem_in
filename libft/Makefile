@@ -6,7 +6,7 @@
 #    By: emuckens <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/07 16:46:27 by emuckens          #+#    #+#              #
-#    Updated: 2018/10/20 02:02:27 by emuckens         ###   ########.fr        #
+#    Updated: 2018/11/08 16:34:04 by emuckens         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ SRCS_NUM = ft_abs.c ft_base_to_deci.c ft_beyond_limiti.c ft_beyondn.c ft_dabs.c 
 
 SRCS_STR = get_next_line2.c ft_strcat.c ft_strchr.c ft_strchri.c ft_strclr.c ft_strcmp.c ft_strcpy.c ft_strcstr.c ft_strdel.c ft_strdup.c ft_strdupf.c ft_strequ.c ft_striter.c ft_striteri.c ft_strjoin.c ft_strjoinf.c ft_strlcat.c ft_strlen.c ft_strmap.c ft_strmapi.c ft_strnbc.c ft_strnbci.c ft_strncat.c ft_strncmp.c ft_strncpy.c ft_strnequ.c ft_strnew.c ft_strnstr.c ft_strrchr.c ft_strsplit.c ft_strstr.c ft_strsub.c ft_strsubf.c ft_strtrim.c
 
-SRCS_VEC = ft_44maddd.c ft_44maddrows.c ft_44mcpy.c ft_44minit.c ft_44mrow_addd.c ft_44mswap_rows.c ft_44mtrxmtrx_mul.c ft_44mtranspose.c ft_4fvcpy.c ft_4fvinit.c ft_4ivcpy.c ft_4ivinit.c ft_4mtrxvect_mul.c ft_4vcpy.c ft_4vectvect_mul.c ft_4vinit.c ft_get4mcol.c ft_get4mrow.c ft_getmval.c ft_swap4v.c
+SRCS_VEC = ft_44imtrxmtrx_mul.c ft_44maddd.c ft_44maddrows.c ft_44mcpy.c ft_44minit.c ft_44mrow_addd.c ft_44mswap_rows.c ft_44mtrxmtrx_mul.c ft_44mtranspose.c ft_4fvcpy.c ft_4fvinit.c ft_4ivcpy.c ft_4ivinit.c ft_4imtrxvect_mul.c ft_4mtrxvect_mul.c ft_4vcpy.c ft_4vectvect_mul.c ft_4vinit.c ft_get4mcol.c ft_get4mrow.c ft_getmval.c ft_swap4v.c
 
 FTPRINTF_SRCS = add_prefix.c add_sign.c add_to_buffer.c ft_strncpyi.c apply_specs.c apply_specs_cs.c colors.c ft_printbit.c ft_itoa_base_cust.c itoa_cust_var.c unicode.c attributes_tools.c read_until_arg.c ft_printf.c init_or_clear.c read_attributes.c read_until_arg.c getarg_int.c getarg_nomod.c getarg_uns.c nblen.c negative_arg.c ft_bigc.c ft_bigo.c ft_bigu.c ft_c.c ft_i.c ft_o.c ft_u.c ft_bigd.c ft_bigs.c ft_bigx.c ft_d.c ft_noconv.c ft_p.c ft_s.c ft_x.c ft_n.c ft_b.c mng_nullarg.c ftp_abs.c ftp_isalpha.c ftp_isdigit.c ftp_maxint.c ftp_nblen.c ftp_strcstr.c ftp_strequ.c ftp_strlen.c ftp_strnequ.c ftp_toupper.c ftp_strcmp.c ftp_strncmp.c
 
