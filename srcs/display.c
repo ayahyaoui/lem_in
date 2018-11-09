@@ -133,34 +133,41 @@ void		move_next_room(int **paths, int ***ants, int nb_paths, int turn)
 }
 
 
-int		display_travelling(ENV *e, int **ants, int turn)
+int		display_travelling(ENV *e, int turn)
 {
-	int i;
+	int comb;
+	int path;
 	int j;
-	int ant;
+//	int ant;
 	int arrived;
 
 	j = 0;
-	ant = 1;
+//	ant = 1;
 	arrived = 0;
 //	ft_printf("turn = %d\n", turn);
 	while (++j < turn)
 	{
-		i = -1;
-		while (++i < e->nb_paths)
+		comb = -1;
+		while (e->ants[comb])
 		{
-//			ft_printf("j = %d ants i 0 = %d\n", j, ants[i][0]);
-			if (j <= ants[i][0] && arrived < ((t_input *)e->ins)->nb_ants)
+			path = 0;
+			while (e->ants[comb][path])
 			{
-//				ft_printf("room code = %d for ant # %d\n", ants[i][j], ant);
-				if (ants[i][j] != -1)
-					ft_printf("L%d-%s ", ant, e->ins->room[ants[i][j]]);
-				else
-					++arrived;
-			
-			++ant;
+//			while (++i < e->nb_paths)
+//			{
+//			ft_printf("j = %d ants i 0 = %d\n", j, ants[i][0]);
+				if (j <= e->ants[comb][path][0] && arrived < ((t_input *)e->ins)->nb_ants)
+				{
+//					ft_printf("room code = %d for ant # %d\n", ants[i][j], ant);
+					if (e->ants[comb][path][j] != -1)
+						ft_printf("L%d-%s ", ant, e->ins->room[e->ants[comb][path][j]]);
+					else
+						++arrived;
+				}
+				++path;	
+//			++ant;
 			}
-			
+			++comb;
 		}
 	}
 
@@ -169,33 +176,72 @@ int		display_travelling(ENV *e, int **ants, int turn)
 	return (arrived);
 }
 
+int		ant_in_room(int comb, int path, int room)
+{
+	int i;
+	int j;
+
+	i = 0;
+	while (e->ants[i])
+	{
+		if (i != comb)
+		{
+			j = 0;
+			while (e->ants[i][j])
+			{
+				if (ft_isintab(e->ants[i][j].tab, room))
+					return (1);
+				++j;
+			}
+		}
+		++i;
+	}
+
+}
 
 
 
-void		display_moves(ENV *e, int **paths, int total)
+void		display_moves(ENV *e, t_tab *paths, int total, int comb)
 {
 	int **ants;
 	int	i;
 	int 	j;
+	int	nb_paths;
 
+	nb_paths = 0;
+	while (paths[nb_paths])
+		++nb_paths;
 	int turn;
 	(void)total;
 	i = -1;
 	turn = 2;
-	ants = (int **)ft_memalloc(sizeof(int *) * e->nb_paths);	
-	while (++i < e->nb_paths)
+	e->ants[comb] = (int **)ft_memalloc(sizeof(int *) * nb_paths);	
+	while (++i < nb_paths)
 	{
 		j = 0; // ancienemment 1
-		ants[i] = (int *)malloc(sizeof(int) * (paths[i][0] + 1));
-		ants[i][0] = paths[i][0];
-		ants[i][1] = paths[i][1];
-		while (++j < paths[i][0]) // anciennement paths[i][0] + 1
-			ants[i][j] = -1;
+		e->ants[comb][i] = (int *)malloc(sizeof(int) * (paths[i].tab[0] + 1));
+		e->ants[comb][i][0] = paths[i].tab[0];
+		e->ants[comb][i][1] = paths[i].tab[1];
+		while (++j < paths[i].tab[0]) // anciennement paths[i][0] + 1
+			e->ants[comb][i][j] = -1;
 	}
+	// ajuster a nouveau param 
 //	print_movestab(ants, size);
-	while (display_travelling(e, ants, turn) < total)
+	while (display_travelling(e, turn) < total)
 	{
-		move_next_room(paths, &ants, e->nb_paths, turn);
+		move_next_room(paths, &ants, nb_paths, turn);
 		++turn;
 	}
 }
+
+void		display_allmoves(ENV *e, t_tab ***paths, int arrived)
+{
+	int nb_comb;
+
+	nb_comb = 0;
+	while (paths[nb_comb])
+		++nb_comb;
+	e->ants = (int ***)ft_memalloc(sizeof(int *) * nb_comb);
+
+}
+
