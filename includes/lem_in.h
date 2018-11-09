@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/30 19:00:27 by anyahyao          #+#    #+#             */
-/*   Updated: 2018/11/04 17:59:11 by anyahyao         ###   ########.fr       */
+/*   Updated: 2018/11/09 15:09:08 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,14 +72,14 @@ typedef struct			s_chemins
 	unsigned int			nb_max;
 }							t_chemins;
 */
-
+/*
 typedef struct		s_tab
 {
 	int				length;
 	int				*tab;
 	//int					nb_ant;
 }					t_tab;
-
+*/
 typedef struct		s_file
 {
 	int				begin;

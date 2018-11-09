@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 14:48:09 by emuckens          #+#    #+#             */
-/*   Updated: 2018/11/07 19:20:12 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/11/09 16:03:22 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,18 +75,26 @@ typedef struct 		s_input
 	int			nb_commands;
 }					t_input;
 
+typedef struct		s_tab
+{
+	int			*tab;
+	int			length;
+}					t_tab;
+
+
 typedef struct		s_environment
 {
 	t_list			*anthill;
 	t_input			*ins;
 	t_graphe		*graphe;
+	int			***ants;
 	int			nb_paths;
 	int			options;
 	int			type;
 	int			fd;
 }					t_environment;
 
-int		choose_method(t_graphe *g);
+t_tab	***choose_method(t_graphe *g);
 void		free_graphe(t_graphe *g);
 
 
@@ -121,6 +129,9 @@ enum				e_error
    	ERR_ROOM, ERR_ROOM_CONF, ERR_COORD, ERR_TUBE, ERR_NOTUBE, ERR_NOROOM, ERR_DUP, ERR_ORDER,
 	ERR_START, ERR_END, ERR_LIB, ERR_ALLOC, ERR_HELP, ERR_OPTION, ERR_ARG, ERR_LENGTH 
 };
+
+void		display_allmoves(ENV *e, t_tab ***paths, int arrived);
+void		display_besttab(t_tab ***tab);
 
 int			set_env(ENV *e);
 void			free_env(ENV *e);
