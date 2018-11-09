@@ -46,8 +46,11 @@ void	display_besttab(t_tab ***tab)
 	for (int comb = 0; tab[comb]; ++comb)
 	{
 		for (int path = 0; tab[comb][path]; ++path)
+		{
 			for (int i = 0; i < tab[comb][path]->length; ++i)
 				ft_printf("%d ", tab[comb][path]->tab[i]);
+
+		}
 //			ft_print_inttab(tab[comb][path]->tab, tab[comb][path]->length, ' ');
 		ft_printf("\n");
 	}
@@ -137,6 +140,7 @@ int		main(int argc, char **argv)
 	e.graphe->color = (int *)ft_memalloc(e.graphe->nb_rooms * sizeof(int));
 	paths  = choose_method(e.graphe);
 	display_besttab(paths);
+	paths[0][0]->tab[0] = 100;
 //	paths = get_pathstab();
 	display_allmoves(&e, paths, 0);
 
