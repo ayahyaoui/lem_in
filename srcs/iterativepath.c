@@ -26,6 +26,19 @@
  *	le debut et different de la fin
  */
 
+int		static removepath(t_graphe *g, t_file *file)
+{
+	int i;
+
+	i = file->begin;
+	while (i < file->end - 1)
+	{
+		j = -1;
+		while (++j < g->nb_rooms)
+			g->map[j][file->tab[i]] = 0;
+	}
+}
+
 int		addneighbour(t_graphe *g, t_file *file, int node, int *tab)
 {
 	int i;
@@ -76,12 +89,16 @@ int				dijistra(t_graphe *g)
 {
 	int		*tab;
 	t_file		*file;
+	t_tab	***res;
 
 	file = new_file(g);
 	if(!(tab = (int *)ft_memalloc(sizeof(int) * g->nb_rooms)))
 		return (-1);
 	if (iterative_path(g, tab, file))
+	{
 		displaypath(g, tab);
+		
+	}
 	else
 		ft_putstr("Il est impossible de trouver un chemin arrivant a la fin\n");
 	free_file(&file);
