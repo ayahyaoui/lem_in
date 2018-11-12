@@ -87,7 +87,7 @@ typedef struct		s_environment
 	t_list			*anthill;
 	t_input			*ins;
 	t_graphe		*graphe;
-	int			***ants;
+	int			**ants;
 	int			nb_paths;
 	int			options;
 	int			type;
@@ -142,7 +142,7 @@ char			*get_errmsg(int code);
 int			is_dup(ENV *e, char *str, int max_index);
 
 //TEMP
-void		display_adj_mtrx(int **tab, int size);
+void		display_adj_mtrx(ENV *e, char **tab, int size);
 void		print_rooms(ENV *e, char **rooms);
 
 
