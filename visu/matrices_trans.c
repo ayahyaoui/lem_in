@@ -33,7 +33,7 @@ void	ft_getm_heightinit(VISU *v, double (*dest)[4][4])
 void	ft_getm_move(VISU *v, double (*dest)[4][4])
 {
 	ft_printf("move hor = %d move ver = %d\n", v->uinput.mv_hor, v->uinput.mv_ver);
-	ft_4ivinit(&v->shift, v->uinput.mv_hor, v->uinput.mv_ver, 0);
+	ft_4vinit(&v->shift, v->uinput.mv_hor, v->uinput.mv_ver, 0);
 	v->center = 0;
 	ft_getm_trans(v, dest);
 }

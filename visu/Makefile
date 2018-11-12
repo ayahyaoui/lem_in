@@ -22,6 +22,7 @@ FSANI		:= -fsanitize=address
 CC		:= gcc $(FLAGS)
 CCF		:= $(CC) $(FSANI)
 FRAMEWORKS = -framework OpenGL -framework AppKit
+FRAMEWORKS_L = -lmlx -L $(MLXDIR) -lXext -lX11
 
 #==============================================================================#
 #								DIRECTORIES									    
@@ -30,14 +31,15 @@ FRAMEWORKS = -framework OpenGL -framework AppKit
 BIN_DIR 	:= bin
 LIB_DIR 	:= ../libft
 MLX_DIR 	:= /usr/local
-
+X11DIR = /usr/include/X11/
 #==============================================================================#
 #								    FILES									   
 #==============================================================================#
 
 SRC	= main.c image.c window.c deal_key.c env.c plot.c matrices_center.c \
-  matrices_rot.c matrices_scale.c matrices_trans.c apply_transformation.c \
+matrices_scale.c matrices_trans.c apply_transformation.c \
   get_room.c get_tube.c get_comment.c read.c display.c free.c get_ants.c error.c utils.c 
+#  matrices_rot.c 
 HEAD	= visu.h
 
 BIN	= $(patsubst %.c, $(BIN_DIR)/%.o, $(SRC))
@@ -54,6 +56,11 @@ INDEX := 0
 #							       RULES									    
 #==============================================================================#
 
+##only for linux
+LIBMLX = $(addprefix $(MLXDIR), libmlx.a)
+MLXDIR = minilibx
+
+
 
 .PHONY: all clean fclean re simple debug
 
@@ -61,9 +68,17 @@ all:
 	@make $(NAME)
 #	cp $(NAME) test/
 
-$(NAME): $(BIN) $(LIBFT)
-	@$(CC) -o $(NAME) $(BIN) -lmlx -L $(MLX_DIR)/lib -lft -L $(LIB_DIR) $(FRAMEWORKS) 	
+
+$(NAME): $(BIN) $(LIBFT) $(LIBMLX)
+	@$(CCF) -o $(NAME) $(BIN) $(FRAMEWORKS_L) -lft -L $(LIB_DIR)	
 	@echo "\r>>> \033[01;32m$(NAME) READY              \033[0m"
+
+#$(NAME): $(BIN) $(LIBFT)
+#	@$(CC) -o $(NAME) $(BIN) -lmlx -L $(MLX_DIR)/lib -lft -L $(LIB_DIR) $(FRAMEWORKS) 	
+#	@echo "\r>>> \033[01;32m$(NAME) READY              \033[0m"
+
+$(LIBMLX):
+	make -C $(MLXDIR)
 
 $(LIBFT):
 	@make -C $(LIB_DIR)

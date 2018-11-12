@@ -70,7 +70,7 @@ $(NAME): $(BIN) $(LIBFT)
 	@echo "\r>>> \033[01;32m$(NAME) READY              \033[0m"
 
 $(LIBFT):
-	@make -C $(LIB_DIR)
+	@make -j3 -C $(LIB_DIR)
 
 $(BIN_DIR):
 	@mkdir -p $(BIN_DIR)

@@ -36,8 +36,8 @@ int			apply_commands(VISU *v)
 	int			index;
 	
 	index = -1;
-	if (!v->graphe->map)
-		return (ERR_NOTUBE);
+//	if (!v->graphe->map)
+//		return (ERR_NOTUBE);
 	while (++index < v->ins->nb_commands)
 	{
 		if (!v->ins->commands[index])
@@ -46,10 +46,10 @@ int			apply_commands(VISU *v)
 			f[v->ins->commands[index][0]](v, NULL, v->ins->commands[index][2]);
 	}
 //	ft_printf("start = %d end = %d\n", e->graphe->start, e->graphe->end);
-	if (v->graphe->start == -1)
-		return (ERR_START);
-	if (v->graphe->end == -1)
-		return (ERR_END);
+//	if (v->graphe->start == -1)
+//		return (ERR_START);
+//	if (v->graphe->end == -1)
+//		return (ERR_END);
 	return (NO_ERR);
 
 }

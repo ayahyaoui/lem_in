@@ -81,7 +81,7 @@ t_breakdown	*searchNpath(t_path *p, t_fusion *prev, t_fusion *next, t_tab **res)
 			}
 	}
 	next->altern++;
-	ft_printf("nouvelle conbinaison %d\n\n\n", next->altern);
+	ft_printf("nouvelle combinaison %d\n\n\n", next->altern);
 	//infos(next);
 	return b;
 }

@@ -27,7 +27,7 @@ int			ft_close_window(VISU *v)
 	exit(0);
 }
 
-static void	ft_get_meshsize(VISU *v)
+void	ft_get_meshsize(VISU *v)
 {
 	while ((v->width * v->mesh_init > (v->win_w - PADDING))
 			|| (v->height * v->mesh_init > (v->win_h - PADDING)))
@@ -44,8 +44,8 @@ int			ft_init_win(VISU *v)
 	ft_printf("win w = %d win h = %d\n", v->win_w, v->win_h);
 	if (v->win_h == SCREEN_H || v->win_w == SCREEN_W)
 		ft_get_meshsize(v);
-	ft_4ivinit(&v->min, WIN_W, WIN_H, v->win_w * v->win_h);
-	ft_4ivinit(&v->max, 0, 0, 0);
+	ft_4vinit(&v->min, v->win_w, v->win_h, v->win_w * v->win_h);
+	ft_4vinit(&v->max, 0, 0, 0);
 	ft_printf("minx = %d miny = %d\n", v->min.x, v->min.y);
 	v->ppmove = v->win_h * v->win_w * PPMOVE_RATIO;
 	if (!ft_launch_window(v))

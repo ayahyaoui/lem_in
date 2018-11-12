@@ -25,11 +25,11 @@ static void		ft_input_rot_and_height(VISU *v, int key)
 		v->uinput.roty = M_PI / 24.0;
 }
 
-/*
+
 static void		ft_input_move(VISU *v, int key)
 {
 	ft_printf("before move hor = %d move ver = %d\n", v->uinput.mv_hor, v->uinput.mv_ver);
-/\	if (key == KEY_LF)
+	if (key == KEY_LF)
 		v->uinput.mv_hor -= v->ppmove;
 	else if (key == KEY_RT)
 		v->uinput.mv_hor += v->ppmove;
@@ -38,8 +38,8 @@ static void		ft_input_move(VISU *v, int key)
 	else if (key == KEY_DW)
 		v->uinput.mv_ver += v->ppmove;
 	else if (key == KEY_INVERT)
-		v->uinput.invert *= -1;*/
-/*	else if (key == KEY_ZMIN && v->maxzoomin < 5)
+		v->uinput.invert *= -1;
+	else if (key == KEY_ZMIN && v->maxzoomin < 5)
 	{
 		++v->maxzoomin;
 		--v->maxzoomout;
@@ -54,14 +54,14 @@ static void		ft_input_move(VISU *v, int key)
 	
 	ft_printf("after move hor = %d move ver = %d\n", v->uinput.mv_hor, v->uinput.mv_ver);
 }
-*/
+
 static int		ft_isvalid_key(int key)
 {
 	return (key == 1
-			|| key == KEY_XUP
-			|| key == KEY_XDW
-			|| key == KEY_YUP
-			|| key == KEY_YDW
+//			|| key == KEY_XUP
+//			|| key == KEY_XDW
+//			|| key == KEY_YUP
+//			|| key == KEY_YDW
 //			|| key == KEY_LF
 //			|| key == KEY_RT
 //			|| key == KEY_UP
@@ -84,7 +84,7 @@ int				ft_dealkey(int key, void *param)
 	if (ft_isvalid_key(key))
 	{
 		ft_input_rot_and_height((VISU *)param, key);
-//		ft_input_move((VISU *)param, key);
+		ft_input_move((VISU *)param, key);
 //		ft_input_color((VISU *)param, key);
 //		if (key == KEY_DEFAULT)
 //			((VISU *)param)->revert = 1;

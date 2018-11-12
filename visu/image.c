@@ -22,7 +22,6 @@ int				ft_get_img(VISU *v)
 
 void			ft_put_to_img(VISU *v, int row, int col, int color)
 {
-	color = 0x00FF00;
 	if (col >= 0 && col <= v->win_h - 1 && row >= 0 && row <= v->win_w - 1)
 		*(int *)(v->img.ptr + (row * v->win_w + col) * 4) = color;
 }

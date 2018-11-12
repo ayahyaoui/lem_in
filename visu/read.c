@@ -13,6 +13,7 @@
 #include "visu.h"
 #include "libft.h"
 #include <stdlib.h>
+#include <unistd.h>
 
 char			sep(char *line, int *type)
 {
@@ -56,13 +57,30 @@ int				dispatch_ins(VISU *v, char **words, int nb)
 	return (ret);
 }
 
+
+int				anim_moves(VISU *v, char *str, int ret)
+{
+	v->ants = (int *)ft_memalloc(sizeof(int) * (v->ins->nb_ants + 1));	
+	while (!ret && get_next_line2(STDIN, &str) > 0 && str)
+	{
+		read_moves(v, str);
+		sleep(1);
+		display_moves(v);
+	//	ft_points_to_img(v);
+		ft_strdel(&str);
+	//	mlx_put_image_to_window(v->mlx, v->win, v->img.img, 0, 0);
+	}
+	ft_strdel(&str);
+	return (NO_ERR);
+}
+
 int				read_instructions(VISU *v, char *str, int nbline, int ret)
 {
 	char			**words;
 	char			*tmp;
 	t_list			*line;
 
-	while (!ret && get_next_line2(STDIN, &str) > 0 && str)
+	while (!ret && get_next_line2(STDIN, &str) > 0 && str && str[0] != 0)
 	{
 		if (str[0] != '#' && ++nbline)
 		{
@@ -71,24 +89,17 @@ int				read_instructions(VISU *v, char *str, int nbline, int ret)
 				ft_strdel(&str);
 				return (ERR_READ);
 			}
-			if ((ret = dispatch_ins(v, words, nbline)))
-			{
-				free_strtab(&words);
-				ft_strdel(&str);
-				return (ret);
-			}
+			dispatch_ins(v, words, nbline);
 			free_strtab(&words);
 		}
-		else if (str[1] == '#' /*&& ft_printf("check str: %s\n", str) */&&
-get_command(v, str, 0))
-		{
+		else if (str[1] == '#' && get_command(v, str, 0))
 			++v->ins->nb_commands;
-					}
 		line = ft_lstnew(tmp = ft_strdup(str), ft_strlen(str) + 1);
-		ft_strdel(&tmp); //ajoute pour pouvoir free le contenu duplique
+		ft_strdel(&tmp); 
 		ft_lstaddend(&v->anthill, line);
 		ft_strdel(&str);
 	}
+	ft_printf("1nd HALF READ\n");
 	ft_strdel(&str);
 	return (NO_ERR);
 }

@@ -12,6 +12,7 @@
 
 #include "visu.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 /*
 ** Input: room name
@@ -55,12 +56,12 @@ int		store_rooms(VISU *v)
 		{
 			split = ft_strsplit((char *)tmp->content, ' ');
 			v->ins->room[i].name = (char *)ft_strdup(split[0]);
-			ft_4ivinit(&v->ins->room[i].pos, ft_atoi(split[1]), ft_atoi(split[2]), rand() % 100); // put z to random for 3D
-			ft_printf("store room %s with coord %d %d %d\n", v->ins->room[i].name, v->ins->room[i].pos.x, v->ins->room[i].pos.y, v->ins->room[i].pos.z);
+			ft_4vinit(&v->ins->room[i].pos, (double)ft_atoi(split[1]), (double)ft_atoi(split[2]), (float)(rand() % 100)); // put z to random for 3D
+			printf("store room %s with coord %lf %lf %lf\n", v->ins->room[i].name, v->ins->room[i].pos.x, v->ins->room[i].pos.y, v->ins->room[i].pos.z);
 			free_strtab(&split);
 			link_command(v, ROOM, i);
-			if (is_dup(v, v->ins->room[i].name, i))
-				return (ERR_DUP);
+//			if (is_dup(v, v->ins->room[i].name, i))
+//				return (ERR_DUP);
 			++i;
 		}
 		else if (((char *)tmp->content)[1] == '#' /*&& (unsigned int)i != e->graphe->nb_rooms - 1*/)
@@ -89,12 +90,13 @@ void			print_rooms(VISU *v, char **room) // only for debug, delete
 
 int				get_room(VISU *v, char **str)
 {
-	if (str[1] && str[2] && !str[3])
-	{
-		if (!is_number(str[1]) || !is_number(str[2]))
-			return (ERR_COORD);
+	(void)str;
+//	if (str[1] && str[2] && !str[3])
+//	{
+//		if (!is_number(str[1]) || !is_number(str[2]))
+//			return (ERR_COORD);
 		++v->graphe->nb_rooms;
 		return (NO_ERR);
-	}
-	return (ERR_ROOM);
+//	}
+//	return (ERR_ROOM);
 }

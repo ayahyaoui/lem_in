@@ -12,6 +12,7 @@
 
 #include "visu.h"
 #include <stdlib.h>
+#include <stdio.h>
 /*
 static void	ft_merge_transformations(VISU *v, double (*m)[4][4], int index)
 {
@@ -19,14 +20,14 @@ static void	ft_merge_transformations(VISU *v, double (*m)[4][4], int index)
 	static double	temp2[4][4];
 	static void		(*trans[TRANS])(VISU *v, double (*trans)[4][4]) = {
 		&ft_getm_center_to_origin,
-		&ft_getm_scaledown,
-		&ft_getm_rot,
+//		&ft_getm_scaledown,
+//		&ft_getm_rot,
 		&ft_getm_scaleup,
-		&ft_getm_zoom,
+//		&ft_getm_zoom,
 		&ft_getm_setcenter,
 	};
 
-	if (index == 6)
+	if (index == 3)
 		return ;
 	ft_44mcpy(&temp1, *m);
 	trans[index](v, &temp2);
@@ -69,8 +70,8 @@ static int	ft_apply_transformation(VISU *v, double (*m)[4][4])
 		v->ins->room[index].pos = ft_4imtrxvect_mul(m, &v->ins->room[index].pos);
 	}
 	return (0);
-}
-*/
+}*/
+
 
 int		ft_setextremes(VISU *v)
 {
@@ -84,7 +85,6 @@ int		ft_setextremes(VISU *v)
 	index = -1;
 	while ((unsigned int)++index < v->graphe->nb_rooms)
 	{
-		ft_printf("index = %d\n", index);
 		if (v->ins->room[index].pos.x < v->min.x)
 			v->min.x = v->ins->room[index].pos.x;
 		if (v->ins->room[index].pos.y < v->min.y)
@@ -93,7 +93,6 @@ int		ft_setextremes(VISU *v)
 			v->max.x = v->ins->room[index].pos.x;
 		if (v->ins->room[index].pos.y > v->max.y)
 			v->max.y = v->ins->room[index].pos.y;
-		ft_printf("minx = %d miny = %d maxx = %d maxy = %d\n", v->min.x, v->min.y, v->max.x, v->max.y);
 	}
 	v->coef = v->max.x - v->min.x;
 	if (v->max.y - v->min.y > v->coef)
@@ -104,28 +103,34 @@ int		ft_setextremes(VISU *v)
 void		change_val(VISU *v)
 {
 	int	index;
-	v->coef = WIN_W / v->coef * 0.5;
+	v->coef = v->win_w / v->coef * 0.5;
 
 	index = 0;
 	
-	ft_printf("WINW = %d WINH = %d maxx = %d minx = %d maxy = %d miny = %d\n", WIN_W, WIN_H, v->max.x, v->min.x, v->max.y, v->min.y);
 	while ((unsigned int)index < v->graphe->nb_rooms)
 	{
-		ft_printf("before x = %d y = %d\n", v->ins->room[index].pos.x, v->ins->room[index].pos.y);
-		if (v->max.x <= WIN_W * 0.5)
-			v->ins->room[index].pos.x += ((WIN_W * 0.5 - v->max.x) + (v->max.x - v->min.x) * 0.5);
-		if (v->min.x >= WIN_W * 0.5)
-			v->ins->room[index].pos.x -= ((v->min.x - WIN_W * 0.5) + (v->max.x - v->min.x) + 0.5);
-		if (v->max.y <= WIN_H * 0.5)
-			v->ins->room[index].pos.y += ((WIN_H * 0.5 - v->max.y) + (v->max.y - v->min.y) * 0.5);
-		if (v->min.y >= WIN_H * 0.5)
-			v->ins->room[index].pos.y -= ((v->min.y - WIN_H * 0.5) + (v->max.y - v->min.y) * 0.5);
-		ft_printf("after x = %d y = %d\n", v->ins->room[index].pos.x, v->ins->room[index].pos.y);
+			v->ins->room[index].pos.x -= (v->min.x + (v->max.x - v->min.x) * 0.5);
+			v->ins->room[index].pos.y -= (v->min.y + (v->max.y - v->min.y) * 0.5);
+			v->ins->room[index].pos.x *= v->coef;
+			v->ins->room[index].pos.y *= v->coef;
+			v->ins->room[index].pos.x += (v->win_w * 0.5);
+			v->ins->room[index].pos.y += (v->win_h * 0.5);
+//		printf("before x = %lf y = %lf\n", v->ins->room[index].pos.x, v->ins->room[index].pos.y);
+//		if (v->max.x <= WIN_W * 0.5)
+//		if (v->min.x >= WIN_W * 0.5)
+//			v->ins->room[index].pos.x -= ((v->min.x - v->win_w * 0.5) + (v->max.x - v->min.x) + 0.5);
+//		if (v->max.y <= WIN_H * 0.5)
+//			v->ins->room[index].pos.y += ((v->win_h * 0.5 - v->max.y) + (v->max.y - v->min.y) * 0.5);
+//		if (v->min.y >= WIN_H * 0.5)
+//			v->ins->room[index].pos.y -= ((v->min.y - v->win_h * 0.5) + (v->max.y - v->min.y) * 0.5);
+//		printf("after x = %lf y = %lf\n", v->ins->room[index].pos.x, v->ins->room[index].pos.y);
 
-	//	v->ins->room[index].pos.x *= v->coef; 
-	//	v->ins->room[index].pos.y *= v->coef; 
 		++index;
 	}
+	display_ant(v, v->ins->room[index].pos.x, v->ins->room[index].pos.y, 7);
+//		printf("after scale x = %lf y = %lf\n", v->ins->room[index].pos.x, v->ins->room[index].pos.y);
+//		v->ins->room[index].pos.x *= v->coef; 
+//		v->ins->room[index].pos.y *= v->coef; 
 }
 
 void		add_names(VISU *v)
@@ -144,12 +149,10 @@ void		add_names(VISU *v)
 int			ft_transform_points(VISU *v)
 {
 	double		ftrans[4][4];
+	static int	iter;
 
-	ft_printf("nb rooms = %d\n", v->graphe->nb_rooms);
 	ft_44minit(&ftrans, 1);
-	ft_printf("before set extremes\n");
 	ft_setextremes(v);
-	ft_printf("after set extremes\n");
 //	if (v->revert || v->newheight != 0)
 //	{
 //		v->revert = 1;
@@ -159,15 +162,18 @@ int			ft_transform_points(VISU *v)
 //		ft_merge_transformations(v, &ftrans, 0);
 //		v->revert = 0;
 //	}
-	ft_printf("after merge\n");
+//	ft_printf("after merge\n");
 	change_val(v);
 	
 //	ft_merge_transformations(v, &ftrans, 0);
-//	ft_apply_transformation(v, &ftrans);
+//	if (!iter)
+//		ft_apply_transformation(v, &ftrans);
+	++iter;
+	v->color = 0x00FF00;
 	ft_points_to_img(v);
 	//	ft_display_menu(e);
 	mlx_put_image_to_window(v->mlx, v->win, v->img.img, 0, 0);
-	add_names(v);
+//	add_names(v);
 	//	ft_menu_txt(e);
 	return (1);
 }

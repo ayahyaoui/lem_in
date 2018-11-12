@@ -38,7 +38,7 @@ int		setup_room_mtrx(VISU *v, int size)
 ** Returns index of room if found | -1 otherwise
 */
 
-static int		get_room_index(VISU *v, char *str, int n)
+int		get_room_index(VISU *v, char *str, int n)
 {
 	int i;
 
@@ -72,7 +72,7 @@ static void		handle_way_spec(VISU *v, char **str1, char **str2, int *way)
 		(*str1)[ft_strlen(*str1) - 1] = 0;
 	}
 }
-
+/*
 static int		handle_tube_len(VISU *v, char ***str, char **room, int *len)
 {
 	if (!(v->options & OPT_LENGTH) || !(*str)[1])
@@ -81,16 +81,16 @@ static int		handle_tube_len(VISU *v, char ***str, char **room, int *len)
 		return (NO_ERR);
 	}
 	ft_printf("check str0 = %s str1 = %s\n", (*str)[0], (*str)[1]);
-	if (ft_beyondn((*str)[1], 255) || (*str)[2])
-	{
-		free_strtab(str);
-		return (ERR_LENGTH);
-	}
+//	if (ft_beyondn((*str)[1], 255) || (*str)[2])
+//	{
+//		free_strtab(str);
+//		return (ERR_LENGTH);
+//	}
 	*len = ft_atoi((*str)[1]);
 	(*room)[ft_strlen((*str)[0])] = 0;
 	return (NO_ERR);
 }
-
+*/
 
 /*
 ** Read tube information, setup and fill adjacency matrix, check start and end
@@ -106,20 +106,20 @@ int				get_tube(VISU *v, char **str, int way, int len)
 	int			i;
 	int			j;
 
-	if (!str[1] || str[2]
-		|| ((check = ft_strsplit(str[1], ' '))[1] && !(v->options & OPT_LENGTH)))
-	{
-		free_strtab(&check);
-		return (ERR_TUBE);
-	}
-	if ((i = handle_tube_len(v, &check, &str[1], &len)))
-		return (i);
+//	if (!str[1] || str[2]
+//		|| ((check = ft_strsplit(str[1], ' '))[1] && !(v->options & OPT_LENGTH)))
+//	{
+//		free_strtab(&check);
+//		return (ERR_TUBE);
+//	}
+//	if ((i = handle_tube_len(v, &check, &str[1], &len)))
+//		return (i);
 	handle_way_spec(v, &str[0], &str[1], &way);
 	i = get_room_index(v, str[0], 0);
 	j = get_room_index(v, str[1], len > 1 ? ft_strlen(check[0]) : 0);
 	free_strtab(&check);
-	if ((i == -1 || j == -1))
-		return (ERR_NOROOM);
+//	if ((i == -1 || j == -1))
+//		return (ERR_NOROOM);
 	if ((way == FORWARD || way == BOTH) && (v->graphe->map[i][j] = len))
 		str[1] -= (v->options & OPT_WAY) ? 1 : 0;
 	if (way == BACKWARD || way == BOTH)

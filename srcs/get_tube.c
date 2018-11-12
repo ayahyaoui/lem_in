@@ -73,25 +73,6 @@ static void		handle_way_spec(ENV *e, char **str1, char **str2, int *way)
 	}
 }
 
-static int		handle_tube_len(ENV *e, char ***str, char **room, int *len)
-{
-	if (!(e->options & OPT_LENGTH) || !(*str)[1])
-	{
-		*len = 1;
-		return (NO_ERR);
-	}
-	ft_printf("check str0 = %s str1 = %s\n", (*str)[0], (*str)[1]);
-	if (ft_beyondn((*str)[1], 255) || (*str)[2])
-	{
-		free_strtab(str);
-		return (ERR_LENGTH);
-	}
-	*len = ft_atoi((*str)[1]);
-	(*room)[ft_strlen((*str)[0])] = 0;
-	return (NO_ERR);
-}
-
-
 /*
 ** Read tube information, setup and fill adjacency matrix, check start and end
 ** existence
@@ -112,8 +93,6 @@ int				get_tube(ENV *e, char **str, int way, int len)
 		free_strtab(&check);
 		return (ERR_TUBE);
 	}
-	if ((i = handle_tube_len(e, &check, &str[1], &len)))
-		return (i);
 	handle_way_spec(e, &str[0], &str[1], &way);
 	i = get_room_index(e, str[0], 0);
 	j = get_room_index(e, str[1], len > 1 ? ft_strlen(check[0]) : 0);
