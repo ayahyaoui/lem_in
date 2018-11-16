@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/01 18:41:53 by anyahyao          #+#    #+#             */
-/*   Updated: 2018/11/01 18:51:53 by anyahyao         ###   ########.fr       */
+/*   Updated: 2018/11/16 18:42:48 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 int				addfile(t_file *file, int value);
 int				removefile(t_file *file);
 t_file			*new_file(t_graphe *g);
+t_file			*clean_file(t_file *file, int size);
 
 t_file			*new_file(t_graphe *g)
 {
@@ -26,6 +27,16 @@ t_file			*new_file(t_graphe *g)
 	file->end = 0;
 	if(!(file->tab = (int *)ft_memalloc(sizeof(int) * g->nb_rooms)))
 		exit(3);
+	return (file);
+}
+
+t_file			*clean_file(t_file *file, int size)
+{
+	if (!file)
+		return (0x0);
+	ft_bzero(file->tab, size * sizeof(int));
+	file->begin = 0;
+	file->end = 0;
 	return (file);
 }
 

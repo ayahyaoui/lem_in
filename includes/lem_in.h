@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/30 19:00:27 by anyahyao          #+#    #+#             */
-/*   Updated: 2018/11/04 17:59:11 by anyahyao         ###   ########.fr       */
+/*   Updated: 2018/11/16 23:22:36 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 **					-nb_path est la taille du tableau path
 **					-nb_next_node
 */
+typedef struct			s_graphe t_graphe;
 
 typedef struct			s_point
 {
@@ -108,6 +109,7 @@ int					addfile(t_file *file, int value);
 int					removefile(t_file *file);
 int					isemptyfile(t_file *file);
 t_file				*new_file(t_graphe *g);
+t_file				*clean_file(t_file *file, int size);
 
 // free.c
 void				free_fusion(t_fusion *f);

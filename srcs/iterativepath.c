@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/01 18:30:35 by anyahyao          #+#    #+#             */
-/*   Updated: 2018/11/02 18:32:11 by anyahyao         ###   ########.fr       */
+/*   Updated: 2018/11/16 23:22:34 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,40 +25,28 @@
  *	la file pour l'allouer 1 seule fois
  *	le debut et different de la fin
  */
-
+/*
 int		static removepath(t_graphe *g, t_file *file)
 {
 	int i;
+	int j;
 
 	i = file->begin;
 	while (i < file->end - 1)
 	{
 		j = -1;
-		while (++j < g->nb_rooms)
+		while (++j < (int)g->nb_rooms)
 			g->map[j][file->tab[i]] = 0;
 	}
 }
-
-int		addneighbour(t_graphe *g, t_file *file, int node, int *tab)
+*/
+int		addneighbourr(t_graphe *g, t_file *file, int node, int *tab)
 {
-	int i;
-//	int j;
-//	int k;
-
-	i = -1;
-	while ((unsigned int)++i < g->nb_rooms)
-	{
-		//k = MIN(node, );
-		if (g->color[i] == WHITE && g->map[i][node] == 1)
-		{
-			g->color[i] = GREY;
-			addfile(file, i);
-			tab[i] = node;
-			if (i == g->end)
-				return (2);
-		}
-	}
-	return (1);
+	(void)g;
+	(void)file;
+	(void)node;
+	(void)tab;
+	return (2);
 }
 
 int				iterative_path(t_graphe *g, int *tab, t_file *file)
@@ -74,7 +62,7 @@ int				iterative_path(t_graphe *g, int *tab, t_file *file)
 	while (!isemptyfile(file))
 	{
 		node = removefile(file);
-		if (addneighbour(g, file, node, tab) == 2)
+		if (addneighbourr(g, file, node, tab) == 2)
 		{
 			find = 1;
 			break;
@@ -89,7 +77,7 @@ int				dijistra(t_graphe *g)
 {
 	int		*tab;
 	t_file		*file;
-	t_tab	***res;
+	//t_tab	***res;
 
 	file = new_file(g);
 	if(!(tab = (int *)ft_memalloc(sizeof(int) * g->nb_rooms)))
