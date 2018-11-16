@@ -1,0 +1,42 @@
+10
+##start
+un 1 2
+deux 2 1
+trois 2 2
+quatre 2 3
+cinq 2 4
+six 2 5
+sept 3 1
+huit 3 3
+neuf 3 4
+dix 3 5
+onze 4 1
+douze 4 5
+treize 5 1
+quatorze 6 2
+quinze 6 3
+##end
+seize 7 2
+dixsept 6 4
+un-deux
+un-trois
+un-quatre
+un-cinq
+deux-sept
+sept-onze
+onze-treize
+trois-huit
+quatre-huit
+quatre-neuf
+cinq-six
+six-dix
+dix-douze
+cinq-neuf
+treize-quatorze
+trois-quatorze
+huit-quinze
+neuf-quinze
+#douze-dixsept
+quatorze-seize
+quinze-seize
+seize-dixsept

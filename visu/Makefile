@@ -6,7 +6,7 @@
 #    By: emuckens <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/20 17:52:27 by emuckens          #+#    #+#              #
-#    Updated: 2018/11/08 15:36:13 by emuckens         ###   ########.fr        #
+#    Updated: 2018/11/16 18:16:58 by emuckens         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -69,13 +69,13 @@ all:
 #	cp $(NAME) test/
 
 
-$(NAME): $(BIN) $(LIBFT) $(LIBMLX)
-	@$(CCF) -o $(NAME) $(BIN) $(FRAMEWORKS_L) -lft -L $(LIB_DIR)	
-	@echo "\r>>> \033[01;32m$(NAME) READY              \033[0m"
-
-#$(NAME): $(BIN) $(LIBFT)
-#	@$(CC) -o $(NAME) $(BIN) -lmlx -L $(MLX_DIR)/lib -lft -L $(LIB_DIR) $(FRAMEWORKS) 	
+#$(NAME): $(BIN) $(LIBFT) $(LIBMLX)
+#	@$(CCF) -o $(NAME) $(BIN) $(FRAMEWORKS_L) -lft -L $(LIB_DIR)	
 #	@echo "\r>>> \033[01;32m$(NAME) READY              \033[0m"
+
+$(NAME): $(BIN) $(LIBFT)
+	@$(CC) -o $(NAME) $(BIN) -lmlx -L $(MLX_DIR)/lib -lft -L $(LIB_DIR) $(FRAMEWORKS) 	
+	@echo "\r>>> \033[01;32m$(NAME) READY              \033[0m"
 
 $(LIBMLX):
 	make -C $(MLXDIR)

@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/17 15:39:45 by emuckens          #+#    #+#             */
-/*   Updated: 2018/11/08 18:59:33 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/11/16 21:15:48 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,9 +125,9 @@ void		change_val(VISU *v)
 //			v->ins->room[index].pos.y -= ((v->min.y - v->win_h * 0.5) + (v->max.y - v->min.y) * 0.5);
 //		printf("after x = %lf y = %lf\n", v->ins->room[index].pos.x, v->ins->room[index].pos.y);
 
+		display_square(v, index, 10, 0xFFFFFF);
 		++index;
 	}
-	display_ant(v, v->ins->room[index].pos.x, v->ins->room[index].pos.y, 7);
 //		printf("after scale x = %lf y = %lf\n", v->ins->room[index].pos.x, v->ins->room[index].pos.y);
 //		v->ins->room[index].pos.x *= v->coef; 
 //		v->ins->room[index].pos.y *= v->coef; 
@@ -172,7 +172,7 @@ int			ft_transform_points(VISU *v)
 	v->color = 0x00FF00;
 	ft_points_to_img(v);
 	//	ft_display_menu(e);
-	mlx_put_image_to_window(v->mlx, v->win, v->img.img, 0, 0);
+//	mlx_put_image_to_window(v->mlx, v->win, v->img.img, 0, 0);
 //	add_names(v);
 	//	ft_menu_txt(e);
 	return (1);

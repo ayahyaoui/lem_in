@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/10 17:50:41 by emuckens          #+#    #+#             */
-/*   Updated: 2018/11/08 15:42:44 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/11/16 21:08:12 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,25 +72,6 @@ static void		handle_way_spec(VISU *v, char **str1, char **str2, int *way)
 		(*str1)[ft_strlen(*str1) - 1] = 0;
 	}
 }
-/*
-static int		handle_tube_len(VISU *v, char ***str, char **room, int *len)
-{
-	if (!(v->options & OPT_LENGTH) || !(*str)[1])
-	{
-		*len = 1;
-		return (NO_ERR);
-	}
-	ft_printf("check str0 = %s str1 = %s\n", (*str)[0], (*str)[1]);
-//	if (ft_beyondn((*str)[1], 255) || (*str)[2])
-//	{
-//		free_strtab(str);
-//		return (ERR_LENGTH);
-//	}
-	*len = ft_atoi((*str)[1]);
-	(*room)[ft_strlen((*str)[0])] = 0;
-	return (NO_ERR);
-}
-*/
 
 /*
 ** Read tube information, setup and fill adjacency matrix, check start and end
@@ -102,28 +83,18 @@ static int		handle_tube_len(VISU *v, char ***str, char **room, int *len)
 
 int				get_tube(VISU *v, char **str, int way, int len)
 {
-	char		**check;
+	char		**check = NULL;
 	int			i;
 	int			j;
-
-//	if (!str[1] || str[2]
-//		|| ((check = ft_strsplit(str[1], ' '))[1] && !(v->options & OPT_LENGTH)))
-//	{
-//		free_strtab(&check);
-//		return (ERR_TUBE);
-//	}
-//	if ((i = handle_tube_len(v, &check, &str[1], &len)))
-//		return (i);
+(void)len;
 	handle_way_spec(v, &str[0], &str[1], &way);
 	i = get_room_index(v, str[0], 0);
-	j = get_room_index(v, str[1], len > 1 ? ft_strlen(check[0]) : 0);
+	j = get_room_index(v, str[1], 0);
 	free_strtab(&check);
-//	if ((i == -1 || j == -1))
-//		return (ERR_NOROOM);
 	if ((way == FORWARD || way == BOTH) && (v->graphe->map[i][j] = len))
 		str[1] -= (v->options & OPT_WAY) ? 1 : 0;
 	if (way == BACKWARD || way == BOTH)
-		v->graphe->map[j][i] = len;
+		v->graphe->map[j][i] = 1;
 	++v->graphe->nb_tubes;
 	return (NO_ERR);
 }

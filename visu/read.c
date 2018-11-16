@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 14:48:52 by emuckens          #+#    #+#             */
-/*   Updated: 2018/11/08 15:43:25 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/11/16 21:12:23 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,12 @@ int				anim_moves(VISU *v, char *str, int ret)
 	while (!ret && get_next_line2(STDIN, &str) > 0 && str)
 	{
 		read_moves(v, str);
-		sleep(1);
 		display_moves(v);
+		sleep(1);
 	//	ft_points_to_img(v);
 		ft_strdel(&str);
-	//	mlx_put_image_to_window(v->mlx, v->win, v->img.img, 0, 0);
+		mlx_put_image_to_window(v->mlx, v->win, v->img.img, 0, 0);
+		display_ant_names(v);
 	}
 	ft_strdel(&str);
 	return (NO_ERR);

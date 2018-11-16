@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/07 16:49:44 by emuckens          #+#    #+#             */
-/*   Updated: 2018/11/08 17:58:15 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/11/16 19:36:25 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef VISU_H
@@ -213,6 +213,7 @@ typedef struct s_visu
 {
 	void		*mlx;
 	void		*win;
+	int			*map;
 	t_image		img;
 	t_4vect		shift;
 	t_4vect		min;
@@ -311,8 +312,9 @@ void		printlist(VISU *v, t_list *l);
 int			read_options(VISU *v, char **argv, int argc);
 int		display_moves(VISU *v);
 int			anim_moves(VISU* v, char *str, int ret);
-void		display_ant(VISU *v, double x, double y, int width);
+void		display_square(VISU *v, int index, int width, int color);
 
+void		display_ant_names(VISU *v);
 
 /*
  * ** Read and store instructions
