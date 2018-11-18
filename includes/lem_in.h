@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/30 19:00:27 by anyahyao          #+#    #+#             */
-/*   Updated: 2018/11/16 23:22:36 by anyahyao         ###   ########.fr       */
+/*   Updated: 2018/11/18 23:47:52 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 #define VALUE 0
 #define NBNODE 1
 #define COST 1
+#define ERRORMALLOC 12
 #define MIN(a, b) (a > b ? b : a)
 #include "libft.h"
 
