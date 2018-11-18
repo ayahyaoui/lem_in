@@ -57,7 +57,7 @@ int		store_rooms(VISU *v)
 			split = ft_strsplit((char *)tmp->content, ' ');
 			v->ins->room[i].name = (char *)ft_strdup(split[0]);
 			ft_4vinit(&v->ins->room[i].pos, (double)ft_atoi(split[1]), (double)ft_atoi(split[2]), (float)(rand() % 100)); // put z to random for 3D
-			printf("store room %s with coord %lf %lf %lf\n", v->ins->room[i].name, v->ins->room[i].pos.x, v->ins->room[i].pos.y, v->ins->room[i].pos.z);
+//			printf("store room %s with coord %lf %lf %lf\n", v->ins->room[i].name, v->ins->room[i].pos.x, v->ins->room[i].pos.y, v->ins->room[i].pos.z);
 			free_strtab(&split);
 			link_command(v, ROOM, i);
 //			if (is_dup(v, v->ins->room[i].name, i))

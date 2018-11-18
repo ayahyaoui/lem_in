@@ -11,8 +11,9 @@
 /* ************************************************************************** */
 
 #include "visu.h"
+#include "stdio.h"
 #include <math.h>
-
+/*
 static void		ft_input_rot_and_height(VISU *v, int key)
 {
 	if (key == KEY_XUP)
@@ -24,8 +25,8 @@ static void		ft_input_rot_and_height(VISU *v, int key)
 	else if (key == KEY_YDW)
 		v->uinput.roty = M_PI / 24.0;
 }
-
-
+*/
+/*
 static void		ft_input_move(VISU *v, int key)
 {
 	ft_printf("before move hor = %d move ver = %d\n", v->uinput.mv_hor, v->uinput.mv_ver);
@@ -53,8 +54,8 @@ static void		ft_input_move(VISU *v, int key)
 	}
 	
 	ft_printf("after move hor = %d move ver = %d\n", v->uinput.mv_hor, v->uinput.mv_ver);
-}
-
+}*/
+/*
 static int		ft_isvalid_key(int key)
 {
 	return (key == 1
@@ -70,32 +71,49 @@ static int		ft_isvalid_key(int key)
 			|| key == KEY_ZMOUT
 			|| key == KEY_INVERT
 			|| key == KEY_DEFAULT);
-}
+}*/
 
 int				ft_dealkey(int key, void *param)
 {
-	mlx_clear_window(((VISU *)param)->mlx, ((VISU *)param)->win);
-	ft_bzero(((VISU *)param)->img.ptr,
-			((VISU *)param)->win_w * ((VISU *)param)->win_h * 4);
-	((VISU *)param)->uinput.rotx = 0;
-	((VISU *)param)->uinput.roty = 0;
-	((VISU *)param)->uinput.zoom = 1.0;
-	((VISU *)param)->setextremes = 0;
-	if (ft_isvalid_key(key))
-	{
-		ft_input_rot_and_height((VISU *)param, key);
-		ft_input_move((VISU *)param, key);
+
+//	display_moves(((void *)param), COL_ROOM);
+//	anim_moves(((void *)param), NULL, 0);
+//	mlx_clear_window(((VISU *)param)->mlx, ((VISU *)param)->win);
+//	ft_bzero(((VISU *)param)->img.ptr,
+//			((VISU *)param)->win_w * ((VISU *)param)->win_h * 4);
+//	((VISU *)param)->uinput.rotx = 0;
+//	((VISU *)param)->uinput.roty = 0;
+//	((VISU *)param)->uinput.zoom = 1.0;
+//	((VISU *)param)->setextremes = 0;
+//	if (ft_isvalid_key(key))
+//	{
+//		ft_input_rot_and_height((VISU *)param, key);
+//		ft_input_move((VISU *)param, key);
 //		ft_input_color((VISU *)param, key);
 //		if (key == KEY_DEFAULT)
 //			((VISU *)param)->revert = 1;
-		return (ft_transform_points((VISU *)param));
-	}
-	else if (key == KEY_ESC)
+//		return (ft_transform_points((VISU *)param));
+//	}
+
+/*	else*/ if (key == KEY_ESC)
 		return (ft_close_window((VISU *)param));
-	ft_points_to_img(((VISU *)param));
+	else if (key == KEY_LF && !((VISU *)param)->pause)
+		((VISU *)param)->pause = 1;
+	else if (key == KEY_LF)
+		((VISU *)param)->pause = 0;
+
+//		mlx_expose_hook(((VISU *)param)->win, &anim_moves, (VISU *)param);
+
+	mlx_loop_hook(((VISU *)param)->mlx, anim_moves, (VISU *)param);
+//	ft_transform_points((VISU *)param);
+//	ft_points_to_img(((VISU *)param));
 //	display menu
-	mlx_put_image_to_window(((VISU *)param)->mlx, ((VISU *)param)->win,
-			((VISU *)param)->img.img, 0, 0);
+//	mlx_put_image_to_window(((VISU *)param)->mlx, ((VISU *)param)->win, ((VISU *)param)->img.img, 0, 0);
+//	display_moves(((void *)param), COL_ANT);
+//	mlx_string_put(((VISU *)param)->mlx, ((VISU *)param)->win, ((VISU *)param)->ins->room[((VISU *)param)->graphe->start].pos.x, ((VISU *)param)->ins->room[((VISU *)param)->graphe->start].pos.y, 0x00FF00, "START");
+//	mlx_string_put(((VISU *)param)->mlx, ((VISU *)param)->win, ((VISU *)param)->ins->room[((VISU *)param)->graphe->end].pos.x, ((VISU *)param)->ins->room[((VISU *)param)->graphe->end].pos.y, 0x00FF00, "END");
+
+
 //	ft_menu_txt((VISU *)param);
 	return (0);
 }

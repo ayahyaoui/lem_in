@@ -124,5 +124,6 @@ int		set_env(VISU *v)
 	v->graphe->end = -1;
 	v->mesh_init = 40;
 	v->ppmove = 20;
+	v->pause = 0;
 	return (1);
 }

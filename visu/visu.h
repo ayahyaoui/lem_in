@@ -23,6 +23,11 @@
 # define ERR_NB			21
 # define NB_COMMANDS		2
 
+# define COL_ROOM		0xFFFFFF
+# define COL_ANT		0xFF0000
+# define COL_ANTNAME		0x0000FF
+
+
 # define NOINS			"empty file"
 # define ANT_INPUT		"invalid ant format"
 # define ANT_NB			"not enough ants!"
@@ -242,8 +247,10 @@ typedef struct s_visu
 	int			color;
 	int			coef;
 	int			center;
+	int			pause;
 }				t_visu;
 
+void		display_rooms(VISU *v);
 /*
 ** ENV
 */
@@ -310,8 +317,8 @@ void		printlist(VISU *v, t_list *l);
 
 
 int			read_options(VISU *v, char **argv, int argc);
-int		display_moves(VISU *v);
-int			anim_moves(VISU* v, char *str, int ret);
+int		display_moves(VISU *v, int color, int option);
+int			anim_moves(VISU* v);
 void		display_square(VISU *v, int index, int width, int color);
 
 void		display_ant_names(VISU *v);

@@ -125,7 +125,7 @@ void		change_val(VISU *v)
 //			v->ins->room[index].pos.y -= ((v->min.y - v->win_h * 0.5) + (v->max.y - v->min.y) * 0.5);
 //		printf("after x = %lf y = %lf\n", v->ins->room[index].pos.x, v->ins->room[index].pos.y);
 
-		display_square(v, index, 10, 0xFFFFFF);
+//		display_square(v, index, 10, 0xFFFFFF);
 		++index;
 	}
 //		printf("after scale x = %lf y = %lf\n", v->ins->room[index].pos.x, v->ins->room[index].pos.y);
@@ -144,6 +144,17 @@ void		add_names(VISU *v)
 		++index;
 	}
 }
+
+
+void		display_rooms(VISU *v)
+{
+	int index;
+
+	index = -1;
+	while ((unsigned int)++index < v->graphe->nb_rooms)
+		display_square(v, index, 10, COL_ROOM);
+}
+
 
 
 int			ft_transform_points(VISU *v)
@@ -171,8 +182,9 @@ int			ft_transform_points(VISU *v)
 	++iter;
 	v->color = 0x00FF00;
 	ft_points_to_img(v);
+	display_rooms(v);
 	//	ft_display_menu(e);
-//	mlx_put_image_to_window(v->mlx, v->win, v->img.img, 0, 0);
+	mlx_put_image_to_window(v->mlx, v->win, v->img.img, 0, 0);
 //	add_names(v);
 	//	ft_menu_txt(e);
 	return (1);

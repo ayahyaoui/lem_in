@@ -28,7 +28,7 @@ void			ft_put_to_img(VISU *v, int row, int col, int color)
 
 static void		ft_setcoor(VISU *v, int index, int dest_index)
 {
-	ft_printf("draw line from (%d %d %d) to (%d %d %d)\n", v->coord.x0, v->coord.y0, v->coord.z0, v->coord.x1, v->coord.y1, v->coord.z1);
+//	ft_printf("draw line from (%d %d %d) to (%d %d %d)\n", v->coord.x0, v->coord.y0, v->coord.z0, v->coord.x1, v->coord.y1, v->coord.z1);
 //	e->color = e->points[e->row][e->col].color;
 	v->coord.x0 = v->ins->room[index].pos.x;
 	v->coord.y0 = v->ins->room[index].pos.y;

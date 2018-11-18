@@ -13,6 +13,7 @@
 #include "visu.h"
 #include "libft.h"
 #include <stdlib.h>
+#include <stdio.h>
 #include <unistd.h>
 
 char			sep(char *line, int *type)
@@ -58,20 +59,29 @@ int				dispatch_ins(VISU *v, char **words, int nb)
 }
 
 
-int				anim_moves(VISU *v, char *str, int ret)
+int				anim_moves(VISU *v)
 {
-	v->ants = (int *)ft_memalloc(sizeof(int) * (v->ins->nb_ants + 1));	
-	while (!ret && get_next_line2(STDIN, &str) > 0 && str)
+	char *str = NULL;
+	int	ret = 0;
+//	ft_printf("ANIM MOVES\n");
+//	v->ants = (int *)ft_memalloc(sizeof(int) * (v->ins->nb_ants + 1));	
+	if (!v->pause && !ret && get_next_line2(STDIN, &str) > 0 && str)
 	{
+		ft_bzero(v->img.ptr, v->win_w * v->win_h * 4);
+//		ft_printf("check str = %s\n", str)
+		ft_points_to_img(v);
+		display_rooms(v);
+//		display_moves(v, COL_ROOM, 1);
 		read_moves(v, str);
-		display_moves(v);
-		sleep(1);
-	//	ft_points_to_img(v);
-		ft_strdel(&str);
+		display_moves(v, COL_ANT, 0);
 		mlx_put_image_to_window(v->mlx, v->win, v->img.img, 0, 0);
 		display_ant_names(v);
+		sleep(1);
+		ft_strdel(&str);
 	}
-	ft_strdel(&str);
+	mlx_hook(v->win, KeyPress, KeyPressMask, ft_dealkey, (void *)v);
+
+//	ft_strdel(&str);
 	return (NO_ERR);
 }
 
@@ -100,7 +110,7 @@ int				read_instructions(VISU *v, char *str, int nbline, int ret)
 		ft_lstaddend(&v->anthill, line);
 		ft_strdel(&str);
 	}
-	ft_printf("1nd HALF READ\n");
+//	ft_printf("1nd HALF READ\n");
 	ft_strdel(&str);
 	return (NO_ERR);
 }
