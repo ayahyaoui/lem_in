@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 14:48:52 by emuckens          #+#    #+#             */
-/*   Updated: 2018/11/16 21:12:23 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/11/19 20:50:46 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,24 +64,28 @@ int				anim_moves(VISU *v)
 	char *str = NULL;
 	int	ret = 0;
 //	ft_printf("ANIM MOVES\n");
-//	v->ants = (int *)ft_memalloc(sizeof(int) * (v->ins->nb_ants + 1));	
-	if (!v->pause && !ret && get_next_line2(STDIN, &str) > 0 && str)
+	if (!v->pause && !ret && get_next_line2(STDIN, &str) > 0 && /*ft_printf("str = %s\n", str) &&*/ str)
 	{
-		ft_bzero(v->img.ptr, v->win_w * v->win_h * 4);
-//		ft_printf("check str = %s\n", str)
+		ft_bzero(v->img.ptr, v->win_w * v->win_h * sizeof(int));
+		ft_printf("BZERO\n");
+		read_moves(v, str);
 		ft_points_to_img(v);
 		display_rooms(v);
-//		display_moves(v, COL_ROOM, 1);
-		read_moves(v, str);
 		display_moves(v, COL_ANT, 0);
 		mlx_put_image_to_window(v->mlx, v->win, v->img.img, 0, 0);
 		display_ant_names(v);
+		mlx_string_put(v->mlx, v->win, v->ins->room[v->graphe->start].pos.x + 13, v->ins->room[v->graphe->start].pos.y - 10, COL_TUBES, "START");
+		mlx_string_put(v->mlx, v->win, v->ins->room[v->graphe->end].pos.x + 13, v->ins->room[v->graphe->end].pos.y - 10, COL_TUBES, "END");
 		sleep(1);
 		ft_strdel(&str);
+		return (NO_ERR);
 	}
+	display_moves(v, COL_ANT, 0);
+	mlx_put_image_to_window(v->mlx, v->win, v->img.img, 0, 0);
+	display_ant_names(v);
 	mlx_hook(v->win, KeyPress, KeyPressMask, ft_dealkey, (void *)v);
-
-//	ft_strdel(&str);
+	mlx_string_put(v->mlx, v->win, v->ins->room[v->graphe->start].pos.x + 13, v->ins->room[v->graphe->start].pos.y - 10, COL_TUBES, "START");
+	mlx_string_put(v->mlx, v->win, v->ins->room[v->graphe->end].pos.x + 13, v->ins->room[v->graphe->end].pos.y - 10, COL_TUBES, "END");
 	return (NO_ERR);
 }
 

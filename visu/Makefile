@@ -6,7 +6,7 @@
 #    By: emuckens <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/20 17:52:27 by emuckens          #+#    #+#              #
-#    Updated: 2018/11/16 18:16:58 by emuckens         ###   ########.fr        #
+#    Updated: 2018/11/19 17:55:42 by emuckens         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ NAME := visu
 #					 		 	  COMPILATION								   
 #==============================================================================#
 
-FLAGS		:= -Wall -Werror -Wextra -g
+FLAGS		:= -Wall -Wextra -g
 FSANI		:= -fsanitize=address
 CC		:= gcc $(FLAGS)
 CCF		:= $(CC) $(FSANI)
@@ -37,7 +37,7 @@ X11DIR = /usr/include/X11/
 #==============================================================================#
 
 SRC	= main.c image.c window.c deal_key.c env.c plot.c matrices_center.c \
-matrices_scale.c matrices_trans.c apply_transformation.c \
+matrices_scale.c matrices_trans.c matrices_rot.c apply_transformation.c \
   get_room.c get_tube.c get_comment.c read.c display.c free.c get_ants.c error.c utils.c 
 #  matrices_rot.c 
 HEAD	= visu.h
@@ -69,13 +69,13 @@ all:
 #	cp $(NAME) test/
 
 
-$(NAME): $(BIN) $(LIBFT) $(LIBMLX)
-	@$(CCF) -o $(NAME) $(BIN) $(FRAMEWORKS_L) -lft -L $(LIB_DIR)	
-	@echo "\r>>> \033[01;32m$(NAME) READY              \033[0m"
-
-#$(NAME): $(BIN) $(LIBFT)
-#	@$(CC) -o $(NAME) $(BIN) -lmlx -L $(MLX_DIR)/lib -lft -L $(LIB_DIR) $(FRAMEWORKS) 	
+#$(NAME): $(BIN) $(LIBFT) $(LIBMLX)
+#	@$(CCF) -o $(NAME) $(BIN) $(FRAMEWORKS_L) -lft -L $(LIB_DIR)	
 #	@echo "\r>>> \033[01;32m$(NAME) READY              \033[0m"
+
+$(NAME): $(BIN) $(LIBFT)
+	@$(CC) -o $(NAME) $(BIN) -lmlx -L $(MLX_DIR)/lib -lft -L $(LIB_DIR) $(FRAMEWORKS) 	
+	@echo "\r>>> \033[01;32m$(NAME) READY              \033[0m"
 
 $(LIBMLX):
 	make -C $(MLXDIR)

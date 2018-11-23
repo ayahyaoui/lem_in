@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 14:58:47 by emuckens          #+#    #+#             */
-/*   Updated: 2018/11/16 21:21:19 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/11/19 20:50:51 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,46 @@
 #include <stdio.h>
 
 
+void		draw_ant_legs(VISU *v, int index, int scale, int option)
+{
+	int x;
+	int y;
+
+	x = v->ins->room[index].pos.x;
+	y = v->ins->room[index].pos.y;
+	v->coord.x0 = option ? x + scale : x - scale;
+	v->coord.x0 -= 2;
+	v->coord.y0 = y - scale;
+	v->coord.x1 = option ? x - scale : x + scale;
+	v->coord.x1 -= 2;
+	v->coord.y1 = y + scale;
+	ft_drawline(v);
+}
+
+void		display_ant(VISU *v, int index, int scale)
+{
+	int x;
+	int y;
+
+	x = v->ins->room[index].pos.x;
+	y = v->ins->room[index].pos.y;
+	if (scale < 5)
+		scale = 5;
+	v->color = COL_ANT;
+	display_square(v, index, -2, COL_ANT);
+	v->coord.x0 = x - 2 * scale + 2;
+	v->coord.y0 = y;
+	v->coord.x1 = x + 4;
+	v->coord.y1 = y;
+	ft_drawline(v);
+	v->coord.x0 = x - 2;
+	v->coord.y0 = y - scale;
+	v->coord.x1 = x - 2;
+	v->coord.y1 = y + scale;
+	ft_drawline(v);
+	draw_ant_legs(v, index, scale, 0);
+	draw_ant_legs(v, index, scale, 1);
+}
 
 void		display_square(VISU *v, int index, int width, int color)
 {
@@ -24,7 +64,11 @@ void		display_square(VISU *v, int index, int width, int color)
 
 	x = v->ins->room[index].pos.x;
 	y = v->ins->room[index].pos.y;
-
+	if (width < 0)
+	{
+		width *= -1;
+		x += 5;
+	}
 	col = x - width;
 	while (col < x + width)
 	{
@@ -57,10 +101,8 @@ int		read_moves(VISU *v, char *line)
 	{
 		if (!(antsplit = ft_strsplit(split[ant], '-')))
 			return (ERR_READ);
-		ft_printf("check split 0 = %s\n", antsplit[0]);
 		num = ft_atoi(antsplit[0] + 1);
 		v->ants[num - 1] = get_room_index(v, antsplit[1], ft_strlen(antsplit[1]));
-		ft_printf("ant %d is in room index %d\n", num, v->ants[num - 1]); 
 		ft_strdel(&antsplit[0]);
 		ft_strdel(&antsplit[1]);
 		ft_memdel((void **)&antsplit);
@@ -85,13 +127,11 @@ void		display_ant_names(VISU *v)
 		{
 			name = ft_itoa(ant + 1);
 			ft_printf("name = %s\n", name);
-			mlx_string_put(v->mlx, v->win, v->ins->room[v->ants[ant]].pos.x + 10, v->ins->room[v->ants[ant]].pos.y - 10, COL_ANTNAME, name);
+			mlx_string_put(v->mlx, v->win, v->ins->room[v->ants[ant]].pos.x + 10, v->ins->room[v->ants[ant]].pos.y - 15, COL_ANTNAME, name);
 			ft_strdel(&name);
 		}
 		++ant;
 	}
-	mlx_string_put(v->mlx, v->win, v->ins->room[v->graphe->start].pos.x + 13, v->ins->room[v->graphe->start].pos.y - 5, 0x00FF00, "START");
-	mlx_string_put(v->mlx, v->win, v->ins->room[v->graphe->end].pos.x + 13, v->ins->room[v->graphe->end].pos.y - 5, 0x00FF00, "END");
 
 }
 
@@ -101,28 +141,16 @@ int		display_moves(VISU *v, int color, int option)
 	int ant;
 
 	ant = 0;
+	(void)color;
+	(void)option;
 	if (!v->ants)
 		return (-1);
-//	ft_bzero(v->img.img, v->win_w);
-//	ft_memmove(v->img.img, v->map, sizeof(v->map));
 	while (ant < v->ins->nb_ants)
 	{
-	ft_printf("ant = %d, v->ants[ant] = %d\n", ant, v->ants[ant]);
-		if (option && v->ants[ant] == -1)
-			display_square(v, v->ants[ant], 4, color);
-		else if (v->ants[ant] != -1)
-		{
-//			ft_points_to_img(v);
-			display_square(v, v->ants[ant], 4, color);
-			
-		}
-
+		if (v->ants[ant] != -1)
+			display_ant(v, v->ants[ant], 4);
 		++ant;
-
 	}
-//	mlx_put_image_to_window(v->mlx, v->win, v->img.img, 0, 0);
-//	display_ant_names(v);
-
 	return (0); 
 }
 	
@@ -146,27 +174,16 @@ int		main(void)
 	}
 	ft_init_win(&v);
 	ft_get_img(&v);
-//	ft_printf("after init img\n");
+//	ft_setextremes(&v);
+//	change_val(&v);
+
 	ft_transform_points((void *)&v);
-
+	ft_points_to_img(&v);
+	display_rooms(&v);
+	mlx_put_image_to_window(v.mlx, v.win, v.img.img, 0, 0);
 	v.map = (int *)ft_memalloc(sizeof(int) * v.win_h * v.win_w);
-//	unsigned int room = 0;
-//	anim_moves(&v, NULL, 0 );
-//	while (room < v.graphe->nb_rooms)
-//{
-//	ft_printf("room name = %s x = %d y = %d\n", v.ins->room[room].name, v.ins->room[room].pos.x, v.ins->room[room].pos.y);
-//++room;
-//	mlx_put_image_to_window(v.mlx, v.win, v.img.img, 0, 0);
-//}//	mlx_string_put(v.mlx, v.win, v.ins->room[v.graphe->start].pos.x, v.ins->room[v.graphe->start].pos.y, 0x00FF00, "START");
-//	mlx_string_put(v.mlx, v.win, v.ins->room[v.graphe->end].pos.x, v.ins->room[v.graphe->end].pos.y, 0x00FF00, "END");
-//	ft_transform_points((void *)&v);
-
 	v.ants = (int *)ft_memalloc(sizeof(int) * (v.ins->nb_ants + 1));
-//	display_moves(&v, COL_ANT);
-
 	mlx_hook(v.win, KeyPress, KeyPressMask, ft_dealkey, (void *)&v);
-//	ft_printf("after deal key\n");
-//	ft_printf("nb rooms = %d\n", e.graphe->nb_rooms);
 //	mlx_expose_hook(v.win, &anim_moves, (void *)&v);
 //	anim_moves(&v, NULL, 0);
 	mlx_loop(v.mlx);

@@ -6,35 +6,17 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/15 20:51:12 by emuckens          #+#    #+#             */
-/*   Updated: 2018/11/08 18:59:38 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/11/19 20:50:44 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "visu.h"
 #include <stdio.h>
-/*
-void	ft_getm_height(VISU *v, double (*dest)[4][4])
-{
-	ft_44minit(dest, 1);
-	(*dest)[2][3] = v->uinput.height;
-}*/
-/*
-void	ft_getm_heightinit(VISU *v, double (*dest)[4][4])
-{
-	ft_44minit(dest, 1);
-	if (v->maxheight > 55)
-		(*dest)[2][2] = 55.0 / v->maxheight;
-	else if (e->minheight < -55)
-		(*dest)[2][2] = 55.0 / e->minheight;
-	e->minheight *= (*dest)[2][2];
-	e->maxheight *= (*dest)[2][2];
-}
-*/
+
 void	ft_getm_move(VISU *v, double (*dest)[4][4])
 {
 	ft_printf("move hor = %d move ver = %d\n", v->uinput.mv_hor, v->uinput.mv_ver);
 	ft_4vinit(&v->shift, v->uinput.mv_hor, v->uinput.mv_ver, 0);
-	v->center = 0;
 	ft_getm_trans(v, dest);
 }
 

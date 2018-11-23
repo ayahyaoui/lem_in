@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/15 20:52:20 by emuckens          #+#    #+#             */
-/*   Updated: 2018/11/08 17:43:16 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/11/19 17:52:19 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ void	ft_getm_scaledown(VISU *v, double (*dest)[4][4])
 	if (!iteration || v->revert)
 		v->mesh_size = 1;
 	ft_44minit(dest, 1);
-	ratio = 1.0 / v->mesh_size;
+	ratio = v->coef;
+//	ratio = 1.0 / v->mesh_size;
 	(*dest)[0][0] = ratio;
 	(*dest)[1][1] = ratio;
 	(*dest)[2][2] = ratio;

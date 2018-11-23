@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/20 10:56:35 by emuckens          #+#    #+#             */
-/*   Updated: 2018/11/16 19:14:48 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/11/19 20:50:58 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void			ft_points_to_img(VISU *v)
 	int 	col;
 
 	col = 0;
+	v->color = COL_TUBES;
 	while ((unsigned int)col < v->graphe->nb_rooms)
 	{
 		row = 0;
@@ -62,4 +63,5 @@ void			ft_points_to_img(VISU *v)
 		}
 		++col;
 	}
+
 }

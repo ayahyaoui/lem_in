@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/15 12:52:54 by emuckens          #+#    #+#             */
-/*   Updated: 2018/11/08 16:15:05 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/11/19 13:51:04 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int			ft_init_win(VISU *v)
 
 	ft_4vinit(&v->min, v->win_w, v->win_h, v->win_w * v->win_h);
 	ft_4vinit(&v->max, 0, 0, 0);
-//	ft_printf("minx = %d miny = %d\n", v->min.x, v->min.y);
+	ft_printf("minx = %d miny = %d\n", v->min.x, v->min.y);
 	v->ppmove = v->win_h * v->win_w * PPMOVE_RATIO;
 	if (!ft_launch_window(v))
 		return (ERR_MLX);

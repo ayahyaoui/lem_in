@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/10 17:40:04 by emuckens          #+#    #+#             */
-/*   Updated: 2018/11/16 19:33:14 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/11/19 18:06:03 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int		store_rooms(VISU *v)
 		{
 			split = ft_strsplit((char *)tmp->content, ' ');
 			v->ins->room[i].name = (char *)ft_strdup(split[0]);
-			ft_4vinit(&v->ins->room[i].pos, (double)ft_atoi(split[1]), (double)ft_atoi(split[2]), (float)(rand() % 100)); // put z to random for 3D
+			ft_4vinit(&v->ins->room[i].pos, (double)ft_atoi(split[1]), (double)ft_atoi(split[2]), (double)(rand() % (i + 1))); // put z to random for 3D
 //			printf("store room %s with coord %lf %lf %lf\n", v->ins->room[i].name, v->ins->room[i].pos.x, v->ins->room[i].pos.y, v->ins->room[i].pos.z);
 			free_strtab(&split);
 			link_command(v, ROOM, i);

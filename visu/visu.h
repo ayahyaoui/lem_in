@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/07 16:49:44 by emuckens          #+#    #+#             */
-/*   Updated: 2018/11/16 19:36:25 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/11/19 20:51:05 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef VISU_H
@@ -23,9 +23,34 @@
 # define ERR_NB			21
 # define NB_COMMANDS		2
 
+/*
+** NICE COLORS
+*/
+# define BBLACK			0x000000
+# define RED			0xEF5350
+# define PINK			0xEC407A
+# define PURPLE			0x7E57C2
+# define INDIGO			0x5C6BC0
+# define BLUE			0x42A5F5
+# define LBLUE			0x29B6F6
+# define CYAN			0x26C6DA
+# define TEAL			0x26A69A
+# define GREEN			0x66BB6A
+# define LGREEN			0x9CCC65
+# define LIME			0xD4E157
+# define YELLOW			0xFFEE58
+# define AMBER			0xFFCA28
+# define ORANGE			0xFFA726
+# define DORANGE		0xFF7043
+# define BROWN			0x8D6E63
+# define BGREY			0x78909C
+
+
+
 # define COL_ROOM		0xFFFFFF
-# define COL_ANT		0xFF0000
-# define COL_ANTNAME		0x0000FF
+# define COL_TUBES		TEAL
+# define COL_ANT		RED
+# define COL_ANTNAME	AMBER
 
 
 # define NOINS			"empty file"
@@ -67,7 +92,7 @@
 # define MIN_H			1000	//changer
 # define WIN_TITLE		"VISU LEM_IN"
 # define PPMOVE_RATIO	0.00001
-/*
+
 # define KEY_ESC		53
 # define KEY_LF			123
 # define KEY_RT			124
@@ -83,8 +108,9 @@
 # define KEY_ZMOUT		78
 # define KEY_DEFAULT	15
 # define KEY_INVERT		34
-*/
+# define KEY_PAUSE		49
 
+/*
 # define KEY_ESC		65307
 # define KEY_LF			65361
 # define KEY_RT			65363
@@ -98,7 +124,7 @@
 # define KEY_ZMOUT		65453
 # define KEY_DEFAULT	15
 # define KEY_INVERT		34
-
+*/
 # define MLX		"failed setting up mlx"
 
 
@@ -245,22 +271,25 @@ typedef struct s_visu
 	int			maxzoomout;
 	int			setextremes;
 	int			color;
-	int			coef;
+	double		coef;
 	int			center;
 	int			pause;
 }				t_visu;
 
 void		display_rooms(VISU *v);
+void		change_val(VISU *v);
+
 /*
 ** ENV
 */
 void		set_visu(VISU *v);
 void		free_graphe(t_graphe *g);
+int			ft_setextremes(VISU *v);
 
 /*
 ** USER ACTION
 */
-int		ft_dealkey(int key, void *param);
+int		ft_dealkey(int key, VISU *v);
 int		ft_transform_points(VISU *v);
 
 
@@ -312,8 +341,10 @@ void		ft_get_meshsize(VISU *v);
  * */
 
 int			display(VISU *v, char *str);
+void		display_ant(VISU *v, int index, int scale);
 void		display_anthill(t_list *anthill);
 void		printlist(VISU *v, t_list *l);
+void		display_ants(VISU *v, int x, int y, int scale);
 
 
 int			read_options(VISU *v, char **argv, int argc);
