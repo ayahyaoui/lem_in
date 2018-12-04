@@ -43,10 +43,13 @@
 # define ARG			"unexpected argument, only options allowed"
 # define LENGTH			"please specify tube length below 255"
 
+# define OPTION_CHARS		"clvw"
 # define OPT_VERBOSE		1 << ('v' - 'a')
 # define OPT_COLOR		1 << ('c' - 'a')
 # define OPT_WAY		1 << ('w' - 'a')
 # define OPT_LENGTH		1 << ('l' - 'a')
+
+# define COL_END		COL_CYAN
 
 
 
@@ -108,11 +111,6 @@ enum				e_special
 	START, END
 };
 
-enum				e_status
-{
-	DEALT, UNDEALT
-};
-
 enum				e_input
 {
 	INVALID_INPUT, VALID_INPUT
@@ -130,7 +128,7 @@ enum				e_error
 	ERR_START, ERR_END, ERR_LIB, ERR_ALLOC, ERR_HELP, ERR_OPTION, ERR_ARG, ERR_LENGTH 
 };
 
-void		display_allmoves(ENV *e, t_tab ***paths, int arrived);
+int		display_allmoves(ENV *e, t_tab ***paths, int arrived);
 void		display_besttab(t_tab ***tab);
 
 int			set_env(ENV *e);
@@ -160,6 +158,11 @@ void		printlist(ENV *e, t_list *l);
 int			read_options(ENV *e, char **argv, int argc);
 
 
+/*
+** Move ants in anthill
+*/
+int			ant_enter_path(ENV *e, t_tab ***paths, int comb);
+void			move_next_room(ENV *e, t_tab ***paths);
 
 
 /*

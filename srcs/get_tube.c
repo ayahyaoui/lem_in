@@ -54,7 +54,10 @@ static int		get_room_index(ENV *e, char *str, int n)
 }
 
 /*
-** 
+** Handle optional possibility to use ->, <- or <-> (= -) to indicate flow direction
+** in tube
+** Input: 2 strings for room names, pointer on way marker to set to FORWARD,
+** BACKWARD or BOTH 
 */
 
 static void		handle_way_spec(ENV *e, char **str1, char **str2, int *way)
@@ -90,13 +93,13 @@ int				get_tube(ENV *e, char **str, int way, int len)
 	if (!str[1] || str[2]
 		|| ((check = ft_strsplit(str[1], ' '))[1] && !(e->options & OPT_LENGTH)))
 	{
-		free_strtab(&check);
+		ft_free_strtab(&check);
 		return (ERR_TUBE);
 	}
 	handle_way_spec(e, &str[0], &str[1], &way);
 	i = get_room_index(e, str[0], 0);
 	j = get_room_index(e, str[1], len > 1 ? ft_strlen(check[0]) : 0);
-	free_strtab(&check);
+	ft_free_strtab(&check);
 	if ((i == -1 || j == -1))
 		return (ERR_NOROOM);
 	if ((way == FORWARD || way == BOTH) && (e->graphe->map[i][j] = len))

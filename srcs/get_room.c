@@ -33,6 +33,7 @@ int		is_dup(ENV *e, char *str, int max_index)
 /*
 ** Scans anthill and stores room names in char **tab, while checking if
 ** duplicate room names
+** link with commands if command(s) detected and unlinked
 ** returns err code if error, 0 if success
 */
 
@@ -44,12 +45,12 @@ int		store_rooms(ENV *e)
 
 	i = 0;
 	tmp = e->anthill;
-	if (!(e->ins->room = (t_room *)ft_memalloc(sizeof(t_room) * (e->graphe->nb_rooms + 1))))
+	e->ins->room = (t_room *)ft_memalloc(sizeof(t_room) * (e->graphe->nb_rooms + 1));
+	e->ins->commands = (int **)ft_memalloc(sizeof(int *) * (e->ins->nb_commands + 1));
+	if (!e->ins->room || !e->ins->commands)
 		return (ERR_ALLOC);
-	if (!(e->ins->commands = (int **)ft_memalloc(sizeof(int *) * (e->ins->nb_commands + 1))))
-		return (ERR_ALLOC);
-	while (((char *)tmp->content)[0] == '#')
-		tmp = tmp->next;
+//	while (((char *)tmp->content)[0] == '#')
+//		tmp = tmp->next;
 	while ((tmp = tmp->next) && ((unsigned int)i < e->graphe->nb_rooms))
 	{
 		if (((char *)tmp->content)[0] != '#')
@@ -57,29 +58,17 @@ int		store_rooms(ENV *e)
 			split = ft_strsplit((char *)tmp->content, ' ');
 			e->ins->room[i].name = (char *)ft_strdup(split[0]);
 			ft_4vinit(&e->ins->room[i].pos, ft_atoi(split[1]), ft_atoi(split[2]), 0); // put z to random for 3D
-			free_strtab(&split);
+			ft_free_strtab(&split);
 			link_command(e, ROOM, i);
 			if (is_dup(e, e->ins->room[i].name, i))
 				return (ERR_DUP);
 			++i;
 		}
-		else if (((char *)tmp->content)[1] == '#' /*&& (unsigned int)i != e->graphe->nb_rooms - 1*/)
+		else if (((char *)tmp->content)[1] == '#')
 			get_command(e, ((char *)tmp->content), 1);
 	}
 	return (NO_ERR);
 }
-
-void			print_rooms(ENV *e, char **room) // only for debug, delete
-{
-	int i;
-
-	i = -1;
-	ft_printf("list of %d rooms", e->graphe->nb_rooms);
-	while ((unsigned int)++i < e->graphe->nb_rooms)
-		ft_printf("%s ", room[i]);
-	ft_printf("\n");
-}
-
 
 /*
 ** ### Check room info, store in list, # mark start and end

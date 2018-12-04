@@ -12,9 +12,14 @@
 
 #include "lemin.h"
 
+/*
+** Checks if char is valid option char
+** returns error code or no err
+*/
+
 static int			is_option(char c)
 {
-	if (!ft_strchr("clvw", c) || !c)
+	if (!ft_strchr(OPTION_CHARS, c) || !c)
 		return (ERR_OPTION);
 	return (NO_ERR);
 }

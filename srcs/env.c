@@ -13,20 +13,9 @@
 #include "lemin.h"
 #include <stdlib.h>
 
-void		free_strtab(char ***tab)
-{
-	char **tmp;
-
-	if (!*tab)
-		return ;
-	tmp = *tab;
-	while (tmp && *tmp)
-	{
-		ft_strdel(tmp);
-		++tmp;
-	}
-	ft_memdel((void **)tab);
-}
+/*
+** Delete anthill
+*/
 
 void		del_anthill(t_list *l)
 {
@@ -38,8 +27,11 @@ void		del_anthill(t_list *l)
 		ft_memdel((void **)tmp);
 		l = l->next;
 	}
-
 }
+
+/*
+** Delete all room content
+*/
 
 void		del_rooms(ENV *e, t_room **room)
 {
@@ -58,33 +50,23 @@ void		del_rooms(ENV *e, t_room **room)
 
 }
 
-
-void		free_inttab(int ***tab, int size)
-{
-	int **tmp;
-	int i;
-
-	i = -1;
-	if (!*tab)
-		return ;
-	tmp = *tab;
-	while (++i < size)
-	{
-		ft_memdel((void **)tmp);
-		++tmp;
-	}
-	ft_memdel((void **)tab);
-}
-
+/*
+** Free environement at end: rooms, graphe, commands, instructions, anthill
+*/
 
 void		free_env(ENV *e)
 {
 	del_rooms(e, &e->ins->room);
 	free_graphe(e->graphe);
-	free_inttab(&e->ins->commands, e->ins->nb_commands);	
+	ft_free_inttab(&e->ins->commands, e->ins->nb_commands);	
 	ft_memdel((void **)&e->ins);
 	del_anthill(e->anthill);
 }
+
+/*
+** Set up environment
+** Return error code if malloc error, else return 1
+*/
 
 int		set_env(ENV *e)
 {

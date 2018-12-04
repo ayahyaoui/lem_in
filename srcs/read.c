@@ -14,6 +14,12 @@
 #include "libft.h"
 #include <stdlib.h>
 
+/*
+** Determine if string should be parsed by '-' (tubes) or ' ' (rooms)
+** Set pointer on type accordingly
+** Return separating character for use in strsplit
+*/
+
 char			sep(char *line, int *type)
 {
 	int i;
@@ -28,7 +34,14 @@ char			sep(char *line, int *type)
 	return (' ');
 }
 
-int				dispatch_ins(ENV *e, char **words, int nb)
+/*
+** Parse input and store significant information as ants, room or tube
+** Considers first tube as sign that all rooms are known, set up adjacency matrix
+** to store tube information relative to rooms
+** Return error code in case of error, no err otherwise
+*/
+
+static int			dispatch_ins(ENV *e, char **words, int nb)
 {
 	int ret;
 	static int		endrooms;
@@ -56,11 +69,31 @@ int				dispatch_ins(ENV *e, char **words, int nb)
 	return (ret);
 }
 
+/*
+** Store line in anthill linked list, for display at the end of the program
+** Input: string line 
+*/
+
+void				store_line_in_anthill(ENV *e, char **str)
+{
+	t_list *line;
+	char	*tmp;
+
+	line = ft_lstnew(tmp = ft_strdup(*str), ft_strlen(*str) + 1);
+	ft_strdel(&tmp);
+	ft_lstaddend(&e->anthill, line);
+}
+
+/*
+** Read input one line at a time, split all non comment and command instruction
+** and send to type detection
+** Store line as string in anthill linked list
+** Return error code in case of error, no err otherwise
+*/
+
 int				read_instructions(ENV *e, char *str, int nbline, int ret)
 {
 	char			**words;
-	char			*tmp;
-	t_list			*line;
 
 	while (!ret && get_next_line2(STDIN, &str) > 0 && str)
 	{
@@ -73,20 +106,15 @@ int				read_instructions(ENV *e, char *str, int nbline, int ret)
 			}
 			if ((ret = dispatch_ins(e, words, nbline)))
 			{
-				free_strtab(&words);
+				ft_free_strtab(&words);
 				ft_strdel(&str);
 				return (ret);
 			}
-			free_strtab(&words);
+			ft_free_strtab(&words);
 		}
-		else if (str[1] == '#' /*&& ft_printf("check str: %s\n", str) */&&
-get_command(e, str, 0))
-		{
+		else if (str[1] == '#' && get_command(e, str, 0))
 			++e->ins->nb_commands;
-					}
-		line = ft_lstnew(tmp = ft_strdup(str), ft_strlen(str) + 1);
-		ft_strdel(&tmp); //ajoute pour pouvoir free le contenu duplique
-		ft_lstaddend(&e->anthill, line);
+		store_line_in_anthill(e, &str);
 		ft_strdel(&str);
 	}
 	ft_strdel(&str);

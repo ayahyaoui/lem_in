@@ -125,6 +125,7 @@ double			ft_dabs(double num);
 double			ft_dsqrt(double num);
 size_t			ft_endien_btl(size_t valbe);
 float			ft_fabs(float num);
+void			ft_free_inttab(int ***tab, int size);
 int			ft_isintab(int *tab, int len, int val);
 long long		ft_llabs(long long n);
 size_t			ft_lllen(long long n);
@@ -143,6 +144,7 @@ void			ft_swapd(double *a, double *b);
 */
 int				get_next_line(const int fd, char **line);
 int				get_next_line2(const int fd, char **line);
+void			ft_free_strtab(char ***tab);
 char			*ft_strcat(char *s1, const char *s2);
 char			*ft_strchr(const char *s, int c);
 int				ft_strchri(const char *s, int c, int i);

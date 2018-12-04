@@ -12,6 +12,12 @@
 
 #include "lemin.h"
 
+
+/*
+** Retrieve string error message
+** Input: error code for scanning error reference static  table
+*/
+
 char 	*get_errmsg(int code)
 {
 	static char *msg[ERR_NB + 1] = {NULL, NOINS, ANT_INPUT, ANT_NB,
@@ -21,19 +27,12 @@ char 	*get_errmsg(int code)
 	return (msg[code]);
 }
 
-void	printlist(ENV *e, t_list *l)
-{	
-	t_list *tmp;
-
-	(void)e;
-	tmp = l;
-	ft_printf("print list of rooms\n");
-	while (tmp)
-	{
-		ft_printf("%s\t", (char *)(tmp->content));
-		tmp = tmp->next;
-	}
-}
+/*
+** Display error message on fd
+** Input: string error message
+** Differentiate regular or verbose message
+** Always return -1;
+*/
 
 int		display(ENV *e, char *str)
 {
