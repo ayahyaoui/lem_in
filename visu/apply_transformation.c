@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/17 15:39:45 by emuckens          #+#    #+#             */
-/*   Updated: 2018/11/19 20:51:02 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/08 19:16:39 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,5 +184,5 @@ int			ft_transform_points(VISU *v)
 	ft_setextremes(v);
 	ft_merge_transformations(v, &ftrans, 0);
 	ft_apply_transformation(v, &ftrans);
-	eturn (1);
+	return (1);
 }
