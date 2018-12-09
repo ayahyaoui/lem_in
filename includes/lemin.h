@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 14:48:09 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/09 16:48:38 by anyahyao         ###   ########.fr       */
+/*   Updated: 2018/12/09 20:02:48 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,11 @@ typedef struct		s_graphe
 {
 	unsigned int			nb_rooms; // anciennement taille
 	unsigned int			nb_tubes;
-	int						*color;
+	int						*color;// char *
 	int						*previous;// permet de trouver un chemin rapidement
 	char					**map; // bientot capacite
 	int						**graph;//prend  pas mal de place mais permet opti
+	int						*capacite;
 	int						start;
 	int						end;
 	t_file					*file;

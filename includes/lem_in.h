@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/30 19:00:27 by anyahyao          #+#    #+#             */
-/*   Updated: 2018/12/09 17:47:37 by anyahyao         ###   ########.fr       */
+/*   Updated: 2018/12/09 20:43:34 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ int					removefile(t_file *file);
 int					isemptyfile(t_file *file);
 t_file				*new_file(t_graphe *g);
 t_file				*clean_file(t_file *file, int size);
+void	printfile(t_file *f);
 
 // free.c
 void				free_fusion(t_fusion *f);
