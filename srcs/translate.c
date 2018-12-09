@@ -11,21 +11,47 @@
  * mtn toute la deuxieme ^partie du graphe n'a qu'un seule voisin
  */
 
+int		**creategraph(int len)
+{
+	int **map;
+	int i;
+
+	if (!(map = (int**)malloc(sizeof(int*) * (len * 2 + 1))))
+		exit(ERRORMALLOC);
+	i = -1;
+	while (++i < len)
+	{
+		if (!(map[i] = (int*)ft_memalloc(sizeof(int) * (len + 1))))
+			exit(ERRORMALLOC);
+	}
+	while (i < 2 * len)
+	{
+		if (!(map[i] = (int*)ft_memalloc(sizeof(int) * 2)))
+			exit(ERRORMALLOC);
+		i++;
+	}
+	map[i] = 0x0;
+	return map;
+}
+
 void		convert(t_graphe *g)
 {
-	int i;
+	unsigned int i;
 	int j;
 	int room;
 
-	i = -1;
-	while (++i < g->nb_rooms)
+	g->graph = creategraph(g->nb_rooms);
+	i = 0;
+	g->previous = ft_memalloc(g->nb_rooms);
+	while (i < g->nb_rooms)
 	{
 		j = -1;
 		room = -1;
-		while (++j < g->nb_rooms)
+		while ((unsigned int)++j < g->nb_rooms)
 			if (g->map[i][j] == 1)
 				g->map[i][++room] = j + g->nb_rooms;
 		g->map[i][room + 1] = -1;
+		i++;
 	}
 	while (i < g->nb_rooms)
 	{
@@ -35,9 +61,11 @@ void		convert(t_graphe *g)
 	}
 }
 
+/*
 int		ajout_chemin(t_graphe *g, t_file *file)
 {
 	int node;
+	int i;
 
 	node = g->start;
 	g->color = GREY;
@@ -45,11 +73,16 @@ int		ajout_chemin(t_graphe *g, t_file *file)
 	while (file->begin != file->end)
 	{
 		node = removefile(file);
-
-
-
-
+		if (node == g->end)
+			return (1);
+		i = 0;
+		while (g->graph[i] != -1)
+		{
+			
+		}
+	}
+	return (-1);
 }
 
-
+*/
 

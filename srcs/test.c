@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/01 19:39:32 by anyahyao          #+#    #+#             */
-/*   Updated: 2018/11/04 19:40:10 by anyahyao         ###   ########.fr       */
+/*   Updated: 2018/12/09 17:47:19 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,9 +107,9 @@ void	test_map(t_graphe *g)
 
 int			choose_method(t_graphe *g)
 {
-	t_tab ***best_tab = 0X0;
+	//t_tab ***best_tab = 0X0;
 	//ft_printf("choisemethodse\n");
-	if (g->nb_rooms < 16)
+/*	if (g->nb_rooms < 16)
 		best_tab = test_multipathbinary(g);
 	else
 		dijistra(g);
@@ -117,6 +117,8 @@ int			choose_method(t_graphe *g)
 	add_ant(g, best_tab, 10);
 	displayallpath(g, best_tab);
 	free_besttab(best_tab);
+*/
+	convert(g);
 	return (1);
 }
 /*

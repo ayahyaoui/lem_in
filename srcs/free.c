@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/01 18:22:17 by anyahyao          #+#    #+#             */
-/*   Updated: 2018/11/03 19:25:32 by anyahyao         ###   ########.fr       */
+/*   Updated: 2018/12/09 18:23:06 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,19 @@ void			free_graphe(t_graphe *g)
 		while ((unsigned int)++i < g->nb_rooms)
 			ft_memdel((void **)&g->map[i]);
 		ft_memdel((void **)&g->map);
+		g->map = 0x0;
 	}
+	i = -1;
+	if (g->graph)
+	{
+		ft_putstr("qwertyuiop\n");
+		while ((unsigned int)++i < g->nb_rooms * 2)
+			ft_memdel((void **)&g->graph[i]);
+		ft_memdel((void **)&g->graph);
+		g->graph = 0x0;
+	}
+
+	ft_memdel((void**)&g->previous);
 	ft_memdel((void**)&g->color);
 	free(g);
 	g = 0x0;

@@ -6,7 +6,7 @@
 #    By: emuckens <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/20 17:52:27 by emuckens          #+#    #+#              #
-#    Updated: 2018/11/16 19:19:01 by anyahyao         ###   ########.fr        #
+#    Updated: 2018/12/09 17:48:05 by anyahyao         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,7 @@ LIB_DIR 	:= libft
 
 _SRC	= all_path.c binarypath.c count_ant.c debug.c display.c env.c error.c file.c free.c ft_tri_fusion_recursive.c dijistra.c\
 	fusion.c get_ants.c get_comment.c getgraphe.c get_room.c get_tube.c initial.c iterativepath.c \
-	options.c short_path.c test.c main.c read.c utils.c \
+	options.c short_path.c test.c main.c read.c utils.c translate.c\
 	
 _HEAD	= lemin.h lem_in.h
 

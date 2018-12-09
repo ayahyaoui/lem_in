@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 14:58:47 by emuckens          #+#    #+#             */
-/*   Updated: 2018/11/07 15:49:47 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/09 17:35:30 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int		main(int argc, char **argv)
 	display_anthill(e.anthill);
 	e.graphe->color = (int *)ft_memalloc(e.graphe->nb_rooms * sizeof(int));
 	choose_method(e.graphe);
-
+	//free_graphe(g);
 //	display_adj_mtrx(e.graphe->map, e.graphe->nb_rooms); 
 //	paths = get_pathstab(); // seulement pour tester display moves, sur une combinaison de e.nb_paths chemins
 //	names = room_names(((t_input *)e.ins)->rooms, e.graphe->nb_rooms, (int **)paths, 3);

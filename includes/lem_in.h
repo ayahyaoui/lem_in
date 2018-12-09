@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/30 19:00:27 by anyahyao          #+#    #+#             */
-/*   Updated: 2018/11/18 23:47:52 by anyahyao         ###   ########.fr       */
+/*   Updated: 2018/12/09 17:47:37 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 #define ERRORMALLOC 12
 #define MIN(a, b) (a > b ? b : a)
 #include "libft.h"
+
 
 
 /*
@@ -98,6 +99,8 @@ typedef struct		s_big_tab
 }					t_big_tab;
 
 // new initial
+
+void				convert(t_graphe *g);
 
 //t_big_tab			*new_big_tab(t_graphe *g);
 t_fusion			*create_fusion(t_path *p, int max);

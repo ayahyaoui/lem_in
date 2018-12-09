@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/16 17:53:09 by anyahyao          #+#    #+#             */
-/*   Updated: 2018/11/18 23:47:50 by anyahyao         ###   ########.fr       */
+/*   Updated: 2018/12/09 17:27:56 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int		dijkstra(t_graphe *g, int *avoid, int *path)
  *	lors de la prochaine verison on auras le choix entre pointe sur un autre
  *	chemin pour pas duplique ou cree si le chemin est different
  */
-
+/*
 static int	addpathintab(t_tab ***best_tab, int *path, int index)
 {
 	int i;
@@ -85,7 +85,7 @@ static int	addpathintab(t_tab ***best_tab, int *path, int index)
 
 	return (1);
 }
-
+*/
 t_tab	***dijkstra_loop(t_graphe *g)
 {
 	t_tab	***best_tab;
@@ -110,7 +110,7 @@ t_tab	***dijkstra_loop(t_graphe *g)
 			best_tab[i] = 0x0;
 			break;
 		}
-		addpathintab(best_tab, path, i);
+		//addpathintab(best_tab, path, i);
 	}
 	free(avoid);
 	return (best_tab);
