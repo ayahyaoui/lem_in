@@ -105,7 +105,7 @@ void	test_map(t_graphe *g)
 	g->map[2][1] = 1;
 }
 
-int			choose_method(t_graphe *g)
+int			choose_method(t_graphe *g, t_input *info)
 {
 	//t_tab ***best_tab = 0X0;
 	//ft_printf("choisemethodse\n");
@@ -118,7 +118,7 @@ int			choose_method(t_graphe *g)
 	displayallpath(g, best_tab);
 	free_besttab(best_tab);
 */
-	convert(g);
+	convert(g, info);
 	return (1);
 }
 /*

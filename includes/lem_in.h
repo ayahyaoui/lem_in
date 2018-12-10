@@ -100,7 +100,6 @@ typedef struct		s_big_tab
 
 // new initial
 
-void				convert(t_graphe *g);
 
 //t_big_tab			*new_big_tab(t_graphe *g);
 t_fusion			*create_fusion(t_path *p, int max);

@@ -62,7 +62,7 @@ int		main(int argc, char **argv)
 	}
 	display_anthill(e.anthill);
 	e.graphe->color = (int *)ft_memalloc(e.graphe->nb_rooms * sizeof(int));
-	choose_method(e.graphe);
+	choose_method(e.graphe, e.ins);
 	//free_graphe(g);
 //	display_adj_mtrx(e.graphe->map, e.graphe->nb_rooms); 
 //	paths = get_pathstab(); // seulement pour tester display moves, sur une combinaison de e.nb_paths chemins

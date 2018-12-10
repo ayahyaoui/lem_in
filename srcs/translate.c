@@ -11,8 +11,8 @@
  * mtn toute la deuxieme ^partie du graphe n'a qu'un seule voisin
  */
 
-void		affiche_allpaths(t_graphe *g);
-int		algoquidechire(t_graphe *g);
+void		affiche_allpaths(t_graphe *g, t_input *infos);
+int		algoquidechire(t_graphe *g, t_input *infos);
 int		**creategraph(int len)
 {
 	int **map;
@@ -36,7 +36,7 @@ int		**creategraph(int len)
 	return map;
 }
 
-void		convert(t_graphe *g)
+void		convert(t_graphe *g , t_input *infos)
 {
 	unsigned int i;
 	int j;
@@ -69,7 +69,7 @@ void		convert(t_graphe *g)
 	g->file = new_file(g);
 	g->end = 10;
 	ft_putstr("==========================GO==============================\n");
-	algoquidechire(g);
+	algoquidechire(g, infos);
 }
 
 int		ajout_chemin(t_graphe *g)
@@ -94,8 +94,7 @@ int		ajout_chemin(t_graphe *g)
 			i = g->capacite[node];
 			addfile(g->file, i);
 			g->color[i] = BLACK;
-			g->previous[i] = node;
-			
+			g->previous[i] = node + g->nb_rooms;
 		}
 		else
 		{
@@ -121,10 +120,11 @@ int		ajout_chemin(t_graphe *g)
 	return (-1);
 }
 
-int		algoquidechire(t_graphe *g)
+int		algoquidechire(t_graphe *g, t_input *infos)
 {
 	//ft_printf("reussi %d\n",ajout_chemin(g));
 	int i;
+	int exept;
 	while (1)
 	{
 		g->file = clean_file(g->file, g->nb_rooms);
@@ -133,18 +133,34 @@ int		algoquidechire(t_graphe *g)
 		if (ajout_chemin(g) == -1)
 			break;
 		i = g->end;
+			exept = 0;
 		while (i != g->start)
 		{
-			ft_printf("%d <-", i);
+			//ft_printf("%d <-", i);
+			if (g->previous[i] > 0 && 
+			(unsigned int)g->previous[g->previous[i]] >= g->nb_rooms)
+			{
+				g->previous[g->previous[i]] -= g->nb_rooms;
+				exept = 1;
+			}
 			g->capacite[i] = g->previous[i];
-			g->map[g->previous[i]][i] = 2;
+			if (exept == 2)
+				exept = 0;
+			else
+				g->map[g->previous[i]][i] = 2;
 			g->map[i][g->previous[i]] = 1;
 			i = g->previous[i];
-			ft_putstr("- ");
+			if (exept == 1)
+			{
+				exept++;
+				g->map[g->previous[i]][i] = 1;
+			}
+			//ft_putstr("- ");
 		}
-			ft_printf("%d\n", g->start);
+			//ft_printf("%d\n", g->start);
 	}
-	affiche_allpaths(g);
+			//	g->map[2][1] = 1;
+	affiche_allpaths(g, infos);
 	free_file(&g->file);
 /*	i = g->end;
 	while (i != g->start)
@@ -156,11 +172,16 @@ int		algoquidechire(t_graphe *g)
 */	return 1;
 }
 
-void		affiche_allpaths(t_graphe *g)
+void		affiche_allpaths(t_graphe *g, t_input *infos)
 {
 	int i;
 	int j;
 	int k;
+	int	nb_chemin = -1;
+	int longeurmax = 0;
+	int longueur = 0;
+	int *simulation = malloc(4 * g->nb_rooms);
+
 
 	i = -1;
 	while ((unsigned int)++i < g->nb_rooms)
@@ -168,8 +189,12 @@ void		affiche_allpaths(t_graphe *g)
 		{
 			ft_printf("%d -->", g->start);
 			j = i;
+			longueur = 0;
 			while (j != g->end)
 			{
+				longueur++;
+				if (longueur > longeurmax)
+					longeurmax = longueur;
 				k = -1;
 				while ((unsigned int)++k < g->nb_rooms)
 					if (g->map[j][k] == 2)
@@ -182,6 +207,28 @@ void		affiche_allpaths(t_graphe *g)
 					exit(1);
 			}
 			ft_printf("%d\n\n\n", g->end);
+			simulation[++nb_chemin] = longueur + 1;
+			ft_printf("longueur%d\n", longueur);
 		}
+	ft_printf("calcul du pire des cas: \n");
+	ft_printf("nombre de chemin = %d\n",nb_chemin);
+	ft_printf("longeurmax = %d\n",longeurmax);
+	ft_printf("fourmis = %d\n",infos->nb_ants);
+//ft_printf("pire des cas theorique = %d", (infos->nb_ants / nb_chemin) +longeurmax);
+	int fourmis = infos->nb_ants;
+	int pass;
+	i = 1;
+	while (fourmis > 0)
+	{
+		pass = 0;
+		j = -1;
+		while (++j < nb_chemin)
+			if (i > simulation[j])
+				pass++;
+		ft_printf("tour (%d,%d)", i,pass);
+		fourmis-=pass;
+		i++;
+	}
+	printf("\npire des cas via simulation = %d\n", i);
 }
 
