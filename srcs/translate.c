@@ -67,7 +67,7 @@ void		convert(t_graphe *g , t_input *infos)
 		g->capacite[j] = -1;
 	ft_bzero(g->color, g->nb_rooms * sizeof(int));
 	g->file = new_file(g);
-	g->end = 10;
+	g->end =  1;
 	ft_putstr("==========================GO==============================\n");
 	algoquidechire(g, infos);
 }
@@ -189,7 +189,7 @@ void		affiche_allpaths(t_graphe *g, t_input *infos)
 		{
 			ft_printf("%d -->", g->start);
 			j = i;
-			longueur = 0;
+			longueur = 1;
 			while (j != g->end)
 			{
 				longueur++;
@@ -206,12 +206,13 @@ void		affiche_allpaths(t_graphe *g, t_input *infos)
 				if ((unsigned int)k == g->nb_rooms)
 					exit(1);
 			}
-			ft_printf("%d\n\n\n", g->end);
-			simulation[++nb_chemin] = longueur + 1;
-			ft_printf("longueur%d\n", longueur);
+			ft_printf("%d\n", g->end);
+			simulation[++nb_chemin] = longueur;
+			ft_printf("chemin numero %d = %d\n", nb_chemin ,simulation[nb_chemin]);
+			ft_putstr("\n\n");
 		}
-	ft_printf("calcul du pire des cas: \n");
-	ft_printf("nombre de chemin = %d\n",nb_chemin);
+	ft_printf("-------------calcul du pire des cas:-----------------\n");
+	ft_printf("nombre de chemin = %d\n",nb_chemin + 1);
 	ft_printf("longeurmax = %d\n",longeurmax);
 	ft_printf("fourmis = %d\n",infos->nb_ants);
 //ft_printf("pire des cas theorique = %d", (infos->nb_ants / nb_chemin) +longeurmax);
@@ -222,13 +223,13 @@ void		affiche_allpaths(t_graphe *g, t_input *infos)
 	{
 		pass = 0;
 		j = -1;
-		while (++j < nb_chemin)
-			if (i > simulation[j])
+		while (++j <= nb_chemin)
+			if (i >= simulation[j])
 				pass++;
 		ft_printf("tour (%d,%d)", i,pass);
 		fourmis-=pass;
 		i++;
 	}
-	printf("\npire des cas via simulation = %d\n", i);
+	printf("\npire des cas via simulation = %d\n", i - 1);
 }
 
