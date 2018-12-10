@@ -230,6 +230,8 @@ void		affiche_allpaths(t_graphe *g, t_input *infos)
 		fourmis-=pass;
 		i++;
 	}
+	free(simulation);
+	simulation = 0x0;
 	printf("\npire des cas via simulation = %d\n", i - 1);
 }
 
