@@ -41,8 +41,8 @@ static void		ft_input_move(VISU *v, int key)
 		v->uinput.mv_ver -= v->ppmove;
 	else if (key == KEY_DW)
 		v->uinput.mv_ver += v->ppmove;
-	else if (key == KEY_INVERT)
-		v->uinput.invert *= -1;
+//	else if (key == KEY_INVERT)
+//		v->uinput.invert *= -1;
 	else if (key == KEY_ZMIN && v->maxzoomin < 5)
 	{
 		++v->maxzoomin;
@@ -73,7 +73,6 @@ static int		ft_isvalid_key(int key)
 			|| key == KEY_DW
 			|| key == KEY_ZMIN
 			|| key == KEY_ZMOUT
-//			|| key == KEY_INVERT
 /*			|| key == KEY_DEFAULT*/);
 }
 

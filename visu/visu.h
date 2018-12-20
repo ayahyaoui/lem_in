@@ -92,7 +92,7 @@
 # define MIN_H			1000	//changer
 # define WIN_TITLE		"VISU LEM_IN"
 # define PPMOVE_RATIO	0.00001
-
+/*
 # define KEY_ESC		53
 # define KEY_LF			123
 # define KEY_RT			124
@@ -109,22 +109,22 @@
 # define KEY_DEFAULT	15
 # define KEY_INVERT		34
 # define KEY_PAUSE		49
+*/
 
-/*
 # define KEY_ESC		65307
 # define KEY_LF			65361
 # define KEY_RT			65363
 # define KEY_UP			65362
 # define KEY_DW			65364
-# define KEY_XUP		91
-# define KEY_XDW		84
-# define KEY_YUP		86
-# define KEY_YDW		88
+# define KEY_XUP		65431
+# define KEY_XDW		65433
+# define KEY_YUP		65430
+# define KEY_YDW		65432
 # define KEY_ZMIN		65451
 # define KEY_ZMOUT		65453
 # define KEY_DEFAULT	15
-# define KEY_INVERT		34
-*/
+# define KEY_PAUSE		65429
+
 # define MLX		"failed setting up mlx"
 
 
