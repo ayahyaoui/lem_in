@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/02 18:03:25 by anyahyao          #+#    #+#             */
-/*   Updated: 2018/11/03 23:19:28 by anyahyao         ###   ########.fr       */
+/*   Updated: 2018/11/18 23:47:51 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,12 +70,12 @@ int		number_active_bit(unsigned long p, int max)
 	return (res);
 }
 
-
+/*
 t_tab	***test_multipathbinary(t_graphe *g)
 {
 	t_path	*p;
 //	int		i;
-	t_tab	***res;
+//	t_tab	***res;
 
 	ft_printf("debut MULTI PATH\n");
 	if (!g || g->nb_rooms > 32)
@@ -92,10 +92,10 @@ t_tab	***test_multipathbinary(t_graphe *g)
 	ft_tri_fusion_recursive_couple(p->path, p->nb_path);
 //	i = 0;
 	sleep(1);
-	res = get_all_separpath(g, p);
+//	res = get_all_separpath(g, p);
 	ft_printf("bien jouer\n");
 	ft_memdel((void**)&p);
 	return (res);
 }
 
-
+*/

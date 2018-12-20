@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 14:48:09 by emuckens          #+#    #+#             */
-/*   Updated: 2018/11/09 16:03:22 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/09 20:02:48 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #define __LEMIN__
 
 #include "libft.h"
-
+#include "lem_in.h"
 # define ENV			t_environment
 # define STDIN			0
 # define STDOUT			1
@@ -52,17 +52,22 @@
 # define COL_END		COL_CYAN
 
 
+typedef struct s_file t_file;
 
 
 typedef struct		s_graphe
 {
 	unsigned int			nb_rooms; // anciennement taille
 	unsigned int			nb_tubes;
-	int				*color;
-	char				**map;
-	int				start;
-	int				end;
-}					t_graphe;
+	int						*color;// char *
+	int						*previous;// permet de trouver un chemin rapidement
+	char					**map; // bientot capacite
+	int						**graph;//prend  pas mal de place mais permet opti
+	int						*capacite;
+	int						start;
+	int						end;
+	t_file					*file;
+}						t_graphe;
 
 typedef struct		s_room
 {
@@ -97,7 +102,8 @@ typedef struct		s_environment
 	int			fd;
 }					t_environment;
 
-t_tab	***choose_method(t_graphe *g);
+int		choose_method(t_graphe *g, t_input * info);
+void				convert(t_graphe *g, t_input *infos);
 void		free_graphe(t_graphe *g);
 
 
@@ -153,6 +159,8 @@ int			display(ENV *e, char *str);
 void		display_moves(ENV *e, int **tab, int total);
 void		display_anthill(t_list *anthill);
 void		printlist(ENV *e, t_list *l);
+int		ant_enter_path(ENV *e, t_tab ***paths, int comb);
+void		move_next_room(ENV *e, t_tab ***paths);
 
 
 int			read_options(ENV *e, char **argv, int argc);

@@ -62,10 +62,10 @@ t_breakdown	*searchNpath(t_path *p, t_fusion *prev, t_fusion *next, t_tab **res)
 	(void)res;
 	min = 32; // 32 > au cout maximale
 	i = -1;
-	while ((unsigned int)++i < p->nb_path)
+	while ((unsigned int)++i < p->nb_path && next->nb_path < p->nb_path)
 	{
 		j = -1;
-		while ((unsigned int)++j < prev->nb_path)
+		while ((unsigned int)++j < prev->nb_path && next->nb_path < p->nb_path)
 			if (!(p->path[i][VALUE] & prev->fusion[j]->value)
 			&& (prev->altern > 1 || j > i) &&
 			(!valueisinfusion(next,p->path[i][VALUE] + prev->fusion[j]->value)))
@@ -76,12 +76,10 @@ t_breakdown	*searchNpath(t_path *p, t_fusion *prev, t_fusion *next, t_tab **res)
 				{
 					min = cost;
 					b = next->fusion[next->nb_path - 1];
-	//min = getfusionpath(prev->fusion[j], res,p->path[i][VALUE], cost);
 				}
 			}
 	}
 	next->altern++;
-	ft_printf("nouvelle combinaison %d\n\n\n", next->altern);
 	//infos(next);
 	return b;
 }
@@ -205,7 +203,7 @@ t_tab		***get_all_separpath(t_graphe *g, t_path *p)
 	affiche_path(g, p);
 	if (max_separpath > 0)
 		my_best_tab(g, p, max_separpath, &best_tab[1 + boolean]);
-	displayallpath(g, best_tab);
+//	displayallpath(g, best_tab);
 	//free_besttab(best_tab);
 	return (best_tab);
 }

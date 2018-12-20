@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/01 18:30:35 by anyahyao          #+#    #+#             */
-/*   Updated: 2018/11/02 18:32:11 by anyahyao         ###   ########.fr       */
+/*   Updated: 2018/11/16 23:22:34 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,27 +25,28 @@
  *	la file pour l'allouer 1 seule fois
  *	le debut et different de la fin
  */
-
-int		addneighbour(t_graphe *g, t_file *file, int node, int *tab)
+/*
+int		static removepath(t_graphe *g, t_file *file)
 {
 	int i;
-//	int j;
-//	int k;
+	int j;
 
-	i = -1;
-	while ((unsigned int)++i < g->nb_rooms)
+	i = file->begin;
+	while (i < file->end - 1)
 	{
-		//k = MIN(node, );
-		if (g->color[i] == WHITE && g->map[i][node] == 1)
-		{
-			g->color[i] = GREY;
-			addfile(file, i);
-			tab[i] = node;
-			if (i == g->end)
-				return (2);
-		}
+		j = -1;
+		while (++j < (int)g->nb_rooms)
+			g->map[j][file->tab[i]] = 0;
 	}
-	return (1);
+}
+*/
+int		addneighbourr(t_graphe *g, t_file *file, int node, int *tab)
+{
+	(void)g;
+	(void)file;
+	(void)node;
+	(void)tab;
+	return (2);
 }
 
 int				iterative_path(t_graphe *g, int *tab, t_file *file)
@@ -61,7 +62,7 @@ int				iterative_path(t_graphe *g, int *tab, t_file *file)
 	while (!isemptyfile(file))
 	{
 		node = removefile(file);
-		if (addneighbour(g, file, node, tab) == 2)
+		if (addneighbourr(g, file, node, tab) == 2)
 		{
 			find = 1;
 			break;
@@ -76,12 +77,16 @@ int				dijistra(t_graphe *g)
 {
 	int		*tab;
 	t_file		*file;
+	//t_tab	***res;
 
 	file = new_file(g);
 	if(!(tab = (int *)ft_memalloc(sizeof(int) * g->nb_rooms)))
 		return (-1);
 	if (iterative_path(g, tab, file))
+	{
 		displaypath(g, tab);
+		
+	}
 	else
 		ft_putstr("Il est impossible de trouver un chemin arrivant a la fin\n");
 	free_file(&file);

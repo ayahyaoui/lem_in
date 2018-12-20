@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/01 19:39:32 by anyahyao          #+#    #+#             */
-/*   Updated: 2018/11/09 15:47:18 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/09 17:47:19 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int		addlink(t_graphe *g, unsigned int a, unsigned int b)
 	}
 	return(0);
 }
-
+/*
 void	test_mapdemoniaque(t_graphe *g)
 {
 	if (g->nb_rooms < 12)
@@ -84,7 +84,7 @@ void	test_mapdemoniaque(t_graphe *g)
 	g->start = 0;
 	g->end = 10;
 }
-
+*/
 void	test_map(t_graphe *g)
 {
 	g->map[0][1] = 1;
@@ -105,19 +105,21 @@ void	test_map(t_graphe *g)
 	g->map[2][1] = 1;
 }
 
-t_tab			***choose_method(t_graphe *g)
+int			choose_method(t_graphe *g, t_input *info)
 {
-	t_tab ***best_tab = 0X0;
+	//t_tab ***best_tab = 0X0;
 	//ft_printf("choisemethodse\n");
-	if (g->nb_rooms < 16)
+/*	if (g->nb_rooms < 16)
 		best_tab = test_multipathbinary(g);
 	else
 		dijistra(g);
 
 	add_ant(g, best_tab, 10);
 	displayallpath(g, best_tab);
-//	free_besttab(best_tab);
-	return (best_tab);
+	free_besttab(best_tab);
+*/
+	convert(g, info);
+	return (1);
 }
 /*
 int main(int argc, const char *argv[])

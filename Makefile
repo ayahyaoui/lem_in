@@ -36,11 +36,9 @@ LIB_DIR 	:= libft
 #								    FILES									   
 #==============================================================================#
 
-
-_SRC	= all_path.c binarypath.c count_ant.c debug.c display.c env.c error.c file.c free.c ft_tri_fusion_recursive.c \
+_SRC	= all_path.c binarypath.c count_ant.c debug.c display.c env.c error.c file.c free.c ft_tri_fusion_recursive.c dijistra.c\
 	fusion.c get_ants.c get_comment.c getgraphe.c get_room.c get_tube.c initial.c iterativepath.c \
-	options.c short_path.c test.c main.c move.c read.c utils.c \
-	tmp.c
+	options.c short_path.c test.c main.c read.c utils.c translate.c move.c\
 	
 _HEAD	= lemin.h lem_in.h
 SRC 	= $(patsubst %, $(SRC_DIR)/%, $(_SRC))
