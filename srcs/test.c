@@ -63,7 +63,7 @@ int		addlink(t_graphe *g, unsigned int a, unsigned int b)
 	}
 	return(0);
 }
-
+/*
 void	test_mapdemoniaque(t_graphe *g)
 {
 	if (g->nb_rooms < 12)
@@ -84,7 +84,7 @@ void	test_mapdemoniaque(t_graphe *g)
 	g->start = 0;
 	g->end = 10;
 }
-
+*/
 void	test_map(t_graphe *g)
 {
 	g->map[0][1] = 1;

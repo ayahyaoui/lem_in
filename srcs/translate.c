@@ -67,7 +67,7 @@ void		convert(t_graphe *g , t_input *infos)
 		g->capacite[j] = -1;
 	ft_bzero(g->color, g->nb_rooms * sizeof(int));
 	g->file = new_file(g);
-	g->end =  1;
+//	g->end =  1;
 	ft_putstr("==========================GO==============================\n");
 	algoquidechire(g, infos);
 }
