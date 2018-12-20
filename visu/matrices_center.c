@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "visu.h"
+#include <stdio.h>
 
 void	ft_getm_setcenter(VISU *v, double (*dest)[4][4])
 {

@@ -22,7 +22,7 @@ FSANI		:= -fsanitize=address
 CC		:= gcc $(FLAGS)
 CCF		:= $(CC) $(FSANI)
 FRAMEWORKS = -framework OpenGL -framework AppKit
-FRAMEWORKS_L = -lmlx -L $(MLXDIR) -lXext -lX11
+FRAMEWORKS_L = -lm -lmlx -L $(MLXDIR) -lXext -lX11
 
 #==============================================================================#
 #								DIRECTORIES									    
@@ -69,13 +69,13 @@ all:
 #	cp $(NAME) test/
 
 
-#$(NAME): $(BIN) $(LIBFT) $(LIBMLX)
-#	@$(CCF) -o $(NAME) $(BIN) $(FRAMEWORKS_L) -lft -L $(LIB_DIR)	
-#	@echo "\r>>> \033[01;32m$(NAME) READY              \033[0m"
-
-$(NAME): $(BIN) $(LIBFT)
-	@$(CC) -o $(NAME) $(BIN) -lmlx -L $(MLX_DIR)/lib -lft -L $(LIB_DIR) $(FRAMEWORKS) 	
+$(NAME): $(BIN) $(LIBFT) $(LIBMLX)
+	@$(CCF) -o $(NAME) $(BIN) -lft -L $(LIB_DIR)	 $(FRAMEWORKS_L)
 	@echo "\r>>> \033[01;32m$(NAME) READY              \033[0m"
+
+#$(NAME): $(BIN) $(LIBFT)
+#	@$(CC) -o $(NAME) $(BIN) -lmlx -L $(MLX_DIR)/lib -lft -L $(LIB_DIR) $(FRAMEWORKS) 	
+#	@echo "\r>>> \033[01;32m$(NAME) READY              \033[0m"
 
 $(LIBMLX):
 	make -C $(MLXDIR)

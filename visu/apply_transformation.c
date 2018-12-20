@@ -184,5 +184,5 @@ int			ft_transform_points(VISU *v)
 	ft_setextremes(v);
 	ft_merge_transformations(v, &ftrans, 0);
 	ft_apply_transformation(v, &ftrans);
-	eturn (1);
+	return (1);
 }
