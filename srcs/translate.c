@@ -36,6 +36,7 @@ int		**creategraph(int len)
 	return map;
 }
 
+void	algoopti(t_graphe *g, t_input *infos);
 void		convert(t_graphe *g , t_input *infos)
 {
 	unsigned int i;
@@ -69,7 +70,8 @@ void		convert(t_graphe *g , t_input *infos)
 	g->file = new_file(g);
 //	g->end =  1;
 	ft_putstr("==========================GO==============================\n");
-	algoquidechire(g, infos);
+	//algoquidechire(g, infos);
+	algoopti(g, infos);
 }
 
 int		ajout_chemin(t_graphe *g)
@@ -140,6 +142,7 @@ int		algoquidechire(t_graphe *g, t_input *infos)
 			if (g->previous[i] > 0 && 
 			(unsigned int)g->previous[g->previous[i]] >= g->nb_rooms)
 			{
+				printf("nouveau chemin trouver !!!!!!!!!\n");
 				g->previous[g->previous[i]] -= g->nb_rooms;
 				exept = 1;
 			}
@@ -187,7 +190,7 @@ void		affiche_allpaths(t_graphe *g, t_input *infos)
 	while ((unsigned int)++i < g->nb_rooms)
 		if (g->map[g->start][i] == 2)
 		{
-			ft_printf("%d -->", g->start);
+			//ft_printf("%d -->", g->start);
 			j = i;
 			longueur = 1;
 			while (j != g->end)
@@ -199,17 +202,17 @@ void		affiche_allpaths(t_graphe *g, t_input *infos)
 				while ((unsigned int)++k < g->nb_rooms)
 					if (g->map[j][k] == 2)
 					{
-						ft_printf("%d -->", j);
+			//			ft_printf("%d -->", j);
 						j = k;
 						break;
 					}
 				if ((unsigned int)k == g->nb_rooms)
 					exit(1);
 			}
-			ft_printf("%d\n", g->end);
+			//ft_printf("%d\n", g->end);
 			simulation[++nb_chemin] = longueur;
 			ft_printf("chemin numero %d = %d\n", nb_chemin ,simulation[nb_chemin]);
-			ft_putstr("\n\n");
+			//ft_putstr("\n\n");
 		}
 	ft_printf("-------------calcul du pire des cas:-----------------\n");
 	ft_printf("nombre de chemin = %d\n",nb_chemin + 1);
@@ -226,8 +229,10 @@ void		affiche_allpaths(t_graphe *g, t_input *infos)
 		while (++j <= nb_chemin)
 			if (i >= simulation[j])
 				pass++;
-		ft_printf("tour (%d,%d)", i,pass);
 		fourmis-=pass;
+		ft_printf("tour (%d,%d reste %d) ", i,pass, fourmis);
+		if ((i % 5) == 4)
+			ft_putstr("\n");
 		i++;
 	}
 	free(simulation);
