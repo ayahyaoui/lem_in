@@ -10,6 +10,21 @@
  * et que ce dernier pointes sur plusieur autre noeud
  * mtn toute la deuxieme ^partie du graphe n'a qu'un seule voisin
  */
+/*
+typedef struct		s_graphe
+{
+	unsigned int			nb_rooms; // anciennement taille
+	unsigned int			nb_tubes;
+	int						*color;// char *
+	int						*previous;// permet de trouver un chemin rapidement
+	char					**map; // bientot capacite
+	int						**graph;//prend  pas mal de place mais permet opti
+	int						*capacite;
+	int						start;
+	int						end;
+	t_file					*file;
+}						t_graphe;
+*/
 
 void		affiche_allpaths(t_graphe *g, t_input *infos);
 int		algoquidechire(t_graphe *g, t_input *infos);
@@ -72,6 +87,8 @@ void		convert(t_graphe *g , t_input *infos)
 	ft_putstr("==========================GO==============================\n");
 	//algoquidechire(g, infos);
 	algoopti(g, infos);
+	//exit(1);
+	//troisieme_tentative(g, infos);
 }
 
 int		ajout_chemin(t_graphe *g)

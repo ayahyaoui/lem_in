@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/23 16:28:04 by anyahyao          #+#    #+#             */
-/*   Updated: 2019/01/07 19:35:52 by anyahyao         ###   ########.fr       */
+/*   Updated: 2019/01/07 16:40:09 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,63 +47,53 @@ void	infos_graphes(t_graphe *g);
 void	algoopti(t_graphe *g, t_input *infos)
 {
 	edmondKarp(g);
-	(void)infos;
-	//print_lastpath(g, infos);
+	print_lastpath(g, infos);
 
 }
 
-int		getColor(t_graphe *g, int pos)
+
+
+int		add_chemin(t_graphe *g)
 {
-	return g->node[pos]->color;
-}
-
-
-
-int		ajout_chemins(t_graphe *g)
-{
-	t_node *node;
+	int node;
 	int i;
-//	int tmp;
-	t_node *suiv;
-//	int parent;
+	int tmp;
 
-	node = g->node[g->start];
-	node->color = BLACK;
-	addfile(g->file, node->value);
+	node = g->start;
+	g->color[node] = BLACK;
+	addfile(g->file, node);
 	while (g->file->begin < g->file->end)
 	{
-		if ((node = g->node[removefile(g->file)])->value == g->end)
+		if ((node = removefile(g->file)) == g->end)
 			return (1);
-		if (node->parent != -1 && node->previous != -1 && getColor(g, node->parent) == WHITE)
+		i = g->capacite[node];
+		if (i != -1 && g->color[i] == WHITE)
 		{
-			addfile(g->file, node->parent);
-			g->node[node->parent]->color = BLACK;
-			g->node[node->parent]->previous = -1;
+			addfile(g->file, i);
+			g->color[i] = BLACK;
+			g->previous[i] = -1;
 		}
-		else
-		{
+		//else
+		//{
 			i = 0;
-			while (g->graph[node->value][i] != -1)
+			while (g->graph[node][i] != -1)
 			{
-				suiv = g->node[g->graph[node->value][i]];
-				//tmp = g->graph[node][i];
-				if (suiv->color == WHITE && suiv->parent != node->value)
+				tmp = g->graph[node][i];
+				if (g->color[tmp] == WHITE && (g->capacite[tmp] != node))
 				{
-					suiv->color = BLACK;
-
-					addfile(g->file, suiv->value);
-					suiv->previous = node->value;
-//					g->previous[suiv->value] = node;
+					g->color[tmp] = BLACK;
+					addfile(g->file, tmp);
+					g->previous[tmp] = node;
 				}
 				i++;
 			}
-		}
+		//}
 	}
 	return (-1);
 }
 
 
-void		print_lastpath(t_graphe *g, t_input *infos)
+void		troisieme_tentative(t_graphe *g, t_input *infos)
 {
 	int i;
 	int j;
@@ -113,6 +103,7 @@ void		print_lastpath(t_graphe *g, t_input *infos)
 	int *simulation = malloc(4 * g->nb_rooms);
 
 
+	
 	i = -1;
 	ft_print_inttab(g->capacite, g->nb_rooms, ' ');
 	while ((unsigned int)++i < g->nb_rooms)
@@ -173,112 +164,52 @@ void		print_lastpath(t_graphe *g, t_input *infos)
  * previous est local et represente pour chaque node ou est son precedent
  *
  */
-void	convertGraphe(t_graphe *g)
-{
-	unsigned int i;
 
-	i = 0;
-	g->node = malloc(sizeof(t_node*) * g->nb_rooms);
-	while (i < g->nb_rooms)
-	{
-		g->node[i] = malloc(sizeof(t_node));
-		g->node[i]->parent = -1;
-		g->node[i]->value = (int)i;
-		i++;
-	}
-}
 
-void	cleanNodee(t_graphe *g)
-{
-	unsigned int i;
 
-	i = 0;
-	while (i < g->nb_rooms)
-	{
-		g->node[i]->previous = -1;
-		g->node[i]->color = WHITE;
-		i++;
-	}
-}
-
-void	afficheAllParent(t_graphe *g)
-{
-	unsigned int i = 0;
-	t_node *node;
-	printf("============\n");
-	while (i < g->nb_rooms)
-	{
-		if (g->map[i][g->end] == 1 && g->node[i]->parent >= 0)
-		{
-			node = g->node[i];
-			while (node->value != g->start)
-			{
-				printf("(%d)<-",node->value);
-				node = g->node[node->parent];
-			}
-			printf("(%d)\n", g->start);
-		}
-		i++;
-	}
-	for (i = 0; i < g->nb_rooms; i++) {
-		if (g->node[i]->parent >= 0)
-			printf("%d->%d//// ", g->node[i])
-	}
-}
 
 int		edmondKarp(t_graphe *g)
 {
 	int i;
-	int tmperror;
-	t_node *node;
-	t_node *tmp;
+	int next;
+	//int tmp
 
-	convertGraphe(g);
 	while (1)
 	{
 		g->file = clean_file(g->file, g->nb_rooms);
-		cleanNodee(g);
+		ft_bzero(g->color, g->nb_rooms * sizeof(int));
+		ft_mem_set_int(g->previous, -1, g->nb_rooms);
+		ft_putstr("ajout_chemins");
 		if (ajout_chemins(g) == -1)
 			break;
-		ft_putstr("ajout_chemins\n");
-		i = g->node[g->end]->previous;
-		node = g->node[i];
-		while (node->value != g->start)
+		next = 0;
+		i = g->previous[g->end];
+		while (i != g->start)
 		{
-			printf("<%d> ", node->value);
-			if (node->value == 994)
-			printf("\n");
-			if (node->previous != -1)
+			//if (g->capacite[i] != -1 && g->previous[i] != g->capacite[i])
+			//	next = 1;
+//if (g->previous[i] == 1 || i == 1)
+//	ft_printf("(%d)%d = %d\n\n\n\n\n", i, g->capacite[i], g->previous[i]);
+			if (g->previous[i] > -1)
 			{
-				node->parent = node->previous;
-				node = g->node[node->parent];
-			}
-			else
+				//ft_printf("{%d}", i);
+				g->capacite[i] = g->previous[i];
+				i = g->previous[i];
+			}/*else
 			{
-				i = -1;
-				tmperror = 0;
-				while (++i < (int)g->nb_rooms)
-				{
-					if (g->node[i]->parent == node->value)
-					{
-						sleep(1);
-						printf("value %d vers %d\n", node->value, i);
-						tmperror++;
-						if (tmperror == 1)
-						{
-							g->node[i]->parent = -1;
-							tmp = g->node[i];
-						}
-					}
-				}
-				if (tmperror != 1)
-					printf("Error :%d\n", tmperror);
-				if (tmperror == 0)
-					return (0);
-				node = tmp;
-			}
+				tmp = -1;
+				while (g->capacite[++tmp] != i && (unsigned int)tmp < g->nb_rooms);
+				if (g->capacite[tmp] == )
+					i = tmp;
+				ft_printf("[%d]", i);
+			}*/
 		}
-		afficheAllParent(g);
+		if (next == 1)
+			ft_putstr("nouveau chemin trouver !!!!!!!!!!\n");
+		else
+
+		ft_printf("\n\n=>");
+	//	infos_graphes(g);
 	}
 	return (1);
 }
