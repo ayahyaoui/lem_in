@@ -85,8 +85,8 @@ void		convert(t_graphe *g , t_input *infos)
 	g->file = new_file(g);
 //	g->end =  1;
 	ft_putstr("==========================GO==============================\n");
-	//algoquidechire(g, infos);
-	algoopti(g, infos);
+	algoquidechire(g, infos);
+	//algoopti(g, infos);
 	//exit(1);
 	//troisieme_tentative(g, infos);
 }

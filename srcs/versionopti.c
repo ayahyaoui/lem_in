@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/23 16:28:04 by anyahyao          #+#    #+#             */
-/*   Updated: 2019/01/07 19:35:52 by anyahyao         ###   ########.fr       */
+/*   Updated: 2019/01/07 23:11:00 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ int		ajout_chemins(t_graphe *g)
 			return (1);
 		if (node->parent != -1 && node->previous != -1 && getColor(g, node->parent) == WHITE)
 		{
+			ft_printf("======%d\n", node->previous);
 			addfile(g->file, node->parent);
 			g->node[node->parent]->color = BLACK;
 			g->node[node->parent]->previous = -1;
@@ -90,9 +91,8 @@ int		ajout_chemins(t_graphe *g)
 				if (suiv->color == WHITE && suiv->parent != node->value)
 				{
 					suiv->color = BLACK;
-
-					addfile(g->file, suiv->value);
 					suiv->previous = node->value;
+					addfile(g->file, suiv->value);
 //					g->previous[suiv->value] = node;
 				}
 				i++;
@@ -211,19 +211,34 @@ void	afficheAllParent(t_graphe *g)
 		if (g->map[i][g->end] == 1 && g->node[i]->parent >= 0)
 		{
 			node = g->node[i];
+			int j = -1;
 			while (node->value != g->start)
-			{
+			{ ++j;
 				printf("(%d)<-",node->value);
 				node = g->node[node->parent];
+				if (node->value == 1333 && j > 15)
+					exit(1);
 			}
 			printf("(%d)\n", g->start);
 		}
 		i++;
 	}
+	ft_bzero(g->color, g->nb_rooms * 4);
 	for (i = 0; i < g->nb_rooms; i++) {
-		if (g->node[i]->parent >= 0)
-			printf("%d->%d//// ", g->node[i])
+		if (g->node[i]->parent > 0)
+			g->color[g->node[i]->parent]++;
 	}
+	for (i = 0; i < g->nb_rooms; i++) 
+		if (g->color[i] > 1){
+			ft_printf("probleme en %d<-%d", i, g->node[i]->parent);
+			exit(1);
+		}
+	/*for (i = 0; i < g->nb_rooms; i++) {
+		if (g->color[i] > 1)
+			ft_printf("probleme en %d<-%d", i, g->node[i]->parent);
+	}*/
+	ft_bzero(g->color, g->nb_rooms);
+			//printf("%d(%d) //// ", g->node[i]->parent, i);
 }
 
 int		edmondKarp(t_graphe *g)
@@ -232,6 +247,8 @@ int		edmondKarp(t_graphe *g)
 	int tmperror;
 	t_node *node;
 	t_node *tmp;
+	t_node *p;
+	int first = 0;
 
 	convertGraphe(g);
 	while (1)
@@ -240,49 +257,72 @@ int		edmondKarp(t_graphe *g)
 		cleanNodee(g);
 		if (ajout_chemins(g) == -1)
 			break;
-		ft_putstr("ajout_chemins\n");
+		ft_putstr("\n\najout_chemins\n");
 		i = g->node[g->end]->previous;
 		node = g->node[i];
+		p = node;
+		ft_printf("= = %d\n",++first);
+	//	ft_printf("parent de 1333 %d et parent de 1014 %d\n", g->node[1333]->parent, g->node[1014]->parent);
 		while (node->value != g->start)
 		{
-			printf("<%d> ", node->value);
-			if (node->value == 994)
-			printf("\n");
+			//if (first == 12)
+			ft_printf("<%d>\n", node->value);
 			if (node->previous != -1)
 			{
+			p = node;
+				if (node->parent == node->previous)
+					ft_printf("bizare\n");
 				node->parent = node->previous;
 				node = g->node[node->parent];
 			}
 			else
 			{
+			//	ft_printf("<<<%d\n", first);
 				i = -1;
 				tmperror = 0;
 				while (++i < (int)g->nb_rooms)
 				{
-					if (g->node[i]->parent == node->value)
+					if (g->node[i]->parent == node->value && i != p->value )
 					{
-						sleep(1);
-						printf("value %d vers %d\n", node->value, i);
+			//			sleep(1);
+						ft_printf("value %d vers %d\n", node->value, i);
 						tmperror++;
 						if (tmperror == 1)
 						{
+								
+							ft_printf("%d>>>%d\n", node->value,node->parent);
 							g->node[i]->parent = -1;
 							tmp = g->node[i];
+							//ode->parent = i;;
 						}
 					}
 				}
+			p = node;
+				/*if (g->node[node->parent]->parent == node->value)
+				{
+					printf("%d ppppppppp %d ", node->value, node->parent);
+					exit(1);//printf("Error :%d\n", tmperror);
+				}*/
 				if (tmperror != 1)
-					printf("Error :%d\n", tmperror);
+				{
+					printf("%d et %d ", tmperror, g->end);
+					exit(1);//printf("Error :%d\n", tmperror);
+				
+				}
 				if (tmperror == 0)
 					return (0);
 				node = tmp;
 			}
+			
 		}
+	//	if (first == 12)
 		afficheAllParent(g);
 	}
 	return (1);
 }
-
+// 1333 1014
+// 973 > 473
+// 973 > 1136
 
 void	infos_graphes(t_graphe *g)
 {

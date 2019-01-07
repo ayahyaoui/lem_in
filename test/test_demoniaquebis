@@ -1,0 +1,37 @@
+3
+##start
+zero 1 2
+one 3 2
+two 5 2
+three 1 1
+four 3 1
+five 4 1
+six 5 1
+seven 3 3
+eight 4 3
+nine 5 3
+ten 6 4
+eleven 1 10
+twelve 7 4
+thirteen 8 4
+##end
+fourteen 9 4
+zero-one
+zero-three
+zero-seven
+one-ten
+two-six
+two-fourteen
+three-four
+four-five
+five-six
+six-two
+seven-eight
+seven-eleven
+eight-nine
+nine-fourteen
+ten-two
+ten-eight
+eleven-twelve
+twelve-thirteen
+thirteen-fourteen

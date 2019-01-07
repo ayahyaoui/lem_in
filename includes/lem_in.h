@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/30 19:00:27 by anyahyao          #+#    #+#             */
-/*   Updated: 2018/11/09 15:09:08 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/07 17:04:00 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,14 @@ typedef struct			s_fusion
 	unsigned int	nb_path;
 	unsigned int	altern;
 }					t_fusion;
+
+typedef struct			s_node
+{
+	int value;
+	int previous;
+	int color;
+	int parent; // aciennement capaite
+}						t_node;
 
 /*
 typedef struct			s_chemins
