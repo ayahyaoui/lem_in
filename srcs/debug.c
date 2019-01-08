@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/01 19:29:03 by anyahyao          #+#    #+#             */
-/*   Updated: 2018/11/03 00:01:54 by anyahyao         ###   ########.fr       */
+/*   Updated: 2019/01/08 23:19:41 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int			displayallpath(t_graphe *g, t_tab ***t)
 
 
 	i = -1;
-	while (t[++i])
+	while (t[++i] && i < 3)
 	{
 		j = -1;
 		ft_putstr("=======================================\n");
@@ -114,6 +114,7 @@ int			displayallpath(t_graphe *g, t_tab ***t)
 		while (t[i][++j])
 		{
 		//	ft_printf("%d fourmis vont passer par la\n", t[i][j]->nb_ant);
+			ft_printf("i = %d et j = %d",i, j);
 			ft_print_inttab(t[i][j]->tab, t[i][j]->length, '>');
 		}
 		ft_putstr("=======================================\n");

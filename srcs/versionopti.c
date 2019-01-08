@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/23 16:28:04 by anyahyao          #+#    #+#             */
-/*   Updated: 2019/01/07 23:11:00 by anyahyao         ###   ########.fr       */
+/*   Updated: 2019/01/08 23:29:27 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 
 
-
+#define PATH_SIZE 16;
 
 /*
 typedef struct		s_graphe
@@ -38,16 +38,19 @@ typedef struct		s_graphe
 int		ajout_chemins(t_graphe *g);
 void	algoopti(t_graphe *g, t_input *infos);
 void		print_lastpath(t_graphe *g, t_input *infos);
-int		edmondKarp(t_graphe *g);
+t_tab		***edmondKarp(t_graphe *g);
 void	infos_graphes(t_graphe *g);
+void		bestsimulation(t_graphe *g, t_input *infos, t_tab ***besttab);
 
 
 
 
 void	algoopti(t_graphe *g, t_input *infos)
 {
-	edmondKarp(g);
-	(void)infos;
+	t_tab ***besttab = edmondKarp(g);
+(void)infos;
+bestsimulation(g, infos, besttab);
+	free_besttab(besttab);
 	//print_lastpath(g, infos);
 
 }
@@ -63,31 +66,24 @@ int		ajout_chemins(t_graphe *g)
 {
 	t_node *node;
 	int i;
-//	int tmp;
 	t_node *suiv;
-//	int parent;
 
 	node = g->node[g->start];
 	node->color = BLACK;
 	addfile(g->file, node->value);
-	//ft_bzero(g->color, g->nb_rooms * 4);
 	while (g->file->begin < g->file->end)
 	{
 		if ((node = g->node[removefile(g->file)])->value == g->end)
 			return (1);
-			if (node->value == 398 || node->value == 1594 || node->value == 1595)
-				ft_printf("---");
-			
-		if (node->parent != -1 && g->color[node->previous] == 0 && getColor(g, node->parent) == WHITE)
+		if (node->parent != -1 && g->color[node->previous] == 0)
 		{
-		//	if(node->value == 398)
-		//		ft_printf("\ncc %d\n", node->parent);
-			//ft_printf("======%d\n", node->previous);
+			if (getColor(g, node->parent) == WHITE)
+			{
 			addfile(g->file, node->parent);
 			g->node[node->parent]->color = BLACK;
 			g->node[node->parent]->previous = node->value;
 			g->color[node->value] = 1;
-			//g->color[node->parent] = 1;
+			}
 		}
 		else
 		{
@@ -95,16 +91,12 @@ int		ajout_chemins(t_graphe *g)
 			while (g->graph[node->value][i] != -1)
 			{
 				suiv = g->node[g->graph[node->value][i]];
-				//tmp = g->graph[node][i];
 				if (suiv->color == WHITE && (suiv->parent == -1 ||(suiv->parent >= 0 
 				 && suiv->parent != node->value))) //node->value)
 				{
-		//			if(node->value == 398)
-						//ft_printf("\nbb %d\n", suiv->value);
 					suiv->color = BLACK;
 					suiv->previous = node->value;
 					addfile(g->file, suiv->value);
-//					g->previous[suiv->value] = node;
 				}
 				i++;
 			}
@@ -113,7 +105,7 @@ int		ajout_chemins(t_graphe *g)
 	return (-1);
 }
 
-
+/*
 void		print_lastpath(t_graphe *g, t_input *infos)
 {
 	int i;
@@ -175,7 +167,7 @@ void		print_lastpath(t_graphe *g, t_input *infos)
 	simulation = 0x0;
 	printf("\npire des cas via simulation = %d\n", i - 1);
 }
-
+*/
 
 
 /*
@@ -254,111 +246,285 @@ void	afficheAllParent(t_graphe *g)
 			//printf("%d(%d) //// ", g->node[i]->parent, i);
 }
 
-int		edmondKarp(t_graphe *g)
+int first = 0;
+/*
+void	registerPath(t_graphe *g, int newas, t_tab *** besttab)
+{
+	int val;
+	int i;
+	t_node *node;
+
+	i = -1;
+	val = -1;
+	while (++i < (int)g->nb_rooms)
+		if (g->map[i][g->end] > 0 && g->node[i]->parent >= 0 && g->capacite[i] > val)
+			val = g->capacite[i];
+	if (val > 0)
+	{
+		while (!(val & binaire))
+			binaire = binaire >> 1;
+	}else
+		binaire = 1;
+	if (news)
+		binaire = binaire << 1;
+	ft_printf("binaire == %u %d", binaire, news);
+	while (++i < (int)g->nb_rooms)
+	{
+		if (g->map[i][g->end] > 0 && g->node[i]->parent >= 0)
+			while ((node = g->node[i])->value != g->start)
+			{
+				if (!(g->capacite[i] & binaire))
+					g->capacite[i] += binaire;
+				node = g->node[node->parent];
+			}
+	}
+}
+*/
+
+t_tab	***allowBestTab(int nbPath, int sizeMax)
+{
+	t_tab ***besttab = 0x0;
+	int i;
+	int a;
+
+	ft_printf("je suis appele une seule fois !!!!!!!%llu * %d = %lld\n",
+			sizeof(t_tab), sizeMax, sizeMax* sizeof(t_tab));
+	if (!(besttab = (t_tab***)ft_memalloc(sizeof(t_tab**) * (nbPath + 1))))
+		exit(ERRORMALLOC);
+	a = -1;
+
+	while (++a < nbPath)
+	{
+		if (!(besttab[a] = ft_memalloc(sizeof(t_tab *) * (nbPath  + 1))))
+			exit(ERRORMALLOC);
+		i = -1;
+		while (++i < nbPath)
+		{
+			if (!(besttab[a][i] = (t_tab*)ft_memalloc(sizeof(t_tab))))
+				exit(ERRORMALLOC);
+			if (!(besttab[a][i]->tab = ft_memalloc(sizeof(int) * (sizeMax + 1))))
+				exit(ERRORMALLOC);
+		}
+		besttab[a][i] = 0x0;
+	}
+	besttab[a] = 0x0;
+	return (besttab);
+}
+
+int		addPath(t_node *node, t_graphe *g, t_tab *t)
+{
+	int pos;
+
+	if (node->value == g->start)
+	{
+		t->tab[0] = g->start;
+		return 1;
+	}
+	pos = addPath(g->node[node->parent], g, t);
+	t->tab[pos] = node->value;
+	return pos + 1;
+}
+
+t_tab	***registerPath(t_graphe *g, int nbPath, int sizeMax, t_tab ***besttab)
 {
 	int i;
-	//int tmperror;
-	t_node *node;
-	//t_node *tmp;
-//	t_node *p;
-	t_node *next;
-	int first = 0;
+	int j;
+	(void)sizeMax;
 
+	//besttab = allowBestTab(nbPath, g->nb_rooms, besttab);
+	i = -1;
+	j = 0;
+	while (++i < (int)g->nb_rooms)
+	{
+		if (g->map[i][g->end] > 0 && g->node[i]->parent >= 0)
+		{
+			besttab[nbPath][j]->length = addPath
+				(g->node[i], g, besttab[nbPath][j]);
+			j++;
+		}
+	}
+	besttab[nbPath][j] = 0x0;
+	return besttab;
+}
+
+t_tab		***edmondKarp(t_graphe *g)
+{
+	int i;
+	t_node *node;
+	t_node *next;
+	int		nbmap;
+	t_tab ***besttab;
+
+	nbmap = 0;
 	convertGraphe(g);
+	besttab = allowBestTab(50 , 200);//(t_tab***)malloc(sizeof(t_tab**));
+	ft_printf("je vais commence!!");
 	while (1)
 	{
 		g->file = clean_file(g->file, g->nb_rooms);
 		cleanNodee(g);
-		
 		ft_bzero(g->color, g->nb_rooms * 4);
 		if (ajout_chemins(g) == -1)
 			break;
 		ft_printf("\n\najout_chemins%d\n", first++);
 		i = g->node[g->end]->previous;
 		node = g->node[i];
-
-		//p = node;
-		//ft_printf("= = %d\n",++first);
-	//	ft_printf("parent de 1333 %d et parent de 1014 %d\n", g->node[1333]->parent, g->node[1014]->parent);
+		
 		while (node->value != g->start)
 		{
-			if (node->value == 398 || node->value == 1594 || node->value == 1595)
-				ft_printf("---(%d)---",node->parent);
-			ft_printf("%d> ",node->value);
-			if (node->parent == node->previous)
-			{ 
-				ft_printf("wesh %d-%d", node->value, node->previous);
-				exit(2);
-			}
 			next = g->node[node->previous];
 			if (g->color[node->previous] == 0)
-			{
 				node->parent = node->previous;
-			}
 			else
-				sleep(1);
-				//ft_printf("<<%d>>",node->value);
-
+				nbmap = 1;
 			node = next;
-			//if (first == 12)
-			/*ft_printf("<%d>\n", node->value);
-			if (node->previous != -1)
-			{
-			p = node;
-				if (node->parent == node->previous)
-					ft_printf("bizare\n");
-				node->parent = node->previous;
-				node = g->node[node->parent];
-			}
-			else
-			{
-			//	ft_printf("<<<%d\n", first);
-				i = -1;
-				tmperror = 0;
-				while (++i < (int)g->nb_rooms)
-				{
-					if (g->node[i]->parent == node->value && i != p->value )
-					{
-			//			sleep(1);
-						ft_printf("value %d vers %d\n", node->value, i);
-						tmperror++;
-						if (tmperror == 1)
-						{
-								
-							ft_printf("%d>>>%d\n", node->value,node->parent);
-							g->node[i]->parent = -1;
-							tmp = g->node[i];
-							//ode->parent = i;;
-						}
-					}
-				}
-			p = node;
-*/				/*if (g->node[node->parent]->parent == node->value)
-				{
-					printf("%d ppppppppp %d ", node->value, node->parent);
-					exit(1);//printf("Error :%d\n", tmperror);
-				}*/
-		/*		if (tmperror != 1)
-				{
-					printf("%d et %d ", tmperror, g->end);
-					exit(1);//printf("Error :%d\n", tmperror);
-				
-				}
-				if (tmperror == 0)
-					return (0);
-				node = tmp;
-			}*/
-			
 		}
-	//	if (first == 12)
-		afficheAllParent(g);
+		registerPath(g, first - 1, 0, besttab);
+		//afficheAllParent(g);
 	}
+//	besttab[first] = 0x0;
 	printf("finishhhh\n");
+	return (besttab);
+}
+
+int		IsinIntTab(int *tab, int len, int value)
+{
+	int i;
+
+	i = -1;
+	while (++i < len)
+	{
+		if (value == tab[i])
+			return (1);
+	}
+	return (0);
+}
+
+int		searchIntTab(int *tab, int len, int value)
+{
+	int i;
+
+	i = -1;
+	while (++i < len)
+		if (value == tab[i])
+			return (i);
+	return (-1);
+}
+
+void	move(t_graphe *g, t_tab ***besttab)
+{
+	int i;
+	int j;
+	t_tab *t;
+	int *tmp;
+
+	i = -1;
+	while (++i < ((int)g->nb_rooms))
+		if (g->color[i] > 0)
+		{
+			j = -1;
+			while ((t = besttab[g->color[i]][++j]))
+			{
+				if (IsinIntTab(t->tab, t->length , i))
+				{
+					j = searchIntTab(t->tab, t->length, i);
+					break;
+				}
+			}
+			if (g->capacite[j] == 0)
+				g->capacite[j] = g->color[i];
+			else if (g->capacite[i] == 0)
+				g->capacite[i] = g->color[i];
+			else
+				ft_printf("une fourmis vient de disparaitre en %d\n", i);
+		}
+	tmp = g->color;
+	g->color = g->capacite;
+	g->capacite = tmp;
+}
+
+void		add(t_graphe *g, int *tab, t_tab ***besttab)
+{
+	int i;
+	int j;
+	
+	i = (int)(g->nb_rooms);
+	while (i > 0 && tab[i] == 0)
+		i--;
+	j = -1;
+	ft_printf("i = %d ", i);
+	while (++j <= i)
+	{
+		ft_printf("val = %d ", besttab[i][j]->tab[1]);
+		if (g->color[besttab[i][j]->tab[1]] == 0)
+		{
+			ft_printf("yes");
+			g->color[besttab[i][j]->tab[1]] = i + 1;
+			tab[i]--;
+		}
+	}
+}
+
+int			isfinish(t_graphe *g, int *tab)
+{
+	int i;
+
+	i = -1;
+	while (++i < (int)(g->nb_rooms))
+	{
+		if (tab[i] > 0 || (i != g->end && g->color[i] != 0))
+			return (0);
+	}
 	return (1);
 }
-// 1333 1014
-// 973 > 473
-// 973 > 1136
+
+void	printAnt(t_graphe *g, int res, int *tab)
+{
+	ft_printf("Tour numero %d \n", res);
+	ft_print_inttab(g->color, (int)g->nb_rooms, ' ');
+	ft_print_inttab(tab, g->nb_rooms, ' ');
+
+}
+
+int			simulation(t_graphe *g, int *tab, t_tab ***besttab)
+{
+	int res;
+	ft_bzero(g->color, sizeof(int) * g->nb_rooms);
+	ft_bzero(g->capacite, sizeof(int) * g->nb_rooms);
+	displayallpath(g, besttab);
+
+
+	res = 0;
+	while (1)
+	{
+		move(g, besttab);
+		add(g, tab, besttab);
+		if (res > 10|| isfinish(g, tab))
+			break;
+		printAnt(g,res, tab);
+		res++;
+	}
+	return res;
+
+}
+
+
+void		bestsimulation(t_graphe *g, t_input *infos, t_tab ***besttab)
+{
+	int *tab = ft_memalloc(sizeof(int) *g->nb_rooms);
+	int min = 2000000000;
+	tab[first - 1] = infos->nb_ants;
+	
+	min = simulation(g, tab, besttab);
+
+	ft_printf("resultat == %d", min);
+	free(tab);
+}
+
+
+
+
+
 
 void	infos_graphes(t_graphe *g)
 {
@@ -379,7 +545,6 @@ void	infos_graphes(t_graphe *g)
 			ft_printf("%2d ",g->graph[j][i]);
 		}
 		ft_putstr("\n");
-		
 	}
-
 }
+

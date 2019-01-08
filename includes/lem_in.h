@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/30 19:00:27 by anyahyao          #+#    #+#             */
-/*   Updated: 2019/01/07 17:04:00 by anyahyao         ###   ########.fr       */
+/*   Updated: 2019/01/08 19:25:09 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,9 @@ typedef struct			s_chemins
 	unsigned int			nb_max;
 }							t_chemins;
 */
-/*
-typedef struct		s_tab
-{
+
+typedef struct		s_tab t_tab;
+/*a{
 	int				length;
 	int				*tab;
 	//int					nb_ant;
@@ -108,6 +108,7 @@ typedef struct		s_big_tab
 
 // new initial
 
+int			displayallpath(t_graphe *g, t_tab ***t);
 
 //t_big_tab			*new_big_tab(t_graphe *g);
 t_fusion			*create_fusion(t_path *p, int max);
@@ -127,8 +128,8 @@ void	printfile(t_file *f);
 void				free_fusion(t_fusion *f);
 void				free_file(t_file **file);
 void				free_graphe(t_graphe *g);
-//void				free_besttab(t_tab ***best_tab);
-//void				free_t_tab(t_tab *t);
+void				free_besttab(t_tab ***best_tab);
+void				free_t_tab(t_tab *t);
 
 //affiche
 void				affichebreak(t_breakdown *bp);

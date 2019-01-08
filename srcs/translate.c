@@ -108,13 +108,14 @@ int		ajout_chemin(t_graphe *g)
 			return (1);
 		//if (g->capacite[node] != -1)
 		//	ft_printf("pb %d sur le node %d\n", g->capacite[node], node);
-		if (g->capacite[node] != -1 && g->previous[node] > (int)g->nb_rooms &&(g->color[g->capacite[node]]) == WHITE)
+		if (g->capacite[node] != -1/* && g->previous[node] > (int)g->nb_rooms*/)
 		{
-			i = g->capacite[node];
+			if ((g->color[g->capacite[node]]) == WHITE)
+			{i = g->capacite[node];
 			addfile(g->file, i);
 			g->color[i] = BLACK;
 			g->previous[i] = node + g->nb_rooms;
-		}
+		}}
 		else
 		{
 			i = 0;

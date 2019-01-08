@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/01 18:22:17 by anyahyao          #+#    #+#             */
-/*   Updated: 2018/12/09 23:38:16 by anyahyao         ###   ########.fr       */
+/*   Updated: 2019/01/08 19:52:58 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,14 @@ void			free_graphe(t_graphe *g)
 	ft_memdel((void**)&g->capacite);
 	ft_memdel((void**)&g->previous);
 	ft_memdel((void**)&g->color);
+	if (g->node)
+	{
+		i = -1;
+		while (++i < (int)g->nb_rooms)
+			ft_memdel((void**)&g->node[i]);
+		ft_memdel((void **)&g->node);
+	}
+	free_file(&g->file);
 	free(g);
 	g = 0x0;
 }
@@ -88,6 +96,7 @@ void			free_besttab(t_tab ***best_tab)
 	int i;
 	int j;
 
+	ft_putstr("je suuuuuupppp best_tab");
 	if (best_tab)
 	{
 		i = -1;
@@ -95,7 +104,12 @@ void			free_besttab(t_tab ***best_tab)
 		{
 			j = -1;
 			while (best_tab[i][++j])
-				ft_memdel((void**)(&best_tab[i][j]->tab));
+			{
+				ft_memdel((void**)(&(best_tab[i][j]->tab)));
+				ft_memdel((void**)&best_tab[i][j]);
+			}
+			ft_memdel((void**)(&best_tab[i]));
 		}
+		ft_memdel((void**)&best_tab);
 	}
 }
