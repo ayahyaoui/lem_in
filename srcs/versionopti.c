@@ -70,16 +70,24 @@ int		ajout_chemins(t_graphe *g)
 	node = g->node[g->start];
 	node->color = BLACK;
 	addfile(g->file, node->value);
+	//ft_bzero(g->color, g->nb_rooms * 4);
 	while (g->file->begin < g->file->end)
 	{
 		if ((node = g->node[removefile(g->file)])->value == g->end)
 			return (1);
-		if (node->parent != -1 && node->previous != -1 && getColor(g, node->parent) == WHITE)
+			if (node->value == 398 || node->value == 1594 || node->value == 1595)
+				ft_printf("---");
+			
+		if (node->parent != -1 && g->color[node->previous] == 0 && getColor(g, node->parent) == WHITE)
 		{
-			ft_printf("======%d\n", node->previous);
+		//	if(node->value == 398)
+		//		ft_printf("\ncc %d\n", node->parent);
+			//ft_printf("======%d\n", node->previous);
 			addfile(g->file, node->parent);
 			g->node[node->parent]->color = BLACK;
-			g->node[node->parent]->previous = -1;
+			g->node[node->parent]->previous = node->value;
+			g->color[node->value] = 1;
+			//g->color[node->parent] = 1;
 		}
 		else
 		{
@@ -88,8 +96,11 @@ int		ajout_chemins(t_graphe *g)
 			{
 				suiv = g->node[g->graph[node->value][i]];
 				//tmp = g->graph[node][i];
-				if (suiv->color == WHITE && suiv->parent != node->value)
+				if (suiv->color == WHITE && (suiv->parent == -1 ||(suiv->parent >= 0 
+				 && suiv->parent != node->value))) //node->value)
 				{
+		//			if(node->value == 398)
+						//ft_printf("\nbb %d\n", suiv->value);
 					suiv->color = BLACK;
 					suiv->previous = node->value;
 					addfile(g->file, suiv->value);
@@ -227,6 +238,8 @@ void	afficheAllParent(t_graphe *g)
 	for (i = 0; i < g->nb_rooms; i++) {
 		if (g->node[i]->parent > 0)
 			g->color[g->node[i]->parent]++;
+		if (g->node[i]->parent == 398)
+			printf("398---->%d\n", i);
 	}
 	for (i = 0; i < g->nb_rooms; i++) 
 		if (g->color[i] > 1){
@@ -244,10 +257,11 @@ void	afficheAllParent(t_graphe *g)
 int		edmondKarp(t_graphe *g)
 {
 	int i;
-	int tmperror;
+	//int tmperror;
 	t_node *node;
-	t_node *tmp;
-	t_node *p;
+	//t_node *tmp;
+//	t_node *p;
+	t_node *next;
 	int first = 0;
 
 	convertGraphe(g);
@@ -255,18 +269,39 @@ int		edmondKarp(t_graphe *g)
 	{
 		g->file = clean_file(g->file, g->nb_rooms);
 		cleanNodee(g);
+		
+		ft_bzero(g->color, g->nb_rooms * 4);
 		if (ajout_chemins(g) == -1)
 			break;
-		ft_putstr("\n\najout_chemins\n");
+		ft_printf("\n\najout_chemins%d\n", first++);
 		i = g->node[g->end]->previous;
 		node = g->node[i];
-		p = node;
-		ft_printf("= = %d\n",++first);
+
+		//p = node;
+		//ft_printf("= = %d\n",++first);
 	//	ft_printf("parent de 1333 %d et parent de 1014 %d\n", g->node[1333]->parent, g->node[1014]->parent);
 		while (node->value != g->start)
 		{
+			if (node->value == 398 || node->value == 1594 || node->value == 1595)
+				ft_printf("---(%d)---",node->parent);
+			ft_printf("%d> ",node->value);
+			if (node->parent == node->previous)
+			{ 
+				ft_printf("wesh %d-%d", node->value, node->previous);
+				exit(2);
+			}
+			next = g->node[node->previous];
+			if (g->color[node->previous] == 0)
+			{
+				node->parent = node->previous;
+			}
+			else
+				sleep(1);
+				//ft_printf("<<%d>>",node->value);
+
+			node = next;
 			//if (first == 12)
-			ft_printf("<%d>\n", node->value);
+			/*ft_printf("<%d>\n", node->value);
 			if (node->previous != -1)
 			{
 			p = node;
@@ -298,12 +333,12 @@ int		edmondKarp(t_graphe *g)
 					}
 				}
 			p = node;
-				/*if (g->node[node->parent]->parent == node->value)
+*/				/*if (g->node[node->parent]->parent == node->value)
 				{
 					printf("%d ppppppppp %d ", node->value, node->parent);
 					exit(1);//printf("Error :%d\n", tmperror);
 				}*/
-				if (tmperror != 1)
+		/*		if (tmperror != 1)
 				{
 					printf("%d et %d ", tmperror, g->end);
 					exit(1);//printf("Error :%d\n", tmperror);
@@ -312,12 +347,13 @@ int		edmondKarp(t_graphe *g)
 				if (tmperror == 0)
 					return (0);
 				node = tmp;
-			}
+			}*/
 			
 		}
 	//	if (first == 12)
 		afficheAllParent(g);
 	}
+	printf("finishhhh\n");
 	return (1);
 }
 // 1333 1014

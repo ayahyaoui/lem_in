@@ -10,24 +10,10 @@
  * et que ce dernier pointes sur plusieur autre noeud
  * mtn toute la deuxieme ^partie du graphe n'a qu'un seule voisin
  */
-/*
-typedef struct		s_graphe
-{
-	unsigned int			nb_rooms; // anciennement taille
-	unsigned int			nb_tubes;
-	int						*color;// char *
-	int						*previous;// permet de trouver un chemin rapidement
-	char					**map; // bientot capacite
-	int						**graph;//prend  pas mal de place mais permet opti
-	int						*capacite;
-	int						start;
-	int						end;
-	t_file					*file;
-}						t_graphe;
-*/
 
 void		affiche_allpaths(t_graphe *g, t_input *infos);
 int		algoquidechire(t_graphe *g, t_input *infos);
+
 int		**creategraph(int len)
 {
 	int **map;
@@ -51,7 +37,6 @@ int		**creategraph(int len)
 	return map;
 }
 
-void	algoopti(t_graphe *g, t_input *infos);
 void		convert(t_graphe *g , t_input *infos)
 {
 	unsigned int i;
@@ -85,11 +70,17 @@ void		convert(t_graphe *g , t_input *infos)
 	g->file = new_file(g);
 //	g->end =  1;
 	ft_putstr("==========================GO==============================\n");
-	//algoquidechire(g, infos);
-	algoopti(g, infos);
-	//exit(1);
-	//troisieme_tentative(g, infos);
+	algoquidechire(g, infos);
 }
+
+/*
+ * We can add triple array:
+ *	 for the first dimension we upgrade when we find a special way 
+ *	 (when a new way intesrsect a old way)
+ *	 for the rest it is like a map 
+ *  
+ *
+ */
 
 int		ajout_chemin(t_graphe *g)
 {
@@ -106,9 +97,9 @@ int		ajout_chemin(t_graphe *g)
 		//ft_printf("<%d>\n", node);
 		if (node == g->end)
 			return (1);
-		//if (g->capacite[node] != -1)
+		// if (g->capacite[node] != -1)
 		//	ft_printf("pb %d sur le node %d\n", g->capacite[node], node);
-		if (g->capacite[node] != -1 && g->previous[node] > (int)g->nb_rooms &&(g->color[g->capacite[node]]) == WHITE)
+	if (g->capacite[node] != -1 && (g->color[g->capacite[node]]) == WHITE)
 		{
 			i = g->capacite[node];
 			addfile(g->file, i);
@@ -121,19 +112,15 @@ int		ajout_chemin(t_graphe *g)
 			while (g->graph[node][i] != -1)
 			{
 				tmp = g->graph[node][i];
-				//printf("link %d->%d\n", node, tmp);
 				if (g->color[tmp] == WHITE && (g->capacite[tmp] == -1 ||
 				(g->capacite[tmp] != -1 && g->map[node][tmp] == 1)))
 				{
-				//	printf("add %d\n", tmp);
 					g->color[tmp] = BLACK;
 					addfile(g->file, tmp);
 					g->previous[tmp] = node;
 				}
 				i++;
-				//if ()
 			}
-			//ft_printf("loop finish\n");
 		}
 	}
 	return (-1);
@@ -159,7 +146,6 @@ int		algoquidechire(t_graphe *g, t_input *infos)
 			if (g->previous[i] > 0 && 
 			(unsigned int)g->previous[g->previous[i]] >= g->nb_rooms)
 			{
-				printf("nouveau chemin trouver !!!!!!!!!\n");
 				g->previous[g->previous[i]] -= g->nb_rooms;
 				exept = 1;
 			}
@@ -207,7 +193,7 @@ void		affiche_allpaths(t_graphe *g, t_input *infos)
 	while ((unsigned int)++i < g->nb_rooms)
 		if (g->map[g->start][i] == 2)
 		{
-			//ft_printf("%d -->", g->start);
+			ft_printf("%d -->", g->start);
 			j = i;
 			longueur = 1;
 			while (j != g->end)
@@ -219,17 +205,17 @@ void		affiche_allpaths(t_graphe *g, t_input *infos)
 				while ((unsigned int)++k < g->nb_rooms)
 					if (g->map[j][k] == 2)
 					{
-			//			ft_printf("%d -->", j);
+						ft_printf("%d -->", j);
 						j = k;
 						break;
 					}
 				if ((unsigned int)k == g->nb_rooms)
 					exit(1);
 			}
-			//ft_printf("%d\n", g->end);
+			ft_printf("%d\n", g->end);
 			simulation[++nb_chemin] = longueur;
 			ft_printf("chemin numero %d = %d\n", nb_chemin ,simulation[nb_chemin]);
-			//ft_putstr("\n\n");
+			ft_putstr("\n\n");
 		}
 	ft_printf("-------------calcul du pire des cas:-----------------\n");
 	ft_printf("nombre de chemin = %d\n",nb_chemin + 1);
@@ -246,10 +232,8 @@ void		affiche_allpaths(t_graphe *g, t_input *infos)
 		while (++j <= nb_chemin)
 			if (i >= simulation[j])
 				pass++;
+		ft_printf("tour (%d,%d)", i,pass);
 		fourmis-=pass;
-		ft_printf("tour (%d,%d reste %d) ", i,pass, fourmis);
-		if ((i % 5) == 4)
-			ft_putstr("\n");
 		i++;
 	}
 	free(simulation);
