@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/01 18:22:17 by anyahyao          #+#    #+#             */
-/*   Updated: 2019/01/08 19:52:58 by anyahyao         ###   ########.fr       */
+/*   Updated: 2019/01/09 13:35:36 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void			free_graphe(t_graphe *g)
 	i = -1;
 	if (g->graph)
 	{
-		ft_putstr("qwertyuiop\n");
 		while ((unsigned int)++i < g->nb_rooms)
 			ft_memdel((void **)&g->graph[i]);
 		ft_memdel((void **)&g->graph);
@@ -96,7 +95,6 @@ void			free_besttab(t_tab ***best_tab)
 	int i;
 	int j;
 
-	ft_putstr("je suuuuuupppp best_tab");
 	if (best_tab)
 	{
 		i = -1;
