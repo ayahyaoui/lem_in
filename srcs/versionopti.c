@@ -35,6 +35,7 @@ typedef struct		s_graphe
 }						t_graphe;
 */
 
+void	printAnt(t_graphe *g, int res, int *tab);
 int		ajout_chemins(t_graphe *g);
 void	algoopti(t_graphe *g, t_input *infos);
 void		print_lastpath(t_graphe *g, t_input *infos);
@@ -418,21 +419,29 @@ void	move(t_graphe *g, t_tab ***besttab)
 	t_tab *t;
 	int *tmp;
 
+	ft_bzero(g->capacite, sizeof(int) * g->nb_rooms);
+	//printAnt(g,0, g->capacite);
 	i = -1;
 	while (++i < ((int)g->nb_rooms))
 		if (g->color[i] > 0)
 		{
 			j = -1;
-			while ((t = besttab[g->color[i]][++j]))
+			while (besttab[g->color[i] - 1][++j])
 			{
+				t = besttab[g->color[i] - 1][j];
 				if (IsinIntTab(t->tab, t->length , i))
 				{
 					j = searchIntTab(t->tab, t->length, i);
+				//	ft_print_inttab(t->tab, t->length, ' ');
+					//ft_printf("je recherche %d dans le tab res = %d\n", i, j);
 					break;
 				}
 			}
-			if (g->capacite[j] == 0)
-				g->capacite[j] = g->color[i];
+			j++;
+			if (j == t->length)
+				ft_printf("une fourmis est arrive a destination");
+			else if (g->capacite[t->tab[j]] == 0)
+				g->capacite[t->tab[j]] = g->color[i];
 			else if (g->capacite[i] == 0)
 				g->capacite[i] = g->color[i];
 			else
@@ -441,6 +450,8 @@ void	move(t_graphe *g, t_tab ***besttab)
 	tmp = g->color;
 	g->color = g->capacite;
 	g->capacite = tmp;
+	//ft_printf("move terminer\n");
+	//printAnt(g, 0, g->capacite);
 }
 
 void		add(t_graphe *g, int *tab, t_tab ***besttab)
@@ -452,13 +463,15 @@ void		add(t_graphe *g, int *tab, t_tab ***besttab)
 	while (i > 0 && tab[i] == 0)
 		i--;
 	j = -1;
-	ft_printf("i = %d ", i);
+	ft_printf(" add est appele");
+	if (i == 0 && tab[0] == 0)
+		return;
 	while (++j <= i)
 	{
-		ft_printf("val = %d ", besttab[i][j]->tab[1]);
+		//ft_printf("val = %d ", besttab[i][j]->tab[1]);
 		if (g->color[besttab[i][j]->tab[1]] == 0)
 		{
-			ft_printf("yes");
+		//	ft_printf("yes");
 			g->color[besttab[i][j]->tab[1]] = i + 1;
 			tab[i]--;
 		}
@@ -497,11 +510,12 @@ int			simulation(t_graphe *g, int *tab, t_tab ***besttab)
 	res = 0;
 	while (1)
 	{
+		ft_printf("nouveau tour (%d)", res);
+		//ft_print_inttab(tab, g->nb_rooms, ' ');
 		move(g, besttab);
 		add(g, tab, besttab);
 		if (res > 10|| isfinish(g, tab))
 			break;
-		printAnt(g,res, tab);
 		res++;
 	}
 	return res;
