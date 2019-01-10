@@ -88,7 +88,12 @@ t_tab	***convert(t_graphe *g , t_input *infos)
 //	g->end =  1;
 	ft_putstr("==========================GO==============================\n");
 	//algoquidechire(g, infos);
-	return (all_path_combinations = algoopti(g, infos));
+	all_path_combinations = algoopti(g, infos);
+	all_path_combinations[1][1]->tab[0] = 1;
+	all_path_combinations[1][0]->tab[0] = 1;
+	all_path_combinations[0][0]->tab[0] = 1;
+
+	return (all_path_combinations);
 	//exit(1);
 	//troisieme_tentative(g, infos);
 }

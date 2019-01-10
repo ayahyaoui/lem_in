@@ -79,6 +79,7 @@ int		set_env(ENV *e)
 	e->options = 0;
 	e->ins->room = NULL;
 	e->ins->commands = NULL;
+	e->turns = 0;
 	e->ins->nb_commands = 0;
 	e->graphe->map = NULL;
 	e->graphe->start = -1;

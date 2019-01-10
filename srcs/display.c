@@ -43,10 +43,15 @@ static int		display_ant_at_endlocation(ENV *e, t_tab ***paths, int ant)
 	int comb;
 	int room;
 
+//	ft_printf("ant = %d\n", ant);
+	if (!e->ants[ant - 1] || !e->ants[ant - 1][2])
+		return (1);
 	comb = e->ants[ant - 1][0];
 	path = e->ants[ant - 1][1];
 	room = e->ants[ant - 1][2];
-	ft_printf("display at end location, comb = %d path = %d room = %d\n", comb, path, room);
+//	ft_printf("end location ant = %d comb = %d path = %d room = %d\n", ant, comb, path, room);
+//	if (comb >= 0)
+//		ft_printf("display at end location, comb = %d path = %d room = %d room name = %d\n", comb, path, room, paths[comb][path]->tab[room]);
 	if (comb != -2 && paths[comb][path]->tab[room] == e->graphe->end)
 	{
 		if (e->options & OPT_COLOR)
@@ -77,19 +82,25 @@ int		display_travelling(ENV *e, t_tab ***paths)
 	int arrived;
 	int	roomindex;
 
-	ant = -1;
+	ant = 0;
 	arrived = 0;
-	while (++ant < e->ins->nb_ants && e->ants[ant])
+//		ft_printf("ant = %d nbants = %d ants[ant] = %d\n", ant, e->ins->nb_ants, e->ants[ant]);
+	++e->turns;
+	while (ant < e->ins->nb_ants /*&& e->ants[ant]*/)
 	{	
-		ft_printf("ant = %d nbants = %d ants[ant] = %d\n", ant, e->ins->nb_ants, e->ants[ant]);
-		if (display_ant_at_endlocation(e, paths, ant + 1))
+//		if (e->ants[ant + 1]/* && e->ants[ant][0] != -2*/)
+//		{
+//		ft_printf("ant = %d nbants = %d ants[ant] = %d\n", ant, e->ins->nb_ants, e->ants[ant]);
+		if (/*e->ants[ant + 1] &&*/ display_ant_at_endlocation(e, paths, ant + 1))
 			++arrived;
 	
-		else
+		else// if (e->ants[ant])
 		{
 			roomindex = paths[e->ants[ant][0]][e->ants[ant][1]]->tab[e->ants[ant][2]];
 			ft_printf("L%d-%s ", ant + 1, e->ins->room[roomindex].name);
 		}
+//		}
+		++ant;
 	}
 	ft_printf("\n");
 	return (arrived);
@@ -118,9 +129,11 @@ int		display_allmoves(ENV *e, t_tab ***paths, int arrived)
 		move_next_room(e, paths);
 		ant_enter_path(e, paths, high_comb - 1);
 		arrived = display_travelling(e, paths);
-		ft_printf("ARRIVED = %d nb ants = %d\n", arrived, e->ins->nb_ants);
+//		ft_printf("ARRIVED = %d nb ants = %d\n", arrived, e->ins->nb_ants);
 		nb_comb = high_comb;
 	}
+	if (e->options & OPT_TURNS)
+		ft_printf(">>>>>> %d turns\n", e->turns);
 	return (NO_ERR);
 }
 

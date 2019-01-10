@@ -67,6 +67,7 @@ int		main(int argc, char **argv)
 
 //	display_besttab(paths);
 	paths = convert(e.graphe, e.ins);
+	ft_printf("\n\n*** final display***\n\n");
 	display_allmoves(&e, paths, 0);
 	//free_graphe(g);
 //	display_adj_mtrx(e.graphe->map, e.graphe->nb_rooms); 

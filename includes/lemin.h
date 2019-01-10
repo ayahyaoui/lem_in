@@ -43,9 +43,10 @@
 # define ARG			"unexpected argument, only options allowed"
 # define LENGTH			"please specify tube length below 255"
 
-# define OPTION_CHARS		"clvw"
+# define OPTION_CHARS		"cltvw"
 # define OPT_VERBOSE		1 << ('v' - 'a')
 # define OPT_COLOR		1 << ('c' - 'a')
+# define OPT_TURNS		1 << ('t' - 'a')
 # define OPT_WAY		1 << ('w' - 'a')
 # define OPT_LENGTH		1 << ('l' - 'a')
 
@@ -101,6 +102,7 @@ typedef struct		s_environment
 	int			nb_paths;
 	int			options;
 	int			type;
+	int			turns;
 	int			fd;
 }					t_environment;
 

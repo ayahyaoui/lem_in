@@ -315,6 +315,7 @@ int		addPath(t_node *node, t_graphe *g, t_tab *t)
 {
 	int pos;
 
+//	ft_printf("add path | node value = %d start = %d\n", node->value, g->start);
 	if (node->value == g->start)
 	{
 		t->tab[0] = g->start;
@@ -415,13 +416,30 @@ t_tab	***registerPath(t_graphe *g, int nbPath, t_tab ***besttab)
 	if (nbPath >= 50)
 		exit(1);
 	besttab[nbPath] = allowTab(g, besttab[nbPath]);
-	i = -1;
+	i = 0;
 	SortPath(g);
-	ft_printf("allocation\n");
-	while (g->previous[++i] >= 0)
-		besttab[nbPath][i]->length = addPath(g->node[g->previous[i]], g, besttab[nbPath][i]);
-	ft_printf("il y'a %d chemin en %d", i, nbPath);
-	besttab[nbPath][i] = 0x0;
+//	ft_printf("allocation nb path = %d\n", nbPath);
+	while (g->previous[i] >= 0)
+	{
+//		ft_printf("previous = %d\n", g->previous[i]);
+		besttab[nbPath][i]->length = addPath(g->node[g->previous[i]], g, besttab[nbPath][i]) + 1;
+		besttab[nbPath][i]->tab[besttab[nbPath][i]->length - 1] = g->end;
+//		ft_printf("display path: \n");
+//		for (int j = 0; j < besttab[nbPath][i]->length; j++)
+//			ft_printf("%d ", besttab[nbPath][i]->tab[j]);
+//		ft_printf("\n");
+//		besttab[nbPath][i]->tab[0] = 
+//		ft_printf("length = %d\n", besttab[nbPath][i]->length);
+//		--g->previous[i];
+		++i;
+//		ft_printf("next previous = %d\n", g->previous[i]);
+	}
+//	besttab[0][0]->tab[0] = 1;
+//	besttab[0][1]->tab[0] = 2;
+	
+//	ft_printf("nb path = %d i = %d length = %d\n", nbPath, i, besttab[nbPath][i - 1]->length - 1);
+//	ft_printf("il y'a %d chemin en %d", i, nbPath);
+	besttab[nbPath][ i + 1] = 0x0;
 	first = nbPath;
 	return besttab;
 }
@@ -537,7 +555,7 @@ void	move(t_graphe *g, t_tab ***besttab)
 				}
 			}
 			j++;
-			if (j == t->length)
+			if (j == t->length - 1)
 				fourmis ++;//ft_printf("une fourmis est arrive a destination");
 			else if (g->capacite[t->tab[j]] == 0)
 				g->capacite[t->tab[j]] = g->color[i];
@@ -600,9 +618,11 @@ void		add(t_graphe *g, int *tab, t_tab ***besttab)
 	while (i > 0 && tab[i] <= 0)
 		i--;
 	j = -1;
-	//ft_printf(" add est appele");
+//	ft_printf(" add est appele, i = %d\n", i);
 	if (i == 0 && tab[0] == 0)
 		return;
+	if (!besttab[i])
+		return ;
 	while (besttab[i][++j])
 	{
 		//ft_printf("val = %d ", besttab[i][j]->tab[1]);
@@ -620,8 +640,10 @@ int			isfinish(t_graphe *g, int *tab)
 	int i;
 
 	i = -1;
+	ft_printf("nb rooms = %d\n", g->nb_rooms);
 	while (++i < (int)(g->nb_rooms))
 	{
+		ft_printf("i = %d nb rooms = %d\n", i, g->nb_rooms);
 		if (tab[i] > 0 || (i != g->end && g->color[i] != 0))
 			return (0);
 	}

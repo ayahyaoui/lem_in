@@ -60,26 +60,38 @@ void		move_next_room(ENV *e, t_tab ***paths)
 int	ant_enter_path(ENV *e, t_tab ***paths, int comb)
 {
 	int i;
+//	int j;
 	int ant;
 
+//	j = 0;
 	while (comb >= 0 && !(i = 0))
 	{
+//		ft_printf("NEW COMBINATION = %d paths[comb][i] = %d\n", comb, paths[comb][i]);
 		while (!(ant = 0) && paths[comb][i])
 		{
 			while (e->ants[ant])
 				++ant;
+//			ft_printf("nb of ants to put in room = %d ant = %d \n", paths[comb][i]->tab[0], ant);
 			if (paths[comb][i]->tab[0] && ant < e->ins->nb_ants
-					&& !ant_in_room(e, paths, ant, paths[comb][i]->tab[1]))
+				/*	&& !ant_in_room(e, paths, ant, paths[comb][i]->tab[1])*/)
 			{
 				if (!(e->ants[ant] = (int *)ft_memalloc(sizeof(int) * 3)))
 					return (ERR_ALLOC);
+//				ft_printf("ant setup\n");
+				if (ant_in_room(e, paths, ant, paths[comb][i]->tab[1]))
+				{
+					e->ants[ant][2] = 0;
+					break;
+				}
 				e->ants[ant][0] = comb;
 				e->ants[ant][1] = i;
 				e->ants[ant][2] = 1;
 				--paths[comb][i]->tab[0];
+//				ft_printf("comb = %d path = %d placed in room #1, nb ants left to put in path = %d\n", comb, i, paths[comb][i]->tab[0]);
 			}
 			++i;
 		}
+//		++j;
 		--comb;
 	}
 	return (NO_ERR);
