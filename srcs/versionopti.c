@@ -621,8 +621,6 @@ void		add(t_graphe *g, int *tab, t_tab ***besttab)
 //	ft_printf(" add est appele, i = %d\n", i);
 	if (i == 0 && tab[0] == 0)
 		return;
-	if (!besttab[i])
-		return ;
 	while (besttab[i][++j])
 	{
 		//ft_printf("val = %d ", besttab[i][j]->tab[1]);
