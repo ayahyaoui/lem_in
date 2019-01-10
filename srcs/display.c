@@ -46,6 +46,7 @@ static int		display_ant_at_endlocation(ENV *e, t_tab ***paths, int ant)
 	comb = e->ants[ant - 1][0];
 	path = e->ants[ant - 1][1];
 	room = e->ants[ant - 1][2];
+	ft_printf("display at end location, comb = %d path = %d room = %d\n", comb, path, room);
 	if (comb != -2 && paths[comb][path]->tab[room] == e->graphe->end)
 	{
 		if (e->options & OPT_COLOR)
@@ -80,6 +81,7 @@ int		display_travelling(ENV *e, t_tab ***paths)
 	arrived = 0;
 	while (++ant < e->ins->nb_ants && e->ants[ant])
 	{	
+		ft_printf("ant = %d nbants = %d ants[ant] = %d\n", ant, e->ins->nb_ants, e->ants[ant]);
 		if (display_ant_at_endlocation(e, paths, ant + 1))
 			++arrived;
 	
@@ -110,11 +112,13 @@ int		display_allmoves(ENV *e, t_tab ***paths, int arrived)
 	high_comb = nb_comb;
 	if (!(e->ants = (int **)ft_memalloc(sizeof(int *) * (e->ins->nb_ants + 1))))
 		return (ERR_ALLOC);
+//	e->ants[e->ins->nb_ants] = NULL;
 	while (arrived < e->ins->nb_ants)
 	{
 		move_next_room(e, paths);
 		ant_enter_path(e, paths, high_comb - 1);
 		arrived = display_travelling(e, paths);
+		ft_printf("ARRIVED = %d nb ants = %d\n", arrived, e->ins->nb_ants);
 		nb_comb = high_comb;
 	}
 	return (NO_ERR);

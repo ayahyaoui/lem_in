@@ -51,12 +51,14 @@ int		**creategraph(int len)
 	return map;
 }
 
-void	algoopti(t_graphe *g, t_input *infos);
-void		convert(t_graphe *g , t_input *infos)
+t_tab	***algoopti(t_graphe *g, t_input *infos);
+
+t_tab	***convert(t_graphe *g , t_input *infos)
 {
 	unsigned int i;
 	int j;
 	int room;
+	t_tab ***all_path_combinations;
 
 	g->graph = creategraph(g->nb_rooms);
 	i = 0;
@@ -86,7 +88,7 @@ void		convert(t_graphe *g , t_input *infos)
 //	g->end =  1;
 	ft_putstr("==========================GO==============================\n");
 	//algoquidechire(g, infos);
-	algoopti(g, infos);
+	return (all_path_combinations = algoopti(g, infos));
 	//exit(1);
 	//troisieme_tentative(g, infos);
 }

@@ -37,7 +37,7 @@ typedef struct		s_graphe
 
 void	printAnt(t_graphe *g, int res, int *tab);
 int		ajout_chemins(t_graphe *g);
-void	algoopti(t_graphe *g, t_input *infos);
+t_tab	***algoopti(t_graphe *g, t_input *infos);
 void		print_lastpath(t_graphe *g, t_input *infos);
 t_tab		***edmondKarp(t_graphe *g);
 void	infos_graphes(t_graphe *g);
@@ -46,12 +46,13 @@ void		bestsimulation(t_graphe *g, t_input *infos, t_tab ***besttab);
 
 
 
-void	algoopti(t_graphe *g, t_input *infos)
+t_tab	***algoopti(t_graphe *g, t_input *infos)
 {
 	t_tab ***besttab = edmondKarp(g);
 (void)infos;
 bestsimulation(g, infos, besttab);
-	free_besttab(besttab);
+	return (besttab);
+//	free_besttab(besttab);
 	//print_lastpath(g, infos);
 
 }
@@ -327,7 +328,7 @@ t_tab	**allowTab(t_graphe *g, t_tab **besttab)
 {
 	int i;
 	int j;
-	int a;
+//	int a;
 	int sizeMax;
 	t_node *node;
 
@@ -353,7 +354,7 @@ t_tab	**allowTab(t_graphe *g, t_tab **besttab)
 		}
 	}
 	ft_printf("la plus grade fairet %d et %d\n", sizeMax, j);
-	a = 0;
+//	a = 0;
 	if (!(besttab = ft_memalloc(sizeof(t_tab *) * (j  + 1))))
 		exit(ERRORMALLOC);
 	i = -1;
@@ -406,11 +407,11 @@ int		SortPath(t_graphe *g)
 t_tab	***registerPath(t_graphe *g, int nbPath, t_tab ***besttab)
 {
 	int i;
-	int j;
+//	int j;
 
 	//besttab = allowBestTab(nbPath, g->nb_rooms, besttab);
 	i = -1;
-	j = 0;
+//	j = 0;
 	if (nbPath >= 50)
 		exit(1);
 	besttab[nbPath] = allowTab(g, besttab[nbPath]);
@@ -444,10 +445,10 @@ t_tab		***edmondKarp(t_graphe *g)
 	int i;
 	t_node *node;
 	t_node *next;
-	int		nbmap;
+//	int		nbmap;
 	t_tab ***besttab;
 
-	nbmap = 0;
+//	nbmap = 0;
 	convertGraphe(g);
 	besttab = allowBestTab(50 , 200);//(t_tab***)malloc(sizeof(t_tab**));
 	ft_printf("je vais commence!!");
@@ -472,7 +473,7 @@ t_tab		***edmondKarp(t_graphe *g)
 				node->parent = node->previous;
 			else
 			{
-				nbmap = 1;
+//				nbmap = 1;
 				ft_printf("nouveau chemin\n");
 			}
 			node = next;

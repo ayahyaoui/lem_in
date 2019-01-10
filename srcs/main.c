@@ -38,7 +38,7 @@ int		main(int argc, char **argv)
 	(void)argc;
 	(void)argv;
 	static ENV	e;
-//	t_tab ***paths;
+	t_tab ***paths;
 	int		err;
 //	int		**paths; //seulement pour tester display_moves
 //	char 		**names; //idem	
@@ -66,8 +66,8 @@ int		main(int argc, char **argv)
 //	paths[1][1]->tab[0] = 10;
 
 //	display_besttab(paths);
-//	display_allmoves(&e, paths, 0);
-	choose_method(e.graphe, e.ins);
+	paths = convert(e.graphe, e.ins);
+	display_allmoves(&e, paths, 0);
 	//free_graphe(g);
 //	display_adj_mtrx(e.graphe->map, e.graphe->nb_rooms); 
 //	paths = get_pathstab(); // seulement pour tester display moves, sur une combinaison de e.nb_paths chemins

@@ -105,7 +105,7 @@ typedef struct		s_environment
 }					t_environment;
 
 int		choose_method(t_graphe *g, t_input * info);
-void				convert(t_graphe *g, t_input *infos);
+t_tab		***convert(t_graphe *g, t_input *infos);
 void		free_graphe(t_graphe *g);
 
 

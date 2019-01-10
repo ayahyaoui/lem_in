@@ -71,7 +71,7 @@ int	ant_enter_path(ENV *e, t_tab ***paths, int comb)
 			if (paths[comb][i]->tab[0] && ant < e->ins->nb_ants
 					&& !ant_in_room(e, paths, ant, paths[comb][i]->tab[1]))
 			{
-				if (!(e->ants[ant]= (int *)ft_memalloc(sizeof(int) * 3)))
+				if (!(e->ants[ant] = (int *)ft_memalloc(sizeof(int) * 3)))
 					return (ERR_ALLOC);
 				e->ants[ant][0] = comb;
 				e->ants[ant][1] = i;
