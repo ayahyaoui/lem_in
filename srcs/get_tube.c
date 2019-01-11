@@ -90,8 +90,8 @@ int				get_tube(ENV *e, char **str, int way, int len)
 	int			i;
 	int			j;
 
-	if (!str[1] || str[2]
-		|| ((check = ft_strsplit(str[1], ' '))[1] && !(e->options & OPT_LENGTH)))
+	if (!str[1] /*|| str[2]
+		|| ((check = ft_strsplit(str[1], ' '))[1] && !(e->options & OPT_LENGTH))*/)
 	{
 		ft_free_strtab(&check);
 		return (ERR_TUBE);
