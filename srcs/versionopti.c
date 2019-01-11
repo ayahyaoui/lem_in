@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/23 16:28:04 by anyahyao          #+#    #+#             */
-/*   Updated: 2019/01/09 22:46:49 by anyahyao         ###   ########.fr       */
+/*   Updated: 2019/01/11 14:14:16 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,11 @@ t_tab	***algoopti(t_graphe *g, t_input *infos)
 	t_tab ***besttab = edmondKarp(g);
 (void)infos;
 bestsimulation(g, infos, besttab);
+	ft_printf("============================================================");
+	ft_printf(" PREMIERE PARTIE FINIS ");
+	ft_printf("============================================================\n");
+	ft_printf("il y'a %d fourmis\n", infos->nb_ants);
+	displayallpath(g, besttab);
 	return (besttab);
 //	free_besttab(besttab);
 	//print_lastpath(g, infos);
@@ -426,7 +431,7 @@ t_tab	***registerPath(t_graphe *g, int nbPath, t_tab ***besttab)
 //		ft_printf("previous = %d\n", g->previous[i]);
 		besttab[nbPath][i]->length = addPath(g->node[g->previous[i]], g, besttab[nbPath][i]) + 1;
 		besttab[nbPath][i]->tab[besttab[nbPath][i]->length - 1] = g->end;
-		ft_printf("b = %d", besttab[nbPath][i]->tab[1]);
+		ft_printf("i = %db = %d", i,besttab[nbPath][i]->tab[1]);
 //		ft_printf("display path: \n");
 //		for (int j = 0; j < besttab[nbPath][i]->length; j++)
 //			ft_printf("%d ", besttab[nbPath][i]->tab[j]);
@@ -442,8 +447,7 @@ t_tab	***registerPath(t_graphe *g, int nbPath, t_tab ***besttab)
 	
 //	ft_printf("nb path = %d i = %d length = %d\n", nbPath, i, besttab[nbPath][i - 1]->length - 1);
 //	ft_printf("il y'a %d chemin en %d", i, nbPath);
-	besttab[nbPath][ i + 1] = 0x0;
-	displayallpath(g, besttab);
+	//besttab[nbPath][i + 1] = 0x0;
 	return besttab;
 }
 
@@ -753,10 +757,11 @@ void		addAnt(t_graphe *g, t_tab **besttab, int nbAnt)
 	}
 	i++;
 	j = -1;
+	ft_printf("il reste %d fourmis a placer\n", nbAnt);
 	k = nbAnt / i;
 	while (++ j < i)
 	{
-		besttab[j]->tab[0] = k;
+		besttab[j]->tab[0] += k;
 		if (j < nbAnt % i)
 			besttab[j]->tab[0]++;
 	}
@@ -773,20 +778,21 @@ void		bestsimulation(t_graphe *g, t_input *infos, t_tab ***besttab)
 	t[first] = infos->nb_ants;
 	displayallpath(g, besttab);
 	ft_printf("on verifie %d\n", first - 1);
-	while (changeTab(tab) && min == 2000000000)
-	{
+	//while (changeTab(tab) && min == 2000000000)
+	//{
 		//calcul = simulation(g, tab, besttab);
 	//	if (calcul < min)
 	//	{
-			min = 18;
+	//		min = 18;
 			i = -1;
 			while (++i < (int)g->nb_rooms)
 				if (t[i] > 0)
-				{	addAnt(g, besttab[i], infos->nb_ants);
+				{
+					addAnt(g, besttab[i], infos->nb_ants);
 
 					}
 	//	}
-	}
+	//}
 	vielleSimulation(g, besttab, infos->nb_ants);
 	//int test = test_simulation()
 	ft_printf("resultat == %d", min);
