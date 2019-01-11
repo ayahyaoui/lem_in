@@ -66,7 +66,6 @@ MLXDIR = minilibx
 
 all: 
 	@make $(NAME)
-#	cp $(NAME) test/
 
 
 $(NAME): $(BIN) $(LIBFT) $(LIBMLX)
