@@ -35,12 +35,12 @@ typedef struct		s_graphe
 }						t_graphe;
 */
 
-void	printAnt(t_graphe *g, int res, int *tab);
-int		ajout_chemins(t_graphe *g);
-t_tab	***algoopti(t_graphe *g, t_input *infos);
+void		printAnt(t_graphe *g, int res, int *tab);
+int			ajout_chemins(t_graphe *g);
+t_tab		***algoopti(t_graphe *g, t_input *infos);
 void		print_lastpath(t_graphe *g, t_input *infos);
 t_tab		***edmondKarp(t_graphe *g);
-void	infos_graphes(t_graphe *g);
+void		infos_graphes(t_graphe *g);
 void		bestsimulation(t_graphe *g, t_input *infos, t_tab ***besttab);
 
 
@@ -363,7 +363,7 @@ t_tab	**allowTab(t_graphe *g, t_tab **besttab)
 	{
 		if (!(besttab[i] = (t_tab*)ft_memalloc(sizeof(t_tab))))
 			exit(ERRORMALLOC);
-		if (!(besttab[i]->tab = ft_memalloc(sizeof(int) * (sizeMax + 1))))
+		if (!(besttab[i]->tab = ft_memalloc(sizeof(int) * (sizeMax + 2))))
 			exit(ERRORMALLOC);
 	}
 	besttab[j] = 0x0;
@@ -399,6 +399,7 @@ int		SortPath(t_graphe *g)
 			j = 0;
 			while (g->previous[j] >= 0 && g->capacite[i] > g->capacite[g->previous[j]])
 				j++;
+			ft_printf("val = %d pos = %d et j = %d", g->capacite[i], i, j);
 			placeValueInTab(g->previous, i, j);
 		}
 	}
@@ -418,12 +419,14 @@ t_tab	***registerPath(t_graphe *g, int nbPath, t_tab ***besttab)
 	besttab[nbPath] = allowTab(g, besttab[nbPath]);
 	i = 0;
 	SortPath(g);
+	ft_print_inttab(g->previous, g->nb_rooms, ' ');
 //	ft_printf("allocation nb path = %d\n", nbPath);
 	while (g->previous[i] >= 0)
 	{
 //		ft_printf("previous = %d\n", g->previous[i]);
 		besttab[nbPath][i]->length = addPath(g->node[g->previous[i]], g, besttab[nbPath][i]) + 1;
 		besttab[nbPath][i]->tab[besttab[nbPath][i]->length - 1] = g->end;
+		ft_printf("b = %d", besttab[nbPath][i]->tab[1]);
 //		ft_printf("display path: \n");
 //		for (int j = 0; j < besttab[nbPath][i]->length; j++)
 //			ft_printf("%d ", besttab[nbPath][i]->tab[j]);
@@ -440,7 +443,7 @@ t_tab	***registerPath(t_graphe *g, int nbPath, t_tab ***besttab)
 //	ft_printf("nb path = %d i = %d length = %d\n", nbPath, i, besttab[nbPath][i - 1]->length - 1);
 //	ft_printf("il y'a %d chemin en %d", i, nbPath);
 	besttab[nbPath][ i + 1] = 0x0;
-	first = nbPath;
+	displayallpath(g, besttab);
 	return besttab;
 }
 
@@ -763,27 +766,31 @@ void		bestsimulation(t_graphe *g, t_input *infos, t_tab ***besttab)
 {
 	int *tab = ft_memalloc(sizeof(int) *g->nb_rooms);
 	int min = 2000000000;
-	int calcul;
+	//int calcul;
 	int i;
 	tab[first] = infos->nb_ants;
 	int *t = ft_memalloc(sizeof(int) *g->nb_rooms);
 	t[first] = infos->nb_ants;
+	displayallpath(g, besttab);
 	ft_printf("on verifie %d\n", first - 1);
 	while (changeTab(tab) && min == 2000000000)
 	{
-		calcul = simulation(g, tab, besttab);
-		if (calcul < min)
-		{
-			min = calcul;
+		//calcul = simulation(g, tab, besttab);
+	//	if (calcul < min)
+	//	{
+			min = 18;
 			i = -1;
 			while (++i < (int)g->nb_rooms)
 				if (t[i] > 0)
-					addAnt(g, besttab[i], infos->nb_ants);
-		}
+				{	addAnt(g, besttab[i], infos->nb_ants);
+
+					}
+	//	}
 	}
 	vielleSimulation(g, besttab, infos->nb_ants);
 	//int test = test_simulation()
 	ft_printf("resultat == %d", min);
+	displayallpath(g, besttab);
 	free(tab);
 	free(t);
 }
