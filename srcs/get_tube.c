@@ -90,16 +90,16 @@ int				get_tube(ENV *e, char **str, int way, int len)
 	int			i;
 	int			j;
 
-	if (!str[1] /*|| str[2]
-		|| ((check = ft_strsplit(str[1], ' '))[1] && !(e->options & OPT_LENGTH))*/)
+	if (!str[1] || str[2]
+	/*	|| ((check = ft_strsplit(str[1], ' '))[1] && !(e->options & OPT_LENGTH))*/)
 	{
 		ft_free_strtab(&check);
 		return (ERR_TUBE);
 	}
 	handle_way_spec(e, &str[0], &str[1], &way);
 	i = get_room_index(e, str[0], 0);
-	j = get_room_index(e, str[1], len > 1 ? ft_strlen(check[0]) : 0);
-	ft_free_strtab(&check);
+	j = get_room_index(e, str[1], 0);
+
 	if ((i == -1 || j == -1))
 		return (ERR_NOROOM);
 	if ((way == FORWARD || way == BOTH) && (e->graphe->map[i][j] = len))

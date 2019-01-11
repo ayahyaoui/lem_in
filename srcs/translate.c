@@ -89,9 +89,9 @@ t_tab	***convert(t_graphe *g , t_input *infos)
 	ft_putstr("==========================GO==============================\n");
 	//algoquidechire(g, infos);
 	all_path_combinations = algoopti(g, infos);
-	all_path_combinations[0][1]->tab[0] = 1; // enlever une fois que le nb de fourmis est ok
-	all_path_combinations[1][0]->tab[0] = 1; // idem
-		all_path_combinations[0][0]->tab[0] = 1; // idem
+//	all_path_combinations[0][1]->tab[0] = 1; // enlever une fois que le nb de fourmis est ok
+//	all_path_combinations[1][0]->tab[0] = 1; // idem
+//		all_path_combinations[0][0]->tab[0] = 1; // idem
 
 	return (all_path_combinations);
 	//exit(1);

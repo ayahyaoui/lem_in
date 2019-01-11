@@ -46,6 +46,7 @@ int		main(int argc, char **argv)
 	set_env(&e);
 	if ((err = read_options(&e, argv, argc)))
 		return (display(&e, get_errmsg(err)));
+	ft_printf("beginning\n");
 	if ((err = read_instructions(&e, NULL, 0, 0)))
 	{
 		free_env(&e);

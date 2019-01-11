@@ -133,7 +133,7 @@ int		display_allmoves(ENV *e, t_tab ***paths, int arrived)
 		nb_comb = high_comb;
 	}
 	if (e->options & OPT_TURNS)
-		ft_printf(">>>>>> %d turns\n", e->turns);
+		ft_printf("\n>>>>>> %d turns\n", e->turns);
 	return (NO_ERR);
 }
 
