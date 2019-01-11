@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/23 16:28:04 by anyahyao          #+#    #+#             */
-/*   Updated: 2019/01/11 14:14:16 by anyahyao         ###   ########.fr       */
+/*   Updated: 2019/01/11 18:46:22 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -593,14 +593,20 @@ void		vielleSimulation(t_graphe *g, t_tab ***besttab, int fourmis)
 			longeurmax = simulation[i];
 	}
 	nb_chemin = i;
-
 	while (fourmis > 0)
 	{
+		ft_printf("seggggggggggg\n");
 		pass = 0;
 		j = -1;
-		while (++j <= nb_chemin)
+		while (++j < nb_chemin)
+		{
 			if (i >= simulation[j])
+			{
 				pass++;
+				besttab[first][j]->tab[0]++;
+	//			ft_printf("%d",besttab[first][j]->length);
+			}
+		}
 		fourmis-=pass;
 		ft_printf("tour (%d,%d reste %d) ", i,pass, fourmis);
 		if ((i % 5) == 4)
@@ -770,9 +776,9 @@ void		addAnt(t_graphe *g, t_tab **besttab, int nbAnt)
 void		bestsimulation(t_graphe *g, t_input *infos, t_tab ***besttab)
 {
 	int *tab = ft_memalloc(sizeof(int) *g->nb_rooms);
-	int min = 2000000000;
+//	int min = 2000000000;
 	//int calcul;
-	int i;
+//	int i;
 	tab[first] = infos->nb_ants;
 	int *t = ft_memalloc(sizeof(int) *g->nb_rooms);
 	t[first] = infos->nb_ants;
@@ -784,18 +790,18 @@ void		bestsimulation(t_graphe *g, t_input *infos, t_tab ***besttab)
 	//	if (calcul < min)
 	//	{
 	//		min = 18;
-			i = -1;
+	/*		i = -1;
 			while (++i < (int)g->nb_rooms)
 				if (t[i] > 0)
 				{
 					addAnt(g, besttab[i], infos->nb_ants);
-
-					}
+*/
+					//}
 	//	}
 	//}
 	vielleSimulation(g, besttab, infos->nb_ants);
 	//int test = test_simulation()
-	ft_printf("resultat == %d", min);
+	ft_printf("resultat == rien");
 	displayallpath(g, besttab);
 	free(tab);
 	free(t);
