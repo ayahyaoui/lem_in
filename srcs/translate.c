@@ -30,12 +30,12 @@ int		**creategraph(int len)
 	int i;
 
 	if (!(map = (int**)malloc(sizeof(int*) * (len * 2 + 1))))
-		exit(ERRORMALLOC);
+		return (0x0);
 	i = -1;
 	while (++i < len)
 	{
 		if (!(map[i] = (int*)ft_memalloc(sizeof(int) * (len + 1))))
-			exit(ERRORMALLOC);
+			return (0x0);
 	}
 	map[i] = 0x0;
 	return map;
@@ -45,6 +45,7 @@ int			convert_map_to_graph(t_graphe *g)
 {
 	int room;
 	int i;
+	int j;
 
 	if (!(g->graph = creategraph(g->nb_rooms)))
 			return (ERR_ALLOC);
@@ -58,29 +59,20 @@ int			convert_map_to_graph(t_graphe *g)
 				g->graph[i][++room] = j;
 		g->graph[i][room + 1] = -1;
 	}
+	return (0);
 }
 
 
-// retourner int ERR_MALLOC ou ERR_SOLUTION, NO_ERR si solution valide trouvee
 int			convert_graphe(t_graphe *g)
 {
 	int i;
-	int j;
-	int room;
 
-	g->graph = creategraph(g->nb_rooms);
-	g->previous = ft_memalloc(g->nb_rooms * sizeof(int));
-	i = -1;
-	while (++i < (int)g->nb_rooms)
-	{
-		j = -1;
-		room = -1;
-		while (++j < (int)g->nb_rooms)
-			if (g->map[i][j] == 1)
-				g->graph[i][++room] = j;
-		g->graph[i][room + 1] = -1;
-	}
-	g->node = malloc(sizeof(t_node*) * g->nb_rooms);
+	if (convert_map_to_graph(g) != NO_ERR)
+		return (ERR_ALLOC);
+	if (!(g->previous = ft_memalloc(g->nb_rooms * sizeof(int))))
+		return (ERR_ALLOC);
+	if (!(g->node = malloc(sizeof(t_node*) * g->nb_rooms)))
+		return (ERR_ALLOC);
 	i = -1;
 	while (++i < (int)g->nb_rooms)
 	{
@@ -89,7 +81,7 @@ int			convert_graphe(t_graphe *g)
 		g->node[i]->value = (int)i;
 	}
 	if (!(g->capacite = (int*)ft_memalloc(g->nb_rooms * sizeof(int))))
-		exit(ERRORMALLOC);
+		return (ERR_ALLOC);
 	for (unsigned int j = 0; j < g->nb_rooms ; j++)
 		g->capacite[j] = -1;
 	ft_bzero(g->color, g->nb_rooms * sizeof(int));
