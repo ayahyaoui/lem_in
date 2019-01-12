@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/23 16:28:04 by anyahyao          #+#    #+#             */
-/*   Updated: 2019/01/11 22:57:01 by anyahyao         ###   ########.fr       */
+/*   Updated: 2019/01/12 18:15:51 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,31 +36,31 @@ typedef struct		s_graphe
 }						t_graphe;
 */
 
+void		vielleSimulation(t_graphe *g, t_tab ***besttab, int fourmis);
 t_tab	***registerPath(t_graphe *g, int nbPath, t_tab ***besttab);
 t_tab	***allowBestTab(int nbPath, int sizeMax);
 void		printAnt(t_graphe *g, int res, int *tab);
 int			ajout_chemins(t_graphe *g);
-t_tab		***algoopti(t_graphe *g, t_input *infos);
+int			algoopti(t_graphe *g, ENV e);
 void		print_lastpath(t_graphe *g, t_input *infos);
-t_tab		***edmondKarp(t_graphe *g);
+int			edmondKarp(t_graphe *g, ENV e);
 void		infos_graphes(t_graphe *g);
 void		bestsimulation(t_graphe *g, t_input *infos, t_tab ***besttab);
 
 
 
 
-t_tab	***algoopti(t_graphe *g, t_input *infos)
+int			algoopti(t_graphe *g, ENV e)
 {
-	t_tab ***besttab = edmondKarp(g);
-(void)infos;
-bestsimulation(g, infos, besttab);
 	ft_printf("============================================================");
 	ft_printf(" PREMIERE PARTIE FINIS ");
 	ft_printf("============================================================\n");
+	return (edmondKarp(g, e));
+/*bestsimulation(g, infos, besttab);
 	ft_printf("il y'a %d fourmis\n", infos->nb_ants);
 	displayallpath(g, besttab);
 	return (besttab);
-//	free_besttab(besttab);
+*///	free_besttab(besttab);
 	//print_lastpath(g, infos);
 
 }
@@ -208,7 +208,7 @@ int		breakPath(t_graphe *g, int start)
 	return (0);
 }
 
-t_tab		***edmondKarp(t_graphe *g)
+int			edmondKarp(t_graphe *g, ENV e)
 {
 	int i;
 	t_node *node;
@@ -250,6 +250,9 @@ t_tab		***edmondKarp(t_graphe *g)
 	}
 	registerPath(g, first, besttab);
 	//	besttab[first] = 0x0;
+	vielleSimulation(g, besttab, e.ins->nb_ants);
 	printf("finishhhh\n");
-	return (besttab);
+	e.all_paths = besttab;
+	//displayallpath(g, e.all_paths);
+	return (0);
 }

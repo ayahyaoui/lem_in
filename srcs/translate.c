@@ -27,7 +27,10 @@ typedef struct		s_graphe
 */
 
 void		affiche_allpaths(t_graphe *g, t_input *infos);
-int		algoquidechire(t_graphe *g, t_input *infos);
+int			algoquidechire(t_graphe *g, t_input *infos);
+int			algoopti(t_graphe *g, ENV e);
+int			convert(t_graphe *g , ENV e);
+
 int		**creategraph(int len)
 {
 	int **map;
@@ -51,14 +54,12 @@ int		**creategraph(int len)
 	return map;
 }
 
-t_tab	***algoopti(t_graphe *g, t_input *infos);
 
-t_tab	***convert(t_graphe *g , t_input *infos) // retourner int ERR_MALLOC ou ERR_SOLUTION, NO_ERR si solution valide trouvee
+int			convert(t_graphe *g , ENV e) // retourner int ERR_MALLOC ou ERR_SOLUTION, NO_ERR si solution valide trouvee
 {
 	unsigned int i;
 	int j;
 	int room;
-	t_tab ***all_path_combinations; // e->all_paths a la place
 
 	g->graph = creategraph(g->nb_rooms);
 	i = 0;
@@ -85,17 +86,8 @@ t_tab	***convert(t_graphe *g , t_input *infos) // retourner int ERR_MALLOC ou ER
 		g->capacite[j] = -1;
 	ft_bzero(g->color, g->nb_rooms * sizeof(int));
 	g->file = new_file(g);
-//	g->end =  1;
 	ft_putstr("==========================GO==============================\n");
-	//algoquidechire(g, infos);
-	all_path_combinations = algoopti(g, infos);
-//	all_path_combinations[0][1]->tab[0] = 1; // enlever une fois que le nb de fourmis est ok
-//	all_path_combinations[1][0]->tab[0] = 1; // idem
-//		all_path_combinations[0][0]->tab[0] = 1; // idem
-
-	return (all_path_combinations);
-	//exit(1);
-	//troisieme_tentative(g, infos);
+	return (algoopti(g, e));
 }
 
 int		ajout_chemin(t_graphe *g)

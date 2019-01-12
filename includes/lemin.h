@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 14:48:09 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/12 17:23:04 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/12 18:08:07 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,8 +107,8 @@ typedef struct		s_environment
 	int			fd;
 }					t_environment;
 
-int		choose_method(t_graphe *g, t_input * info);
-t_tab		***convert(t_graphe *g, t_input *infos);
+int		choose_method(t_graphe *g, ENV info);
+int		convert(t_graphe *g, ENV infos);
 void		free_graphe(t_graphe *g);
 
 
