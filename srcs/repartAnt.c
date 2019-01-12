@@ -274,9 +274,9 @@ void		vielleSimulation(t_graphe *g, t_tab ***besttab, int fourmis)
 	int longeurmax = 0;
 	int *simulation = malloc(4 * g->nb_rooms);
 	int pass;
-
-	for (i = 0; besttab[first][i] ; i++) {
-		simulation[i] = besttab[first][i]->length;
+	
+	for (i = 0; besttab[g->nb_paths][i] ; i++) {
+		simulation[i] = besttab[g->nb_paths][i]->length;
 		if (simulation[i] > longeurmax)
 			longeurmax = simulation[i];
 	}
@@ -291,7 +291,7 @@ void		vielleSimulation(t_graphe *g, t_tab ***besttab, int fourmis)
 			if (i >= simulation[j])
 			{
 				pass++;
-				besttab[first][j]->tab[0]++;
+				besttab[g->nb_paths][j]->tab[0]++;
 	//			ft_printf("%d",besttab[first][j]->length);
 			}
 		}
@@ -314,11 +314,11 @@ void		bestsimulation(t_graphe *g, t_input *infos, t_tab ***besttab)
 //	int min = 2000000000;
 	//int calcul;
 //	int i;
-	tab[first] = infos->nb_ants;
+	tab[g->nb_paths] = infos->nb_ants;
 	int *t = ft_memalloc(sizeof(int) *g->nb_rooms);
-	t[first] = infos->nb_ants;
+	t[g->nb_paths] = infos->nb_ants;
 	displayallpath(g, besttab);
-	ft_printf("on verifie %d\n", first - 1);
+	ft_printf("on verifie %d\n", g->nb_paths - 1);
 	//while (changeTab(tab) && min == 2000000000)
 	//{
 		//calcul = simulation(g, tab, besttab);

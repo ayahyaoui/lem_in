@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/30 19:00:27 by anyahyao          #+#    #+#             */
-/*   Updated: 2019/01/08 19:25:09 by anyahyao         ###   ########.fr       */
+/*   Updated: 2019/01/12 22:48:31 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,6 @@ typedef struct				s_path
 {
 	unsigned int		path[9000][2];
 	unsigned int		nb_path;
-//	int					next_node;  
-//	int					nb_next_node;
 }						t_path;
 
 typedef struct			s_breakdown
@@ -74,23 +72,8 @@ typedef struct			s_node
 	int parent; // aciennement capaite
 }						t_node;
 
-/*
-typedef struct			s_chemins
-{
-	unsigned char	*path;
-	unsigned char			**all_path;
-	unsigned int			nb_path;
-	unsigned int			nb_max;
-}							t_chemins;
-*/
-
 typedef struct		s_tab t_tab;
-/*a{
-	int				length;
-	int				*tab;
-	//int					nb_ant;
-}					t_tab;
-*/
+
 typedef struct		s_file
 {
 	int				begin;
@@ -105,6 +88,62 @@ typedef struct		s_big_tab
 	int				*t1;
 	int				*t2;
 }					t_big_tab;
+
+
+
+typedef struct 		s_environment	t_environment;
+# define ENV			t_environment
+typedef struct 		s_input					t_input;
+
+
+
+void		vielleSimulation(t_graphe *g, t_tab ***besttab, int fourmis);
+t_tab		***registerPath(t_graphe *g, int nbPath, t_tab ***besttab);
+t_tab		***allowBestTab(int nbPath);
+void		printAnt(t_graphe *g, int res, int *tab);
+int			ajout_chemins(t_graphe *g);
+int			algoopti(t_graphe *g, ENV *e);
+void		print_lastpath(t_graphe *g, t_input *infos);
+int			edmond_karp(t_graphe *g, t_tab ***t);
+void		infos_graphes(t_graphe *g);
+void		bestsimulation(t_graphe *g, t_input *infos, t_tab ***besttab);
+void		convertGraphe(t_graphe *g);
+void		cleanNodee(t_graphe *g);
+void		add_node_parcous(t_graphe *g, t_node *next, int value, int opt);
+int			convert_graphe(t_graphe *g);
+
+
+
+
+
+
+int		is_break_path(t_graphe *g, int start);
+void	add_node_parcous(t_graphe *g, t_node *next, int value, int opt);
+void		vielleSimulation(t_graphe *g, t_tab ***besttab, int fourmis);
+t_tab	***registerPath(t_graphe *g, int nbPath, t_tab ***besttab);
+t_tab	***allowBestTab(int nbPath);
+void		printAnt(t_graphe *g, int res, int *tab);
+int			ajout_chemins(t_graphe *g);
+int			algoopti(t_graphe *g, ENV *e);
+void		print_lastpath(t_graphe *g, t_input *infos);
+int			edmondKarp(t_graphe *g, t_tab ***t);
+void		infos_graphes(t_graphe *g);
+void		bestsimulation(t_graphe *g, t_input *infos, t_tab ***besttab);
+void	convertGraphe(t_graphe *g);
+void	cleanNodee(t_graphe *g);
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // new initial
 
@@ -153,18 +192,6 @@ int					number_active_bit(unsigned long p, int max);
 //t_tab				***test_multipathbinary(t_graphe *g);
 void				getallpath(t_graphe *g, t_path *path, int node
 					, unsigned int p);
-
-// all_path
-
-//t_tab				***get_all_separpath(t_graphe *g, t_path *p);
-//t_tab				**addpaths(t_graphe *g, t_breakdown *paths, int nb_path);
-//t_tab				*addpath(t_graphe *g, int path);
-//int					*my_best_tab(t_graphe *g, t_path *p, unsigned int len, t_tab ***best_tab);
-//t_breakdown			*searchNpath(t_path *p, t_fusion *pr, t_fusion *n, t_tab **r);
-
-
-
-//getgraphe
 
 int					degre_graphe(t_graphe *g);
 int					degre(t_graphe *g, int node);

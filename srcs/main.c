@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 14:58:47 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/12 18:15:32 by anyahyao         ###   ########.fr       */
+/*   Updated: 2019/01/12 22:14:23 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,7 @@ int		main(int argc, char **argv)
 //	paths[1][1]->tab[0] = 10;
 
 //	display_besttab(paths);
-	convert(e.graphe, e);
-	ft_printf("===============================oooo=\n\n");
+	algoopti(e.graphe, &e);
 	displayallpath(e.graphe, e.all_paths);
 	paths = e.all_paths;
 	ft_printf("\n\n*** final display***\n\n");

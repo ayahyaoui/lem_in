@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 14:48:09 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/12 18:08:07 by anyahyao         ###   ########.fr       */
+/*   Updated: 2019/01/12 21:25:26 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ typedef struct		s_graphe
 	int						*capacite;
 	int						start;
 	int						end;
+	int						nb_paths;
 	t_file					*file;
 }						t_graphe;
 
@@ -107,8 +108,8 @@ typedef struct		s_environment
 	int			fd;
 }					t_environment;
 
-int		choose_method(t_graphe *g, ENV info);
-int		convert(t_graphe *g, ENV infos);
+int		choose_method(t_graphe *g, ENV *info);
+int		convert(t_graphe *g, ENV *infos);
 void		free_graphe(t_graphe *g);
 
 

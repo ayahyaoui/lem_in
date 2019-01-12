@@ -3,33 +3,14 @@
 
 
 t_tab	***registerPath(t_graphe *g, int nbPath, t_tab ***besttab);
-t_tab	***allowBestTab(int nbPath, int sizeMax);
+t_tab	***allowBestTab(int nbPath);
 
-t_tab	***allowBestTab(int nbPath, int sizeMax)
+t_tab	***allowBestTab(int nbPath)
 {
 	t_tab ***besttab = 0x0;
 
-	ft_printf("je suis appele une seule fois !!!!!!!%llu * %d = %lld\n",
-			sizeof(t_tab), sizeMax, sizeMax* sizeof(t_tab));
 	if (!(besttab = (t_tab***)ft_memalloc(sizeof(t_tab**) * (nbPath + 1))))
 		exit(ERRORMALLOC);
-/*
-	while (++a < nbPath)
-	{
-		if (!(besttab[a] = ft_memalloc(sizeof(t_tab *) * (nbPath  + 1))))
-			exit(ERRORMALLOC);
-		i = -1;
-		while (++i < nbPath)
-		{
-			if (!(besttab[a][i] = (t_tab*)ft_memalloc(sizeof(t_tab))))
-				exit(ERRORMALLOC);
-			if (!(besttab[a][i]->tab = ft_memalloc(sizeof(int) * (sizeMax + 1))))
-				exit(ERRORMALLOC);
-		}
-		besttab[a][i] = 0x0;
-	}
-	besttab[a] = 0x0;
-	*/
 	return (besttab);
 }
 
@@ -131,6 +112,7 @@ int		SortPath(t_graphe *g)
 t_tab	***registerPath(t_graphe *g, int nbPath, t_tab ***besttab)
 {
 	int i;
+
 //	int j;
 
 	//besttab = allowBestTab(nbPath, g->nb_rooms, besttab);
@@ -165,6 +147,7 @@ t_tab	***registerPath(t_graphe *g, int nbPath, t_tab ***besttab)
 //	ft_printf("nb path = %d i = %d length = %d\n", nbPath, i, besttab[nbPath][i - 1]->length - 1);
 //	ft_printf("il y'a %d chemin en %d", i, nbPath);
 	//besttab[nbPath][i + 1] = 0x0;
+	g->nb_paths++;
 	return besttab;
 }
 
