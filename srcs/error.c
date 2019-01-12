@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/10 11:42:01 by emuckens          #+#    #+#             */
-/*   Updated: 2018/11/07 16:19:50 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/12 17:23:12 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char 	*get_errmsg(int code)
 	static char *msg[ERR_NB + 1] = {NULL, NOINS, ANT_INPUT, ANT_NB,
 		MAXINT,
 		ROOM_INPUT, ROOM_CONF, COORD, TUBE_INPUT, NOTUBE, TUBE_NOROOM, ROOM_DUP, ORDER,
-		NOSTART, NOEND, LIB, MALLOC, HELP, OPTION, ARG, LENGTH};
+		NOSTART, NOEND, LIB, MALLOC, HELP, OPTION, ARG, LENGTH, NO_SOLUTION};
 	return (msg[code]);
 }
 

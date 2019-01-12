@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 14:48:09 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/07 16:59:43 by anyahyao         ###   ########.fr       */
+/*   Updated: 2019/01/12 17:23:04 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # define STDIN			0
 # define STDOUT			1
 # define STDERR			2
-# define ERR_NB			21
+# define ERR_NB			22
 # define NB_COMMANDS		2
 
 # define NOINS			"empty file"
@@ -42,13 +42,13 @@
 # define OPTION			"unknown option"
 # define ARG			"unexpected argument, only options allowed"
 # define LENGTH			"please specify tube length below 255"
+# define NO_SOLUTION	"No valid path found between start and end"
 
-# define OPTION_CHARS		"cltvw"
+# define OPTION_CHARS		"ctvw"
 # define OPT_VERBOSE		1 << ('v' - 'a')
 # define OPT_COLOR		1 << ('c' - 'a')
 # define OPT_TURNS		1 << ('t' - 'a')
 # define OPT_WAY		1 << ('w' - 'a')
-# define OPT_LENGTH		1 << ('l' - 'a')
 
 # define COL_END		COL_CYAN
 
@@ -98,6 +98,7 @@ typedef struct		s_environment
 	t_list			*anthill;
 	t_input			*ins;
 	t_graphe		*graphe;
+	t_tab ***		all_paths;
 	int			**ants;
 	int			nb_paths;
 	int			options;
@@ -135,7 +136,7 @@ enum				e_error
 {
 	NO_ERR, ERR_NO_INS, ERR_READ, ERR_ANT_INPUT, ERR_ANT_NB, ERR_INTMAX,
    	ERR_ROOM, ERR_ROOM_CONF, ERR_COORD, ERR_TUBE, ERR_NOTUBE, ERR_NOROOM, ERR_DUP, ERR_ORDER,
-	ERR_START, ERR_END, ERR_LIB, ERR_ALLOC, ERR_HELP, ERR_OPTION, ERR_ARG, ERR_LENGTH 
+	ERR_START, ERR_END, ERR_LIB, ERR_ALLOC, ERR_HELP, ERR_OPTION, ERR_ARG, ERR_SOLUTION 
 };
 
 int		display_allmoves(ENV *e, t_tab ***paths, int arrived);

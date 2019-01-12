@@ -53,12 +53,12 @@ int		**creategraph(int len)
 
 t_tab	***algoopti(t_graphe *g, t_input *infos);
 
-t_tab	***convert(t_graphe *g , t_input *infos)
+t_tab	***convert(t_graphe *g , t_input *infos) // retourner int ERR_MALLOC ou ERR_SOLUTION, NO_ERR si solution valide trouvee
 {
 	unsigned int i;
 	int j;
 	int room;
-	t_tab ***all_path_combinations;
+	t_tab ***all_path_combinations; // e->all_paths a la place
 
 	g->graph = creategraph(g->nb_rooms);
 	i = 0;
