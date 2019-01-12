@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/20 15:04:49 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/12 22:39:19 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/12 22:52:09 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,8 @@ int		display_travelling(ENV *e, t_tab ***paths, int display)
 //		}
 		++ant;
 	}
-	ft_printf("\n");
+	if (display)
+		ft_printf("\n");
 	return (arrived);
 }
 
@@ -122,6 +123,7 @@ int		display_travelling(ENV *e, t_tab ***paths, int display)
  ** one move comprises: moving all ants in anthill to the next room (when possible), introducing new ants in
  ** anthill (if enough ants and free rooms)
  */
+// DISPLAY_ON ou DISPLAY_OFF
 
 int		scan_allmoves(ENV *e, t_tab ***paths, int display)
 {
