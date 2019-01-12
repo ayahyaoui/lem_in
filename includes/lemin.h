@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 14:48:09 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/12 17:23:04 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/12 22:35:53 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,11 @@ enum				e_direction
 	FORWARD, BACKWARD, BOTH
 };
 
+enum				e_display
+{
+	DISPLAY_OFF, DISPLAY_ON
+};
+
 enum				e_error
 {
 	NO_ERR, ERR_NO_INS, ERR_READ, ERR_ANT_INPUT, ERR_ANT_NB, ERR_INTMAX,
@@ -139,7 +144,7 @@ enum				e_error
 	ERR_START, ERR_END, ERR_LIB, ERR_ALLOC, ERR_HELP, ERR_OPTION, ERR_ARG, ERR_SOLUTION 
 };
 
-int		display_allmoves(ENV *e, t_tab ***paths, int arrived);
+int		scan_allmoves(ENV *e, t_tab ***paths, int display);
 void		display_besttab(t_tab ***tab);
 
 int			set_env(ENV *e);

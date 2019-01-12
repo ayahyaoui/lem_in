@@ -26,18 +26,18 @@ seven-eight
 eight-nine
 nine-ten
 
-L1-three L2-one
-L1-four L2-seven L3-three L4-one
-L1-five L2-eight L3-four L4-seven L5-three L6-one
-L1-six L2-nine L3-five L4-eight L5-four L6-seven L7-three L8-one
-L1-two L2-ten L3-six L4-nine L5-five L6-eight L7-four L8-seven L9-three L10-one
-L1-ten L3-two L4-ten L5-six L6-nine L7-five L8-eight L9-four L10-seven L11-three L12-one
-L3-ten L5-two L6-ten L7-six L8-nine L9-five L10-eight L11-four L12-seven L13-three L14-one
-L5-ten L7-two L8-ten L9-six L10-nine L11-five L12-eight L13-four L14-seven L15-three L16-one
-L7-ten L9-two L10-ten L11-six L12-nine L13-five L14-eight L15-four L16-seven L17-three L18-one
-L9-ten L11-two L12-ten L13-six L14-nine L15-five L16-eight L17-four L18-seven L19-three L20-one
-L11-ten L13-two L14-ten L15-six L16-nine L17-five L18-eight L19-four L20-seven
-L13-ten L15-two L16-ten L17-six L18-nine L19-five L20-eight
-L15-ten L17-two L18-ten L19-six L20-nine
-L17-ten L19-two L20-ten
-L19-ten
+L1-one L2-three
+L1-two L2-four L3-one L4-three
+L1-ten L2-five L3-two L4-four L5-one L6-three
+L2-six L3-ten L4-five L5-seven L6-four L7-one L8-three
+L2-two L4-six L5-eight L6-five L7-seven L8-four L9-one L10-three
+L2-ten L4-two L5-nine L6-six L7-eight L8-five L9-seven L10-four L11-one L12-three
+L4-ten L5-ten L6-two L7-nine L8-six L9-eight L10-five L11-seven L12-four L13-one L14-three
+L6-ten L7-ten L8-two L9-nine L10-six L11-eight L12-five L13-seven L14-four L15-one L16-three
+L8-ten L9-ten L10-two L11-nine L12-six L13-eight L14-five L15-seven L16-four L17-one L18-three
+L10-ten L11-ten L12-two L13-nine L14-six L15-eight L16-five L17-seven L18-four L19-one
+L12-ten L13-ten L14-two L15-nine L16-six L17-eight L18-five L19-seven L20-one
+L14-ten L15-ten L16-two L17-nine L18-six L19-eight L20-seven
+L16-ten L17-ten L18-two L19-nine L20-eight
+L18-ten L19-ten L20-nine
+L20-ten

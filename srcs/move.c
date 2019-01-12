@@ -1,4 +1,20 @@
 #include "lemin.h"
+/*
+void		display_ant_location(ENV *e, t_tab ***paths)
+{
+	int ant = 0;
+	(void)paths;
+	while (e->ants[ant])
+	{
+		ft_printf("ant #%d in room index = %d (comb = %d path = %d)", ant + 1, e->ants[ant][2], e->ants[ant][0], e->ants[ant][1]);
+		if (e->ants[ant][0] == -2 && paths[e->ants[ant][0]][e->ants[ant][1]]->tab[e->ants[ant][2]] == e->graphe->end)
+			ft_printf(" (END)");
+		ft_printf("\n");
+		++ant;
+	}
+
+}
+*/
 
 /*
  ** Scan all ants info and check if one of them is located in room
@@ -19,7 +35,7 @@ static int	ant_in_room(ENV *e, t_tab ***paths, int ant, int room)
 		if (e->ants[i][0] != -2 && paths[e->ants[i][0]]
 				&& (curpath = paths[e->ants[i][0]][e->ants[i][1]]))
 		{
-			if (curpath->tab[e->ants[i][2]] == room)
+			if (curpath->tab[(int)ft_abs(e->ants[i][2])] == room)
 				return (1);
 		}
 	}
@@ -44,10 +60,18 @@ void		move_next_room(ENV *e, t_tab ***paths)
 	while (++j < ant)
 	{
 		if ((comb = e->ants[j][0]) != -2 
-				&& e->ants[j][2] + 1 < (paths[comb][e->ants[j][1]])->length)
+				&& (int)ft_abs(e->ants[j][2]) + 1 < (paths[comb][e->ants[j][1]])->length)
 		{
-			if (!ant_in_room(e, paths, j, paths[comb][e->ants[j][1]]->tab[e->ants[j][2] + 1]))
-				e->ants[j][2] += 1;
+
+			if (!ant_in_room(e, paths, j, paths[comb][e->ants[j][1]]->tab[(int)ft_abs(e->ants[j][2]) + 1]))
+			{
+				if (!e->ants[j][2] && paths[e->ants[j][0]][e->ants[j][1]]->tab[0])
+					--paths[e->ants[j][0]][e->ants[j][1]]->tab[0];
+					e->ants[j][2] = (int)ft_abs(e->ants[j][2]) +  1;
+			}
+			else
+				e->ants[j][2] = -(int)ft_abs(e->ants[j][2]);
+
 		}
 	}
 }
@@ -60,39 +84,31 @@ void		move_next_room(ENV *e, t_tab ***paths)
 int	ant_enter_path(ENV *e, t_tab ***paths, int comb)
 {
 	int i;
-//	int j;
+	int j;
 	int ant;
 
-//	j = 0;
-	while (comb >= 0 && !(i = 0))
+	j = 0;
+	while (j < comb && !(i = 0))
 	{
-//		ft_printf("NEW COMBINATION = %d paths[comb][i] = %d\n", comb, paths[comb][i]);
-		while (!(ant = 0) && paths[comb][i])
+		while (!(ant = 0) && paths[j][i])
 		{
 			while (e->ants[ant])
 				++ant;
-//			ft_printf("nb of ants to put in room = %d ant = %d \n", paths[comb][i]->tab[0], ant);
-			if (paths[comb][i]->tab[0] && ant < e->ins->nb_ants
-				/*	&& !ant_in_room(e, paths, ant, paths[comb][i]->tab[1])*/)
+			if (paths[j][i]->tab[0] && ant < e->ins->nb_ants)
 			{
+				if (!ant_in_room(e, paths, ant, paths[j][i]->tab[1]) )
+				{
 				if (!(e->ants[ant] = (int *)ft_memalloc(sizeof(int) * 3)))
 					return (ERR_ALLOC);
-//				ft_printf("ant setup\n");
-				if (ant_in_room(e, paths, ant, paths[comb][i]->tab[1]))
-				{
-					e->ants[ant][2] = 0;
-					break;
+					e->ants[ant][0] = j;
+					e->ants[ant][1] = i;
+					e->ants[ant][2] = 1;
+					--paths[j][i]->tab[0];
 				}
-				e->ants[ant][0] = comb;
-				e->ants[ant][1] = i;
-				e->ants[ant][2] = 1;
-				--paths[comb][i]->tab[0];
-//				ft_printf("comb = %d path = %d placed in room #1, nb ants left to put in path = %d\n", comb, i, paths[comb][i]->tab[0]);
 			}
 			++i;
 		}
-//		++j;
-		--comb;
+		++j;
 	}
 	return (NO_ERR);
 }

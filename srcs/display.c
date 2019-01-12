@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/20 15:04:49 by emuckens          #+#    #+#             */
-/*   Updated: 2018/11/09 16:22:05 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/12 22:39:19 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,10 @@ static int		display_ant_at_endlocation(ENV *e, t_tab ***paths, int ant)
 	int room;
 
 //	ft_printf("ant = %d\n", ant);
-	if (!e->ants[ant - 1] || !e->ants[ant - 1][2])
-		return (1);
+	if (!e->ants[ant - 1])
+		return (0);
+	if (e->ants[ant - 1][2] <= 0)
+		return (0);
 	comb = e->ants[ant - 1][0];
 	path = e->ants[ant - 1][1];
 	room = e->ants[ant - 1][2];
@@ -58,12 +60,16 @@ static int		display_ant_at_endlocation(ENV *e, t_tab ***paths, int ant)
 			ft_printf("{CYAN}L%d-%s{EOC} ", ant,
 				e->ins->room[paths[comb][path]->tab[room]].name);
 		else
+		{
 			ft_printf("L%d-%s ", ant,
 				e->ins->room[paths[comb][path]->tab[room]].name);
+		}
 
 		e->ants[ant - 1][0] = -2;
 		return (1);
 	}
+//	ft_printf("comb = %d\n", comb);
+//	return (0);
 	return (comb != -2 ? 0 : 1);
 }
 
@@ -76,29 +82,34 @@ static int		display_ant_at_endlocation(ENV *e, t_tab ***paths, int ant)
 ** return number of ants arrived, to stop program when all have arrived
  */
 
-int		display_travelling(ENV *e, t_tab ***paths)
+int		display_travelling(ENV *e, t_tab ***paths, int display)
 {
 	int ant;
 	int arrived;
 	int	roomindex;
+	int	ret; //
 
 	ant = 0;
 	arrived = 0;
 //		ft_printf("ant = %d nbants = %d ants[ant] = %d\n", ant, e->ins->nb_ants, e->ants[ant]);
 	++e->turns;
-	while (ant < e->ins->nb_ants /*&& e->ants[ant]*/)
+	while (ant < e->ins->nb_ants && e->ants[ant])
 	{	
 //		if (e->ants[ant + 1]/* && e->ants[ant][0] != -2*/)
 //		{
 //		ft_printf("ant = %d nbants = %d ants[ant] = %d\n", ant, e->ins->nb_ants, e->ants[ant]);
-		if (/*e->ants[ant + 1] &&*/ display_ant_at_endlocation(e, paths, ant + 1))
+		if (/*e->ants[ant + 1] &&*/ (ret = display_ant_at_endlocation(e, paths, ant + 1)))
 			++arrived;
 	
-		else// if (e->ants[ant])
+	
+		else  if (display && e->ants[ant])
 		{
 			roomindex = paths[e->ants[ant][0]][e->ants[ant][1]]->tab[e->ants[ant][2]];
-			ft_printf("L%d-%s ", ant + 1, e->ins->room[roomindex].name);
+//			ft_printf("check 0 = %d 1 = %d 2 = %d\n", e->ants[ant][0], e->ants[ant][1], e->ants[ant][2]);
+			if (e->ants[ant][2] > 0)
+				ft_printf("L%d-%s ", ant + 1, e->ins->room[roomindex].name);
 		}
+//		ft_printf("ret = %d\n", ret);
 //		}
 		++ant;
 	}
@@ -112,27 +123,34 @@ int		display_travelling(ENV *e, t_tab ***paths)
  ** anthill (if enough ants and free rooms)
  */
 
-int		display_allmoves(ENV *e, t_tab ***paths, int arrived)
+int		scan_allmoves(ENV *e, t_tab ***paths, int display)
 {
 	int	nb_comb;
 	int	high_comb;
+	int	i;
+	int arrived;
 
 	nb_comb = 0;
+	arrived = 0;
+	e->turns = 0;
+	i = -1;
 	while (paths[nb_comb])
 		++nb_comb;
 	high_comb = nb_comb;
-	if (!(e->ants = (int **)ft_memalloc(sizeof(int *) * (e->ins->nb_ants + 1))))
-		return (ERR_ALLOC);
-//	e->ants[e->ins->nb_ants] = NULL;
+	if (!e->ants)
+	{
+		if (!(e->ants = (int **)ft_memalloc(sizeof(int *) * (e->ins->nb_ants + 1))))
+			return (ERR_ALLOC);
+	}
+		else
+			ft_bzero(&e->ants, sizeof(e->ants));
 	while (arrived < e->ins->nb_ants)
 	{
 		move_next_room(e, paths);
-		ant_enter_path(e, paths, high_comb - 1);
-		arrived = display_travelling(e, paths);
-//		ft_printf("ARRIVED = %d nb ants = %d\n", arrived, e->ins->nb_ants);
-		nb_comb = high_comb;
+		ant_enter_path(e, paths, high_comb);
+		arrived = display_travelling(e, paths, display);
 	}
-	if (e->options & OPT_TURNS)
+	if (display && e->options & OPT_TURNS)
 		ft_printf("\n>>>>>> %d turns\n", e->turns);
 	return (NO_ERR);
 }
