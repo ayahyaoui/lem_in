@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/01 18:22:17 by anyahyao          #+#    #+#             */
-/*   Updated: 2019/01/09 13:35:36 by anyahyao         ###   ########.fr       */
+/*   Updated: 2019/01/13 17:26:22 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,27 +57,6 @@ void			free_file(t_file **file)
 		if ((*file)->tab)
 			ft_memdel((void**)&(*file)->tab);
 		ft_memdel((void**)file);
-	}
-}
-
-void			free_breakdown(t_breakdown *br)
-{
-	if (br)
-		ft_memdel((void**)&(br->breakdown));
-	ft_memdel((void**)&br);
-}
-
-void			free_fusion(t_fusion *f)
-{
-	int i;
-
-	i =-1;
-	if (f)
-	{
-		if (f->fusion)
-		while (f->fusion[++i])
-			free_breakdown(f->fusion[i]);
-		ft_memdel((void**)&f);
 	}
 }
 

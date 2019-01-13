@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   translate.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/01/13 21:58:28 by anyahyao          #+#    #+#             */
+/*   Updated: 2019/01/13 23:18:44 by anyahyao         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 
 #include "lem_in.h"
 
@@ -82,10 +94,10 @@ int			convert_graphe(t_graphe *g)
 	}
 	if (!(g->capacite = (int*)ft_memalloc(g->nb_rooms * sizeof(int))))
 		return (ERR_ALLOC);
-	for (unsigned int j = 0; j < g->nb_rooms ; j++)
-		g->capacite[j] = -1;
+	i = -1;
+	while (++i < (int)g->nb_rooms)
+		g->capacite[i] = -1;
 	ft_bzero(g->color, g->nb_rooms * sizeof(int));
 	g->file = new_file(g);
-	ft_putstr("==========================GO==============================\n");
 	return (NO_ERR);
 }

@@ -6,13 +6,12 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/23 16:28:04 by anyahyao          #+#    #+#             */
-/*   Updated: 2019/01/12 22:42:13 by anyahyao         ###   ########.fr       */
+/*   Updated: 2019/01/13 23:18:20 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-#define PATH_SIZE 16;
 
 int			algoopti(t_graphe *g, ENV *e)
 {
@@ -20,42 +19,26 @@ int			algoopti(t_graphe *g, ENV *e)
 	int			res;
 
 	g->nb_paths = 0;
-	if (convert_graphe(g) == ERR_ALLOC || !(besttab = allowBestTab(50)))
+	if (convert_graphe(g) == ERR_ALLOC || !(besttab = allowBestTab(PATH_SIZE)))
 		return (ERR_ALLOC);
-	res = edmond_karp(g, besttab);
+	res = edmond_karp(g, &besttab);
 	if (res != NO_ERR)
 		return (res);
-	registerPath(g, g->nb_paths, besttab);
+	ft_printf("dernier appele\n");
+	if (!(besttab = registerPath(g, g->nb_paths, besttab)))
+		return (ERR_ALLOC);
 	g->nb_paths--;
 	vielleSimulation(g, besttab, e->ins->nb_ants);
-	e->all_paths = besttab;
 	ft_printf("============================================================");
 	ft_printf(" PREMIERE PARTIE FINIS ");
-	ft_printf("============================================================\n");
+	ft_printf("============================================================ %d\n", g->nb_paths);
+	besttab[g->nb_paths + 1] = 0x0;
+	ft_printf("%d\n", besttab[0][0]->tab[0]);
+	e->all_paths = besttab;
 	return (res);
 }
-/*
-int			convert_map_to_graph(t_graphe *g)
-{
-	int room;
-	int i;
 
-	if (!(g->graph = creategraph(g->nb_rooms)))
-			return (ERR_ALLOC);
-	i = -1;
-	while (++i < (int)g->nb_rooms)
-	{
-		j = -1;
-		room = -1;
-		while (++j < (int)g->nb_rooms)
-			if (g->map[i][j] == 1)
-				g->graph[i][++room] = j;
-		g->graph[i][room + 1] = -1;
-	}
-}
-*/
-
-int			edmond_karp(t_graphe *g, t_tab ***besttab)
+int			edmond_karp(t_graphe *g, t_tab ****besttab)
 {
 	int			i;
 	t_node		*node;
@@ -71,7 +54,7 @@ int			edmond_karp(t_graphe *g, t_tab ***besttab)
 		i = g->node[g->end]->previous;
 		node = g->node[i];
 		if (is_break_path(g, i))
-			if (!(registerPath(g, g->nb_paths, besttab)))
+			if (!(*besttab = registerPath(g, g->nb_paths, *besttab)))
 				return (ERR_ALLOC);
 		while (node->value != g->start)
 		{

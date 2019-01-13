@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/20 15:04:49 by emuckens          #+#    #+#             */
-/*   Updated: 2018/11/09 16:22:05 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/13 21:54:57 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,11 +118,13 @@ int		display_allmoves(ENV *e, t_tab ***paths, int arrived)
 	int	high_comb;
 
 	nb_comb = 0;
+	//paths[0][0]->tab[0] = 5;
 	while (paths[nb_comb])
 		++nb_comb;
 	high_comb = nb_comb;
 	if (!(e->ants = (int **)ft_memalloc(sizeof(int *) * (e->ins->nb_ants + 1))))
 		return (ERR_ALLOC);
+	ft_printf("arrived = %d nb ants = %d\n", arrived, e->ins->nb_ants);
 //	e->ants[e->ins->nb_ants] = NULL;
 	while (arrived < e->ins->nb_ants)
 	{

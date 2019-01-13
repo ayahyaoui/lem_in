@@ -6,14 +6,14 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/30 20:46:40 by anyahyao          #+#    #+#             */
-/*   Updated: 2018/11/01 18:36:35 by anyahyao         ###   ########.fr       */
+/*   Updated: 2019/01/13 17:06:11 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
 
-
+/*
 
 int		check_path_len(t_graphe *g, t_big_tab *bt, int k, int node)
 {
@@ -50,15 +50,15 @@ void			reboot_big_tab(t_big_tab *bt, int begin)
 	bt->tab[begin] = 0;
 	bt->t1[0] = begin;
 }
-
-
+*/
+/*
 int				short_path(t_graphe *g, t_big_tab *bt, unsigned int begin, unsigned int end)
 {
 	int i;
 	int j;
 	int k;
 
-	if (begin > g->nb_rooms || end > g->nb_rooms /*|| begin < 0 || end < 0*/)
+	if (begin > g->nb_rooms || end > g->nb_rooms)
 		return (-1);
 	if (begin == end)
 		return (0);
@@ -81,4 +81,4 @@ int				short_path(t_graphe *g, t_big_tab *bt, unsigned int begin, unsigned int e
 	ft_print_inttab(bt->tab,bt->taille,' ');
 	printf("\n");
 	return (bt->tab[end]);
-}
+}*/

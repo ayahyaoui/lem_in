@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/01 19:39:32 by anyahyao          #+#    #+#             */
-/*   Updated: 2019/01/12 20:35:03 by anyahyao         ###   ########.fr       */
+/*   Updated: 2019/01/13 18:01:43 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void			ft_mem_set_int(int *tab, int val, int taille)
 	while (++i < taille)
 		tab[i] = val;
 }
+
 int		addlink(t_graphe *g, unsigned int a, unsigned int b)
 {
 	if (g->nb_rooms > a && g->nb_rooms > b && a != b)
@@ -48,26 +49,6 @@ int		addlink(t_graphe *g, unsigned int a, unsigned int b)
 		return (1);
 	}
 	return(0);
-}
-
-void	test_map(t_graphe *g)
-{
-	g->map[0][1] = 1;
-	g->map[1][0] = 1;
-	g->map[1][3] = 1;
-	g->map[3][1] = 1;
-	g->map[3][5] = 1;
-	g->map[5][3] = 1;
-	g->map[0][4] = 1;
-	g->map[4][0] = 1;
-	g->map[4][5] = 1;
-	g->map[5][4] = 1;
-	g->map[2][5] = 1;
-	g->map[5][2] = 1;
-	g->map[0][2] = 1;
-	g->map[2][0] = 1;
-	g->map[1][2] = 1;
-	g->map[2][1] = 1;
 }
 
 void	afficheAllParent(t_graphe *g)
