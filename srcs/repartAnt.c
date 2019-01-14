@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/13 21:58:25 by anyahyao          #+#    #+#             */
-/*   Updated: 2019/01/14 20:23:50 by anyahyao         ###   ########.fr       */
+/*   Updated: 2019/01/14 23:53:38 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,35 +84,62 @@ void		place_ant(t_tab ***besttab, int fourmis, int path)
 }
 
 
-/*
+void	swap_pointeur(void **a, void **b)
+{
+	char *c;
+	char **aa;
+	char **bb;
+
+	aa = (char **)a;
+	bb = (char **)b;
+	c = *aa;
+	*aa = *bb;
+	*bb = c;
+}
+
+void	change_place_ant(t_graphe *g, int *tab)
+{
+	int i;
+
+	i = -1;
+	while (++i < g->nb_paths && tab[i])
+		;
+	if (i > 0)
+	{
+		tab[i - 1] = tab[i];
+		tab[i] = 0;
+	}
+}
 
 void	prediction(ENV *e, t_graphe *g)
 {
-	int turn_min;
 	int *best_combinaison;
 	int *last_combinaison;
+	int cost_best;
 
 	ft_bzero(g->color, sizeof(int) * g->nb_rooms);
 	ft_bzero(g->previous, sizeof(int) * g->nb_rooms);
-
 	best_combinaison = g->color;
-	best_combinaison = g->previous;
-
-	
-
-	
-	best_combinaison[g->nb_paths];
-	while (last_combinaison[0] != e->nbAnt)
+	last_combinaison = g->previous;
+	last_combinaison[g->nb_paths] = e->ins->nb_ants;
+	cost_best = -1;
+	while (last_combinaison[0] != e->ins->nb_ants)
 	{
-
-
+		try_to_place_ant(e->all_paths, last_combinaison);
+		scan_allmoves(e, DISPLAY_OFF);
+		if (e->turns > 0 && (e->turns < cost_best || cost_best != -1))
+		{
+			cost_best = e->turns;
+			swap_pointeur((void**)&last_combinaison, (void**)&best_combinaison);
+		}
+		change_place_ant(g, last_combinaison);
 	}
-
+	ft_printf ("");
 
 
 }
 
-*/
+
 /*
  *	par du principe que la somme de tab_fourmis est egale au nombre de fourmis
  */
@@ -120,6 +147,7 @@ void		try_to_place_ant(t_tab ***besttab, int *tab_fourmis)
 {
 	int i;
 
+	clean_ant(besttab);
 	i = -1;
 	while (besttab[++i])
 		if (tab_fourmis[i] > 0)

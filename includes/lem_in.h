@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/30 19:00:27 by anyahyao          #+#    #+#             */
-/*   Updated: 2019/01/14 18:39:59 by anyahyao         ###   ########.fr       */
+/*   Updated: 2019/01/14 23:55:54 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,10 @@ void		place_ant(t_tab ***besttab, int fourmis, int path);
 
 
 
+void		try_to_place_ant(t_tab ***besttab, int *tab_fourmis);
+void		clean_ant(t_tab ***besttab);
 
+void	prediction(ENV *e, t_graphe *g);
 
 
 int		is_break_path(t_graphe *g, int start);

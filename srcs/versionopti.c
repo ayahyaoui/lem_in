@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/23 16:28:04 by anyahyao          #+#    #+#             */
-/*   Updated: 2019/01/14 21:04:24 by anyahyao         ###   ########.fr       */
+/*   Updated: 2019/01/14 23:04:11 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,13 @@ int			algoopti(t_graphe *g, ENV *e)
 	res = edmond_karp(g, &besttab);
 	if (res != NO_ERR && !(res == ERR_SOLUTION && g->start_next_to_end))
 		return (res);
-//	ft_printf("dernier appele\n");
 	if (!(besttab = registerPath(g, g->nb_paths, besttab)))
 		return (ERR_ALLOC);
 	g->nb_paths--;
 	place_ant(besttab, e->ins->nb_ants, g->nb_paths);
-//	ft_printf("============================================================");
-//	ft_printf(" PREMIERE PARTIE FINIS ");
-//	ft_printf("============================================================ %d\n", g->nb_paths);
 	besttab[g->nb_paths + 1] = 0x0;
-	//ft_printf("%d\n", besttab[0][0]->tab[0]);
 	e->all_paths = besttab;
-	return (res);
+	return (NO_ERR);
 }
 
 int			edmond_karp(t_graphe *g, t_tab ****besttab)

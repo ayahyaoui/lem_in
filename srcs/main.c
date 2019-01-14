@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 14:58:47 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/14 22:39:07 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/14 23:58:19 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,10 @@ int		main(int argc, char **argv)
 	e.graphe->color = (int *)ft_memalloc(e.graphe->nb_rooms * sizeof(int));
 	ft_printf("\n");
 	if (algoopti(e.graphe, &e) != ERR_SOLUTION)
+	{
+		//prediction(&e, e.graphe);
 		scan_allmoves(&e, DISPLAY_ON);
+	}
 	else
 		return (display(&e, get_errmsg(ERR_SOLUTION)));
 	free_env(&e);
