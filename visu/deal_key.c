@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/15 12:48:36 by emuckens          #+#    #+#             */
-/*   Updated: 2018/11/19 20:50:55 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/14 13:59:09 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,9 @@ static void		ft_input_rot_and_height(VISU *v, int key)
 		v->uinput.roty = M_PI / 24.0;
 }
 
-
 static void		ft_input_move(VISU *v, int key)
 {
 	v->uinput.zoom = 1;
-	ft_printf("before move hor = %d move ver = %d\n", v->uinput.mv_hor, v->uinput.mv_ver);
 	if (key == KEY_LF)
 		v->uinput.mv_hor -= v->ppmove;
 	else if (key == KEY_RT)
@@ -41,13 +39,10 @@ static void		ft_input_move(VISU *v, int key)
 		v->uinput.mv_ver -= v->ppmove;
 	else if (key == KEY_DW)
 		v->uinput.mv_ver += v->ppmove;
-//	else if (key == KEY_INVERT)
-//		v->uinput.invert *= -1;
 	else if (key == KEY_ZMIN && v->maxzoomin < 5)
 	{
 		++v->maxzoomin;
 		--v->maxzoomout;
-		ft_printf("ZOOMIN!!!\n");
 		v->uinput.zoom = 2.0;
 	}
 	else if (key == KEY_ZMOUT && v->maxzoomout < 5)
@@ -56,14 +51,11 @@ static void		ft_input_move(VISU *v, int key)
 		--v->maxzoomin;
 		v->uinput.zoom = 0.5;
 	}
-	
-	ft_printf("after move hor = %d move ver = %d\n", v->uinput.mv_hor, v->uinput.mv_ver);
 }
 
 static int		ft_isvalid_key(int key)
 {
-	return (/*key == 1*/
-			 key == KEY_XUP
+	return (key == KEY_XUP
 			|| key == KEY_XDW
 			|| key == KEY_YUP
 			|| key == KEY_YDW
@@ -72,8 +64,7 @@ static int		ft_isvalid_key(int key)
 			|| key == KEY_UP
 			|| key == KEY_DW
 			|| key == KEY_ZMIN
-			|| key == KEY_ZMOUT
-/*			|| key == KEY_DEFAULT*/);
+			|| key == KEY_ZMOUT);
 }
 
 int				ft_dealkey(int key, VISU *v)
@@ -85,10 +76,8 @@ int				ft_dealkey(int key, VISU *v)
 	{
 		ft_input_rot_and_height(v, key);
 		ft_input_move(v, key);
-		ft_printf("valid key, transform points\n");
 		ft_transform_points(v);
 	}
-
 	else if (key == KEY_ESC)
 		return (ft_close_window(v));
 	else if (key == KEY_PAUSE && !v->pause)
@@ -98,11 +87,11 @@ int				ft_dealkey(int key, VISU *v)
 		mlx_put_image_to_window(v->mlx, v->win, v->img.img, 0, 0);
 		v->pause = 0;
 	}
-	ft_points_to_img(v);
-	display_rooms(v);
-	mlx_put_image_to_window(v->mlx, v->win, v->img.img, 0, 0);
-	mlx_string_put(v->mlx, v->win, v->ins->room[v->graphe->start].pos.x + 13, v->ins->room[v->graphe->start].pos.y - 10, COL_TUBES, "START");
-	mlx_string_put(v->mlx, v->win, v->ins->room[v->graphe->end].pos.x + 13, v->ins->room[v->graphe->end].pos.y - 10, COL_TUBES, "END");
+//	ft_points_to_img(v);
+//	display_rooms(v);
+//	mlx_put_image_to_window(v->mlx, v->win, v->img.img, 0, 0);
+//	mlx_string_put(v->mlx, v->win, v->ins->room[v->graphe->start].pos.x + 13, v->ins->room[v->graphe->start].pos.y - 10, COL_TUBES, "START");
+//	mlx_string_put(v->mlx, v->win, v->ins->room[v->graphe->end].pos.x + 13, v->ins->room[v->graphe->end].pos.y - 10, COL_TUBES, "END");
 
 	mlx_loop_hook(v->mlx, anim_moves, v);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/07 16:49:44 by emuckens          #+#    #+#             */
-/*   Updated: 2018/11/19 20:51:05 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/14 13:59:08 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef VISU_H
@@ -276,21 +276,23 @@ typedef struct s_visu
 	int			pause;
 }				t_visu;
 
+/*
+** DISPLAY
+*/
+
 void		display_rooms(VISU *v);
-void		change_val(VISU *v);
 
 /*
 ** ENV
 */
 void		set_visu(VISU *v);
 void		free_graphe(t_graphe *g);
-int			ft_setextremes(VISU *v);
 
 /*
 ** USER ACTION
 */
 int		ft_dealkey(int key, VISU *v);
-int		ft_transform_points(VISU *v);
+void	ft_transform_points(VISU *v);
 
 
 /*

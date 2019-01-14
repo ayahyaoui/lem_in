@@ -6,7 +6,7 @@
 #    By: emuckens <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/20 17:52:27 by emuckens          #+#    #+#              #
-#    Updated: 2018/11/19 17:55:42 by emuckens         ###   ########.fr        #
+#    Updated: 2019/01/14 13:46:54 by emuckens         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ X11DIR = /usr/include/X11/
 #==============================================================================#
 
 SRC	= main.c image.c window.c deal_key.c env.c plot.c matrices_center.c \
-matrices_scale.c matrices_trans.c matrices_rot.c apply_transformation.c \
+matrices_scale.c matrices_trans.c matrices_rot.c transform_points.c \
   get_room.c get_tube.c get_comment.c read.c display.c free.c get_ants.c error.c utils.c 
 #  matrices_rot.c 
 HEAD	= visu.h

@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/20 15:04:49 by emuckens          #+#    #+#             */
-/*   Updated: 2018/11/16 19:07:01 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/14 13:57:58 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,15 @@ t_list	*ft_lstval(t_list *l, int index)
 		++i;
 	}
 	return (tmp);
+}
+
+void		display_rooms(VISU *v)
+{
+	int		index;
+
+	index = -1;
+	while ((unsigned int)++index < v->graphe->nb_rooms)
+		display_square(v, index, 10, COL_ROOM);
 }
 
 /*
