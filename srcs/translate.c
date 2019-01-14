@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/13 21:58:28 by anyahyao          #+#    #+#             */
-/*   Updated: 2019/01/13 23:18:44 by anyahyao         ###   ########.fr       */
+/*   Updated: 2019/01/14 20:42:11 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,12 @@ int			convert_graphe(t_graphe *g)
 {
 	int i;
 
+	g->start_next_to_end = 0;
+	if (g->map[g->start][g->end] >= 0)
+	{
+		g->map[g->start][g->end] = 0;
+		g->start_next_to_end = 1;
+	}
 	if (convert_map_to_graph(g) != NO_ERR)
 		return (ERR_ALLOC);
 	if (!(g->previous = ft_memalloc(g->nb_rooms * sizeof(int))))

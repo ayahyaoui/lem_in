@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/23 16:28:04 by anyahyao          #+#    #+#             */
-/*   Updated: 2019/01/13 23:18:20 by anyahyao         ###   ########.fr       */
+/*   Updated: 2019/01/14 21:04:24 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int			algoopti(t_graphe *g, ENV *e)
 	if (convert_graphe(g) == ERR_ALLOC || !(besttab = allowBestTab(PATH_SIZE)))
 		return (ERR_ALLOC);
 	res = edmond_karp(g, &besttab);
-	if (res != NO_ERR)
+	if (res != NO_ERR && !(res == ERR_SOLUTION && g->start_next_to_end))
 		return (res);
 //	ft_printf("dernier appele\n");
 	if (!(besttab = registerPath(g, g->nb_paths, besttab)))
