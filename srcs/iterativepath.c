@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/01 18:30:35 by anyahyao          #+#    #+#             */
-/*   Updated: 2018/11/16 23:22:34 by anyahyao         ###   ########.fr       */
+/*   Updated: 2019/01/13 17:08:46 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int		static removepath(t_graphe *g, t_file *file)
 	}
 }
 */
+/*
 int		addneighbourr(t_graphe *g, t_file *file, int node, int *tab)
 {
 	(void)g;
@@ -93,4 +94,4 @@ int				dijistra(t_graphe *g)
 	ft_memdel((void**)&tab);
 	return(1);
 }
-
+*/

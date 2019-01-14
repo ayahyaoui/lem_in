@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   repartAnt.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/01/13 21:58:25 by anyahyao          #+#    #+#             */
+/*   Updated: 2019/01/13 23:18:41 by anyahyao         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 
 #define ABS(X) (X > 0) ? X : -1 * X
 
@@ -43,7 +55,60 @@ int		IsinIntTab(int *tab, int len, int value)
 	return (0);
 }
 
+void		place_ant(t_tab ***besttab, int fourmis, int path)
+{
+	int i;
+	int j;
+	int	nb_chemin;
+	int pass;
 
+	nb_chemin = 0;
+	while (besttab[path][nb_chemin])
+		nb_chemin++;
+	i = nb_chemin;
+	while (fourmis > 0)
+	{
+		pass = 0;
+		j = -1;
+		while (++j < nb_chemin)
+			if (i >= besttab[path][j]->length)
+			{
+				pass++;
+				besttab[path][j]->tab[0]++;
+			}
+		fourmis -= pass;
+		i++;
+	}
+}
+
+
+
+/*
+ *	c'est fonction n'est pas encore prete
+ */
+/*
+void	prediction(ENV *e, t_graphe *g)
+{
+	int turn_min;
+	int *best_combinaison;
+	int *last_combinaison;
+
+	ft_bzero(g->color, sizeof(int) * g->nb_rooms);
+	ft_bzero(g->previous, sizeof(int) * g->nb_rooms);
+	best_combinaison = g->color;
+	best_combinaison = g->previous;
+	best_combinaison[g->nb_paths];
+	while (last_combinaison[0] != e->nbAnt)
+	{
+
+
+	}
+
+
+
+}
+*/
+/*
 void	move(t_graphe *g, t_tab ***besttab)
 {
 	int i;
@@ -176,7 +241,7 @@ int			simulation(t_graphe *g, int *tab, t_tab ***besttab)
 	return res;
 
 }
-
+*/
 /*
  *	a faire
  */
@@ -191,7 +256,7 @@ int changeTab(int *tab)
 /*
  *	par du principe que besttab est triee
  */
-
+/*
 void		addAnt(t_graphe *g, t_tab **besttab, int nbAnt)
 {
 	int i;
@@ -242,7 +307,7 @@ void		addAnt(t_graphe *g, t_tab **besttab, int nbAnt)
 
 
 
-
+*/
 
 void	infos_graphes(t_graphe *g)
 {
@@ -266,71 +331,24 @@ void	infos_graphes(t_graphe *g)
 	  }*/
 }
 
-void		vielleSimulation(t_graphe *g, t_tab ***besttab, int fourmis)
-{
-	int i;
-	int j;
-	int	nb_chemin = -1;
-	int longeurmax = 0;
-	int *simulation = malloc(4 * g->nb_rooms);
-	int pass;
-
-	for (i = 0; besttab[first][i] ; i++) {
-		simulation[i] = besttab[first][i]->length;
-		if (simulation[i] > longeurmax)
-			longeurmax = simulation[i];
-	}
-	nb_chemin = i;
-	while (fourmis > 0)
-	{
-		ft_printf("seggggggggggg\n");
-		pass = 0;
-		j = -1;
-		while (++j < nb_chemin)
-		{
-			if (i >= simulation[j])
-			{
-				pass++;
-				besttab[first][j]->tab[0]++;
-	//			ft_printf("%d",besttab[first][j]->length);
-			}
-		}
-		fourmis-=pass;
-		ft_printf("tour (%d,%d reste %d) ", i,pass, fourmis);
-		if ((i % 5) == 4)
-			ft_putstr("\n");
-		i++;
-	}
-	free(simulation);
-	simulation = 0x0;
-	printf("\npire des cas via simulation = %d\n", i - 1);
-}
-
-
-
+/*
 void		bestsimulation(t_graphe *g, t_input *infos, t_tab ***besttab)
 {
 	int *tab = ft_memalloc(sizeof(int) *g->nb_rooms);
 //	int min = 2000000000;
 	//int calcul;
 //	int i;
-	tab[first] = infos->nb_ants;
+	tab[g->nb_paths] = infos->nb_ants;
 	int *t = ft_memalloc(sizeof(int) *g->nb_rooms);
-	t[first] = infos->nb_ants;
+	t[g->nb_paths] = infos->nb_ants;
 	displayallpath(g, besttab);
-	ft_printf("on verifie %d\n", first - 1);
+	ft_printf("on verifie %d\n", g->nb_paths - 1);
 	//while (changeTab(tab) && min == 2000000000)
 	//{
 		//calcul = simulation(g, tab, besttab);
 	//	if (calcul < min)
 	//	{
 	//		min = 18;
-	/*		i = -1;
-			while (++i < (int)g->nb_rooms)
-				if (t[i] > 0)
-				{
-					addAnt(g, besttab[i], infos->nb_ants);
-*/
 					//}
 	//	}
 	//}
@@ -341,5 +359,5 @@ void		bestsimulation(t_graphe *g, t_input *infos, t_tab ***besttab)
 	free(tab);
 	free(t);
 }
-
+*/
 

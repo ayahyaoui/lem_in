@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 14:58:47 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/14 13:54:20 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/13 23:18:35 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,12 @@ int		main(int argc, char **argv)
 //	paths[1][1]->tab[0] = 10;
 
 //	display_besttab(paths);
-	paths = convert(e.graphe, e.ins);
-	ft_printf("\n\n*** final display***\n\n");
+	algoopti(e.graphe, &e);
+//	ft_printf("\n\n*** final display***\n\n");
+	paths = e.all_paths;
 	scan_allmoves(&e, paths, DISPLAY_ON);
+	ft_printf("\n");
+//display_allmoves(&e, e.all_paths, 0);
 	//free_graphe(g);
 //	display_adj_mtrx(e.graphe->map, e.graphe->nb_rooms); 
 //	paths = get_pathstab(); // seulement pour tester display moves, sur une combinaison de e.nb_paths chemins
