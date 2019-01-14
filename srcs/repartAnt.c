@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/13 21:58:25 by anyahyao          #+#    #+#             */
-/*   Updated: 2019/01/13 23:18:41 by anyahyao         ###   ########.fr       */
+/*   Updated: 2019/01/14 20:23:50 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,34 +25,36 @@ void		printAnt(t_graphe *g, int res, int *tab);
 int			simulation(t_graphe *g, int *tab, t_tab ***besttab);
 int			changeTab(int *tab);
 void		addAnt(t_graphe *g, t_tab **besttab, int nbAnt);
-void		vielleSimulation(t_graphe *g, t_tab ***besttab, int fourmis);
 void		bestsimulation(t_graphe *g, t_input *infos, t_tab ***besttab);
 
 int fourmis = 0;
 extern int first;
 
-int		searchIntTab(int *tab, int len, int value)
+
+/*
+ *	c'est fonction n'est pas encore prete
+ */
+
+void	infos_graphes(t_graphe *g)
 {
-	int i;
+	ft_printf("nb_rooms = %d, nb_tubes = %d\n", g->nb_rooms, g->nb_tubes);
+	ft_printf("start = %d, end = %d\n", g->start, g->end);
 
-	i = -1;
-	while (++i < len)
-		if (value == tab[i])
-			return (i);
-	return (-1);
-}
+	/*ft_putstr("best paths:\n");
+	  ft_print_inttab(g->capacite, g->nb_rooms, ' ');
 
-int		IsinIntTab(int *tab, int len, int value)
-{
-	int i;
+	  ft_printf("map\n");
+	  unsigned int i,j;
+	  for (j = 0; j < g->nb_rooms; j++)
+	  ft_printf("%2u ",j);
+	  ft_putstr("\n");
 
-	i = -1;
-	while (++i < len)
-	{
-		if (value == tab[i])
-			return (1);
-	}
-	return (0);
+	  for (i = 0; i < g->nb_rooms; i++) {
+	  for (j = 0; j < g->nb_rooms; j++) {
+	  ft_printf("%2d ",g->graph[j][i]);
+	  }
+	  ft_putstr("\n");
+	  }*/
 }
 
 void		place_ant(t_tab ***besttab, int fourmis, int path)
@@ -82,11 +84,8 @@ void		place_ant(t_tab ***besttab, int fourmis, int path)
 }
 
 
+/*
 
-/*
- *	c'est fonction n'est pas encore prete
- */
-/*
 void	prediction(ENV *e, t_graphe *g)
 {
 	int turn_min;
@@ -95,8 +94,13 @@ void	prediction(ENV *e, t_graphe *g)
 
 	ft_bzero(g->color, sizeof(int) * g->nb_rooms);
 	ft_bzero(g->previous, sizeof(int) * g->nb_rooms);
+
 	best_combinaison = g->color;
 	best_combinaison = g->previous;
+
+	
+
+	
 	best_combinaison[g->nb_paths];
 	while (last_combinaison[0] != e->nbAnt)
 	{
@@ -107,7 +111,35 @@ void	prediction(ENV *e, t_graphe *g)
 
 
 }
+
 */
+/*
+ *	par du principe que la somme de tab_fourmis est egale au nombre de fourmis
+ */
+void		try_to_place_ant(t_tab ***besttab, int *tab_fourmis)
+{
+	int i;
+
+	i = -1;
+	while (besttab[++i])
+		if (tab_fourmis[i] > 0)
+			place_ant(besttab, tab_fourmis[i], i);
+}
+
+void		clean_ant(t_tab ***besttab)
+{
+	int i;
+	int j;
+
+	i = -1;
+	while (besttab[++i])
+	{
+		j = -1;
+		while (besttab[i][++j])
+			besttab[i][j]->tab[0] = 0;
+	}
+}
+
 /*
 void	move(t_graphe *g, t_tab ***besttab)
 {
@@ -245,7 +277,7 @@ int			simulation(t_graphe *g, int *tab, t_tab ***besttab)
 /*
  *	a faire
  */
-
+/*
 int changeTab(int *tab)
 {
 	(void)tab;
@@ -253,6 +285,31 @@ int changeTab(int *tab)
 }
 
 
+int		searchIntTab(int *tab, int len, int value)
+{
+	int i;
+
+	i = -1;
+	while (++i < len)
+		if (value == tab[i])
+			return (i);
+	return (-1);
+}
+
+int		IsinIntTab(int *tab, int len, int value)
+{
+	int i;
+
+	i = -1;
+	while (++i < len)
+	{
+		if (value == tab[i])
+			return (1);
+	}
+	return (0);
+}
+
+*/
 /*
  *	par du principe que besttab est triee
  */
@@ -308,29 +365,6 @@ void		addAnt(t_graphe *g, t_tab **besttab, int nbAnt)
 
 
 */
-
-void	infos_graphes(t_graphe *g)
-{
-	ft_printf("nb_rooms = %d, nb_tubes = %d\n", g->nb_rooms, g->nb_tubes);
-	ft_printf("start = %d, end = %d\n", g->start, g->end);
-
-	/*ft_putstr("best paths:\n");
-	  ft_print_inttab(g->capacite, g->nb_rooms, ' ');
-
-	  ft_printf("map\n");
-	  unsigned int i,j;
-	  for (j = 0; j < g->nb_rooms; j++)
-	  ft_printf("%2u ",j);
-	  ft_putstr("\n");
-
-	  for (i = 0; i < g->nb_rooms; i++) {
-	  for (j = 0; j < g->nb_rooms; j++) {
-	  ft_printf("%2d ",g->graph[j][i]);
-	  }
-	  ft_putstr("\n");
-	  }*/
-}
-
 /*
 void		bestsimulation(t_graphe *g, t_input *infos, t_tab ***besttab)
 {

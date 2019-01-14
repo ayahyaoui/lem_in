@@ -6,13 +6,12 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/30 19:00:27 by anyahyao          #+#    #+#             */
-/*   Updated: 2019/01/13 19:30:35 by anyahyao         ###   ########.fr       */
+/*   Updated: 2019/01/14 18:39:59 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef __LEM_IN__
 #define __LEM_IN__
-#include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include "lemin.h"

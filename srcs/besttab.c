@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/13 21:58:22 by anyahyao          #+#    #+#             */
-/*   Updated: 2019/01/13 23:18:05 by anyahyao         ###   ########.fr       */
+/*   Updated: 2019/01/14 21:03:52 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_tab	***allowBestTab(int nb_path)
 	t_tab ***besttab = 0x0;
 
 	if (!(besttab = (t_tab***)ft_memalloc(sizeof(t_tab**) * (nb_path + 1))))
-		exit(ERRORMALLOC);
+		return (0x0);
 	return (besttab);
 }
 
@@ -45,8 +45,8 @@ void	get_infos_allow_tab(t_graphe *g,int *nb_path, int *sizeMax)
 
 	ft_bzero(g->capacite, sizeof(int) * g->nb_rooms);
 	i = -1;
-	*nb_path = 0;
-	*sizeMax = -1;
+	*nb_path =  (g->start_next_to_end == 1) ? 1 : 0;
+	*sizeMax = (g->start_next_to_end == 1) ? 2 : -1;
 	while (++i < (int)g->nb_rooms)
 	{
 		if (g->map[i][g->end] > 0 && g->node[i]->parent >= 0)
@@ -73,7 +73,7 @@ t_tab	**allowTab(t_graphe *g, t_tab **besttab)
 
 	j = 0;
 	get_infos_allow_tab(g, &j, &sizeMax);
-	if (!(besttab = ft_memalloc(sizeof(t_tab *) * (j  + 1))))
+	if (!(besttab = ft_memalloc(sizeof(t_tab *) * (j  + 2))))
 		return (0x0);
 	i = -1;
 	while (++i < j)
@@ -134,9 +134,19 @@ void					*ft_realloc(void *previous, size_t t, size_t len_src)
 	return (dest);
 }
 
+void	ft_add_exeption(t_graphe *g, t_tab ***besttab, int nb_path)
+{
+	if (g->start_next_to_end)
+	{
+		besttab[nb_path][0]->length = 2;
+		besttab[nb_path][0]->tab[1] = g->end;
+	}
+}
+
 t_tab	***registerPath(t_graphe *g, int nb_path, t_tab ***besttab)
 {
 	int i;
+	int k;
 
 	i = -1;
 	if (nb_path > 0 &&  (nb_path % PATH_SIZE) == 0)
@@ -148,11 +158,13 @@ t_tab	***registerPath(t_graphe *g, int nb_path, t_tab ***besttab)
 		return (0x0);
 	i = 0;
 	SortPath(g);
+	k = g->start_next_to_end;
+	ft_add_exeption(g, besttab, nb_path);
 	while (g->previous[i] >= 0)
 	{
-		besttab[nb_path][i]->length = 
-			addPath(g->node[g->previous[i]], g, besttab[nb_path][i]) + 1;
-		besttab[nb_path][i]->tab[besttab[nb_path][i]->length - 1] = g->end;
+		besttab[nb_path][i + k]->length = 
+			addPath(g->node[g->previous[i]], g, besttab[nb_path][i + k]) + 1;
+		besttab[nb_path][i + k]->tab[besttab[nb_path][i + k]->length - 1] = g->end;
 		++i;
 	}
 	g->nb_paths++;

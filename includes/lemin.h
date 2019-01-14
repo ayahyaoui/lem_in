@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 14:48:09 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/12 21:25:26 by anyahyao         ###   ########.fr       */
+/*   Updated: 2019/01/14 20:38:22 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ typedef struct		s_graphe
 	int						start;
 	int						end;
 	int						nb_paths;
+	int						start_next_to_end;
 	t_file					*file;
 }						t_graphe;
 
