@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 14:48:09 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/12 22:35:53 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/14 18:06:52 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # define STDIN			0
 # define STDOUT			1
 # define STDERR			2
-# define ERR_NB			22
+# define ERR_NB			20
 # define NB_COMMANDS		2
 
 # define NOINS			"empty file"
@@ -69,6 +69,7 @@ typedef struct		s_graphe
 	int						*capacite;
 	int						start;
 	int						end;
+	int						nb_paths;
 	t_file					*file;
 }						t_graphe;
 
@@ -107,8 +108,8 @@ typedef struct		s_environment
 	int			fd;
 }					t_environment;
 
-int		choose_method(t_graphe *g, t_input * info);
-t_tab		***convert(t_graphe *g, t_input *infos);
+int		choose_method(t_graphe *g, ENV *info);
+int		convert(t_graphe *g, ENV *infos);
 void		free_graphe(t_graphe *g);
 
 
@@ -144,7 +145,7 @@ enum				e_error
 	ERR_START, ERR_END, ERR_LIB, ERR_ALLOC, ERR_HELP, ERR_OPTION, ERR_ARG, ERR_SOLUTION 
 };
 
-int		scan_allmoves(ENV *e, t_tab ***paths, int display);
+int		scan_allmoves(ENV *e, int display);
 void		display_besttab(t_tab ***tab);
 
 int			set_env(ENV *e);

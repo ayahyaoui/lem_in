@@ -6,12 +6,12 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/02 17:52:48 by anyahyao          #+#    #+#             */
-/*   Updated: 2018/11/03 18:25:02 by anyahyao         ###   ########.fr       */
+/*   Updated: 2019/01/13 17:00:28 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
-
+/*
 int			valueisinfusion(t_fusion *fusion, unsigned int value);
 void		infos(t_fusion *f);
 int		getfusionpath(t_breakdown *b, int *res, unsigned int val, int cost);
@@ -71,4 +71,4 @@ int			valueisinfusion(t_fusion *fusion, unsigned int value)
 	return (0);
 }
 
-
+*/

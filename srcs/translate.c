@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   translate.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/01/13 21:58:28 by anyahyao          #+#    #+#             */
+/*   Updated: 2019/01/13 23:18:44 by anyahyao         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 
 #include "lem_in.h"
 
@@ -10,258 +22,82 @@
  * et que ce dernier pointes sur plusieur autre noeud
  * mtn toute la deuxieme ^partie du graphe n'a qu'un seule voisin
  */
-/*
-typedef struct		s_graphe
-{
-	unsigned int			nb_rooms; // anciennement taille
-	unsigned int			nb_tubes;
-	int						*color;// char *
-	int						*previous;// permet de trouver un chemin rapidement
-	char					**map; // bientot capacite
-	int						**graph;//prend  pas mal de place mais permet opti
-	int						*capacite;
-	int						start;
-	int						end;
-	t_file					*file;
-}						t_graphe;
-*/
 
-void		affiche_allpaths(t_graphe *g, t_input *infos);
-int		algoquidechire(t_graphe *g, t_input *infos);
+void	cleanNodee(t_graphe *g)
+{
+	unsigned int i;
+
+	i = 0;
+	while (i < g->nb_rooms)
+	{
+		g->node[i]->previous = -1;
+		g->node[i]->color = WHITE;
+		i++;
+	}
+}
+
 int		**creategraph(int len)
 {
 	int **map;
 	int i;
 
 	if (!(map = (int**)malloc(sizeof(int*) * (len * 2 + 1))))
-		exit(ERRORMALLOC);
+		return (0x0);
 	i = -1;
 	while (++i < len)
 	{
 		if (!(map[i] = (int*)ft_memalloc(sizeof(int) * (len + 1))))
-			exit(ERRORMALLOC);
+			return (0x0);
 	}
-	/*while (i < 2 * len)
-	{
-		if (!(map[i] = (int*)ft_memalloc(sizeof(int) * 2)))
-			exit(ERRORMALLOC);
-		i++;
-	}*/
 	map[i] = 0x0;
 	return map;
 }
 
-t_tab	***algoopti(t_graphe *g, t_input *infos);
-
-t_tab	***convert(t_graphe *g , t_input *infos) // retourner int ERR_MALLOC ou ERR_SOLUTION, NO_ERR si solution valide trouvee
+int			convert_map_to_graph(t_graphe *g)
 {
-	unsigned int i;
-	int j;
 	int room;
-	t_tab ***all_path_combinations; // e->all_paths a la place
+	int i;
+	int j;
 
-	g->graph = creategraph(g->nb_rooms);
-	i = 0;
-	g->previous = ft_memalloc(g->nb_rooms * sizeof(int));
-	while (i < g->nb_rooms)
+	if (!(g->graph = creategraph(g->nb_rooms)))
+			return (ERR_ALLOC);
+	i = -1;
+	while (++i < (int)g->nb_rooms)
 	{
 		j = -1;
 		room = -1;
-		while ((unsigned int)++j < g->nb_rooms)
+		while (++j < (int)g->nb_rooms)
 			if (g->map[i][j] == 1)
 				g->graph[i][++room] = j;
 		g->graph[i][room + 1] = -1;
-		i++;
 	}
-	/*while (i < g->nb_rooms)
+	return (0);
+}
+
+
+int			convert_graphe(t_graphe *g)
+{
+	int i;
+
+	if (convert_map_to_graph(g) != NO_ERR)
+		return (ERR_ALLOC);
+	if (!(g->previous = ft_memalloc(g->nb_rooms * sizeof(int))))
+		return (ERR_ALLOC);
+	if (!(g->node = malloc(sizeof(t_node*) * g->nb_rooms)))
+		return (ERR_ALLOC);
+	i = -1;
+	while (++i < (int)g->nb_rooms)
 	{
-		g->map[i][0] = i - g->nb_rooms;
-		g->map[i][1] = -1;
-		i++;
-	}*/
+		g->node[i] = ft_memalloc(sizeof(t_node));
+		g->node[i]->parent = -1;
+		g->node[i]->value = (int)i;
+	}
 	if (!(g->capacite = (int*)ft_memalloc(g->nb_rooms * sizeof(int))))
-		exit(ERRORMALLOC);
-	for (unsigned int j = 0; j < g->nb_rooms ; j++)
-		g->capacite[j] = -1;
+		return (ERR_ALLOC);
+	i = -1;
+	while (++i < (int)g->nb_rooms)
+		g->capacite[i] = -1;
 	ft_bzero(g->color, g->nb_rooms * sizeof(int));
 	g->file = new_file(g);
-//	g->end =  1;
-	ft_putstr("==========================GO==============================\n");
-	//algoquidechire(g, infos);
-	all_path_combinations = algoopti(g, infos);
-//	all_path_combinations[0][1]->tab[0] = 1; // enlever une fois que le nb de fourmis est ok
-//	all_path_combinations[1][0]->tab[0] = 1; // idem
-//		all_path_combinations[0][0]->tab[0] = 1; // idem
-
-	return (all_path_combinations);
-	//exit(1);
-	//troisieme_tentative(g, infos);
+	return (NO_ERR);
 }
-
-int		ajout_chemin(t_graphe *g)
-{
-	int node;
-	int i;
-	int tmp;
-
-	node = g->start;
-	g->color[node] = BLACK;
-	addfile(g->file, node);
-	while (g->file->begin < g->file->end)
-	{
-		node = removefile(g->file);
-		//ft_printf("<%d>\n", node);
-		if (node == g->end)
-			return (1);
-		//if (g->capacite[node] != -1)
-		//	ft_printf("pb %d sur le node %d\n", g->capacite[node], node);
-		if (g->capacite[node] != -1/* && g->previous[node] > (int)g->nb_rooms*/)
-		{
-			if ((g->color[g->capacite[node]]) == WHITE)
-			{i = g->capacite[node];
-			addfile(g->file, i);
-			g->color[i] = BLACK;
-			g->previous[i] = node + g->nb_rooms;
-		}}
-		else
-		{
-			i = 0;
-			while (g->graph[node][i] != -1)
-			{
-				tmp = g->graph[node][i];
-				//printf("link %d->%d\n", node, tmp);
-				if (g->color[tmp] == WHITE && (g->capacite[tmp] == -1 ||
-				(g->capacite[tmp] != -1 && g->map[node][tmp] == 1)))
-				{
-				//	printf("add %d\n", tmp);
-					g->color[tmp] = BLACK;
-					addfile(g->file, tmp);
-					g->previous[tmp] = node;
-				}
-				i++;
-				//if ()
-			}
-			//ft_printf("loop finish\n");
-		}
-	}
-	return (-1);
-}
-
-int		algoquidechire(t_graphe *g, t_input *infos)
-{
-	//ft_printf("reussi %d\n",ajout_chemin(g));
-	int i;
-	int exept;
-	while (1)
-	{
-		g->file = clean_file(g->file, g->nb_rooms);
-		ft_bzero(g->color, g->nb_rooms * sizeof(int));
-		ft_mem_set_int(g->previous, -1, g->nb_rooms);
-		if (ajout_chemin(g) == -1)
-			break;
-		i = g->end;
-			exept = 0;
-		while (i != g->start)
-		{
-			//ft_printf("%d <-", i);
-			if (g->previous[i] > 0 && 
-			(unsigned int)g->previous[g->previous[i]] >= g->nb_rooms)
-			{
-				printf("nouveau chemin trouver !!!!!!!!!\n");
-				g->previous[g->previous[i]] -= g->nb_rooms;
-				exept = 1;
-			}
-			g->capacite[i] = g->previous[i];
-			if (exept == 2)
-				exept = 0;
-			else
-				g->map[g->previous[i]][i] = 2;
-			g->map[i][g->previous[i]] = 1;
-			i = g->previous[i];
-			if (exept == 1)
-			{
-				exept++;
-				g->map[g->previous[i]][i] = 1;
-			}
-			//ft_putstr("- ");
-		}
-			//ft_printf("%d\n", g->start);
-	}
-			//	g->map[2][1] = 1;
-	affiche_allpaths(g, infos);
-	free_file(&g->file);
-/*	i = g->end;
-	while (i != g->start)
-	{
-		ft_printf("%d <-- ", i);
-		i = g->previous[i];
-	}
-	ft_printf("%d\n", g->start);
-*/	return 1;
-}
-
-void		affiche_allpaths(t_graphe *g, t_input *infos)
-{
-	int i;
-	int j;
-	int k;
-	int	nb_chemin = -1;
-	int longeurmax = 0;
-	int longueur = 0;
-	int *simulation = malloc(4 * g->nb_rooms);
-
-
-	i = -1;
-	while ((unsigned int)++i < g->nb_rooms)
-		if (g->map[g->start][i] == 2)
-		{
-			//ft_printf("%d -->", g->start);
-			j = i;
-			longueur = 1;
-			while (j != g->end)
-			{
-				longueur++;
-				if (longueur > longeurmax)
-					longeurmax = longueur;
-				k = -1;
-				while ((unsigned int)++k < g->nb_rooms)
-					if (g->map[j][k] == 2)
-					{
-			//			ft_printf("%d -->", j);
-						j = k;
-						break;
-					}
-				if ((unsigned int)k == g->nb_rooms)
-					exit(1);
-			}
-			//ft_printf("%d\n", g->end);
-			simulation[++nb_chemin] = longueur;
-			ft_printf("chemin numero %d = %d\n", nb_chemin ,simulation[nb_chemin]);
-			//ft_putstr("\n\n");
-		}
-	ft_printf("-------------calcul du pire des cas:-----------------\n");
-	ft_printf("nombre de chemin = %d\n",nb_chemin + 1);
-	ft_printf("longeurmax = %d\n",longeurmax);
-	ft_printf("fourmis = %d\n",infos->nb_ants);
-//ft_printf("pire des cas theorique = %d", (infos->nb_ants / nb_chemin) +longeurmax);
-	int fourmis = infos->nb_ants;
-	int pass;
-	i = 1;
-	while (fourmis > 0)
-	{
-		pass = 0;
-		j = -1;
-		while (++j <= nb_chemin)
-			if (i >= simulation[j])
-				pass++;
-		fourmis-=pass;
-		ft_printf("tour (%d,%d reste %d) ", i,pass, fourmis);
-		if ((i % 5) == 4)
-			ft_putstr("\n");
-		i++;
-	}
-	free(simulation);
-	simulation = 0x0;
-	printf("\npire des cas via simulation = %d\n", i - 1);
-}
-

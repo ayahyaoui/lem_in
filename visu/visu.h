@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/07 16:49:44 by emuckens          #+#    #+#             */
-/*   Updated: 2018/11/19 20:51:05 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/14 14:00:10 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef VISU_H
@@ -22,6 +22,7 @@
 # define STDERR			2
 # define ERR_NB			21
 # define NB_COMMANDS		2
+# define SPEED			50
 
 /*
 ** NICE COLORS
@@ -109,6 +110,8 @@
 # define KEY_DEFAULT	15
 # define KEY_INVERT		34
 # define KEY_PAUSE		49
+# define KEY_FASTER		116
+# define KEY_SLOWER		121
 
 /*
 # define KEY_ESC		65307
@@ -175,6 +178,12 @@ enum				e_error
 enum				e_angle
 {
 		COSX, SINX, COSY, SINY, COSZ, SINZ
+};
+
+enum				e_room
+{
+
+		CURRENT, NEXT
 };
 
 typedef struct		s_graphe
@@ -254,7 +263,7 @@ typedef struct s_visu
 	t_input			*ins;
 	t_graphe		*graphe;
 	t_list		*anthill;
-	int		*ants;
+	int		**ants;
 	int			nb_paths;
 	int			options;
 	int			type;
@@ -274,23 +283,29 @@ typedef struct s_visu
 	double		coef;
 	int			center;
 	int			pause;
+	int			step;
+	t_4fvect		delta;
+	double		speed;
+
 }				t_visu;
 
+/*
+** DISPLAY
+*/
+
 void		display_rooms(VISU *v);
-void		change_val(VISU *v);
 
 /*
 ** ENV
 */
 void		set_visu(VISU *v);
 void		free_graphe(t_graphe *g);
-int			ft_setextremes(VISU *v);
 
 /*
 ** USER ACTION
 */
 int		ft_dealkey(int key, VISU *v);
-int		ft_transform_points(VISU *v);
+void	ft_transform_points(VISU *v);
 
 
 /*
@@ -341,7 +356,7 @@ void		ft_get_meshsize(VISU *v);
  * */
 
 int			display(VISU *v, char *str);
-void		display_ant(VISU *v, int index, int scale);
+void		display_ant(VISU *v, int *ant, int scale);
 void		display_anthill(t_list *anthill);
 void		printlist(VISU *v, t_list *l);
 void		display_ants(VISU *v, int x, int y, int scale);
@@ -350,14 +365,14 @@ void		display_ants(VISU *v, int x, int y, int scale);
 int			read_options(VISU *v, char **argv, int argc);
 int		display_moves(VISU *v, int color, int option);
 int			anim_moves(VISU* v);
-void		display_square(VISU *v, int index, int width, int color);
+void		display_square(VISU *v, int *ant, int width, int color);
 
 void		display_ant_names(VISU *v);
 
 /*
  * ** Read and store instructions
  * */
-int			read_moves(VISU *v, char *line);
+int			read_moves(VISU *v, char *line, int room);
 int			apply_commands(VISU *v);
 int			get_ants(VISU *v, char **str, int type);
 int			get_command(VISU *v, char *str, int option);

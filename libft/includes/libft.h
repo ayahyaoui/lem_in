@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/09 12:08:15 by emuckens          #+#    #+#             */
-/*   Updated: 2018/11/08 16:35:26 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/13 18:27:45 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ int				ft_toupper(int c);
 */
 int				ft_atoi(const char *str);
 int				ft_atoi_index(unsigned char *str, int *count);
+void			ft_itoa_mod(char str[], int n);
 char			*ft_itoa(int n);
 char			*ft_uitoa(unsigned int n);
 char			*ft_lltoa(long long n);

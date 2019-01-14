@@ -1,0 +1,7 @@
+#test less than min int
+3
+##start
+start 0 0
+##end
+end 1 -9999999999999999999999999
+start-end
