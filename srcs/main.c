@@ -46,7 +46,7 @@ int		main(int argc, char **argv)
 	set_env(&e);
 	if ((err = read_options(&e, argv, argc)))
 		return (display(&e, get_errmsg(err)));
-	ft_printf("beginning\n");
+//	ft_printf("beginning\n");
 	if ((err = read_instructions(&e, NULL, 0, 0)))
 	{
 		free_env(&e);
@@ -68,8 +68,9 @@ int		main(int argc, char **argv)
 
 //	display_besttab(paths);
 	algoopti(e.graphe, &e);
-	ft_printf("\n\n*** final display***\n\n");
+//	ft_printf("\n\n*** final display***\n\n");
 	paths = e.all_paths;
+	ft_printf("\n");
 	display_allmoves(&e, e.all_paths, 0);
 	//free_graphe(g);
 //	display_adj_mtrx(e.graphe->map, e.graphe->nb_rooms); 

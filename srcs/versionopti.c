@@ -24,16 +24,16 @@ int			algoopti(t_graphe *g, ENV *e)
 	res = edmond_karp(g, &besttab);
 	if (res != NO_ERR)
 		return (res);
-	ft_printf("dernier appele\n");
+//	ft_printf("dernier appele\n");
 	if (!(besttab = registerPath(g, g->nb_paths, besttab)))
 		return (ERR_ALLOC);
 	g->nb_paths--;
-	vielleSimulation(g, besttab, e->ins->nb_ants);
-	ft_printf("============================================================");
-	ft_printf(" PREMIERE PARTIE FINIS ");
-	ft_printf("============================================================ %d\n", g->nb_paths);
+	place_ant(besttab, e->ins->nb_ants, g->nb_paths);
+//	ft_printf("============================================================");
+//	ft_printf(" PREMIERE PARTIE FINIS ");
+//	ft_printf("============================================================ %d\n", g->nb_paths);
 	besttab[g->nb_paths + 1] = 0x0;
-	ft_printf("%d\n", besttab[0][0]->tab[0]);
+	//ft_printf("%d\n", besttab[0][0]->tab[0]);
 	e->all_paths = besttab;
 	return (res);
 }

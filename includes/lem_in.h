@@ -82,6 +82,7 @@ void		convertGraphe(t_graphe *g);
 void		cleanNodee(t_graphe *g);
 void		add_node_parcous(t_graphe *g, t_node *next, int val, int opt);
 int			convert_graphe(t_graphe *g);
+void		place_ant(t_tab ***besttab, int fourmis, int path);
 
 
 

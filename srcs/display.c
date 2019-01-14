@@ -124,7 +124,7 @@ int		display_allmoves(ENV *e, t_tab ***paths, int arrived)
 	high_comb = nb_comb;
 	if (!(e->ants = (int **)ft_memalloc(sizeof(int *) * (e->ins->nb_ants + 1))))
 		return (ERR_ALLOC);
-	ft_printf("arrived = %d nb ants = %d\n", arrived, e->ins->nb_ants);
+	//ft_printf("arrived = %d nb ants = %d\n", arrived, e->ins->nb_ants);
 //	e->ants[e->ins->nb_ants] = NULL;
 	while (arrived < e->ins->nb_ants)
 	{
