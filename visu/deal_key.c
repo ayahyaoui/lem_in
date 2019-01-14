@@ -6,13 +6,18 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/15 12:48:36 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/14 13:59:09 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/14 19:58:07 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "visu.h"
 #include "stdio.h"
 #include <math.h>
+
+/*
+** Change rotation value according to user key input
+** Input: int key code
+*/
 
 static void		ft_input_rot_and_height(VISU *v, int key)
 {
@@ -27,6 +32,11 @@ static void		ft_input_rot_and_height(VISU *v, int key)
 	else if (key == KEY_YDW)
 		v->uinput.roty = M_PI / 24.0;
 }
+
+/*
+** Change direction, zoom or speed value according to user key input
+** Input: int key code
+*/
 
 static void		ft_input_move(VISU *v, int key)
 {
@@ -55,16 +65,12 @@ static void		ft_input_move(VISU *v, int key)
 		v->speed -= 0.1;
 	else if (key == KEY_FASTER)
 		v->speed += 0.1;
-
-
-	ft_printf("after move hor = %d move ver = %d\n", v->uinput.mv_hor, v->uinput.mv_ver);
 }
 
 static int		ft_isvalid_key(int key)
 {
 	ft_printf("key = %d\n", key);
-	return (/*key == 1*/
-			 key == KEY_XUP
+	return (key == KEY_XUP
 			|| key == KEY_XDW
 			|| key == KEY_YUP
 			|| key == KEY_YDW
@@ -75,16 +81,11 @@ static int		ft_isvalid_key(int key)
 			|| key == KEY_ZMIN
 			|| key == KEY_ZMOUT
 			|| key == KEY_FASTER
-			|| key == KEY_SLOWER
-/*			|| key == KEY_DEFAULT*/);
+			|| key == KEY_SLOWER);
 }
 
 int				ft_dealkey(int key, VISU *v)
 {
-
-	char *str;
-
-	str = NULL;
 //	ft_printf("key = %d\n", key);
 	ft_bzero(v->img.ptr, v->win_w * v->win_h * sizeof(int));
 	if (ft_isvalid_key(key))
@@ -98,16 +99,9 @@ int				ft_dealkey(int key, VISU *v)
 	else if (key == KEY_PAUSE && !v->pause)
 		v->pause = 1;
 	else if (key == KEY_PAUSE)
-	{
-		mlx_put_image_to_window(v->mlx, v->win, v->img.img, 0, 0);
 		v->pause = 0;
-	}
-//	ft_points_to_img(v);
-//	display_rooms(v);
-//	mlx_put_image_to_window(v->mlx, v->win, v->img.img, 0, 0);
-//	mlx_string_put(v->mlx, v->win, v->ins->room[v->graphe->start].pos.x + 13, v->ins->room[v->graphe->start].pos.y - 10, COL_TUBES, "START");
-//	mlx_string_put(v->mlx, v->win, v->ins->room[v->graphe->end].pos.x + 13, v->ins->room[v->graphe->end].pos.y - 10, COL_TUBES, "END");
-
+	display_everything(v);
+	v->turn = -1;
 	mlx_loop_hook(v->mlx, anim_moves, v);
 	return (0);
 }

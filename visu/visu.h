@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/07 16:49:44 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/14 14:00:10 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/14 19:47:58 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef VISU_H
@@ -48,7 +48,7 @@
 
 
 
-# define COL_ROOM		0xFFFFFF
+# define COL_ROOM		TEAL
 # define COL_TUBES		TEAL
 # define COL_ANT		RED
 # define COL_ANTNAME	AMBER
@@ -263,6 +263,7 @@ typedef struct s_visu
 	t_input			*ins;
 	t_graphe		*graphe;
 	t_list		*anthill;
+	char		turn_str[11];
 	int		**ants;
 	int			nb_paths;
 	int			options;
@@ -284,6 +285,8 @@ typedef struct s_visu
 	int			center;
 	int			pause;
 	int			step;
+	int			turn;
+	int			error;
 	t_4fvect		delta;
 	double		speed;
 
@@ -294,6 +297,7 @@ typedef struct s_visu
 */
 
 void		display_rooms(VISU *v);
+void		display_everything(VISU *v);
 
 /*
 ** ENV
@@ -368,6 +372,8 @@ int			anim_moves(VISU* v);
 void		display_square(VISU *v, int *ant, int width, int color);
 
 void		display_ant_names(VISU *v);
+
+void		detect_end(VISU *v);
 
 /*
  * ** Read and store instructions

@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/20 15:04:49 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/14 21:38:57 by anyahyao         ###   ########.fr       */
+/*   Updated: 2019/01/14 21:42:32 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ int		display_travelling(ENV *e, t_tab ***paths, int display)
 		}
 		++ant;
 	}
-		ft_printf("\n");
+	ft_printf("\n");
 	return (arrived);
 }
 

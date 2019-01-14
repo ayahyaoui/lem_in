@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/10 13:50:19 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/14 18:34:00 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/14 20:23:58 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void		free_env(ENV *e)
 {
 	del_rooms(e, &e->ins->room);
 	free_graphe(e->graphe);
-	ft_free_inttab(&e->ins->commands, e->ins->nb_commands);	
+//	ft_free_inttab(&e->ins->commands, e->ins->nb_commands);	
 	ft_memdel((void **)&e->ins);
 	del_anthill(e->anthill);
 }

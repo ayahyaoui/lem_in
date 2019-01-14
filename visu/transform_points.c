@@ -6,11 +6,12 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/17 15:39:45 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/14 13:58:32 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/14 14:43:11 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "visu.h"
+#include <stdio.h> //
 #include <limits.h>
 
 /*
@@ -51,7 +52,10 @@ static void		ft_apply_transformation(VISU *v, double (*m)[4][4])
 
 	index = -1;
 	while ((unsigned int)++index < v->graphe->nb_rooms)
+	{
 		v->ins->room[index].pos = ft_4mtrxvect_mul(m, &v->ins->room[index].pos);
+		printf("room coordinates x = %lf y = %lf\n", v->ins->room[index].pos.y, v->ins->room[index].pos.y);
+	}
 }
 
 /*

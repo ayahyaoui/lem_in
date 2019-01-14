@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 14:48:09 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/14 21:39:21 by anyahyao         ###   ########.fr       */
+/*   Updated: 2019/01/14 21:42:49 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,13 @@
 # define STDIN			0
 # define STDOUT			1
 # define STDERR			2
-# define ERR_NB			20
+# define ERR_NB			22
 # define NB_COMMANDS		2
 
 # define NOINS			"empty file"
 # define ANT_INPUT		"invalid ant format"
 # define ANT_NB			"not enough ants!"
+# define ANT_COMMAND	"invalid command for ant number"
 # define ROOM_INPUT		"invalid room format"
 # define ROOM_DUP		"duplicate room name"
 # define COORD			"non numerical values as room coordinates"
@@ -36,6 +37,7 @@
 # define LIB			"failing lib function"
 # define MALLOC			"failing malloc"
 # define NOSTART		"missing start indicator"
+# define SAME_START_END	"all ants are already at the end"
 # define NOEND			"missing end indicator"
 # define ROOM_CONF		"confusing room name, please avoid use of '-'"
 # define MAXINT			"max number of ants is 2 147 483 647"
@@ -141,9 +143,9 @@ enum				e_display
 
 enum				e_error
 {
-	NO_ERR, ERR_NO_INS, ERR_READ, ERR_ANT_INPUT, ERR_ANT_NB, ERR_INTMAX,
+	NO_ERR, ERR_NO_INS, ERR_READ, ERR_ANT_INPUT, ERR_ANT_NB, ERR_COMMAND, ERR_INTMAX,
    	ERR_ROOM, ERR_ROOM_CONF, ERR_COORD, ERR_TUBE, ERR_NOTUBE, ERR_NOROOM, ERR_DUP, ERR_ORDER,
-	ERR_START, ERR_END, ERR_LIB, ERR_ALLOC, ERR_HELP, ERR_OPTION, ERR_ARG, ERR_SOLUTION 
+	ERR_START, ERR_END, ERR_SAME, ERR_LIB, ERR_ALLOC, ERR_HELP, ERR_OPTION, ERR_ARG, ERR_SOLUTION 
 };
 
 int		scan_allmoves(ENV *e, int display);

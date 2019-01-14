@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/10 13:50:19 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/13 18:17:50 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/14 15:04:53 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,8 +124,10 @@ int		set_env(VISU *v)
 	v->graphe->end = -1;
 	v->mesh_init = 40;
 	v->ppmove = 20;
-	v->pause = 0;
+	v->pause = 1;
 	v->speed = 1;
+	v->turn = 0;
+	v->turn_str[0] = '0';
 	ft_4vinit(&v->shift, 0, 0, 0);
 	return (1);
 }

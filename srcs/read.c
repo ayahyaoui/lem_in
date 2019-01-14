@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 14:48:52 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/14 18:33:58 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/14 20:06:02 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,11 @@ int				read_instructions(ENV *e, char *str, int nbline, int ret)
 			}
 			ft_free_strtab(&words);
 		}
-		else if (str[1] == '#' && get_command(e, str, 0))
+		else if (str[1] == '#')
+		{	
+			if (get_command(e, str, 0))
+				++e->ins->nb_commands;
+		}
 			++e->ins->nb_commands;
 		store_line_in_anthill(e, &str);
 		ft_strdel(&str);
