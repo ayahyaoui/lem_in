@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/10 11:42:01 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/14 21:30:37 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/14 22:11:24 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char 	*get_errmsg(int code)
 {
 	static char *msg[ERR_NB + 1] = {NULL, NOINS, ANT_INPUT, ANT_NB,
 		ANT_COMMAND, MAXINT,
-		ROOM_INPUT, ROOM_CONF, COORD, TUBE_INPUT, NOTUBE, TUBE_NOROOM, ROOM_DUP, ORDER,
+		ROOM_INPUT, ROOM_CONF, ROOM_CHAR, COORD, TUBE_INPUT, NOTUBE, TUBE_NOROOM, ROOM_DUP, ORDER,
 		NOSTART, NOEND, SAME_START_END, LIB, MALLOC, HELP, OPTION, ARG, NO_SOLUTION};
 	return (msg[code - 1]); // verifier que -1 fonctionne toujours
 }

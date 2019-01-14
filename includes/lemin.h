@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 14:48:09 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/14 21:42:49 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/14 22:21:25 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # define STDIN			0
 # define STDOUT			1
 # define STDERR			2
-# define ERR_NB			22
+# define ERR_NB			23
 # define NB_COMMANDS		2
 
 # define NOINS			"empty file"
@@ -28,6 +28,7 @@
 # define ANT_COMMAND	"invalid command for ant number"
 # define ROOM_INPUT		"invalid room format"
 # define ROOM_DUP		"duplicate room name"
+# define ROOM_CHAR		"invalid character in room name (L)"
 # define COORD			"non numerical values as room coordinates"
 # define TUBE_INPUT		"invalid tube input"
 # define NOTUBE			"missing corridors in anthill..."
@@ -43,7 +44,6 @@
 # define MAXINT			"max number of ants is 2 147 483 647"
 # define OPTION			"unknown option"
 # define ARG			"unexpected argument, only options allowed"
-# define LENGTH			"please specify tube length below 255"
 # define NO_SOLUTION	"No valid path found between start and end"
 
 # define OPTION_CHARS		"ctvw"
@@ -144,7 +144,7 @@ enum				e_display
 enum				e_error
 {
 	NO_ERR, ERR_NO_INS, ERR_READ, ERR_ANT_INPUT, ERR_ANT_NB, ERR_COMMAND, ERR_INTMAX,
-   	ERR_ROOM, ERR_ROOM_CONF, ERR_COORD, ERR_TUBE, ERR_NOTUBE, ERR_NOROOM, ERR_DUP, ERR_ORDER,
+   	ERR_ROOM, ERR_ROOM_CONF, ERR_ROOM_CHAR, ERR_COORD, ERR_TUBE, ERR_NOTUBE, ERR_NOROOM, ERR_DUP, ERR_ORDER,
 	ERR_START, ERR_END, ERR_SAME, ERR_LIB, ERR_ALLOC, ERR_HELP, ERR_OPTION, ERR_ARG, ERR_SOLUTION 
 };
 

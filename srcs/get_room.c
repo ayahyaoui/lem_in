@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/10 17:40:04 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/14 18:27:14 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/14 22:35:18 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,10 @@ int				get_room(ENV *e, char **str)
 	{
 		if (!is_number(str[1]) || !is_number(str[2]))
 			return (ERR_COORD);
+		if (ft_beyond_limiti(str[1]) || ft_beyond_limiti(str[2]))
+			return (ERR_INTMAX);
+		if (str[0][0] == 'L')
+			return (ERR_ROOM_CHAR);
 		++e->graphe->nb_rooms;
 		return (NO_ERR);
 	}
