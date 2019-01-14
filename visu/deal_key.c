@@ -51,11 +51,20 @@ static void		ft_input_move(VISU *v, int key)
 		--v->maxzoomin;
 		v->uinput.zoom = 0.5;
 	}
+	else if (key == KEY_FASTER && v->speed >= 0.1)
+		v->speed -= 0.1;
+	else if (key == KEY_FASTER)
+		v->speed += 0.1;
+
+
+	ft_printf("after move hor = %d move ver = %d\n", v->uinput.mv_hor, v->uinput.mv_ver);
 }
 
 static int		ft_isvalid_key(int key)
 {
-	return (key == KEY_XUP
+	ft_printf("key = %d\n", key);
+	return (/*key == 1*/
+			 key == KEY_XUP
 			|| key == KEY_XDW
 			|| key == KEY_YUP
 			|| key == KEY_YDW
@@ -64,13 +73,19 @@ static int		ft_isvalid_key(int key)
 			|| key == KEY_UP
 			|| key == KEY_DW
 			|| key == KEY_ZMIN
-			|| key == KEY_ZMOUT);
+			|| key == KEY_ZMOUT
+			|| key == KEY_FASTER
+			|| key == KEY_SLOWER
+/*			|| key == KEY_DEFAULT*/);
 }
 
 int				ft_dealkey(int key, VISU *v)
 {
 
-	ft_printf("key = %d\n", key);
+	char *str;
+
+	str = NULL;
+//	ft_printf("key = %d\n", key);
 	ft_bzero(v->img.ptr, v->win_w * v->win_h * sizeof(int));
 	if (ft_isvalid_key(key))
 	{

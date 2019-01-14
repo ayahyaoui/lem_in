@@ -16,7 +16,7 @@
 void		display_adj_mtrx(int **tab, int size)
 {
 	int	i;
-	int	j;	
+	int	j;
 
 	i = -1;
 	ft_printf("\t | ", i);
@@ -28,7 +28,7 @@ void		display_adj_mtrx(int **tab, int size)
 	{
 		i = -1;
 		ft_printf("%d\t | ", j);
-		while (++i < size) 
+		while (++i < size)
 			ft_printf("%d ", tab[j][i]);
 		ft_printf("\n");
 	}
@@ -82,7 +82,7 @@ char		**room_names(t_list *l, int nbrooms, int **paths, int nbpaths)
 	char	**names;
 	int	i;
 	int	j;
-	
+
 	i = -1;
 	names = (char **)ft_memalloc(sizeof(char *) * nbrooms);
 	while (++i < nbpaths)
@@ -90,7 +90,7 @@ char		**room_names(t_list *l, int nbrooms, int **paths, int nbpaths)
 		j = 1;
 //		ft_printf("val in tab = %d\n", paths[i][j]);
 		while (paths[i][j] != -1)
-		{	
+		{
 //			ft_printf("name stored in i = %d j = %d\n", i, j);
 		//	ft_printf("retrieve name %s\n", ((t_room *)ft_lstval(l, paths[i][j])->content)->name);
 			names[paths[i][j]] = ft_strdup(((t_room *)ft_lstval(l, paths[i][j])->content)->name);
@@ -137,8 +137,7 @@ void		move_next_room(int **paths, int ***ants, int nb_paths, int turn)
 			(*ants)[i][1] = paths[i][turn];
 		else
 			(*ants)[i][1] = -1;
-			
+
 	}
 //	print_movestab(*ants, nb_paths);
 }
-

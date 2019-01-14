@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 14:48:52 by emuckens          #+#    #+#             */
-/*   Updated: 2018/11/07 16:03:31 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/14 13:44:30 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,10 @@ void				store_line_in_anthill(ENV *e, char **str)
 int				read_instructions(ENV *e, char *str, int nbline, int ret)
 {
 	char			**words;
+	int				gnl;
 
-	while (!ret && get_next_line2(STDIN, &str) > 0 && str)
+	ft_printf("ret = %d\n", ret);
+	while (!ret && (gnl = get_next_line2(STDIN, &str)) >= -1 && str)
 	{
 		if (str[0] != '#' && ++nbline)
 		{
@@ -118,5 +120,5 @@ int				read_instructions(ENV *e, char *str, int nbline, int ret)
 		ft_strdel(&str);
 	}
 	ft_strdel(&str);
-	return (NO_ERR);
+	return (gnl == -1 ? ERR_LIB :  NO_ERR);
 }

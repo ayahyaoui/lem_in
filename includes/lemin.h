@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 14:48:09 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/12 22:35:53 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/14 13:35:17 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # define STDIN			0
 # define STDOUT			1
 # define STDERR			2
-# define ERR_NB			22
+# define ERR_NB			21
 # define NB_COMMANDS		2
 
 # define NOINS			"empty file"
