@@ -6,7 +6,7 @@
 #    By: emuckens <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/20 17:52:27 by emuckens          #+#    #+#              #
-#    Updated: 2018/12/23 16:29:11 by anyahyao         ###   ########.fr        #
+#    Updated: 2019/01/13 18:16:15 by anyahyao         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,10 +36,10 @@ LIB_DIR 	:= libft
 #								    FILES									   
 #==============================================================================#
 
-_SRC	= all_path.c binarypath.c count_ant.c debug.c display.c env.c error.c file.c free.c ft_tri_fusion_recursive.c dijistra.c\
-	fusion.c get_ants.c get_comment.c getgraphe.c get_room.c get_tube.c initial.c iterativepath.c versionopti.c\
-	options.c short_path.c test.c main.c read.c utils.c translate.c move.c repartAnt.c besttab.c\
-	
+_SRC	= debug.c display.c env.c error.c file.c free.c \
+	get_ants.c get_comment.c  get_room.c get_tube.c initial.c  versionopti.c\
+	options.c  test.c main.c read.c utils.c translate.c move.c repartAnt.c besttab.c\
+
 _HEAD	= lemin.h lem_in.h
 SRC 	= $(patsubst %, $(SRC_DIR)/%, $(_SRC))
 HEAD	= $(patsubst %, $(HEAD_DIR)/$, $(_HEAD))

@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/07 16:49:44 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/14 17:07:28 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/14 19:47:58 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef VISU_H
@@ -286,6 +286,7 @@ typedef struct s_visu
 	int			pause;
 	int			step;
 	int			turn;
+	int			error;
 	t_4fvect		delta;
 	double		speed;
 

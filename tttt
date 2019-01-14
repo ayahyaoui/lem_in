@@ -1,0 +1,43 @@
+20
+##start
+zero 1 2
+one 3 2
+two 5 2
+three 1 1
+four 3 1
+five 4 1
+six 5 1
+seven 3 3
+eight 4 3
+nine 5 3
+##end
+ten 6 2
+zero-one
+zero-three
+one-two
+one-seven
+two-six
+two-ten
+three-four
+four-five
+five-six
+six-two
+seven-eight
+eight-nine
+nine-ten
+
+L1-one L2-three 
+L1-seven L2-four L3-one L4-three 
+L1-eight L2-five L3-seven L4-four L5-one L6-three 
+L1-nine L2-six L3-eight L4-five L5-seven L6-four L7-one L8-three 
+L1-ten L2-two L3-nine L4-six L5-eight L6-five L7-seven L8-four L9-one L10-three 
+L2-ten L3-ten L4-two L5-nine L6-six L7-eight L8-five L9-seven L10-four L11-one L12-three 
+L4-ten L5-ten L6-two L7-nine L8-six L9-eight L10-five L11-seven L12-four L13-one L14-three 
+L6-ten L7-ten L8-two L9-nine L10-six L11-eight L12-five L13-seven L14-four L15-one L16-three 
+L8-ten L9-ten L10-two L11-nine L12-six L13-eight L14-five L15-seven L16-four L17-one L18-three 
+L10-ten L11-ten L12-two L13-nine L14-six L15-eight L16-five L17-seven L18-four L19-one L20-three 
+L12-ten L13-ten L14-two L15-nine L16-six L17-eight L18-five L19-seven L20-four 
+L14-ten L15-ten L16-two L17-nine L18-six L19-eight L20-five 
+L16-ten L17-ten L18-two L19-nine L20-six 
+L18-ten L19-ten L20-two 
+L20-ten 

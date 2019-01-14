@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 14:48:52 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/14 13:44:30 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/14 20:06:02 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,9 +96,9 @@ int				read_instructions(ENV *e, char *str, int nbline, int ret)
 	char			**words;
 	int				gnl;
 
-	ft_printf("ret = %d\n", ret);
 	while (!ret && (gnl = get_next_line2(STDIN, &str)) >= -1 && str)
 	{
+//		ft_printf("line = %s\n",str);
 		if (str[0] != '#' && ++nbline)
 		{
 			if (!(words = ft_strsplit(str, sep(str, &e->type))))
@@ -114,7 +114,11 @@ int				read_instructions(ENV *e, char *str, int nbline, int ret)
 			}
 			ft_free_strtab(&words);
 		}
-		else if (str[1] == '#' && get_command(e, str, 0))
+		else if (str[1] == '#')
+		{	
+			if (get_command(e, str, 0))
+				++e->ins->nb_commands;
+		}
 			++e->ins->nb_commands;
 		store_line_in_anthill(e, &str);
 		ft_strdel(&str);

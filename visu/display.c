@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/20 15:04:49 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/14 17:10:37 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/14 19:58:35 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,12 +151,16 @@ int		read_moves(VISU *v, char *line, int room)
 	ant = 0;
 	if (!v || !v->ins)
 		return (-1);
-	while (split[i] && ++ant)
+	while (split[i] && ++ant <= v->ins->nb_ants)
 	{
+//		ft_printf("error = %d split i = %s\n", v->error, split[i]);
 		if (!(antsplit = ft_strsplit(split[i], '-')))
 			return (ERR_READ);
-		num = ft_atoi(antsplit[0] + 1);
-		if (num <= ant)
+//		ft_printf("antsplit0 = %s\n", (antsplit[0]));
+		if (!(num = ft_atoi(antsplit[0] + 1)) && !(v->error = 1))
+				return (0);
+//		ft_printf("num = %d ant= %d\n", num, ant);
+		if (num <= ant && num > 0)
 		{
 
 			if (v->ants[num - 1][CURRENT] != v->graphe->end)

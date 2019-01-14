@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/10 18:01:15 by emuckens          #+#    #+#             */
-/*   Updated: 2018/11/07 15:05:43 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/14 21:35:54 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ int			apply_commands(ENV *e)
 		return (ERR_START);
 	if (e->graphe->end == -1)
 		return (ERR_END);
+	if (e->graphe->start == e->graphe->end)
+		return (ERR_SAME);
 	return (NO_ERR);
 
 }

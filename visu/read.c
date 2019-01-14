@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 14:48:52 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/14 17:09:00 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/14 19:55:42 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void			display_everything(VISU *v)
 int				anim_moves(VISU *v)
 {
 	char *str = NULL;
-	static int iter; 
+	static int iter;
 	int		ret;
 
 	ret = 1;
@@ -91,13 +91,26 @@ int				anim_moves(VISU *v)
 			if (!iter && get_next_line2(STDIN, &str) && !str)
 				return (ERR_LIB);
 			read_moves(v, str, NEXT);
+			if (v->error)
+			{
+				display(v, "unaccepted input in ant movement");
+				return (-1);
+			}
+
 			ft_strdel(&str);
 			++v->turn;
 		}
-//		ft_points_to_img(v);
+		ft_points_to_img(v);
 		ft_itoa_mod(v->turn_str, v->turn);
 		display_everything(v);
-		usleep(10000 * v->speed);
+//		display_rooms(v);
+//		display_moves(v, COL_ANT, 0);
+//		mlx_string_put(v->mlx, v->win, v->ins->room[v->graphe->start].pos.x + 13, v->ins->room[v->graphe->start].pos.y - 10, COL_TUBES, "START");
+//		mlx_string_put(v->mlx, v->win, v->ins->room[v->graphe->end].pos.x + 13, v->ins->room[v->graphe->end].pos.y - 10, COL_TUBES, "END");
+//		mlx_string_put(v->mlx, v->win, 20, 50, 0xFFFFFF, "Turn # ");
+//		mlx_string_put(v->mlx, v->win, 100, 50, 0xFFFFFF, turn_str);
+		usleep(1000 * v->speed);
+
 		++v->step;
 //		if (!v->step)
 //			detect_end(v);
@@ -128,7 +141,7 @@ int				read_instructions(VISU *v, char *str, int nbline, int ret)
 		else if (str[1] == '#' && get_command(v, str, 0))
 			++v->ins->nb_commands;
 		line = ft_lstnew(tmp = ft_strdup(str), ft_strlen(str) + 1);
-		ft_strdel(&tmp); 
+		ft_strdel(&tmp);
 		ft_lstaddend(&v->anthill, line);
 		ft_strdel(&str);
 	}

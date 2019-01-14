@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/10 13:50:19 by emuckens          #+#    #+#             */
-/*   Updated: 2018/11/07 16:44:36 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/14 20:23:58 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void		del_rooms(ENV *e, t_room **room)
 
 	i = 0;
 	tmp = *room;
-	while ((unsigned int)i < e->graphe->nb_rooms && tmp[i].name)
+	while ((unsigned int)i < e->graphe->nb_rooms && tmp && tmp[i].name)
 	{
 		ft_strdel(&tmp[i].name);
 		ft_memdel((void **)&tmp[i]);
@@ -58,7 +58,7 @@ void		free_env(ENV *e)
 {
 	del_rooms(e, &e->ins->room);
 	free_graphe(e->graphe);
-	ft_free_inttab(&e->ins->commands, e->ins->nb_commands);	
+//	ft_free_inttab(&e->ins->commands, e->ins->nb_commands);	
 	ft_memdel((void **)&e->ins);
 	del_anthill(e->anthill);
 }
