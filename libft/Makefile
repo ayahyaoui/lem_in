@@ -6,7 +6,7 @@
 #    By: emuckens <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/07 16:46:27 by emuckens          #+#    #+#              #
-#    Updated: 2018/11/08 16:34:04 by emuckens         ###   ########.fr        #
+#    Updated: 2019/01/13 18:28:05 by emuckens         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = libft.a
 
 SRCS_CHARS = ft_isalnum.c ft_isalpha.c ft_isascii.c ft_isdigit.c ft_isprint.c ft_tolower.c ft_toupper.c
 
-SRCS_CONV = ft_atoi.c ft_atoi_index.c ft_itoa.c ft_uitoa.c ft_lltoa.c
+SRCS_CONV = ft_atoi.c ft_atoi_index.c ft_itoa.c ft_itoa_mod.c ft_uitoa.c ft_lltoa.c
 
 SRCS_LISTS = ft_lstadd.c ft_lstaddend.c ft_lstdel.c ft_lstdelone.c ft_lstiter.c ft_lstmap.c ft_lstnew.c ft_lstnewf.c ft_lstsize.c
 

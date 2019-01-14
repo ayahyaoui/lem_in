@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/20 15:04:49 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/12 22:39:19 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/13 18:13:11 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,9 @@ int		scan_allmoves(ENV *e, t_tab ***paths, int display)
 	arrived = 0;
 	e->turns = 0;
 	i = -1;
+	paths[0][0]->tab[0] += 4;
+	paths[1][0]->tab[0] -= 4;
+
 	while (paths[nb_comb])
 		++nb_comb;
 	high_comb = nb_comb;
