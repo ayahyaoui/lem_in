@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 14:48:09 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/12 21:25:26 by anyahyao         ###   ########.fr       */
+/*   Updated: 2019/01/14 18:06:52 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # define STDIN			0
 # define STDOUT			1
 # define STDERR			2
-# define ERR_NB			21
+# define ERR_NB			20
 # define NB_COMMANDS		2
 
 # define NOINS			"empty file"
@@ -145,7 +145,7 @@ enum				e_error
 	ERR_START, ERR_END, ERR_LIB, ERR_ALLOC, ERR_HELP, ERR_OPTION, ERR_ARG, ERR_SOLUTION 
 };
 
-int		scan_allmoves(ENV *e, t_tab ***paths, int display);
+int		scan_allmoves(ENV *e, int display);
 void		display_besttab(t_tab ***tab);
 
 int			set_env(ENV *e);

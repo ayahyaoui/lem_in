@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/05 19:30:36 by emuckens          #+#    #+#             */
-/*   Updated: 2018/05/20 15:12:11 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/14 17:42:42 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@
 # define BUFF_SIZE 200
 
 # define SEP '\n'
-# define LCPY ((t_file *)(list_cpy->content))
-# define CURFD ((t_file *)(curfd->content))
 
 typedef struct		s_file
 {

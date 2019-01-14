@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/10 17:40:04 by emuckens          #+#    #+#             */
-/*   Updated: 2018/11/07 19:20:04 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/14 18:27:14 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,15 +49,15 @@ int		store_rooms(ENV *e)
 	e->ins->commands = (int **)ft_memalloc(sizeof(int *) * (e->ins->nb_commands + 1));
 	if (!e->ins->room || !e->ins->commands)
 		return (ERR_ALLOC);
-//	while (((char *)tmp->content)[0] == '#')
-//		tmp = tmp->next;
+	while (((char *)tmp->content)[0] == '#')
+		tmp = tmp->next;
 	while ((tmp = tmp->next) && ((unsigned int)i < e->graphe->nb_rooms))
 	{
 		if (((char *)tmp->content)[0] != '#')
 		{
 			split = ft_strsplit((char *)tmp->content, ' ');
 			e->ins->room[i].name = (char *)ft_strdup(split[0]);
-			ft_4vinit(&e->ins->room[i].pos, ft_atoi(split[1]), ft_atoi(split[2]), 0); // put z to random for 3D
+			ft_4vinit(&e->ins->room[i].pos, ft_atoi(split[1]), ft_atoi(split[2]), 0);
 			ft_free_strtab(&split);
 			link_command(e, ROOM, i);
 			if (is_dup(e, e->ins->room[i].name, i))

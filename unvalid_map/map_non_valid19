@@ -1,0 +1,23 @@
+#less int min
+-2147483649
+##start
+start 23 3
+##end
+end 16 7
+#commentaire
+short0 16 3
+short1 16 5
+long0 16 18
+long1 16 9
+long2 5 6
+long3 10 11
+long4 4 8
+start-short0
+short0-short1
+long0-start
+long1-long2
+long2-long3
+long3-long4
+##start
+long4-end
+short1-end
