@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 14:48:52 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/13 18:58:55 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/14 17:09:00 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,17 @@ int				dispatch_ins(VISU *v, char **words, int nb)
 	return (ret);
 }
 
-void			display_everything(VISU *v, char *turn)
+void			display_everything(VISU *v)
 {
+		ft_points_to_img(v);
 		display_rooms(v);
 		display_moves(v, COL_ANT, 0);
+		mlx_put_image_to_window(v->mlx, v->win, v->img.img, 0, 0);
+		display_ant_names(v);
 		mlx_string_put(v->mlx, v->win, v->ins->room[v->graphe->start].pos.x + 13, v->ins->room[v->graphe->start].pos.y - 10, COL_TUBES, "START");
 		mlx_string_put(v->mlx, v->win, v->ins->room[v->graphe->end].pos.x + 13, v->ins->room[v->graphe->end].pos.y - 10, COL_TUBES, "END");
 		mlx_string_put(v->mlx, v->win, 20, 50, 0xFFFFFF, "Turn # ");
-		mlx_string_put(v->mlx, v->win, 100, 50, 0xFFFFFF, turn);
+		mlx_string_put(v->mlx, v->win, 100, 50, 0xFFFFFF, v->turn_str);
 }
 
 
@@ -74,12 +77,10 @@ int				anim_moves(VISU *v)
 {
 	char *str = NULL;
 	static int iter; 
-	static int	turn = -1;
-	char	turn_str[11];
 	int		ret;
 
 	ret = 1;
-//	ft_printf("ANIM MOVES\n");
+//	v->turn = 0;
 	if (!v->pause)
 	{
 		if (v->step > SPEED)
@@ -91,29 +92,18 @@ int				anim_moves(VISU *v)
 				return (ERR_LIB);
 			read_moves(v, str, NEXT);
 			ft_strdel(&str);
-			++turn;
+			++v->turn;
 		}
-		ft_points_to_img(v);
-		ft_itoa_mod(turn_str, turn);
-		display_everything(v, (char *)turn_str);
-//		display_rooms(v);
-//		display_moves(v, COL_ANT, 0);
-//		mlx_string_put(v->mlx, v->win, v->ins->room[v->graphe->start].pos.x + 13, v->ins->room[v->graphe->start].pos.y - 10, COL_TUBES, "START");
-//		mlx_string_put(v->mlx, v->win, v->ins->room[v->graphe->end].pos.x + 13, v->ins->room[v->graphe->end].pos.y - 10, COL_TUBES, "END");
-//		mlx_string_put(v->mlx, v->win, 20, 50, 0xFFFFFF, "Turn # ");
-//		mlx_string_put(v->mlx, v->win, 100, 50, 0xFFFFFF, turn_str);
+//		ft_points_to_img(v);
+		ft_itoa_mod(v->turn_str, v->turn);
+		display_everything(v);
 		usleep(10000 * v->speed);
-
 		++v->step;
+//		if (!v->step)
+//			detect_end(v);
 		return (NO_ERR);
 	}
-		display_everything(v, (char *)turn_str);
-//	display_moves(v, COL_ANT, 0);
-//	mlx_put_image_to_window(v->mlx, v->win, v->img.img, 0, 0);
-//	display_ant_names(v);
-//	mlx_hook(v->win, KeyPress, KeyPressMask, ft_dealkey, (void *)v);
-//	mlx_string_put(v->mlx, v->win, v->ins->room[v->graphe->start].pos.x + 13, v->ins->room[v->graphe->start].pos.y - 10, COL_TUBES, "START");
-//	mlx_string_put(v->mlx, v->win, v->ins->room[v->graphe->end].pos.x + 13, v->ins->room[v->graphe->end].pos.y - 10, COL_TUBES, "END");
+	display_everything(v);
 	return (NO_ERR);
 }
 
@@ -142,7 +132,6 @@ int				read_instructions(VISU *v, char *str, int nbline, int ret)
 		ft_lstaddend(&v->anthill, line);
 		ft_strdel(&str);
 	}
-//	ft_printf("1nd HALF READ\n");
 	ft_strdel(&str);
 	return (NO_ERR);
 }
