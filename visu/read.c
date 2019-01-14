@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 14:48:52 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/13 18:58:55 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/14 17:33:14 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ int				anim_moves(VISU *v)
 //		mlx_string_put(v->mlx, v->win, v->ins->room[v->graphe->end].pos.x + 13, v->ins->room[v->graphe->end].pos.y - 10, COL_TUBES, "END");
 //		mlx_string_put(v->mlx, v->win, 20, 50, 0xFFFFFF, "Turn # ");
 //		mlx_string_put(v->mlx, v->win, 100, 50, 0xFFFFFF, turn_str);
-		usleep(10000 * v->speed);
+		usleep(1000 * v->speed);
 
 		++v->step;
 		return (NO_ERR);
