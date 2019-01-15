@@ -55,12 +55,17 @@ void		move_next_room(ENV *e, t_tab ***paths)
 
 	ant = 0;
 	if (!e->ants)
+	{
 		return ;
+	}
+//	else ft_printf("e->ants exists\n");
 	while (e->ants[ant])
 		++ant;
 	j = -1;
+//	ft_printf("after exists ant = %d\n", ant);
 	while (++j < ant)
 	{
+//		ft_printf("ant 0 = %d 1 = %d 2 = %d\n", e->ants[j][0], e->ants[j][1], e->ants[j][2]);
 		if ((comb = e->ants[j][0]) != -2 
 				&& (int)ft_abs(e->ants[j][2]) + 1 < (paths[comb][e->ants[j][1]])->length)
 		{
@@ -75,6 +80,7 @@ void		move_next_room(ENV *e, t_tab ***paths)
 				e->ants[j][2] = -(int)ft_abs(e->ants[j][2]);
 
 		}
+//		ft_printf("ant 0 = %d 1 = %d 2 = %d\n", e->ants[0], e->ants[1], e->ants[2]);
 	}
 }
 
@@ -88,21 +94,31 @@ int	ant_enter_path(ENV *e, t_tab ***paths, int comb)
 	int i;
 	int j;
 	int ant;
+//	static int iter;
 
 	j = 0;
+//	ft_printf("comb = %d\n", comb);
+	
 	while (j < comb && !(i = 0))
 	{
-		while (!(ant = 0) && paths[j][i])
+		while ( paths[j][i])
 		{
+			ant = 0;
+//			ft_printf("check enter path, ant = %d\n", ant);
 	//		if (!e->ants)
 	//			return (ERR_ANT_NB);
-			while (e->ants[ant])
+			while (e->ants[ant] /*&& e->ants[ant][0] != -1*/)
+			{
 				++ant;
-			if (paths[j][i]->tab[0] && ant < e->ins->nb_ants)
+//				ft_printf("ant number = %d\n", e->ins->nb_ants);
+			}
+//			ft_printf("comb = %d path = %d ants = %d ant = %d nb ants = %d\n", j, i, paths[j][i]->tab[0], ant, e->ins->nb_ants);
+			if (paths[j][i]->tab[0] && ant <= e->ins->nb_ants)
 			{
 				if (!ant_in_room(e, paths, ant, paths[j][i]->tab[1]) )
 				{
-					if (!(e->ants[ant] = (int *)ft_memalloc(sizeof(int) * 3)))
+//					ft_printf("et la? iter = %d \n", iter);
+					if (!e->ants[ant] && !(e->ants[ant] = (int *)ft_memalloc(sizeof(int) * 3)))
 						return (ERR_ALLOC);
 					e->ants[ant][0] = j;
 					e->ants[ant][1] = i;

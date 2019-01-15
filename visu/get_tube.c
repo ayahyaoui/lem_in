@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/10 17:50:41 by emuckens          #+#    #+#             */
-/*   Updated: 2018/11/16 21:08:12 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/15 23:09:10 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int				get_tube(VISU *v, char **str, int way, int len)
 	i = get_room_index(v, str[0], 0);
 	j = get_room_index(v, str[1], 0);
 	free_strtab(&check);
-	if ((way == FORWARD || way == BOTH) && (v->graphe->map[i][j] = len))
+	if ((way == FORWARD || way == BOTH) && (v->graphe->map[i][j] = 1))
 		str[1] -= (v->options & OPT_WAY) ? 1 : 0;
 	if (way == BACKWARD || way == BOTH)
 		v->graphe->map[j][i] = 1;

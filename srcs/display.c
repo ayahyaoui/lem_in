@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/20 15:04:49 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/15 18:43:15 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/15 23:43:09 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,18 @@ void		display_anthill(ENV *e, t_list *anthill)
 ** return 1 if calling function should call regular room index display instead
 */
 
-static int		display_ant_at_endlocation(ENV *e, t_tab ***paths, int ant)
+static int		display_ant_at_endlocation(ENV *e, t_tab ***paths, int ant, int display)
 {
 
 	int path;
 	int comb;
 	int room;
 
+
+//	ft_printf("ant = %d\n", ant);
 	if (!e->ants[ant - 1])
 		return (0);
+//	ft_printf("comb = %d path = %d room = %d\n", e->ants[ant - 1][0], e->ants[ant - 1][1], e->ants[ant - 1][2]);
 	if (e->ants[ant - 1][2] <= 0)
 		return (0);
 	comb = e->ants[ant - 1][0];
@@ -52,16 +55,21 @@ static int		display_ant_at_endlocation(ENV *e, t_tab ***paths, int ant)
 	room = e->ants[ant - 1][2];
 	if (comb != -2 && paths[comb][path]->tab[room] == e->graphe->end)
 	{
-		if (e->options & OPT_COLOR)
-			ft_printf("{CYAN}L%d-%s{EOC} ", ant,
-				e->ins->room[paths[comb][path]->tab[room]].name);
-		else
+		e->arrived_turn++;
+		if (display)
 		{
-			ft_printf("L%d-%s ", ant,
-				e->ins->room[paths[comb][path]->tab[room]].name);
-		}
 
+			if (e->options & OPT_COLOR)
+				ft_printf("{CYAN}L%d-%s{EOC} ", ant,
+					e->ins->room[paths[comb][path]->tab[room]].name);
+			else
+			{
+				ft_printf("L%d-%s ", ant,
+					e->ins->room[paths[comb][path]->tab[room]].name);
+			}
+		}
 		e->ants[ant - 1][0] = -2;
+//	ft_printf("coucou\n");
 		return (1);
 	}
 	return (comb != -2 ? 0 : 1);
@@ -124,22 +132,32 @@ int		display_travelling(ENV *e, t_tab ***paths, int display)
 	int	roomindex;
 	int	ret; //
 
+
 	ant = 0;
 	arrived = 0;
 	++e->turns;
-	while (ant < e->ins->nb_ants && e->ants && e->ants[ant])
+//	ft_printf("DISPLAY TRAVELLING\n");
+//	ft_printf("ant = %d nb ants = %d ant[0] = %d\n", ant, e->ins->nb_ants, e->ants[0]);
+//	
+		e->arrived_turn = 0;
+	while (ant < e->ins->nb_ants && e->ants && e->ants[ant] >= 0)
 	{	
-		if ((ret = display_ant_at_endlocation(e, paths, ant + 1)))
+//		ft_printf("while\n");
+		if ((ret = display_ant_at_endlocation(e, paths, ant + 1, display)))
+		{
 			++arrived;
-		else  if (display && e->ants[ant])
+		}
+		else  if (e->ants[ant])
 		{
 			roomindex = paths[e->ants[ant][0]][e->ants[ant][1]]->tab[e->ants[ant][2]];
-			if (e->ants[ant][2] > 0)
+			if (e->ants[ant][2] > 0 && display)
 				ft_printf("L%d-%s ", ant + 1, e->ins->room[roomindex].name);
 		}
+//		ft_printf("ret display travelling = %d \n", arrived);
 		++ant;
 	}
-	ft_printf("\n");
+	ft_printf("%s", display ? "\n" : "");
+//	ft_printf("arrived this turn = %d\n", e->arrived_turn);
 	return (arrived);
 }
 
@@ -162,28 +180,44 @@ int		scan_allmoves(ENV *e, int display)
 	e->turns = 0;
 
 	if (!e->all_paths)
-		return (display_error(e, ERR_SOLUTION));
-		ft_printf("comb = %d\n", nb_comb);
+		return (ERR_SOLUTION);
+//	displayallpath(e->graphe, e->all_paths);
 	while (e->all_paths[nb_comb])
 	{
+//		ft_printf("coucou\n");
 		++nb_comb;
 	}
+//	ft_printf("nb comb = %d\n", nb_comb);
 	high_comb = nb_comb;
-	if (!e->ants)
-	{
+//	if (!e->ants)
+//	{
 		if (!(e->ants = (int **)ft_memalloc(sizeof(int *) * (e->ins->nb_ants + 1))))
 			return (ERR_ALLOC);
-	}
-		else
-			ft_bzero(&e->ants, sizeof(e->ants));
+//	}
+//		else
+//			for (int j = 0; j < e->ins->nb_ants; ++j)
+//			{
+		//		ft_memset(e->ants[j], sizeof(int) * 3);
+//				e->ants[j][0] = -1;
+//				e->ants[j][1] = -1;
+//				e->ants[j][2] = -1;
+//			}
+//			ft_free_inttab(&e->ants, sizeof(e->ants) * e->ins->nb_ants);
+	if (display)
+		ft_printf("\n"); // pas besoin avant?
 	while (arrived < e->ins->nb_ants)
 	{
+//		ft_printf("coucou 2 arrived = %d\n", arrived);
+//		if (!e->ants)
+//			ft_printf("\n ATTENTION PLUS DE ANTS\n\n");
+		++nb_comb;
 		move_next_room(e, e->all_paths);
 		ant_enter_path(e, e->all_paths, high_comb);
 		arrived = display_travelling(e, e->all_paths, display);
 	}
 	if (display && e->options & OPT_TURNS)
 		ft_printf("\n>>>>>> %d turns\n", e->turns);
+	ft_free_inttab(&e->ants, e->ins->nb_ants);
 	return (NO_ERR);
 }
 

@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/23 16:28:04 by anyahyao          #+#    #+#             */
-/*   Updated: 2019/01/14 23:04:11 by anyahyao         ###   ########.fr       */
+/*   Updated: 2019/01/15 22:52:16 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ int			algoopti(t_graphe *g, ENV *e)
 	place_ant(besttab, e->ins->nb_ants, g->nb_paths);
 	besttab[g->nb_paths + 1] = 0x0;
 	e->all_paths = besttab;
-	find_path_bonus(besttab, g);
 	return (NO_ERR);
 }
 

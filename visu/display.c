@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/20 15:04:49 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/14 19:58:35 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/15 23:14:55 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,6 +143,7 @@ int		read_moves(VISU *v, char *line, int room)
 	int num;
 	int	i;
 
+	int 	arrived = 0;
 	i = 0;
 	if (!v->step)
 		detect_end(v);
@@ -166,12 +167,18 @@ int		read_moves(VISU *v, char *line, int room)
 			if (v->ants[num - 1][CURRENT] != v->graphe->end)
 				v->ants[num - 1][CURRENT] = v->ants[num - 1][NEXT];
 
+			if (v->ants[num - 1][CURRENT] == -1 && v->ants[num - 1][NEXT] != -1)
+			{
+				v->ants[num - 1][CURRENT] = v->graphe->start;
+				ft_printf("PAS OPTI!!!!!!!\n");
+				exit(0);
+			}
 			if (v->ants[num - 1][CURRENT] != v->graphe->start)
 			{
 				v->ants[num - 1][room] = get_room_index(v, antsplit[1], ft_strlen(antsplit[1]));
 			}
-		if (v->ants[num - 1][CURRENT] == -1 && v->ants[num - 1][NEXT] != -1)
-			v->ants[num - 1][CURRENT] = v->graphe->start;
+			if (v->ants[num - 1][NEXT] == v->graphe->end)
+				++arrived;
 		ft_strdel(&antsplit[0]);
 		ft_strdel(&antsplit[1]);
 		ft_memdel((void **)&antsplit);
@@ -181,6 +188,7 @@ int		read_moves(VISU *v, char *line, int room)
 		else if (v->ants[ant - 1][0] != -1 && v->ants[ant - 1][0] != v->graphe->end && v->ants[ant - 1][1] != v->graphe->end)
 			v->ants[ant - 1][0] = v->ants[ant - 1][1];
 	}
+	ft_printf("arrived this turn = %d\n", arrived);
 	ft_memdel((void **)&split);
 	return (0);
 }

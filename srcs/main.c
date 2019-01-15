@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 14:58:47 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/15 20:57:27 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/15 23:50:30 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,11 @@ int		main(int argc, char **argv)
 //	ft_printf("\n");
 	if (algoopti(e.graphe, &e) != ERR_SOLUTION)
 	{
-		scan_allmoves(&e, DISPLAY_OFF);
+		int a =prediction(&e, e.graphe);
+		place_ant(e.all_paths, e.ins->nb_ants, 2);
+		displayallpath(e.graphe, e.all_paths);
 		scan_allmoves(&e, DISPLAY_ON);
+		ft_printf("prediction %d\n",a);
 	}
 	else
 		return (display_error(&e, ERR_SOLUTION));

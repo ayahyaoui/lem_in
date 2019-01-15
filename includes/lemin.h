@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 14:48:09 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/15 20:39:25 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/15 23:50:25 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,6 +182,7 @@ typedef struct			s_environment
 	int			turns;
 	int			nb_line;
 	int			fd;
+	int			arrived_turn;
 }				t_environment;
 
 

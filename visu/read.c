@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 14:48:52 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/14 19:55:42 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/15 23:05:42 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ int				anim_moves(VISU *v)
 			if (!iter && get_next_line2(STDIN, &str) && !str)
 				return (ERR_LIB);
 			read_moves(v, str, NEXT);
+			
 			if (v->error)
 			{
 				display(v, "unaccepted input in ant movement");

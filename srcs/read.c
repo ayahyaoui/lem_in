@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 14:48:52 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/15 20:54:28 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/15 23:06:10 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ static int			dispatch_ins(ENV *e, char **words, int nb)
 	}
 	else
 		return (WRNG_INPUT);
-	ft_printf("start = %d end = %d\n", e->graphe->start, e->graphe->end);
+//	ft_printf("start = %d end = %d\n", e->graphe->start, e->graphe->end);
 	return (NO_ERR);
 }
 
@@ -116,19 +116,19 @@ int				read_instructions(ENV *e, char *str, int nbline, int ret)
 	{
 		if (e->nb_line <= 0)
 			--e->nb_line;
-		ft_printf("RET = %d nbline = %d\n", ret, nbline);
+//		ft_printf("RET = %d nbline = %d\n", ret, nbline);
 		if (str[0] != '#' && ++nbline)
 		{
-			ft_printf("str = %s\n", str);
+//			ft_printf("str = %s\n", str);
 			if (!(words = ft_strsplit(str, sep(str, &e->type))))
 			{
 				ft_strdel(&str);
 				return (ERR_LIB);
 			}
-			ft_printf("nbline = %d\n", nbline);
+//			ft_printf("nbline = %d\n", nbline);
 			if ((ret = dispatch_ins(e, words, nbline)) > 0 )
 			{
-				ft_printf("ret dispatch = %d\n", ret);
+//				ft_printf("ret dispatch = %d\n", ret);
 				ft_free_strtab(&words);
 				ft_strdel(&str);
 				return (ret);
@@ -146,7 +146,7 @@ int				read_instructions(ENV *e, char *str, int nbline, int ret)
 	ft_strdel(&str);
 	if (e->ins->nb_ants <= 0)
 	{
-		ft_printf("nb ants = %d\n", e->ins->nb_ants);
+//		ft_printf("nb ants = %d\n", e->ins->nb_ants);
 		return (e->nb_line ? ERR_ANT_NB : ERR_NO_INS);
 	}
 	return (gnl == -1 ? ERR_LIB :  NO_ERR);

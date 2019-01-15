@@ -2,18 +2,14 @@
 
 void		ft_free_inttab(int ***tab, int size)
 {
-	int	**tmp;
 	int	i;
 	
 	i = -1;
-	if (!*tab)
+	if (tab && !*tab)
 		return ;
-	tmp = *tab;
-	while (++i < size)
-	{		
-//		if (tmp)
-//			ft_memdel((void **)tmp);
-		++tmp;
+	while (++i < size && (*tab)[i])
+	{
+		ft_memdel((void **)&(*tab)[i]);
 	}
 	ft_memdel((void **)tab);
 

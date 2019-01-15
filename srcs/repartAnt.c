@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/13 21:58:25 by anyahyao          #+#    #+#             */
-/*   Updated: 2019/01/14 23:53:38 by anyahyao         ###   ########.fr       */
+/*   Updated: 2019/01/15 23:50:28 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,28 +168,32 @@ int		prediction(ENV *e, t_graphe *g)
 	ft_bzero(g->previous, sizeof(int) * g->nb_rooms);
 	best_combinaison = g->color;
 	last_combinaison = g->previous;
-	last_combinaison[g->nb_paths - 12] = e->ins->nb_ants;
+	last_combinaison[g->nb_paths -1] = e->ins->nb_ants;
+	best_combinaison[g->nb_paths -1] = e->ins->nb_ants;
 	//
 	
-	try_to_place_ant(e->all_paths, last_combinaison);
-	return 1;
+	//try_to_place_ant(e->all_paths, last_combinaison);
 	//
 	cost_best = -1;
 	while (last_combinaison[0] != e->ins->nb_ants)
 	{
 		ft_print_inttab(last_combinaison, g->nb_paths + 1, ' ');
-		e->turns = try_to_place_ant(e->all_paths, last_combinaison);
+		 try_to_place_ant(e->all_paths, last_combinaison);
 		ft_printf("j'ai placer les fourmis\n");
 		
-		//scan_allmoves(e, DISPLAY_OFF);
+		scan_allmoves(e, DISPLAY_OFF);
+		//ft_printf("milllll\n");
 		ft_printf("j'ai verifie combien de tour => %d\n", e->turns);
-		if (e->turns > 0 && (e->turns < cost_best || cost_best != -1))
+		if (e->turns > 0 && (e->turns < cost_best || cost_best == -1))
 		{
+			
+			ft_printf("yesss %d", e->turns);
 			cost_best = e->turns;
 			test2 = test;
 			swap_pointeur((void**)&last_combinaison, (void**)&best_combinaison);
 			ft_printf("nouveau record on remplace last par best\n");
 		}
+		ft_print_inttab(last_combinaison, g->nb_paths + 1, ' ');
 		change_place_ant(g, last_combinaison);
 		ft_printf("j'ai changer la combinaisont\n");
 		test--;

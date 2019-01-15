@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/10 18:01:15 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/15 20:57:29 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/15 23:06:37 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int			apply_commands(ENV *e)
 //		ft_printf("index = %d nb commands = %d\n", index, e->ins->nb_commands);
 		if (e->ins->commands[index])
 			f[e->ins->commands[index][0]](e, index);
-		ft_printf("start is room #%d end %d\n", e->graphe->start, e->graphe->end);
+//i		ft_printf("start is room #%d end %d\n", e->graphe->start, e->graphe->end);
 	}
 	if (e->graphe->start == -1)
 		return (ERR_START);
@@ -118,7 +118,7 @@ int				get_command(ENV *e, char *str, int option)
 		return (0);
 	e->ins->commands[index] = (int *)ft_memalloc(sizeof(int) * 3); 
 	e->ins->commands[index][0] = i;
-	ft_printf("index = %d i = %d\n", index, i);
+//	ft_printf("index = %d i = %d\n", index, i);
 	if (index < NB_COMMANDS)
 		++index;
 	return (i);
