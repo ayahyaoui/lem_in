@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 14:48:52 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/14 22:05:06 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/15 19:46:29 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,20 +55,25 @@ static int			dispatch_ins(ENV *e, char **words, int nb)
 	}
 	else if (e->type == ROOM && !endrooms)
 	{
-		if ((ret = get_room(e, words)) > 0 && (ft_printf("ret = %d\n", ret)))
+		if ((ret = get_room(e, words)) > 0 /*&& (ft_printf("ret = %d\n", ret)*/)
 		{
+			e->nb_line *= -1;
 			display_warning(e, ret);
+//			ft_printf("err notue = %d\n", ERR_NOTUBE);
+			return (ERR_NOTUBE);
 		}
 	}
 	else if (e->type == TUBE && ++endrooms)
 	{
 		if (endrooms == 1)
 		{
-			ret = store_rooms(e);
-			if (ret || (ret = setup_room_mtrx(e, e->graphe->nb_rooms)))
+			if ((ret = store_rooms(e)))
+				display_error(e, ret);
+			if ((ret = setup_room_mtrx(e, e->graphe->nb_rooms)) )
 				return (ret);
 		}
-		ret = get_tube(e, words, BOTH, 1);
+		if ((ret = get_tube(e, words, BOTH, 1)))
+			return (ret);//display_warning(e, ret);
 	}
 	else
 		return (WRNG_INPUT);
@@ -103,8 +108,11 @@ int				read_instructions(ENV *e, char *str, int nbline, int ret)
 	char			**words;
 	int				gnl;
 
+	e->nb_line = 0;
 	while (!ret && (gnl = get_next_line2(STDIN, &str)) >= -1 && str)
 	{
+		if (e->nb_line <= 0)
+			--e->nb_line;
 //		ft_printf("RET = %d\n", ret);
 		if (str[0] != '#' && ++nbline)
 		{
@@ -113,8 +121,9 @@ int				read_instructions(ENV *e, char *str, int nbline, int ret)
 				ft_strdel(&str);
 				return (ERR_LIB);
 			}
-			if ((ret = dispatch_ins(e, words, nbline)))
+			if ((ret = dispatch_ins(e, words, nbline)) > 0 )
 			{
+				ft_printf("ret dispatch = %d\n", ret);
 				ft_free_strtab(&words);
 				ft_strdel(&str);
 				return (ret);

@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 14:58:47 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/15 18:31:36 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/15 19:47:08 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int		main(int argc, char **argv)
 		return (display_error(&e, msg));
 	if ((msg = read_instructions(&e, NULL, 0, 0)))
 	{
+		ft_printf("msg = %d\n", msg);
 		if (is_failing_error(msg))
 			return (display_error(&e, msg));
 		display_warning(&e, msg);
@@ -32,9 +33,9 @@ int		main(int argc, char **argv)
 			return (display_error(&e, msg));
 		display_warning(&e,  msg);
 	}
-	display_anthill(e.anthill);
+	display_anthill(&e, e.anthill);
 	e.graphe->color = (int *)ft_memalloc(e.graphe->nb_rooms * sizeof(int));
-	ft_printf("\n");
+//	ft_printf("\n");
 	if (algoopti(e.graphe, &e) != ERR_SOLUTION)
 	{
 		scan_allmoves(&e, DISPLAY_ON);

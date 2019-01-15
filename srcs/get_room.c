@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/10 17:40:04 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/14 22:35:18 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/15 19:30:57 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,14 +53,17 @@ int		store_rooms(ENV *e)
 		tmp = tmp->next;
 	tmp = tmp->next;
 	while (tmp && ((unsigned int)i < e->graphe->nb_rooms))
-	{
+	{	
 		if (((char *)tmp->content)[0] != '#')
 		{
 			if (!(split = ft_strsplit((char *)tmp->content, ' ')))
 				return (ERR_ALLOC);
 
+			if (!split[0])
+				return (WRNG_INPUT);
 //			ft_printf("store room = %s\n", split[0]);
-			e->ins->room[i].name = (char *)ft_strdup(split[0]);
+			if (!(e->ins->room[i].name = (char *)ft_strdup(split[0])))
+				return (ERR_ALLOC);
 			ft_4vinit(&e->ins->room[i].pos, ft_atoi(split[1]), ft_atoi(split[2]), 0);
 			ft_free_strtab(&split);
 			link_command(e, ROOM, i);
@@ -95,9 +98,9 @@ int				get_room(ENV *e, char **str)
 		if (str[0][0] == 'L')
 			return (WRNG_ROOM_CHAR);
 		++e->graphe->nb_rooms;
-///		ft_printf("room %s ok\n", str[0]);
+//		ft_printf("room %s ok\n", str[0]);
 		return (NO_ERR);
 	}
-//ft_printf("wrng room = %d\n", WRNG_ROOM);
+//	ft_printf("wrng room = %d\n", WRNG_ROOM);
 	return (WRNG_ROOM);
 }

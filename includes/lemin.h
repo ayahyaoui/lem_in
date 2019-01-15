@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 14:48:09 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/14 22:21:25 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/15 19:37:28 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@
 ** WARNINGS
 */
 
-# define NB_WARNINGS		16
-# define MAXINT			"max number of ants is 2 147 483 647"
+# define NB_WARNINGS		17
+# define MAXINT			"max value is 2 147 483 647"
 # define ROOM_INPUT		"invalid room format"
 # define ROOM_CONF		"confusing room name, please avoid use of '-'"
 # define ROOM_DUP		"duplicate room name"
@@ -180,6 +180,7 @@ typedef struct			s_environment
 	int			options;
 	int			type;
 	int			turns;
+	int			nb_line;
 	int			fd;
 }				t_environment;
 
@@ -242,7 +243,7 @@ int		display_warning(ENV *e, int code);
 void		display_help(char *col1, char *col2);
 
 void		display_moves(ENV *e, int **tab, int total);
-void		display_anthill(t_list *anthill);
+void		display_anthill(ENV *e, t_list *anthill);
 void		printlist(ENV *e, t_list *l);
 int		ant_enter_path(ENV *e, t_tab ***paths, int comb);
 void		move_next_room(ENV *e, t_tab ***paths);

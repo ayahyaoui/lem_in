@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/01 18:22:17 by anyahyao          #+#    #+#             */
-/*   Updated: 2019/01/13 17:26:22 by anyahyao         ###   ########.fr       */
+/*   Updated: 2019/01/15 19:12:47 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void			free_graphe(t_graphe *g)
 		while ((unsigned int)++i < g->nb_rooms)
 			ft_memdel((void **)&g->map[i]);
 		ft_memdel((void **)&g->map);
-		g->map = 0x0;
+//		g->map = 0x0;
 	}
 	i = -1;
 	if (g->graph)
@@ -33,7 +33,7 @@ void			free_graphe(t_graphe *g)
 		while ((unsigned int)++i < g->nb_rooms)
 			ft_memdel((void **)&g->graph[i]);
 		ft_memdel((void **)&g->graph);
-		g->graph = 0x0;
+//		g->graph = 0x0;
 	}
 	ft_memdel((void**)&g->capacite);
 	ft_memdel((void**)&g->previous);
@@ -45,9 +45,11 @@ void			free_graphe(t_graphe *g)
 			ft_memdel((void**)&g->node[i]);
 		ft_memdel((void **)&g->node);
 	}
-	free_file(&g->file);
-	free(g);
-	g = 0x0;
+	if (g)
+	{
+		free_file(&g->file);
+		ft_memdel((void **)&g);
+	}
 }
 
 void			free_file(t_file **file)
