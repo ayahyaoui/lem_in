@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/20 15:04:49 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/14 21:42:32 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/15 18:30:09 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ static int		display_ant_at_endlocation(ENV *e, t_tab ***paths, int ant)
 	int comb;
 	int room;
 
-//	ft_printf("ant = %d\n", ant);
 	if (!e->ants[ant - 1])
 		return (0);
 	if (e->ants[ant - 1][2] <= 0)
@@ -51,9 +50,6 @@ static int		display_ant_at_endlocation(ENV *e, t_tab ***paths, int ant)
 	comb = e->ants[ant - 1][0];
 	path = e->ants[ant - 1][1];
 	room = e->ants[ant - 1][2];
-//	ft_printf("end location ant = %d comb = %d path = %d room = %d\n", ant, comb, path, room);
-//	if (comb >= 0)
-//		ft_printf("display at end location, comb = %d path = %d room = %d room name = %d\n", comb, path, room, paths[comb][path]->tab[room]);
 	if (comb != -2 && paths[comb][path]->tab[room] == e->graphe->end)
 	{
 		if (e->options & OPT_COLOR)
@@ -68,8 +64,6 @@ static int		display_ant_at_endlocation(ENV *e, t_tab ***paths, int ant)
 		e->ants[ant - 1][0] = -2;
 		return (1);
 	}
-//	ft_printf("comb = %d\n", comb);
-//	return (0);
 	return (comb != -2 ? 0 : 1);
 }
 
@@ -133,12 +127,10 @@ int		display_travelling(ENV *e, t_tab ***paths, int display)
 	ant = 0;
 	arrived = 0;
 	++e->turns;
-	while (ant < e->ins->nb_ants && e->ants[ant])
+	while (ant < e->ins->nb_ants && e->ants && e->ants[ant])
 	{	
 		if ((ret = display_ant_at_endlocation(e, paths, ant + 1)))
 			++arrived;
-	
-	
 		else  if (display && e->ants[ant])
 		{
 			roomindex = paths[e->ants[ant][0]][e->ants[ant][1]]->tab[e->ants[ant][2]];
@@ -169,8 +161,13 @@ int		scan_allmoves(ENV *e, int display)
 	arrived = 0;
 	e->turns = 0;
 
+	if (!e->all_paths)
+		return (display_error(e, ERR_SOLUTION));
+		ft_printf("comb = %d\n", nb_comb);
 	while (e->all_paths[nb_comb])
+	{
 		++nb_comb;
+	}
 	high_comb = nb_comb;
 	if (!e->ants)
 	{

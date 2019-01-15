@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/10 18:03:30 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/14 22:35:00 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/15 18:14:16 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@
 
 int				get_ants(ENV *e, char **str, int type)
 {
-//	ft_printf("ants = %s\n", str[0]);
+	//gerer segfault
+	ft_printf("ants = %s\n", str[0]);
 	if (str[1] || !is_number(str[0]) || type == TUBE)
 	{
 		++e->ins->nb_commands;

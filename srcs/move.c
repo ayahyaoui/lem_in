@@ -54,6 +54,8 @@ void		move_next_room(ENV *e, t_tab ***paths)
 	int comb;
 
 	ant = 0;
+	if (!e->ants)
+		return ;
 	while (e->ants[ant])
 		++ant;
 	j = -1;
@@ -92,6 +94,8 @@ int	ant_enter_path(ENV *e, t_tab ***paths, int comb)
 	{
 		while (!(ant = 0) && paths[j][i])
 		{
+	//		if (!e->ants)
+	//			return (ERR_ANT_NB);
 			while (e->ants[ant])
 				++ant;
 			if (paths[j][i]->tab[0] && ant < e->ins->nb_ants)
