@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 14:48:52 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/15 19:46:29 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/15 20:54:28 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,11 @@ static int			dispatch_ins(ENV *e, char **words, int nb)
 //	ft_printf("type = %d endroomm = %d room = %d\n", e->type, endrooms, ROOM);
 	if (nb == 1)
 	{
-		ret = get_ants(e, words, e->type);
-		return (ret);
+		if ((ret = get_ants(e, words, e->type)))
+		{
+			display_warning(e, ret);
+			return (ERR_ANT_NB);
+		}
 	}
 	else if (e->type == ROOM && !endrooms)
 	{
@@ -73,11 +76,11 @@ static int			dispatch_ins(ENV *e, char **words, int nb)
 				return (ret);
 		}
 		if ((ret = get_tube(e, words, BOTH, 1)))
-			return (ret);//display_warning(e, ret);
+			return (endrooms == 1 ? ERR_NOTUBE : ret);//display_warning(e, ret);
 	}
 	else
 		return (WRNG_INPUT);
-//	ft_printf("start = %d end = %d\n", e->graphe->start, e->graphe->end);
+	ft_printf("start = %d end = %d\n", e->graphe->start, e->graphe->end);
 	return (NO_ERR);
 }
 
@@ -113,14 +116,16 @@ int				read_instructions(ENV *e, char *str, int nbline, int ret)
 	{
 		if (e->nb_line <= 0)
 			--e->nb_line;
-//		ft_printf("RET = %d\n", ret);
+		ft_printf("RET = %d nbline = %d\n", ret, nbline);
 		if (str[0] != '#' && ++nbline)
 		{
+			ft_printf("str = %s\n", str);
 			if (!(words = ft_strsplit(str, sep(str, &e->type))))
 			{
 				ft_strdel(&str);
 				return (ERR_LIB);
 			}
+			ft_printf("nbline = %d\n", nbline);
 			if ((ret = dispatch_ins(e, words, nbline)) > 0 )
 			{
 				ft_printf("ret dispatch = %d\n", ret);
@@ -139,5 +144,10 @@ int				read_instructions(ENV *e, char *str, int nbline, int ret)
 		ft_strdel(&str);
 	}
 	ft_strdel(&str);
+	if (e->ins->nb_ants <= 0)
+	{
+		ft_printf("nb ants = %d\n", e->ins->nb_ants);
+		return (e->nb_line ? ERR_ANT_NB : ERR_NO_INS);
+	}
 	return (gnl == -1 ? ERR_LIB :  NO_ERR);
 }

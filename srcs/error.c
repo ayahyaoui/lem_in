@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/10 11:42:01 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/15 19:48:39 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/15 20:32:31 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int		is_failing_error(int err)
 
 int	display_error(ENV *e, int code)
 {
-	static char *msg[NB_ERRORS + 1] = {NULL, NOINS, ANT_INPUT, ANT_NB,
+	static char *msg[NB_ERRORS + 1] = {NULL, NOINS, ANT_NB,
 	   NOTUBE,
 	 NOSTART, NOEND, SAME_START_END, LIB, MALLOC, ARG, NO_SOLUTION};
 
@@ -44,7 +44,7 @@ int	display_error(ENV *e, int code)
 
 int	display_warning(ENV *e, int code)
 {
-	static char *msg[NB_WARNINGS + 1] = {NULL, MAXINT, ROOM_INPUT, ROOM_CONF, ROOM_DUP, ROOM_CHAR, COORD, 
+	static char *msg[NB_WARNINGS + 1] = {NULL, ANT_INPUT, MAXINT, ROOM_INPUT, ROOM_CONF, ROOM_DUP, ROOM_CHAR, COORD, 
 		TUBE_NOROOM, TUBE_INPUT, INVALID_INPUT, HELP, OPTION, FAILED_START, FAILED_END,
 		DOUBLE_START, DOUBLE_END, SAME_ROOM};
 

@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 14:48:09 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/15 19:37:28 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/15 20:39:25 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,9 @@
 ** ERRORS
 */
 
-# define NB_ERRORS		11
-# define NOINS			"empty file"
-# define ANT_INPUT		"invalid ant format (require strictly postiive value)"
-# define ANT_NB			"not enough ants!"
+# define NB_ERRORS		10
+# define NOINS			"no instruction received"
+# define ANT_NB			"no valid ant number!"
 # define NOTUBE			"missing corridors in anthill..."
 //# define ORDER			"invalid input order"
 # define NOSTART		"missing start indicator"
@@ -45,7 +44,8 @@
 ** WARNINGS
 */
 
-# define NB_WARNINGS		17
+# define NB_WARNINGS		18
+# define ANT_INPUT		"invalid ant format (require strictly positive value)"
 # define MAXINT			"max value is 2 147 483 647"
 # define ROOM_INPUT		"invalid room format"
 # define ROOM_CONF		"confusing room name, please avoid use of '-'"
@@ -187,9 +187,9 @@ typedef struct			s_environment
 
 enum				e_error
 {
-	NO_ERR, ERR_NO_INS, ERR_ANT_INPUT, ERR_ANT_NB,
+	NO_ERR, ERR_NO_INS, ERR_ANT_NB,
    	ERR_NOTUBE, ERR_START, ERR_END, ERR_SAME, ERR_LIB, ERR_ALLOC, ERR_ARG, ERR_SOLUTION,
-	NO_WRNG, WRNG_INTMAX, WRNG_ROOM, WRNG_ROOM_CONF, WRNG_DUP, WRNG_ROOM_CHAR, WRNG_COORD,
+	NO_WRNG, WRNG_ANT_INPUT, WRNG_INTMAX, WRNG_ROOM, WRNG_ROOM_CONF, WRNG_DUP, WRNG_ROOM_CHAR, WRNG_COORD,
 	WRNG_TUBE_NOROOM, WRNG_TUBE, WRNG_INPUT, WRNG_HELP, WRNG_OPTION, WRNG_FAILED_START, WRNG_FAILED_END,
 	WRNG_DOUBLE_START, WRNG_DOUBLE_END, WRNG_SAME_ROOM,
 

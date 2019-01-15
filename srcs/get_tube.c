@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/10 17:50:41 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/15 19:40:20 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/15 20:17:09 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,9 @@ int				get_tube(ENV *e, char **str, int way, int len)
 	i = get_room_index(e, str[0], 0);
 	j = get_room_index(e, str[1], 0);
 	if ((i == -1 || j == -1))
-		return (WRNG_TUBE_NOROOM);
+	{
+		return (display_warning(e, WRNG_TUBE_NOROOM));
+	}
 	if (i == j)
 		display_warning(e, WRNG_SAME_ROOM);
 	if ((way == FORWARD || way == BOTH) && (e->graphe->map[i][j] = len))
