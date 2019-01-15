@@ -17,20 +17,26 @@
 ** Set start to index value
 */
 
-void			c_start(ENV *e, void **item, int index)
+void			c_start(ENV *e, int index)
 {
-	(void)item;
-	e->graphe->start = index;
+	if (e->ins->commands[index] && e->ins->commands[index][1] != ROOM)
+		display_warning(e, WRNG_FAILED_START);
+	if (e->graphe->start != -1)
+		display_warning(e, WRNG_DOUBLE_START);
+	e->graphe->start = e->ins->commands[index][2];
 }
 
 /*
 ** Set end to index value
 */
 
-void			c_end(ENV *e, void **item, int index)
+void			c_end(ENV *e, int index)
 {
-	(void)item;
-	e->graphe->end = index;
+	if (e->ins->commands[index][1] != ROOM)
+		display_warning(e, WRNG_FAILED_END);
+	if (e->graphe->end != -1)
+		display_warning(e, WRNG_DOUBLE_END);
+	e->graphe->end = e->ins->commands[index][2];
 }
 
 /*
@@ -41,20 +47,16 @@ void			c_end(ENV *e, void **item, int index)
 
 int			apply_commands(ENV *e)
 {
-	static void	 (*f[NB_COMMANDS])(ENV *e, void **item, int index)
+	static void	 (*f[NB_COMMANDS])(ENV *e, int index)
 		= {&c_start, &c_end}; 
 	int			index;
 	
 	index = -1;
 	if (!e->graphe->map)
 		return (ERR_NOTUBE);
-	while (++index < e->ins->nb_commands)
-	{
-		if (!e->ins->commands[index])
-			break;
-		if (e->ins->commands[index][1] == ROOM)
-			f[e->ins->commands[index][0]](e, NULL, e->ins->commands[index][2]);
-	}
+	while(e->ins->commands[++index])
+		f[e->ins->commands[index][0]](e, index);
+	ft_printf("start is room #%d end %d\n", e->graphe->start, e->graphe->end);
 	if (e->graphe->start == -1)
 		return (ERR_START);
 	if (e->graphe->end == -1)
@@ -93,23 +95,24 @@ void			link_command(ENV *e, int type, int index)
 int				get_command(ENV *e, char *str, int option)
 {
 	static int	index;
-	static char	ref[NB_COMMANDS][8] = {"##start", "##end"};
+	static char	ref[NB_COMMANDS][8] = {COMMAND_START, COMMAND_END};
 	int			i;
 
-	i = -1;
-	while (++i < NB_COMMANDS)
+	i = 0;
+	while (i < NB_COMMANDS)
+	{
 		if (ft_strequ(str, ref[i]))
 		{
 			if (option == 0)
 				return (1);
 			break;
 		}
+		++i;
+	}
 	if (i == NB_COMMANDS) 
 		return (0);
-//	ft_printf("i = %d index = %d\n", i, index);
 	e->ins->commands[index] = (int *)ft_memalloc(sizeof(int) * 3); 
 	e->ins->commands[index][0] = i;
-//	ft_printf("commands index 0 = %d\n", e->ins->commands[index][0]);
 	if (index < NB_COMMANDS)
 		++index;
 	return (i);

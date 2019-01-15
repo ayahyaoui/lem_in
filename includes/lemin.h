@@ -15,89 +15,160 @@
 
 #include "libft.h"
 #include "lem_in.h"
+#include "color.h"
+
 # define ENV			t_environment
 # define STDIN			0
 # define STDOUT			1
 # define STDERR			2
-# define ERR_NB			23
 # define NB_COMMANDS		2
 
+/*
+** ERRORS
+*/
+
+# define NB_ERRORS		12
 # define NOINS			"empty file"
-# define ANT_INPUT		"invalid ant format"
+# define ANT_INPUT		"invalid ant format (require strictly postiive value)"
 # define ANT_NB			"not enough ants!"
-# define ANT_COMMAND	"invalid command for ant number"
+# define NOTUBE			"missing corridors in anthill..."
+# define ORDER			"invalid input order"
+# define NOSTART		"missing start indicator"
+# define NOEND			"missing end indicator"
+# define SAME_START_END		"all ants are already at the end"
+# define LIB			"failing lib function"
+# define MALLOC			"failing malloc"
+# define ARG			"unexpected argument, only options allowed"
+# define NO_SOLUTION		"No valid path found between start and end"
+
+/*
+** WARNINGS
+*/
+
+# define NB_WARNINGS		15
+# define ANT_COMMAND		"invalid command for ant number"
+# define MAXINT			"max number of ants is 2 147 483 647"
 # define ROOM_INPUT		"invalid room format"
+# define ROOM_CONF		"confusing room name, please avoid use of '-'"
 # define ROOM_DUP		"duplicate room name"
 # define ROOM_CHAR		"invalid character in room name (L)"
 # define COORD			"non numerical values as room coordinates"
+# define TUBE_NOROOM		"linking non-nexistant room"
 # define TUBE_INPUT		"invalid tube input"
-# define NOTUBE			"missing corridors in anthill..."
-# define TUBE_NOROOM	 "linking non-nexistant room"
-# define ORDER			"invalid input order"
 # define HELP			"(-h for usage)"
-# define LIB			"failing lib function"
-# define MALLOC			"failing malloc"
-# define NOSTART		"missing start indicator"
-# define SAME_START_END	"all ants are already at the end"
-# define NOEND			"missing end indicator"
-# define ROOM_CONF		"confusing room name, please avoid use of '-'"
-# define MAXINT			"max number of ants is 2 147 483 647"
 # define OPTION			"unknown option"
-# define ARG			"unexpected argument, only options allowed"
-# define NO_SOLUTION	"No valid path found between start and end"
+# define FAILED_START		"command ##start without effect"
+# define FAILED_END		"command ##end without effect"
+# define DOUBLE_START		"start room already set, replacing value"
+# define DOUBLE_END		"end room already set, replacing value"
 
-# define OPTION_CHARS		"ctvw"
+/*
+** OPTIONS
+*/
+
+# define OPTION_CHARS		"chtvw"
+# define OPTION_WIDTH		10
+# define OPT_V_CHAR		'v'
+# define OPT_V_DESCRIPTION	"Display warnings and error details"
 # define OPT_VERBOSE		1 << ('v' - 'a')
+# define OPT_C_CHAR		'c'
+# define OPT_C_DESCRIPTION	"Activate colored output"
 # define OPT_COLOR		1 << ('c' - 'a')
+# define OPT_H_CHAR		'h'
+# define OPT_H_DESCRIPTION	"Display anthill instructions and available options"
+# define OPT_HELP		1 << ('h' - 'a')
+# define OPT_T_CHAR		't'
 # define OPT_TURNS		1 << ('t' - 'a')
+# define OPT_T_DESCRIPTION	"Display total number of turns"
 # define OPT_WAY		1 << ('w' - 'a')
 
-# define COL_END		COL_CYAN
+/*
+** COMMANDS
+*/
+
+# define NB_COMMANDS		2
+# define COMMAND_START		"##start"
+# define START_DESCRIPTION	"set room as start location"
+# define COMMAND_END		"##end"
+# define END_DESCRIPTION	"set room as end location"
+
+
+# define HELP_TITLE		"*** Rules for setting up anthill ***"
+# define COMMENTS_NAME		"comments"
+# define COMMENTS_DESCRIPTION	"lines starting with #"
+# define COMMENTS_PLACEMENT	"anywhere"
+# define COMMENTS_EXAMPLE	"Example: #This is a comment"
+# define COMMANDS_NAME		"commands"
+# define COMMANDS_DESCRIPTION	"lines starting with ##"
+# define COMMANDS_PLACEMENT	"before a significant value"
+# define COMMANDS_EXAMPLE	"##command"
+# define COMMANDS_NB1		"if next input is outside the command scope, "
+# define COMMANDS_NB2		"the command will have no effect."
+# define COMMANDS_AVAILABLE	"available commands"
+# define ANTS_NAME		"number of ants"
+# define ANTS_DESCRIPTION	"strictly positive value"
+# define ANTS_PLACEMENT		"at the top of the file"
+# define ANTS_EXAMPLE		"Example: 16"
+# define ROOM_NAME		"rooms"
+# define ROOM_DESCRIPTION	"room name followed by two integer coordinates"
+# define ROOM_PLACEMENT		"after ant number, before tubes information"
+# define ROOM_EXAMPLE		"room_Name 5 4"
+# define ROOM_NB1		"a room name cannot start with L or #"
+# define ROOM_NB2		"forbidden character: -"
+# define TUBE_NAME		"tubes"
+# define TUBE_DESCRIPTION	"link between two existing rooms"
+# define TUBE_PLACEMENT		"after rooms"
+# define TUBE_FORWARD		"forward direction: ->"
+# define TUBE_BACKWARD		"backward direction: <-"
+# define TUBE_ANYWAY		"any direction: - or <->"
+# define TUBE_EXAMPLE		"room1-other_room"
+
+
 
 
 typedef struct s_file t_file;
 typedef struct s_node t_node;
 
 
-typedef struct		s_graphe
+typedef struct			s_graphe
 {
-	unsigned int			nb_rooms; // anciennement taille
-	unsigned int			nb_tubes;
-	t_node					**node;
-	int						*color;// char *
-	int						*previous;// permet de trouver un chemin rapidement
-	char					**map; // bientot capacite
-	int						**graph;//prend  pas mal de place mais permet opti
-	int						*capacite;
-	int						start;
-	int						end;
-	int						nb_paths;
-	int						start_next_to_end;
-	t_file					*file;
-}						t_graphe;
+	unsigned int		nb_rooms; // anciennement taille
+	unsigned int		nb_tubes;
+	t_node			**node;
+	int			*color;// char *
+	int			*previous;// permet de trouver un chemin rapidement
+	char			**map; // bientot capacite
+	int			**graph;//prend  pas mal de place mais permet opti
+	int			*capacite;
+	int			start;
+	int			end;
+	int			nb_paths;
+	int			start_next_to_end;
+	t_file			*file;
+}				t_graphe;
 
-typedef struct		s_room
+typedef struct			s_room
 {
-	char *name;
-	t_4vect	pos; 
-}					t_room;
+	char			*name;
+	t_4vect			pos; 
+}				t_room;
 
-typedef struct 		s_input
+typedef struct 			s_input
 {
 	int 			nb_ants;
 	t_room			*room;
 	int			**commands;
 	int			nb_commands;
-}					t_input;
+}				t_input;
 
-typedef struct		s_tab
+typedef struct			s_tab
 {
 	int			*tab;
 	int			length;
-}					t_tab;
+}				t_tab;
 
 
-typedef struct		s_environment
+typedef struct			s_environment
 {
 	t_list			*anthill;
 	t_input			*ins;
@@ -109,12 +180,20 @@ typedef struct		s_environment
 	int			type;
 	int			turns;
 	int			fd;
-}					t_environment;
+}				t_environment;
 
-int		choose_method(t_graphe *g, ENV *info);
-int		convert(t_graphe *g, ENV *infos);
-void		free_graphe(t_graphe *g);
 
+enum				e_error
+{
+	NO_ERR, ERR_NO_INS, ERR_ANT_INPUT, ERR_ANT_NB,
+   	ERR_NOTUBE, ERR_NOROOM, ERR_ORDER, ERR_START, ERR_END, ERR_SAME, ERR_LIB, ERR_ALLOC, ERR_ARG, ERR_SOLUTION 
+};
+
+enum				e_warning
+{
+	NO_WRNG, WRNG_COMMAND, WRNG_INTMAX, WRNG_ROOM, WRNG_ROOM_CONF, WRNG_DUP, WRNG_ROOM_CHAR, WRNG_COORD, WRNG_TUBE_NOROOM, WRNG_TUBE, WRNG_HELP, WRNG_OPTION, WRNG_FAILED_START, WRNG_FAILED_END, WRNG_DOUBLE_START, WRNG_DOUBLE_END
+
+};
 
 enum				e_type
 {
@@ -141,15 +220,9 @@ enum				e_display
 	DISPLAY_OFF, DISPLAY_ON
 };
 
-enum				e_error
-{
-	NO_ERR, ERR_NO_INS, ERR_READ, ERR_ANT_INPUT, ERR_ANT_NB, ERR_COMMAND, ERR_INTMAX,
-   	ERR_ROOM, ERR_ROOM_CONF, ERR_ROOM_CHAR, ERR_COORD, ERR_TUBE, ERR_NOTUBE, ERR_NOROOM, ERR_DUP, ERR_ORDER,
-	ERR_START, ERR_END, ERR_SAME, ERR_LIB, ERR_ALLOC, ERR_HELP, ERR_OPTION, ERR_ARG, ERR_SOLUTION 
-};
-
-int		scan_allmoves(ENV *e, int display);
-void		display_besttab(t_tab ***tab);
+//int		choose_method(t_graphe *g, ENV *info);
+//int		convert(t_graphe *g, ENV *infos);
+//void		display_besttab(t_tab ***tab);
 
 int			set_env(ENV *e);
 void			free_env(ENV *e);
@@ -169,7 +242,11 @@ void		print_rooms(ENV *e, char **rooms);
 ** Display
 */
 
-int			display(ENV *e, char *str);
+int		is_failing_error(int err);
+int		display_error(ENV *e, int code);
+int		display_warning(ENV *e, int code);
+void		display_help(char *col1, char *col2);
+
 void		display_moves(ENV *e, int **tab, int total);
 void		display_anthill(t_list *anthill);
 void		printlist(ENV *e, t_list *l);
@@ -178,6 +255,12 @@ void		move_next_room(ENV *e, t_tab ***paths);
 
 
 int			read_options(ENV *e, char **argv, int argc);
+
+/*
+** Memory and set-up
+*/
+
+void		free_graphe(t_graphe *g);
 
 
 /*
@@ -196,17 +279,24 @@ int			get_ants(ENV *e, char **str, int type);
 int			get_command(ENV *e, char *str, int option);
 int			get_room(ENV *e, char **str);
 int			get_tube(ENV *e, char **str, int way, int len);
-int			store_rooms(ENV *e);
 void			link_command(ENV *e, int type, int index);
 int			read_instructions(ENV *e, char *str, int nbline, int ret);
+char			**room_names(t_list *l, int nb_rooms, int **paths, int nb_paths);
 int			setup_room_mtrx(ENV *e, int size);
-char		sep(char *line, int *type);
-char		**room_names(t_list *l, int nb_rooms, int **paths, int nb_paths);
+char			sep(char *line, int *type);
+int			store_rooms(ENV *e);
+
+/*
+** Find solution
+*/
+
+int		scan_allmoves(ENV *e, int display);
 
 /*
 ** Utils
 */
 
 int			is_number(char *str);
+
 
 #endif

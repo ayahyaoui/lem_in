@@ -36,11 +36,11 @@ LIB_DIR 	:= libft
 #								    FILES									   
 #==============================================================================#
 
-_SRC	= debug.c display.c env.c error.c file.c free.c \
+_SRC	= display.c env.c error.c file.c free.c \
 	get_ants.c get_comment.c  get_room.c get_tube.c initial.c  versionopti.c\
 	options.c  main.c read.c utils.c translate.c move.c repartAnt.c besttab.c\
 
-_HEAD	= lemin.h lem_in.h
+_HEAD	= lemin.h lem_in.h color.h
 SRC 	= $(patsubst %, $(SRC_DIR)/%, $(_SRC))
 HEAD	= $(patsubst %, $(HEAD_DIR)/$, $(_HEAD))
 BIN	= $(patsubst %.c, $(BIN_DIR)/%.o, $(_SRC))

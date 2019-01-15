@@ -20,7 +20,7 @@
 static int			is_option(char c)
 {
 	if (!ft_strchr(OPTION_CHARS, c) || !c)
-		return (ERR_OPTION);
+		return (WRNG_OPTION);
 	return (NO_ERR);
 }
 
@@ -43,14 +43,22 @@ int				read_options(ENV *e, char **argv, int argc)
 			return (ERR_ARG);
 		i = 1;
 		if (!argv[arg][1])
-			return (ERR_OPTION);
+			return (WRNG_OPTION);
 		while (!is_option(argv[arg][i]))
 		{
 			e->options |= (1 << (argv[arg][i] - 'a'));
 			++i;
 		}
+		if (e->options & WRNG_HELP)
+		{
+			if (e->options & OPT_COLOR)
+				display_help(COLB_OFF, COLF_OFF);
+			else
+				display_help(COL_HELP, COL_OPTIONS);
+
+		}
 		if (argv[arg][i])
-			return (ERR_OPTION);
+			return (WRNG_OPTION);
 		++arg;
 	}
 	return (NO_ERR);

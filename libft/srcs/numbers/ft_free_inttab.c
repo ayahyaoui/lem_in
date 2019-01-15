@@ -11,7 +11,8 @@ void		ft_free_inttab(int ***tab, int size)
 	tmp = *tab;
 	while (++i < size)
 	{		
-		ft_memdel((void **)tmp);
+//		if (tmp)
+//			ft_memdel((void **)tmp);
 		++tmp;
 	}
 	ft_memdel((void **)tab);

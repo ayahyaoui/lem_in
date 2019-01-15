@@ -67,7 +67,7 @@ void		move_next_room(ENV *e, t_tab ***paths)
 			{
 				if (!e->ants[j][2] && paths[e->ants[j][0]][e->ants[j][1]]->tab[0])
 					--paths[e->ants[j][0]][e->ants[j][1]]->tab[0];
-					e->ants[j][2] = (int)ft_abs(e->ants[j][2]) +  1;
+				e->ants[j][2] = (int)ft_abs(e->ants[j][2]) +  1;
 			}
 			else
 				e->ants[j][2] = -(int)ft_abs(e->ants[j][2]);
@@ -98,8 +98,8 @@ int	ant_enter_path(ENV *e, t_tab ***paths, int comb)
 			{
 				if (!ant_in_room(e, paths, ant, paths[j][i]->tab[1]) )
 				{
-				if (!(e->ants[ant] = (int *)ft_memalloc(sizeof(int) * 3)))
-					return (ERR_ALLOC);
+					if (!(e->ants[ant] = (int *)ft_memalloc(sizeof(int) * 3)))
+						return (ERR_ALLOC);
 					e->ants[ant][0] = j;
 					e->ants[ant][1] = i;
 					e->ants[ant][2] = 1;

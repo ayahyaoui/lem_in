@@ -90,11 +90,10 @@ int				get_tube(ENV *e, char **str, int way, int len)
 	int			i;
 	int			j;
 
-	if (!str[1] || str[2]
-	/*	|| ((check = ft_strsplit(str[1], ' '))[1] && !(e->options & OPT_LENGTH))*/)
+	if (!str[1] || str[2])
 	{
 		ft_free_strtab(&check);
-		return (ERR_TUBE);
+		return (WRNG_TUBE);
 	}
 	handle_way_spec(e, &str[0], &str[1], &way);
 	i = get_room_index(e, str[0], 0);

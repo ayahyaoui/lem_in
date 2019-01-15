@@ -25,7 +25,7 @@ int				get_ants(ENV *e, char **str, int type)
 	if (str[1] || !is_number(str[0]) || type == TUBE)
 		return (ERR_ANT_INPUT);
 	if (ft_beyond_limiti(str[0]) == 1) 
-		return (ERR_INTMAX);
+		return (WRNG_INTMAX);
 	if (!(e->ins->nb_ants = ft_atoi(str[0])))
 		return (ERR_ANT_NB);
 	return (NO_ERR);

@@ -61,7 +61,7 @@ int		store_rooms(ENV *e)
 			ft_free_strtab(&split);
 			link_command(e, ROOM, i);
 			if (is_dup(e, e->ins->room[i].name, i))
-				return (ERR_DUP);
+				return (WRNG_DUP);
 			++i;
 		}
 		else if (((char *)tmp->content)[1] == '#')
@@ -81,13 +81,13 @@ int				get_room(ENV *e, char **str)
 	if (str[1] && str[2] && !str[3])
 	{
 		if (!is_number(str[1]) || !is_number(str[2]))
-			return (ERR_COORD);
+			return (WRNG_COORD);
 		if (ft_beyond_limiti(str[1]) || ft_beyond_limiti(str[2]))
-			return (ERR_INTMAX);
+			return (WRNG_INTMAX);
 		if (str[0][0] == 'L')
-			return (ERR_ROOM_CHAR);
+			return (WRNG_ROOM_CHAR);
 		++e->graphe->nb_rooms;
-		return (NO_ERR);
+		return (NO_WRNG);
 	}
-	return (ERR_ROOM);
+	return (WRNG_ROOM);
 }

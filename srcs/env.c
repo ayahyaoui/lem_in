@@ -58,7 +58,7 @@ void		free_env(ENV *e)
 {
 	del_rooms(e, &e->ins->room);
 	free_graphe(e->graphe);
-//	ft_free_inttab(&e->ins->commands, e->ins->nb_commands);	
+	ft_free_inttab(&e->ins->commands, e->ins->nb_commands);	
 	ft_memdel((void **)&e->ins);
 	del_anthill(e->anthill);
 }

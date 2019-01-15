@@ -22,7 +22,7 @@ void		display_anthill(t_list *anthill)
 	t_list *tmp;
 
 	tmp = anthill;
-	while (tmp)
+	while (tmp && tmp->content)
 	{
 		ft_printf("%s\n", (char *)(tmp->content));
 		tmp = tmp->next;
@@ -73,8 +73,46 @@ static int		display_ant_at_endlocation(ENV *e, t_tab ***paths, int ant)
 	return (comb != -2 ? 0 : 1);
 }
 
+void		display_options(char *col)
+{
+	ft_printf("\n%sAvailable options: %s%s\n", col, OPTION_CHARS, COLF_OFF);
+	ft_printf("\n- %*-c: %s\n", OPT_C_CHAR, OPT_C_DESCRIPTION); 
+	ft_printf("\n- %*-c: %s\n", OPT_H_CHAR, OPT_H_DESCRIPTION); 
+	ft_printf("\n- %*-c: %s\n", OPT_T_CHAR, OPT_T_DESCRIPTION); 
+	ft_printf("\n- %*-c: %s\n", OPT_V_CHAR, OPT_V_DESCRIPTION); 
+}
 
-
+void		display_help(char *col1, char *col2)
+{
+	ft_printf("\n\n%s%s%s\n", HELP_TITLE, col1, COLB_OFF);
+	ft_printf("\n%s%s: ", col2, COMMENTS_NAME, COLF_OFF);
+	ft_printf("%s\n", COMMENTS_DESCRIPTION);
+	ft_printf("- placement: %s\n", COMMENTS_PLACEMENT);
+	ft_printf("- example: %s\n", COMMENTS_EXAMPLE);
+	ft_printf("\n%s%s: ", col2, COMMANDS_NAME, COLF_OFF);
+	ft_printf("%s\n", COMMANDS_DESCRIPTION);
+	ft_printf("- placement: %s\n", COMMANDS_PLACEMENT);
+	ft_printf("- example: %s\n", COMMANDS_EXAMPLE);
+	ft_printf("%s%s\n", COMMANDS_NB1, COMMANDS_NB2);
+	ft_printf("%s:\n-%s: %s\n-%s: %s\n", COMMANDS_AVAILABLE, COMMAND_START, START_DESCRIPTION,  COMMAND_END, END_DESCRIPTION);
+	ft_printf("If ##start or ##end command is used with number of ants or tube as next signficant value, ");
+	ft_printf("it will have no effect.\n");
+	ft_printf("\n%s%s: ", col2, ANTS_NAME, COLF_OFF);
+	ft_printf("%s\n", ANTS_DESCRIPTION);
+	ft_printf("- placement: %s\n", ANTS_PLACEMENT);
+	ft_printf("- example: %s\n", ANTS_EXAMPLE);
+	ft_printf("\n%s%s: ", col2, ROOM_NAME, COLF_OFF);
+	ft_printf("%s\n", ROOM_DESCRIPTION);
+	ft_printf("- placement: %s\n", ROOM_PLACEMENT);
+	ft_printf("- example: %s\n", ROOM_EXAMPLE);
+	ft_printf("%s%s\n", ROOM_NB1, ROOM_NB2);
+	ft_printf("\n%s%s: ", col2, TUBE_NAME, COLF_OFF);
+	ft_printf("%s\n", TUBE_DESCRIPTION);
+	ft_printf("%s %s %s\n", TUBE_FORWARD, TUBE_BACKWARD, TUBE_ANYWAY);
+	ft_printf("- placement: %s\n", TUBE_PLACEMENT);
+	ft_printf("- example: %s\n", TUBE_EXAMPLE);
+	display_options(COL_OPTIONS);
+}
 
 
 /*
@@ -121,15 +159,12 @@ int		scan_allmoves(ENV *e, int display)
 {
 	int	nb_comb;
 	int	high_comb;
-	int	i;
+//	int	i;
 	int arrived;
 
 	nb_comb = 0;
 	arrived = 0;
 	e->turns = 0;
-	i = -1;
-//	paths[0][0]->tab[0] += 4;
-//	paths[1][0]->tab[0] -= 4;
 
 	while (e->all_paths[nb_comb])
 		++nb_comb;

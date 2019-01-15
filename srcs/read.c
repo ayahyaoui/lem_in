@@ -98,13 +98,12 @@ int				read_instructions(ENV *e, char *str, int nbline, int ret)
 
 	while (!ret && (gnl = get_next_line2(STDIN, &str)) >= -1 && str)
 	{
-//		ft_printf("line = %s\n",str);
 		if (str[0] != '#' && ++nbline)
 		{
 			if (!(words = ft_strsplit(str, sep(str, &e->type))))
 			{
 				ft_strdel(&str);
-				return (ERR_READ);
+				return (ERR_LIB);
 			}
 			if ((ret = dispatch_ins(e, words, nbline)))
 			{
