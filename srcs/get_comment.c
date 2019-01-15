@@ -54,9 +54,13 @@ int			apply_commands(ENV *e)
 	index = -1;
 	if (!e->graphe->map)
 		return (ERR_NOTUBE);
-	while(e->ins->commands[++index])
+//	ft_printf("nb commands %d\n", e->ins->nb_commands);
+	while(++index < e->ins->nb_commands)
+	{
+//		ft_printf("index = %d nb commands = %d\n", index, e->ins->nb_commands);
 		f[e->ins->commands[index][0]](e, index);
-	ft_printf("start is room #%d end %d\n", e->graphe->start, e->graphe->end);
+//		ft_printf("start is room #%d end %d\n", e->graphe->start, e->graphe->end);
+	}
 	if (e->graphe->start == -1)
 		return (ERR_START);
 	if (e->graphe->end == -1)

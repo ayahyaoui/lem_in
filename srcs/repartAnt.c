@@ -37,8 +37,9 @@ extern int first;
 
 void	infos_graphes(t_graphe *g)
 {
-	ft_printf("nb_rooms = %d, nb_tubes = %d\n", g->nb_rooms, g->nb_tubes);
-	ft_printf("start = %d, end = %d\n", g->start, g->end);
+	(void)g;
+//	ft_printf("nb_rooms = %d, nb_tubes = %d\n", g->nb_rooms, g->nb_tubes);
+//	ft_printf("start = %d, end = %d\n", g->start, g->end);
 
 	/*ft_putstr("best paths:\n");
 	  ft_print_inttab(g->capacite, g->nb_rooms, ' ');

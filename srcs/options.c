@@ -49,17 +49,18 @@ int				read_options(ENV *e, char **argv, int argc)
 			e->options |= (1 << (argv[arg][i] - 'a'));
 			++i;
 		}
-		if (e->options & WRNG_HELP)
-		{
-			if (e->options & OPT_COLOR)
-				display_help(COLB_OFF, COLF_OFF);
-			else
-				display_help(COL_HELP, COL_OPTIONS);
 
-		}
 		if (argv[arg][i])
 			return (WRNG_OPTION);
 		++arg;
+	}
+	if (e->options & OPT_HELP)
+	{
+		
+		if (!(e->options & OPT_COLOR))
+			display_help(COLB_OFF, COLF_OFF);
+		else
+			display_help(COL_HELP, COL_TYPES);
 	}
 	return (NO_ERR);
 }

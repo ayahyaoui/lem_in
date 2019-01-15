@@ -27,12 +27,12 @@
 ** ERRORS
 */
 
-# define NB_ERRORS		12
+# define NB_ERRORS		11
 # define NOINS			"empty file"
 # define ANT_INPUT		"invalid ant format (require strictly postiive value)"
 # define ANT_NB			"not enough ants!"
 # define NOTUBE			"missing corridors in anthill..."
-# define ORDER			"invalid input order"
+//# define ORDER			"invalid input order"
 # define NOSTART		"missing start indicator"
 # define NOEND			"missing end indicator"
 # define SAME_START_END		"all ants are already at the end"
@@ -45,8 +45,7 @@
 ** WARNINGS
 */
 
-# define NB_WARNINGS		15
-# define ANT_COMMAND		"invalid command for ant number"
+# define NB_WARNINGS		16
 # define MAXINT			"max number of ants is 2 147 483 647"
 # define ROOM_INPUT		"invalid room format"
 # define ROOM_CONF		"confusing room name, please avoid use of '-'"
@@ -55,12 +54,14 @@
 # define COORD			"non numerical values as room coordinates"
 # define TUBE_NOROOM		"linking non-nexistant room"
 # define TUBE_INPUT		"invalid tube input"
+# define INVALID_INPUT		"invalid input"
 # define HELP			"(-h for usage)"
 # define OPTION			"unknown option"
 # define FAILED_START		"command ##start without effect"
 # define FAILED_END		"command ##end without effect"
 # define DOUBLE_START		"start room already set, replacing value"
 # define DOUBLE_END		"end room already set, replacing value"
+# define SAME_ROOM		"link to itself is without effect"
 
 /*
 ** OPTIONS
@@ -186,12 +187,10 @@ typedef struct			s_environment
 enum				e_error
 {
 	NO_ERR, ERR_NO_INS, ERR_ANT_INPUT, ERR_ANT_NB,
-   	ERR_NOTUBE, ERR_NOROOM, ERR_ORDER, ERR_START, ERR_END, ERR_SAME, ERR_LIB, ERR_ALLOC, ERR_ARG, ERR_SOLUTION 
-};
-
-enum				e_warning
-{
-	NO_WRNG, WRNG_COMMAND, WRNG_INTMAX, WRNG_ROOM, WRNG_ROOM_CONF, WRNG_DUP, WRNG_ROOM_CHAR, WRNG_COORD, WRNG_TUBE_NOROOM, WRNG_TUBE, WRNG_HELP, WRNG_OPTION, WRNG_FAILED_START, WRNG_FAILED_END, WRNG_DOUBLE_START, WRNG_DOUBLE_END
+   	ERR_NOTUBE, ERR_START, ERR_END, ERR_SAME, ERR_LIB, ERR_ALLOC, ERR_ARG, ERR_SOLUTION,
+	NO_WRNG, WRNG_INTMAX, WRNG_ROOM, WRNG_ROOM_CONF, WRNG_DUP, WRNG_ROOM_CHAR, WRNG_COORD,
+	WRNG_TUBE_NOROOM, WRNG_TUBE, WRNG_INPUT, WRNG_HELP, WRNG_OPTION, WRNG_FAILED_START, WRNG_FAILED_END,
+	WRNG_DOUBLE_START, WRNG_DOUBLE_END, WRNG_SAME_ROOM,
 
 };
 
@@ -204,11 +203,6 @@ enum				e_special
 {
 	START, END
 };
-
-enum				e_input
-{
-	INVALID_INPUT, VALID_INPUT
-};	
 
 enum				e_direction
 {

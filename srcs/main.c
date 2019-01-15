@@ -38,7 +38,7 @@ int		main(int argc, char **argv)
 	if (algoopti(e.graphe, &e) != ERR_SOLUTION)
 		scan_allmoves(&e, DISPLAY_ON);
 	else
-		return (display_error(&e, msg));
+		return (display_error(&e, ERR_SOLUTION));
 	free_env(&e);
 	return (0);
 }

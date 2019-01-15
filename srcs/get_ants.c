@@ -22,8 +22,12 @@
 
 int				get_ants(ENV *e, char **str, int type)
 {
+//	ft_printf("ants = %s\n", str[0]);
 	if (str[1] || !is_number(str[0]) || type == TUBE)
+	{
+		++e->ins->nb_commands;
 		return (ERR_ANT_INPUT);
+	}
 	if (ft_beyond_limiti(str[0]) == 1) 
 		return (WRNG_INTMAX);
 	if (!(e->ins->nb_ants = ft_atoi(str[0])))

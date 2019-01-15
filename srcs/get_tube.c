@@ -98,9 +98,10 @@ int				get_tube(ENV *e, char **str, int way, int len)
 	handle_way_spec(e, &str[0], &str[1], &way);
 	i = get_room_index(e, str[0], 0);
 	j = get_room_index(e, str[1], 0);
-
 	if ((i == -1 || j == -1))
-		return (ERR_NOROOM);
+		return (WRNG_TUBE_NOROOM);
+	if (i == j)
+		display_warning(e, WRNG_SAME_ROOM);
 	if ((way == FORWARD || way == BOTH) && (e->graphe->map[i][j] = len))
 		str[1] -= (e->options & OPT_WAY) ? 1 : 0;
 	if (way == BACKWARD || way == BOTH)
