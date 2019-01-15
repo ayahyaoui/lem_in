@@ -67,6 +67,8 @@ typedef struct 		s_input					t_input;
 
 
 
+
+int			find_path_bonus(t_tab ***besttab, t_graphe *g);
 void		vielleSimulation(t_graphe *g, t_tab ***besttab, int fourmis);
 t_tab		***registerPath(t_graphe *g, int nbPath, t_tab ***besttab);
 t_tab		***allowBestTab(int nbPath);
@@ -81,14 +83,14 @@ void		convertGraphe(t_graphe *g);
 void		cleanNodee(t_graphe *g);
 void		add_node_parcous(t_graphe *g, t_node *next, int val, int opt);
 int			convert_graphe(t_graphe *g);
-void		place_ant(t_tab ***besttab, int fourmis, int path);
+int		place_ant(t_tab ***besttab, int fourmis, int path);
 
 
 
-void		try_to_place_ant(t_tab ***besttab, int *tab_fourmis);
+int		try_to_place_ant(t_tab ***besttab, int *tab_fourmis);
 void		clean_ant(t_tab ***besttab);
 
-void	prediction(ENV *e, t_graphe *g);
+int	prediction(ENV *e, t_graphe *g);
 
 
 int		is_break_path(t_graphe *g, int start);

@@ -12,7 +12,6 @@
 
 #include "lem_in.h"
 
-
 int			algoopti(t_graphe *g, ENV *e)
 {
 	t_tab		***besttab;
@@ -30,6 +29,7 @@ int			algoopti(t_graphe *g, ENV *e)
 	place_ant(besttab, e->ins->nb_ants, g->nb_paths);
 	besttab[g->nb_paths + 1] = 0x0;
 	e->all_paths = besttab;
+	find_path_bonus(besttab, g);
 	return (NO_ERR);
 }
 
