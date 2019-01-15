@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 14:58:47 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/15 18:25:38 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/15 18:31:36 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ int		main(int argc, char **argv)
 	ft_printf("\n");
 	if (algoopti(e.graphe, &e) != ERR_SOLUTION)
 	{
-		scan_allmoves(&e, DISPLAY_OFF);
 		scan_allmoves(&e, DISPLAY_ON);
 	}
 	else

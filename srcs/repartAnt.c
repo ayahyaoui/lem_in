@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/13 21:58:25 by anyahyao          #+#    #+#             */
-/*   Updated: 2019/01/14 20:23:50 by anyahyao         ###   ########.fr       */
+/*   Updated: 2019/01/14 23:53:38 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,6 @@ int			changeTab(int *tab);
 void		addAnt(t_graphe *g, t_tab **besttab, int nbAnt);
 void		bestsimulation(t_graphe *g, t_input *infos, t_tab ***besttab);
 
-int fourmis = 0;
-extern int first;
 
 
 /*
@@ -58,7 +56,35 @@ void	infos_graphes(t_graphe *g)
 	  }*/
 }
 
-void		place_ant(t_tab ***besttab, int fourmis, int path)
+int			find_path_bonus(t_tab ***besttab, t_graphe *g)
+{
+	int i;
+	int j;
+	int k;
+	int isin_path;
+
+	i = -1;
+	ft_printf("je vais faire un tessssssst\n");
+	while (++i < g->nb_paths)
+	{
+		j = -1;
+		while (besttab[i][++j])
+		{
+			isin_path = 0;
+			k = -1;
+			while (besttab[g->nb_paths][++k] && isin_path == 0)
+			{
+				if (besttab[g->nb_paths][k]->tab[1] == besttab[i][j]->tab[1])
+					isin_path++;
+			}
+			if (!isin_path)
+				ft_print_inttab(besttab[i][j]->tab, besttab[i][j]->length, ' ');
+		}
+	}
+	return (1);
+}
+
+int			place_ant(t_tab ***besttab, int fourmis, int path)
 {
 	int i;
 	int j;
@@ -82,49 +108,110 @@ void		place_ant(t_tab ***besttab, int fourmis, int path)
 		fourmis -= pass;
 		i++;
 	}
+	return (i);
 }
 
 
-/*
-
-void	prediction(ENV *e, t_graphe *g)
+void	swap_pointeur(void **a, void **b)
 {
-	int turn_min;
-	int *best_combinaison;
-	int *last_combinaison;
+	char *c;
+	char **aa;
+	char **bb;
 
-	ft_bzero(g->color, sizeof(int) * g->nb_rooms);
-	ft_bzero(g->previous, sizeof(int) * g->nb_rooms);
-
-	best_combinaison = g->color;
-	best_combinaison = g->previous;
-
-	
-
-	
-	best_combinaison[g->nb_paths];
-	while (last_combinaison[0] != e->nbAnt)
-	{
-
-
-	}
-
-
-
+	aa = (char **)a;
+	bb = (char **)b;
+	c = *aa;
+	*aa = *bb;
+	*bb = c;
 }
 
-*/
-/*
- *	par du principe que la somme de tab_fourmis est egale au nombre de fourmis
- */
-void		try_to_place_ant(t_tab ***besttab, int *tab_fourmis)
+void	change_place_antbis(t_graphe *g, int *tab)
+{
+	int i;
+
+	i = 0;
+	while (++i < g->nb_paths && tab[i])
+	;
+	if (i == g->nb_paths && tab[i] == 0)
+	{
+		ft_printf("arrete d'appele cette fct");
+		return;
+	}
+	tab[i] -= 1;
+	tab[i - 1] += 1;
+}
+
+void	change_place_ant(t_graphe *g, int *tab)
 {
 	int i;
 
 	i = -1;
+	while (++i < g->nb_paths && tab[i] == 0)
+		;
+	if (i > 0)
+	{
+		ft_printf("i = %d, tab[i] = %d\n", i, tab[i]);
+		tab[i - 1] = tab[i];
+		tab[i] = 0;
+	}
+}
+
+int		prediction(ENV *e, t_graphe *g)
+{
+	int *best_combinaison;
+	int *last_combinaison;
+	int cost_best;
+	int test = g->nb_paths;
+	int test2 = 0;
+
+	ft_bzero(g->color, sizeof(int) * g->nb_rooms);
+	ft_bzero(g->previous, sizeof(int) * g->nb_rooms);
+	best_combinaison = g->color;
+	last_combinaison = g->previous;
+	last_combinaison[g->nb_paths - 12] = e->ins->nb_ants;
+	//
+	
+	try_to_place_ant(e->all_paths, last_combinaison);
+	return 1;
+	//
+	cost_best = -1;
+	while (last_combinaison[0] != e->ins->nb_ants)
+	{
+		ft_print_inttab(last_combinaison, g->nb_paths + 1, ' ');
+		e->turns = try_to_place_ant(e->all_paths, last_combinaison);
+		ft_printf("j'ai placer les fourmis\n");
+		
+		//scan_allmoves(e, DISPLAY_OFF);
+		ft_printf("j'ai verifie combien de tour => %d\n", e->turns);
+		if (e->turns > 0 && (e->turns < cost_best || cost_best != -1))
+		{
+			cost_best = e->turns;
+			test2 = test;
+			swap_pointeur((void**)&last_combinaison, (void**)&best_combinaison);
+			ft_printf("nouveau record on remplace last par best\n");
+		}
+		change_place_ant(g, last_combinaison);
+		ft_printf("j'ai changer la combinaisont\n");
+		test--;
+	}
+	return (test2);
+}
+
+
+/*
+ *	par du principe que la somme de tab_fourmis est egale au nombre de fourmis
+ */
+int		try_to_place_ant(t_tab ***besttab, int *tab_fourmis)
+{
+	int i;
+	int tmpres = 0;
+
+	clean_ant(besttab);
+	i = -1;
 	while (besttab[++i])
 		if (tab_fourmis[i] > 0)
-			place_ant(besttab, tab_fourmis[i], i);
+			tmpres = place_ant(besttab, tab_fourmis[i], i);
+	return tmpres;
 }
 
 void		clean_ant(t_tab ***besttab)
