@@ -36,7 +36,11 @@ static int	ant_in_room(ENV *e, t_tab ***paths, int ant, int room)
 				&& (curpath = paths[e->ants[i][0]][e->ants[i][1]]))
 		{
 			if (curpath->tab[(int)ft_abs(e->ants[i][2])] == room)
+			{
+				
+	//			ft_printf("room = %d, name = %s\n", room, e->ins->room[room].name); 
 				return (1);
+			}
 		}
 	}
 	return (0);
@@ -77,7 +81,12 @@ void		move_next_room(ENV *e, t_tab ***paths)
 				e->ants[j][2] = (int)ft_abs(e->ants[j][2]) +  1;
 			}
 			else
+			{
 				e->ants[j][2] = -(int)ft_abs(e->ants[j][2]);
+	//			ft_printf("piece qui bloque: %d\n", paths[e->ants[j][0]][e->ants[j][1]]->tab[e->ants[j][2]]);
+	//			ft_printf("putain de merde\n");
+				exit(0);
+			}
 
 		}
 //		ft_printf("ant 0 = %d 1 = %d 2 = %d\n", e->ants[0], e->ants[1], e->ants[2]);

@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/01 19:29:03 by anyahyao          #+#    #+#             */
-/*   Updated: 2019/01/13 17:26:00 by anyahyao         ###   ########.fr       */
+/*   Updated: 2019/01/16 01:04:48 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int			displaypath(t_graphe *g, int *tab)
 	unsigned int node;
 
 	node = g->end;
-	ft_printf("depart = %d\narriver = %d\n",g->start, node);
+//	ft_printf("depart = %d\narriver = %d\n",g->start, node);
 	while (node != (unsigned int)g->start)
 	{
 		ft_printf("%d<-",node);
@@ -41,7 +41,7 @@ int			displayallpath(t_graphe *g, t_tab ***t)
 		ft_putstr("=======================================\n");
 		ft_printf(" nb chemin en parrallele %d (normalement)\n", i + 1);
 		if (t[0][0]->length == 2 && i)
-			ft_printf("%d>%d\n", g->start, g->end);
+			ft_printf("%d>%d\n\n", g->start, g->end);
 		if (!t[i])
 			return 1;
 		while (t[i][++j])
@@ -51,6 +51,7 @@ int			displayallpath(t_graphe *g, t_tab ***t)
 			if (t[i][j]->length == 0)
 				return 1;
 			ft_print_inttab(t[i][j]->tab, t[i][j]->length, '>');
+			ft_putstr("\n");
 		}
 		ft_putstr("=======================================\n");
 		ft_putstr("\n\n\n");

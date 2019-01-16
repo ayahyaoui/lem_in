@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/13 21:58:25 by anyahyao          #+#    #+#             */
-/*   Updated: 2019/01/15 23:50:28 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/16 01:18:50 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,6 @@ void		bestsimulation(t_graphe *g, t_input *infos, t_tab ***besttab);
 
 
 
-/*
- *	c'est fonction n'est pas encore prete
- */
 
 void	infos_graphes(t_graphe *g)
 {
@@ -104,6 +101,8 @@ int			place_ant(t_tab ***besttab, int fourmis, int path)
 			{
 				pass++;
 				besttab[path][j]->tab[0]++;
+				if (fourmis - pass == 0)
+					return (i);
 			}
 		fourmis -= pass;
 		i++;
@@ -150,7 +149,7 @@ void	change_place_ant(t_graphe *g, int *tab)
 		;
 	if (i > 0)
 	{
-		ft_printf("i = %d, tab[i] = %d\n", i, tab[i]);
+//		ft_printf("i = %d, tab[i] = %d\n", i, tab[i]);
 		tab[i - 1] = tab[i];
 		tab[i] = 0;
 	}
@@ -168,8 +167,8 @@ int		prediction(ENV *e, t_graphe *g)
 	ft_bzero(g->previous, sizeof(int) * g->nb_rooms);
 	best_combinaison = g->color;
 	last_combinaison = g->previous;
-	last_combinaison[g->nb_paths -1] = e->ins->nb_ants;
-	best_combinaison[g->nb_paths -1] = e->ins->nb_ants;
+	last_combinaison[g->nb_paths] = e->ins->nb_ants;
+	best_combinaison[g->nb_paths] = e->ins->nb_ants;
 	//
 	
 	//try_to_place_ant(e->all_paths, last_combinaison);
@@ -177,25 +176,31 @@ int		prediction(ENV *e, t_graphe *g)
 	cost_best = -1;
 	while (last_combinaison[0] != e->ins->nb_ants)
 	{
-		ft_print_inttab(last_combinaison, g->nb_paths + 1, ' ');
+//		ft_print_inttab(last_combinaison, g->nb_paths + 1, ' ');
 		 try_to_place_ant(e->all_paths, last_combinaison);
-		ft_printf("j'ai placer les fourmis\n");
+//		ft_printf("j'ai placer les fourmis\n");
 		
 		scan_allmoves(e, DISPLAY_OFF);
 		//ft_printf("milllll\n");
-		ft_printf("j'ai verifie combien de tour => %d\n", e->turns);
+//		ft_printf("j'ai verifie combien de tour => %d\n", e->turns);
 		if (e->turns > 0 && (e->turns < cost_best || cost_best == -1))
 		{
 			
-			ft_printf("yesss %d", e->turns);
+			
 			cost_best = e->turns;
 			test2 = test;
-			swap_pointeur((void**)&last_combinaison, (void**)&best_combinaison);
-			ft_printf("nouveau record on remplace last par best\n");
+			for (test2 = 0; test2 < g->nb_paths; test2++)
+				if (last_combinaison[test2])
+					break;
+//			ft_printf("yesss %d en %d", e->turns, test2);
+//			ft_print_inttab(last_combinaison, g->nb_paths + 1, ' ');
+			ft_memmove(best_combinaison, last_combinaison, g->nb_paths * sizeof(int));
+			//swap_pointeur((void**)&last_combinaison, (void**)&best_combinaison);
+//			ft_printf("nouveau record on remplace last par best\n");
 		}
-		ft_print_inttab(last_combinaison, g->nb_paths + 1, ' ');
+//		ft_print_inttab(last_combinaison, g->nb_paths + 1, ' ');
 		change_place_ant(g, last_combinaison);
-		ft_printf("j'ai changer la combinaisont\n");
+//		ft_printf("j'ai changer la combinaisont\n");
 		test--;
 	}
 	return (test2);

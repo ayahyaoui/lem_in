@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/20 15:04:49 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/15 23:43:09 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/16 01:03:49 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -215,7 +215,7 @@ int		scan_allmoves(ENV *e, int display)
 		ant_enter_path(e, e->all_paths, high_comb);
 		arrived = display_travelling(e, e->all_paths, display);
 	}
-	if (display && e->options & OPT_TURNS)
+	if (/*display &&*/ e->options & OPT_TURNS)
 		ft_printf("\n>>>>>> %d turns\n", e->turns);
 	ft_free_inttab(&e->ants, e->ins->nb_ants);
 	return (NO_ERR);
