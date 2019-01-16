@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/16 05:35:36 by anyahyao          #+#    #+#             */
-/*   Updated: 2019/01/16 06:13:41 by anyahyao         ###   ########.fr       */
+/*   Updated: 2019/01/16 06:48:06 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int			find_best_soluion(t_graphe *g, ENV *e)
 	if (convert_graphe(g) == ERR_ALLOC
 		|| !(besttab = create_besttab(PATH_SIZE)))
 		return (ERR_ALLOC);
-	res = edmond_karp(g, &besttab);
+	res = edmond_karp(g, &besttab, e->max_paths);
 	if (res != NO_ERR && !(res == ERR_SOLUTION && g->start_next_to_end))
 		return (res);
 	if (!(besttab = register_path(g, g->nb_paths, besttab)))
@@ -32,13 +32,13 @@ int			find_best_soluion(t_graphe *g, ENV *e)
 	return (NO_ERR);
 }
 
-int			edmond_karp(t_graphe *g, t_tab ****besttab)
+int			edmond_karp(t_graphe *g, t_tab ****besttab, int max_paths)
 {
 	int			i;
 	t_node		*node;
 
 	i = -42;
-	while (42)
+	while (max_paths--)
 	{
 		g->file = clean_file(g->file, g->nb_rooms);
 		clean_node(g);

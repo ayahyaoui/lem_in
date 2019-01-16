@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/30 19:00:27 by anyahyao          #+#    #+#             */
-/*   Updated: 2019/01/16 06:28:27 by anyahyao         ###   ########.fr       */
+/*   Updated: 2019/01/16 06:48:05 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ t_file			*new_file(t_graphe *g);
 t_file			*clean_file(t_file *file, int size);
 
 int				find_best_soluion(t_graphe *g, ENV *e);
-int				edmond_karp(t_graphe *g, t_tab ****t);
+int				edmond_karp(t_graphe *g, t_tab ****t, int max_paths);
 int				ajout_chemins(t_graphe *g);
 void			add_node_parcous(t_graphe *g, t_node *next, int value, int opt);
 int				is_break_path(t_graphe *g, int start);
