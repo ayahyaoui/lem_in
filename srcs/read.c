@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 14:48:52 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/15 23:06:10 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/16 07:26:47 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,20 @@
 
 char			sep(char *line, int *type)
 {
-	int i;
-	int len;
+	int		i;
+	int		len;
+	char	**split;
 
 	i = -1;
 	len = ft_strlen(line);
 	while (++i < len)
-		if (line[i] == '-' && (*type = TUBE))
+	{
+//		ft_printf("line i = %s\n", line);
+		if (!(split = ft_strsplit(line, ' ')))
+			return (0);
+		if (line[i] == '-' && !split[1] && (*type = TUBE))
 			return ('-');
+	}
 	*type = ROOM;
 	return (' ');
 }
@@ -47,22 +53,22 @@ static int			dispatch_ins(ENV *e, char **words, int nb)
 	static int		endrooms;
 
 	ret = NO_ERR;
-//	ft_printf("type = %d endroomm = %d room = %d\n", e->type, endrooms, ROOM);
+	ft_printf("type = %d endroomm = %d room = %d\n", e->type, endrooms, ROOM);
 	if (nb == 1)
 	{
 		if ((ret = get_ants(e, words, e->type)))
 		{
-			display_warning(e, ret);
+//			if (ret >= NO_WRNG)
+				display_warning(e, ret);
 			return (ERR_ANT_NB);
 		}
 	}
 	else if (e->type == ROOM && !endrooms)
 	{
-		if ((ret = get_room(e, words)) > 0 /*&& (ft_printf("ret = %d\n", ret)*/)
+		if ((ret = get_room(e, words)) /*&& (ft_printf("ret = %d\n", ret)*/)
 		{
 			e->nb_line *= -1;
 			display_warning(e, ret);
-//			ft_printf("err notue = %d\n", ERR_NOTUBE);
 			return (ERR_NOTUBE);
 		}
 	}
@@ -75,8 +81,11 @@ static int			dispatch_ins(ENV *e, char **words, int nb)
 			if ((ret = setup_room_mtrx(e, e->graphe->nb_rooms)) )
 				return (ret);
 		}
-		if ((ret = get_tube(e, words, BOTH, 1)))
+		if ((ret = get_tube(e, words, BOTH, 1)) < NO_WRNG && ret)
+		{
+			ft_printf("ret = %d\n", ret);
 			return (endrooms == 1 ? ERR_NOTUBE : ret);//display_warning(e, ret);
+			}
 	}
 	else
 		return (WRNG_INPUT);
@@ -128,7 +137,7 @@ int				read_instructions(ENV *e, char *str, int nbline, int ret)
 //			ft_printf("nbline = %d\n", nbline);
 			if ((ret = dispatch_ins(e, words, nbline)) > 0 )
 			{
-//				ft_printf("ret dispatch = %d\n", ret);
+				ft_printf("ret dispatch = %d\n", ret);
 				ft_free_strtab(&words);
 				ft_strdel(&str);
 				return (ret);

@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 14:48:09 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/15 23:50:25 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/16 06:17:22 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,17 +44,18 @@
 ** WARNINGS
 */
 
-# define NB_WARNINGS		18
+# define NB_WARNINGS		19
 # define ANT_INPUT		"invalid ant format (require strictly positive value)"
 # define MAXINT			"max value is 2 147 483 647"
+# define MININT			"min value is -2 147 483 648"
 # define ROOM_INPUT		"invalid room format"
 # define ROOM_CONF		"confusing room name, please avoid use of '-'"
 # define ROOM_DUP		"duplicate room name"
 # define ROOM_CHAR		"invalid character in room name (L)"
 # define COORD			"non numerical values as room coordinates"
-# define TUBE_NOROOM		"linking non-nexistant room"
+# define TUBE_NOROOM	"linking non-nexistant room"
 # define TUBE_INPUT		"invalid tube input"
-# define INVALID_INPUT		"invalid input"
+# define INVALID_INPUT	"invalid input"
 # define HELP			"(-h for usage)"
 # define OPTION			"unknown option"
 # define FAILED_START		"command ##start without effect"
@@ -67,7 +68,7 @@
 ** OPTIONS
 */
 
-# define OPTION_CHARS		"chtvw"
+# define OPTION_CHARS		"chtvw0123456789"
 # define OPTION_WIDTH		10
 # define OPT_V_CHAR		'v'
 # define OPT_V_DESCRIPTION	"Display warnings and error details"
@@ -95,25 +96,25 @@
 
 
 # define HELP_TITLE		"*** Rules for setting up anthill ***"
-# define COMMENTS_NAME		"comments"
-# define COMMENTS_DESCRIPTION	"lines starting with #"
-# define COMMENTS_PLACEMENT	"anywhere"
-# define COMMENTS_EXAMPLE	"Example: #This is a comment"
-# define COMMANDS_NAME		"commands"
-# define COMMANDS_DESCRIPTION	"lines starting with ##"
-# define COMMANDS_PLACEMENT	"before a significant value"
-# define COMMANDS_EXAMPLE	"##command"
-# define COMMANDS_NB1		"if next input is outside the command scope, "
-# define COMMANDS_NB2		"the command will have no effect."
-# define COMMANDS_AVAILABLE	"available commands"
+# define COMMTS_NAME		"comments"
+# define COMMTS_DESCRIPTION	"lines starting with #"
+# define COMMTS_PLACEMENT	"anywhere"
+# define COMMTS_EX	"Example: #This is a comment"
+# define COMMDS_NAME		"commands"
+# define COMMDS_DESCRIPTION	"lines starting with ##"
+# define COMMDS_PLACEMENT	"before a significant value"
+# define COMMDS_EX	"##command"
+# define COMMDS_NB1		"if next input is outside the command scope, "
+# define COMMDS_NB2		"the command will have no effect."
+# define COMMDS_AVAILABLE	"available commands"
 # define ANTS_NAME		"number of ants"
 # define ANTS_DESCRIPTION	"strictly positive value"
 # define ANTS_PLACEMENT		"at the top of the file"
-# define ANTS_EXAMPLE		"Example: 16"
+# define ANTS_EX		"Example: 16"
 # define ROOM_NAME		"rooms"
 # define ROOM_DESCRIPTION	"room name followed by two integer coordinates"
 # define ROOM_PLACEMENT		"after ant number, before tubes information"
-# define ROOM_EXAMPLE		"room_Name 5 4"
+# define ROOM_EX		"room_Name 5 4"
 # define ROOM_NB1		"a room name cannot start with L or #"
 # define ROOM_NB2		"forbidden character: -"
 # define TUBE_NAME		"tubes"
@@ -122,7 +123,7 @@
 # define TUBE_FORWARD		"forward direction: ->"
 # define TUBE_BACKWARD		"backward direction: <-"
 # define TUBE_ANYWAY		"any direction: - or <->"
-# define TUBE_EXAMPLE		"room1-other_room"
+# define TUBE_EX		"room1-other_room"
 
 
 
@@ -183,6 +184,7 @@ typedef struct			s_environment
 	int			nb_line;
 	int			fd;
 	int			arrived_turn;
+	int			max_paths;
 }				t_environment;
 
 
@@ -190,7 +192,7 @@ enum				e_error
 {
 	NO_ERR, ERR_NO_INS, ERR_ANT_NB,
    	ERR_NOTUBE, ERR_START, ERR_END, ERR_SAME, ERR_LIB, ERR_ALLOC, ERR_ARG, ERR_SOLUTION,
-	NO_WRNG, WRNG_ANT_INPUT, WRNG_INTMAX, WRNG_ROOM, WRNG_ROOM_CONF, WRNG_DUP, WRNG_ROOM_CHAR, WRNG_COORD,
+	NO_WRNG, WRNG_ANT_INPUT, WRNG_INTMAX, WRNG_INTMIN, WRNG_ROOM, WRNG_ROOM_CONF, WRNG_DUP, WRNG_ROOM_CHAR, WRNG_COORD,
 	WRNG_TUBE_NOROOM, WRNG_TUBE, WRNG_INPUT, WRNG_HELP, WRNG_OPTION, WRNG_FAILED_START, WRNG_FAILED_END,
 	WRNG_DOUBLE_START, WRNG_DOUBLE_END, WRNG_SAME_ROOM,
 
@@ -238,14 +240,15 @@ void		print_rooms(ENV *e, char **rooms);
 ** Display
 */
 
-int		is_failing_error(int err);
+void	display_anthill(ENV *e, t_list *anthill);
+void	display_help(ENV *e, char *col1, char *col2);
 int		display_error(ENV *e, int code);
+void	display_turns(ENV *e);
 int		display_warning(ENV *e, int code);
-void		display_help(char *col1, char *col2);
+int		display_travelling(ENV *e, t_tab ***paths, int display);
 
 void		display_moves(ENV *e, int **tab, int total);
-void		display_anthill(ENV *e, t_list *anthill);
-void		printlist(ENV *e, t_list *l);
+void		printlist(ENV *e, t_list *l); //
 int		ant_enter_path(ENV *e, t_tab ***paths, int comb);
 void		move_next_room(ENV *e, t_tab ***paths);
 

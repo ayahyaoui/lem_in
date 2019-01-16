@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/10 13:50:19 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/15 19:07:54 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/16 06:15:01 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 void		del_anthill(t_list *l)
 {
 	t_list *tmp;
-	
+
 	while (l)
 	{
 		tmp = l;
@@ -35,7 +35,7 @@ void		del_anthill(t_list *l)
 
 void		del_rooms(ENV *e, t_room **room)
 {
-	t_room *tmp;
+	t_room	*tmp;
 	int		i;
 
 	i = 0;
@@ -47,7 +47,6 @@ void		del_rooms(ENV *e, t_room **room)
 		++i;
 	}
 	ft_memdel((void **)room);
-
 }
 
 /*
@@ -62,7 +61,7 @@ void		free_env(ENV *e)
 		free_graphe(e->graphe);
 	if (e->ins)
 	{
-		ft_free_inttab(&e->ins->commands, e->ins->nb_commands);	
+		ft_free_inttab(&e->ins->commands, e->ins->nb_commands);
 		ft_memdel((void **)&e->ins);
 	}
 	del_anthill(e->anthill);
@@ -73,7 +72,7 @@ void		free_env(ENV *e)
 ** Return error code if malloc error, else return 1
 */
 
-int		set_env(ENV *e)
+int			set_env(ENV *e)
 {
 	if (!(e->ins = (t_input *)ft_memalloc(sizeof(t_input))))
 		return (ERR_ALLOC);

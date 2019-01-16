@@ -6,7 +6,7 @@
 #    By: emuckens <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/20 17:52:27 by emuckens          #+#    #+#              #
-#    Updated: 2019/01/15 21:03:25 by emuckens         ###   ########.fr        #
+#    Updated: 2019/01/16 06:11:58 by emuckens         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,8 +36,8 @@ LIB_DIR 	:= libft
 #								    FILES									   
 #==============================================================================#
 
-_SRC	= debug.c display.c env.c error.c file.c free.c \
-	get_ants.c get_comment.c  get_room.c get_tube.c initial.c  versionopti.c\
+_SRC	= debug.c display.c display_options.c display_moves.c env.c error.c file.c free.c \
+	get_ants.c get_comment.c  get_room.c get_tube.c initial.c scan.c  versionopti.c\
 	options.c  main.c read.c utils.c translate.c move.c repartAnt.c besttab.c\
 
 _HEAD	= lemin.h lem_in.h color.h

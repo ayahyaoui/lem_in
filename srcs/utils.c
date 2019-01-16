@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/20 18:34:11 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/15 20:30:58 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/16 06:04:54 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,16 @@
 
 int		is_number(char *str)
 {
-	while (*str)
+	int		i;
+	
+	i = 0;
+	if (!str)
+		return (0);
+	while (str[i])
 	{
-		if (!ft_isdigit(*str))
+		if ((!ft_isdigit(str[i]) && str[i] != '-')|| ((str[i] == '-') && i))
 			return (0);
-		++str;
+		++i;
 	}
 	return (1);
 }

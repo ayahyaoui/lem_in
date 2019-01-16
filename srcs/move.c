@@ -63,7 +63,7 @@ void		move_next_room(ENV *e, t_tab ***paths)
 		return ;
 	}
 //	else ft_printf("e->ants exists\n");
-	while (e->ants[ant])
+	while (ant < e->ins->nb_ants && e->ants[ant])
 		++ant;
 	j = -1;
 //	ft_printf("after exists ant = %d\n", ant);
@@ -116,7 +116,7 @@ int	ant_enter_path(ENV *e, t_tab ***paths, int comb)
 //			ft_printf("check enter path, ant = %d\n", ant);
 	//		if (!e->ants)
 	//			return (ERR_ANT_NB);
-			while (e->ants[ant] /*&& e->ants[ant][0] != -1*/)
+			while (ant < e->ins->nb_ants && e->ants[ant] /*&& e->ants[ant][0] != -1*/)
 			{
 				++ant;
 //				ft_printf("ant number = %d\n", e->ins->nb_ants);
