@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/01 18:20:23 by anyahyao          #+#    #+#             */
-/*   Updated: 2019/01/16 21:15:34 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/17 00:03:05 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,17 @@ int				**create_double_int_tab(int taille, int val)
 	int j;
 
 	i = 0;
-	map = (int **)ft_memalloc(sizeof(int *) * taille);
+	if (!(map = (int **)ft_memalloc(sizeof(int *) * taille)))
+		return (0x0);
 	while (i < taille)
 	{
-		map[i] = (int *)ft_memalloc(sizeof(int) * taille);
+		if (!(map[i] = (int *)ft_memalloc(sizeof(int) * taille)))
+		{
+			while (--i >= 0)
+				ft_memdel((void**)&map[i]);
+			ft_memdel((void**)&map);
+			return (0x0);
+		}
 		j = 0;
 		while (j < taille)
 		{
@@ -32,19 +39,6 @@ int				**create_double_int_tab(int taille, int val)
 		i++;
 	}
 	return (map);
-}
-
-int				*create_tab(int taille, int val)
-{
-	int		*tab;
-	int		i;
-
-	if (!(tab = (int *)ft_memalloc(sizeof(int) * taille)))
-		return (0x0);
-	i = -1;
-	while (++i < taille)
-		tab[i] = val;
-	return (tab);
 }
 
 t_node			*create_node(int value)
@@ -95,5 +89,5 @@ int			set_env(ENV *e)
 	e->graphe->end = -1;
 	e->max_paths = -1;
 	e->nb_line = 0;
-	return (1);
+	return (NO_ERR);
 }

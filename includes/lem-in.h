@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 14:48:09 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/16 21:11:44 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/16 23:05:40 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -289,6 +289,7 @@ int			store_rooms(ENV *e);
 /*
 ** SOLVE
 */
+int				isemptyfile(t_file *file);
 int				addfile(t_file *file, int value);
 int				convert_graphe(t_graphe *g);
 int				find_best_solution(t_graphe *g, ENV *e);

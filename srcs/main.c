@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 14:58:47 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/16 22:23:15 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/17 00:02:21 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@ int		main(int argc, char **argv)
 	static ENV			e;
 	int			msg;
 
-	set_env(&e);
 	msg = NO_ERR;
-	if (((msg = read_options(&e, argv, argc)) == NO_ERR || msg >= NO_WRNG)
-			&& ((msg = read_instructions(&e, NULL)) == NO_ERR || msg >= NO_WRNG)
-			&& ((msg = apply_commands(&e)) == NO_ERR || msg >= NO_WRNG))
+	if ( ((msg = set_env(&e)) == NO_ERR)
+		&& ((msg = read_options(&e, argv, argc)) == NO_ERR || msg >= NO_WRNG)
+		&& ((msg = read_instructions(&e, NULL)) == NO_ERR || msg >= NO_WRNG)
+		&& ((msg = apply_commands(&e)) == NO_ERR || msg >= NO_WRNG))
 	{
 		display_anthill(&e);
 		if (e.graphe->start == e.graphe->end

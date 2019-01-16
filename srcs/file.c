@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/01 18:41:53 by anyahyao          #+#    #+#             */
-/*   Updated: 2019/01/16 20:00:47 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/16 23:17:51 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,16 +54,13 @@ int				addfile(t_file *file, int value)
 	file->end += 1;
 	return (1);
 }
-/*
+
 int				isemptyfile(t_file *file)
 {
 	if (!file)
-	{
-		ft_putstr("GROS PB impossible file null isemptyfile\n");
 		return (-1);
-	}
 	if (file->begin >= file->end)
 		return (1);
 	else
 		return (0);
-}*/
+}

@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/13 21:58:28 by anyahyao          #+#    #+#             */
-/*   Updated: 2019/01/16 20:03:52 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/16 23:36:52 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,22 +66,21 @@ int			convert_graphe(t_graphe *g)
 		g->map[g->start][g->end] = 0;
 		g->start_next_to_end = 1;
 	}
-	if (convert_map_to_graph(g) != NO_ERR)
-		return (ERR_ALLOC);
-	if (!(g->previous = ft_memalloc(g->nb_rooms * sizeof(int))))
-		return (ERR_ALLOC);
-	if (!(g->node = ft_memalloc(sizeof(t_node*) * g->nb_rooms)))
+	if ((convert_map_to_graph(g) != NO_ERR)
+		|| (!(g->color = (int *)ft_memalloc(g->nb_rooms * sizeof(int))))
+		|| (!(g->previous = (int *)ft_memalloc(g->nb_rooms * sizeof(int))))
+		|| (!(g->node = (t_node **)ft_memalloc(sizeof(t_node*) * g->nb_rooms)))
+		|| (!(g->capacite = (int*)ft_memalloc(g->nb_rooms * sizeof(int))))
+		|| (!(g->file = new_file(g))))
 		return (ERR_ALLOC);
 	i = -1;
 	while (++i < (int)g->nb_rooms)
-		g->node[i] = create_node(i);
-	if (!(g->capacite = (int*)ft_memalloc(g->nb_rooms * sizeof(int))))
-		return (ERR_ALLOC);
+		if (!(g->node[i] = create_node(i)))
+			return (ERR_ALLOC);
 	i = -1;
 	while (++i < (int)g->nb_rooms)
 		g->capacite[i] = -1;
 	ft_bzero(g->color, g->nb_rooms * sizeof(int));
-	g->file = new_file(g);
 	return (NO_ERR);
 }
 

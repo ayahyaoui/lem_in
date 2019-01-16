@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/10 17:50:41 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/16 19:34:38 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/17 00:44:15 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,44 +37,17 @@ int					setup_room_mtrx(ENV *e, int size)
 ** Returns index of room if found | -1 otherwise
 */
 
-static int			get_room_index(ENV *e, char *str, int n)
+static int			get_room_index(ENV *e, char *str)
 {
 	int i;
 
 	i = -1;
 	while ((unsigned int)++i < e->graphe->nb_rooms)
-	{
-		if (!n && ft_strequ(e->ins->room[i].name, str))
+		if (ft_strnequ(e->ins->room[i].name, str,
+				ft_strlen(e->ins->room[i].name)))
 			return (i);
-		else if (n && ft_strnequ(e->ins->room[i].name, str, n))
-			return (i);
-	}
 	return (-1);
 }
-
-/*
-** Handle optional possibility to use -> <- or <-> (= -) to indicate flow
-** direction in tube
-** Input: 2 strings for room names, pointer on way marker to set to FORWARD,
-** BACKWARD or BOTH
-*/
-
-static void			handle_way_spec(ENV *e, char **str1, char **str2, int *way)
-{
-	if (!(e->options & OPT_WAY))
-		return ;
-	if ((*str2)[0] == '>')
-	{
-		*way = FORWARD;
-		++(*str2);
-	}
-	if ((*str1)[ft_strlen(*str1) - 1] == '<')
-	{
-		*way = (*way == FORWARD ? BOTH : BACKWARD);
-		(*str1)[ft_strlen(*str1) - 1] = 0;
-	}
-}
-
 /*
 ** Read tube information, setup and fill adjacency matrix, check start and end
 ** existence
@@ -89,23 +62,21 @@ int					get_tube(ENV *e, char **str, int way, int len)
 	int			i;
 	int			j;
 
+	(void)way;
 	if (!str[1] || str[2])
 	{
 		ft_free_strtab(&check);
 		display_warning(e, WRNG_TUBE);
 		return (ERR_NOTUBE);
 	}
-	handle_way_spec(e, &str[0], &str[1], &way);
-	i = get_room_index(e, str[0], 0);
-	j = get_room_index(e, str[1], 0);
+	i = get_room_index(e, str[0]);
+	j = get_room_index(e, str[1]);
 	if ((i == -1 || j == -1))
 		return (display_warning(e, WRNG_TUBE_NOROOM));
 	if (i == j)
 		display_warning(e, WRNG_SAME_ROOM);
-	if ((way == FORWARD || way == BOTH) && (e->graphe->map[i][j] = len))
-		str[1] -= (e->options & OPT_WAY) ? 1 : 0;
-	if (way == BACKWARD || way == BOTH)
-		e->graphe->map[j][i] = len;
+	e->graphe->map[i][j] = len;
+	e->graphe->map[j][i] = len;
 	++e->graphe->nb_tubes;
 	return (NO_ERR);
 }

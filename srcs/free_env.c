@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/16 19:10:50 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/16 21:49:14 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/17 00:52:36 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,14 +79,17 @@ static void		free_besttab(t_tab ***best_tab)
 
 void			free_env(ENV *e)
 {
-		del_rooms(e, &e->ins->room);
 //		getleaks("apres delrooms");
+	if (e->graphe)
 		free_graphe(e->graphe);
 //		getleaks("apres delgraph");
-	free_besttab(e->all_paths);
+	if (e->all_paths)
+		free_besttab(e->all_paths);
 //		getleaks("apres delall paths");
 	if (e->ins)
 	{
+		if (e->ins->room)
+			del_rooms(e, &e->ins->room);
 		ft_free_inttab(&e->ins->commands, e->ins->nb_commands);
 //		getleaks("apres delall ins");
 		ft_memdel((void **)&e->ins);

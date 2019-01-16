@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/16 05:35:36 by anyahyao          #+#    #+#             */
-/*   Updated: 2019/01/16 22:23:17 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/16 23:10:28 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int		ajout_chemins(t_graphe *g)
 	node = g->node[g->start];
 	node->color = BLACK;
 	addfile(g->file, node->value);
-	while (g->file->begin < g->file->end && (i = 0) == 0)
+	while (!isemptyfile(g->file) && (i = 0) == 0)
 		if ((node = g->node[removefile(g->file)])->value == g->end)
 			return (1);
 		else if (node->parent != -1 && g->color[node->previous] == 0)
@@ -97,8 +97,6 @@ int			find_best_solution(t_graphe *g, ENV *e)
 	t_tab		***besttab;
 	int			res;
 
-	if (!(e->graphe->color = (int *)ft_memalloc(g->nb_rooms * sizeof(int))))
-		return (ERR_ALLOC);
 	g->nb_paths = 0;
 	if ((convert_graphe(g) == ERR_ALLOC)
 		|| !(besttab = create_besttab(PATH_SIZE)))
