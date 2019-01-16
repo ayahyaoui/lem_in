@@ -6,13 +6,13 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/16 05:08:18 by anyahyao          #+#    #+#             */
-/*   Updated: 2019/01/16 06:19:06 by anyahyao         ###   ########.fr       */
+/*   Updated: 2019/01/16 19:25:39 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem_in.h"
+#include "lem-in.h"
 
-int			place_ant(t_tab ***besttab, int fourmis, int path)
+static int		place_ant(t_tab ***besttab, int fourmis, int path)
 {
 	int i;
 	int j;
@@ -41,7 +41,21 @@ int			place_ant(t_tab ***besttab, int fourmis, int path)
 	return (i);
 }
 
-void		change_place_ant(t_graphe *g, int *tab)
+static void		clean_ant(t_tab ***besttab)
+{
+	int i;
+	int j;
+
+	i = -1;
+	while (besttab[++i])
+	{
+		j = -1;
+		while (besttab[i][++j])
+			besttab[i][j]->tab[0] = 0;
+	}
+}
+
+static void		change_place_ant(t_graphe *g, int *tab)
 {
 	int i;
 
@@ -94,18 +108,4 @@ int			try_to_place_ant(t_tab ***besttab, int *tab_fourmis)
 		if (tab_fourmis[i] > 0)
 			place_ant(besttab, tab_fourmis[i], i);
 	return (1);
-}
-
-void		clean_ant(t_tab ***besttab)
-{
-	int i;
-	int j;
-
-	i = -1;
-	while (besttab[++i])
-	{
-		j = -1;
-		while (besttab[i][++j])
-			besttab[i][j]->tab[0] = 0;
-	}
 }

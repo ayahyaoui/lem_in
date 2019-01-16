@@ -6,33 +6,65 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/16 05:35:36 by anyahyao          #+#    #+#             */
-/*   Updated: 2019/01/16 06:48:06 by anyahyao         ###   ########.fr       */
+/*   Updated: 2019/01/16 19:24:18 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem_in.h"
+#include "lem-in.h"
 
-int			find_best_soluion(t_graphe *g, ENV *e)
+static void		add_node_parcous(t_graphe *g, t_node *next, int value, int opt)
 {
-	t_tab		***besttab;
-	int			res;
-
-	g->nb_paths = 0;
-	if (convert_graphe(g) == ERR_ALLOC
-		|| !(besttab = create_besttab(PATH_SIZE)))
-		return (ERR_ALLOC);
-	res = edmond_karp(g, &besttab, e->max_paths);
-	if (res != NO_ERR && !(res == ERR_SOLUTION && g->start_next_to_end))
-		return (res);
-	if (!(besttab = register_path(g, g->nb_paths, besttab)))
-		return (ERR_ALLOC);
-	g->nb_paths--;
-	besttab[g->nb_paths + 1] = 0x0;
-	e->all_paths = besttab;
-	return (NO_ERR);
+	if (next->color == WHITE)
+	{
+		next->color = BLACK;
+		next->previous = value;
+		addfile(g->file, next->value);
+		if (opt == 1)
+			g->color[value] = 1;
+	}
 }
 
-int			edmond_karp(t_graphe *g, t_tab ****besttab, int max_paths)
+static int		ajout_chemins(t_graphe *g)
+{
+	t_node		*node;
+	t_node		*suiv;
+	int			i;
+
+	node = g->node[g->start];
+	node->color = BLACK;
+	addfile(g->file, node->value);
+	while (g->file->begin < g->file->end && (i = 0) == 0)
+		if ((node = g->node[removefile(g->file)])->value == g->end)
+			return (1);
+		else if (node->parent != -1 && g->color[node->previous] == 0)
+			add_node_parcous(g, g->node[node->parent], node->value, 1);
+		else
+			while (g->graph[node->value][i] != -1)
+			{
+				suiv = g->node[g->graph[node->value][i]];
+				if (suiv->parent == -1 ||
+					(suiv->parent >= 0 && suiv->parent != node->value))
+					add_node_parcous(g, suiv, node->value, 0);
+				i++;
+			}
+	return (-1);
+}
+
+static int	is_break_path(t_graphe *g, int start)
+{
+	t_node		*node;
+
+	node = g->node[start];
+	while (node->value != g->start)
+	{
+		if (g->color[node->previous] != 0)
+			return (1);
+		node = g->node[node->previous];
+	}
+	return (0);
+}
+
+static int		edmond_karp(t_graphe *g, t_tab ****besttab, int max_paths)
 {
 	int			i;
 	t_node		*node;
@@ -42,7 +74,7 @@ int			edmond_karp(t_graphe *g, t_tab ****besttab, int max_paths)
 	{
 		g->file = clean_file(g->file, g->nb_rooms);
 		clean_node(g);
-		ft_bzero(g->color, g->nb_rooms * 4);
+		ft_bzero(g->color, g->nb_rooms * sizeof(int));
 		if (ajout_chemins(g) == -1)
 			break ;
 		i = g->node[g->end]->previous;
@@ -60,56 +92,25 @@ int			edmond_karp(t_graphe *g, t_tab ****besttab, int max_paths)
 	return ((i == -42) ? ERR_SOLUTION : NO_ERR);
 }
 
-int			ajout_chemins(t_graphe *g)
+int			find_best_solution(t_graphe *g, ENV *e)
 {
-	t_node		*node;
-	t_node		*suiv;
-	int			i;
+	t_tab		***besttab;
+	int			res;
 
-	node = g->node[g->start];
-	node->color = BLACK;
-	addfile(g->file, node->value);
-	while (g->file->begin < g->file->end && (i = 0) == 0)
-		if ((node = g->node[removefile(g->file)])->value == g->end)
-			return (1);
-		else if (node->parent != -1 && g->color[node->previous] == 0)
-		{
-			add_node_parcous(g, g->node[node->parent], node->value, 1);
-		}
-		else
-			while (g->graph[node->value][i] != -1)
-			{
-				suiv = g->node[g->graph[node->value][i]];
-				if (suiv->parent == -1 ||
-					(suiv->parent >= 0 && suiv->parent != node->value))
-					add_node_parcous(g, suiv, node->value, 0);
-				i++;
-			}
-	return (-1);
-}
-
-void		add_node_parcous(t_graphe *g, t_node *next, int value, int opt)
-{
-	if (next->color == WHITE)
-	{
-		next->color = BLACK;
-		next->previous = value;
-		addfile(g->file, next->value);
-		if (opt == 1)
-			g->color[value] = 1;
-	}
-}
-
-int			is_break_path(t_graphe *g, int start)
-{
-	t_node		*node;
-
-	node = g->node[start];
-	while (node->value != g->start)
-	{
-		if (g->color[node->previous] != 0)
-			return (1);
-		node = g->node[node->previous];
-	}
-	return (0);
+	e->graphe->color = (int *)ft_memalloc(g->nb_rooms * sizeof(int));
+	g->nb_paths = 0;
+	if (convert_graphe(g) == ERR_ALLOC
+		|| !(besttab = create_besttab(PATH_SIZE)))
+		return (ERR_ALLOC);
+	res = edmond_karp(g, &besttab, e->max_paths);
+	if (res != NO_ERR && !(res == ERR_SOLUTION && g->start_next_to_end))
+		return (res);
+	if (!(besttab = register_path(g, g->nb_paths, besttab)))
+		return (ERR_ALLOC);
+	g->nb_paths--;
+	besttab[g->nb_paths + 1] = 0x0;
+	e->all_paths = besttab;
+	try_to_place_ant(e->all_paths, prediction(e, e->graphe));
+	scan_allmoves(e, DISPLAY_ON);
+	return (NO_ERR);
 }

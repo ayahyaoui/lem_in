@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   free_graph.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/01 18:22:17 by anyahyao          #+#    #+#             */
-/*   Updated: 2019/01/16 05:05:55 by anyahyao         ###   ########.fr       */
+/*   Updated: 2019/01/16 19:28:56 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem_in.h"
+#include "lem-in.h"
 
 static void		free_node(t_graphe *g)
 {
@@ -22,6 +22,16 @@ static void		free_node(t_graphe *g)
 		while (++i < (int)g->nb_rooms)
 			ft_memdel((void**)&g->node[i]);
 		ft_memdel((void **)&g->node);
+	}
+}
+
+static void		free_file(t_file **file)
+{
+	if (*file)
+	{
+		if ((*file)->tab)
+			ft_memdel((void**)&(*file)->tab);
+		ft_memdel((void**)file);
 	}
 }
 
@@ -51,45 +61,4 @@ void			free_graphe(t_graphe *g)
 	ft_memdel((void**)&g->previous);
 	ft_memdel((void**)&g->color);
 	ft_memdel((void **)&g);
-}
-
-void			free_file(t_file **file)
-{
-	if (*file)
-	{
-		if ((*file)->tab)
-			ft_memdel((void**)&(*file)->tab);
-		ft_memdel((void**)file);
-	}
-}
-
-void			free_t_tab(t_tab *t)
-{
-	if (t)
-	{
-		ft_memdel((void**)&t->tab);
-		ft_memdel((void**)&t);
-	}
-}
-
-void			free_besttab(t_tab ***best_tab)
-{
-	int i;
-	int j;
-
-	if (best_tab)
-	{
-		i = -1;
-		while (best_tab[++i])
-		{
-			j = -1;
-			while (best_tab[i][++j])
-			{
-				ft_memdel((void**)(&(best_tab[i][j]->tab)));
-				ft_memdel((void**)&best_tab[i][j]);
-			}
-			ft_memdel((void**)(&best_tab[i]));
-		}
-		ft_memdel((void**)&best_tab);
-	}
 }

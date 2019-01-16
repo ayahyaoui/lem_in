@@ -6,18 +6,18 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/01 18:41:53 by anyahyao          #+#    #+#             */
-/*   Updated: 2019/01/16 03:43:06 by anyahyao         ###   ########.fr       */
+/*   Updated: 2019/01/16 19:38:53 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem_in.h"
+#include "lem-in.h"
 
 t_file			*new_file(t_graphe *g)
 {
 	t_file *file;
 
 	file = 0x0;
-	if (!(file = (t_file*)malloc(sizeof(t_file))) || !g || g->nb_rooms == 0)
+	if (!(file = (t_file*)ft_memalloc(sizeof(t_file))) || !g || !g->nb_rooms)
 		return (0x0);
 	file->begin = 0;
 	file->end = 0;
@@ -60,7 +60,7 @@ int				addfile(t_file *file, int value)
 	file->end += 1;
 	return (1);
 }
-
+/*
 int				isemptyfile(t_file *file)
 {
 	if (!file)
@@ -72,4 +72,4 @@ int				isemptyfile(t_file *file)
 		return (1);
 	else
 		return (0);
-}
+}*/

@@ -6,11 +6,11 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/16 05:29:47 by anyahyao          #+#    #+#             */
-/*   Updated: 2019/01/16 06:17:45 by anyahyao         ###   ########.fr       */
+/*   Updated: 2019/01/16 19:25:58 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem_in.h"
+#include "lem-in.h"
 
 static void		place_value_in_tab(int *tab, int value, int pos)
 {

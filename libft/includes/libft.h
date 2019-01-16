@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/09 12:08:15 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/13 18:27:45 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/16 18:29:58 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,11 @@ typedef struct	s_4ivect
 	int		w;
 }				t_4ivect;
 
+enum			e_bool
+{
+	FALSE, TRUE
+};
+
 /*
 ** Chars
 */
@@ -76,6 +81,7 @@ void			ft_lstaddcircle(t_list **alst, t_list *new);
 void			ft_lstaddend(t_list **alst, t_list *new);
 void			ft_lstdel(t_list **alst, void(*del)(void*, size_t));
 void			ft_lstdelone(t_list **alst, void(*del)(void*, size_t));
+t_list			*ft_lstel(t_list *l, int index);
 void			ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 t_list			*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
 t_list			*ft_lstnew(void const *content, size_t content_size);
@@ -94,6 +100,7 @@ void			*ft_memcpy(void *dst, const void *src, size_t n);
 void			ft_memdel(void **ap);
 void			*ft_memmove(void *dst, const void *src, size_t len);
 void			*ft_memset(void *str, int c, size_t len);
+void			*ft_realloc(void *previous, size_t t, size_t len_src);
 
 /*
 ** Output
@@ -127,7 +134,7 @@ double			ft_dsqrt(double num);
 size_t			ft_endien_btl(size_t valbe);
 float			ft_fabs(float num);
 void			ft_free_inttab(int ***tab, int size);
-int			ft_isintab(int *tab, int len, int val);
+int				ft_isintab(int *tab, int len, int val);
 long long		ft_llabs(long long n);
 size_t			ft_lllen(long long n);
 long long		ft_llpow(long long n, int pow);
@@ -139,6 +146,7 @@ void			ft_sort_int_tab(int *tab, size_t size);
 int				ft_strarrlen(char **str);
 void			ft_swap(int *a, int *b);
 void			ft_swapd(double *a, double *b);
+void			ft_swapp(void **a, void **b);
 
 /*
 ** Strings
@@ -146,6 +154,7 @@ void			ft_swapd(double *a, double *b);
 int				get_next_line(const int fd, char **line);
 int				get_next_line2(const int fd, char **line);
 void			ft_free_strtab(char ***tab);
+int				ft_isnumber(char *str);
 char			*ft_strcat(char *s1, const char *s2);
 char			*ft_strchr(const char *s, int c);
 int				ft_strchri(const char *s, int c, int i);

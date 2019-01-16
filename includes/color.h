@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/22 15:55:47 by emuckens          #+#    #+#             */
-/*   Updated: 2018/11/28 13:57:27 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/16 06:01:31 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # define COL_WARNING		COLF_BROWN
 # define COL_HELP		COLB_BLACK
 # define COL_TYPES		COLF_BMAGENTA
+# define COL_TURNS		COLF_BGREEN
 
 /*
 ** STANDARD COLORS - FOREGROUND

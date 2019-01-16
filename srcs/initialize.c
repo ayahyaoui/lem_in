@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   initial.c                                          :+:      :+:    :+:   */
+/*   initialize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/01 18:20:23 by anyahyao          #+#    #+#             */
-/*   Updated: 2019/01/16 05:38:01 by anyahyao         ###   ########.fr       */
+/*   Updated: 2019/01/16 19:29:01 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem_in.h"
+#include "lem-in.h"
 
 int				**create_double_int_tab(int taille, int val)
 {
@@ -66,4 +66,30 @@ t_tab			***create_besttab(int nb_path)
 	if (!(besttab = (t_tab***)ft_memalloc(sizeof(t_tab**) * (nb_path + 1))))
 		return (0x0);
 	return (besttab);
+}
+
+/*
+** Set up environment
+** Return error code if malloc error, else return 1
+*/
+
+int			set_env(ENV *e)
+{
+	if (!(e->ins = (t_input *)ft_memalloc(sizeof(t_input))))
+		return (ERR_ALLOC);
+	if (!(e->graphe = (t_graphe *)ft_memalloc(sizeof(t_graphe))))
+		return (ERR_ALLOC);
+	e->ins->nb_ants = 0;
+	e->anthill = NULL;
+	e->options = 0;
+	e->ins->room = NULL;
+	e->ins->commands = NULL;
+	e->turns = 0;
+	e->ins->nb_commands = 0;
+	e->graphe->map = NULL;
+	e->graphe->start = -1;
+	e->graphe->end = -1;
+	e->max_paths = -1;
+	e->nb_line = 0;
+	return (1);
 }

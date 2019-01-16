@@ -1,38 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_beyond_limiti.c                                 :+:      :+:    :+:   */
+/*   ft_swapp.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/10 19:31:32 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/16 04:06:31 by emuckens         ###   ########.fr       */
+/*   Created: 2019/01/16 18:25:23 by emuckens          #+#    #+#             */
+/*   Updated: 2019/01/16 18:26:03 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include "limits.h"
 
-int				ft_beyond_limiti(char *str)
+/*
+** swap pointers
+*/
+
+void		ft_swapp(void **a, void **b)
 {
-	long	num;
-	int		len;
-	int		coef;
-	int		i;
+	char *c;
+	char **aa;
+	char **bb;
 
-	len = ft_strlen(str);
-	num = 0;
-	coef = (str[0] == '-' ? -1 : 1);
-	i = (str[0] == '-' ? 1 : 0);
-	while (i < len)
-	{
-		num += (str[i] - '0');
-		if (num * coef > INT_MAX)
-			return (1);
-		else if (num * coef < INT_MIN)
-			return (-1);
-		num *= 10;
-		++i;
-	}
-	return (0);
+	aa = (char **)a;
+	bb = (char **)b;
+	c = *aa;
+	*aa = *bb;
+	*bb = c;
 }

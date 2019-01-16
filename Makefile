@@ -6,7 +6,7 @@
 #    By: emuckens <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/20 17:52:27 by emuckens          #+#    #+#              #
-#    Updated: 2019/01/16 05:43:59 by anyahyao         ###   ########.fr        #
+#    Updated: 2019/01/16 19:39:32 by emuckens         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 NAME := lem-in
 
 #==============================================================================#
-#					 		 	  COMPILATION								   
+#					 		 	  COMPILATION
 #==============================================================================#
 
 FLAGS		:= -Wall -Werror -Wextra -g
@@ -23,7 +23,7 @@ CC		:= gcc $(FLAGS)
 CCF		:= $(CC) $(FSANI)
 
 #==============================================================================#
-#								DIRECTORIES									    
+#								DIRECTORIES
 #==============================================================================#
 
 BIN_DIR 	:= bin
@@ -33,35 +33,35 @@ EXE_DIR		:= programs
 LIB_DIR 	:= libft
 
 #==============================================================================#
-#								    FILES									   
+#								    FILES
 #==============================================================================#
 
-_SRC	= debug.c display.c env.c error.c file.c free.c algo_best_solution.c \
-	get_ants.c get_comment.c  get_room.c get_tube.c initial.c algo_repart_ant.c\
-	options.c  main.c read.c utils.c translate.c move.c algo_register_paths.c \
-	algo_sort_path.c
 
-_HEAD	= lemin.h lem_in.h color.h
+_SRC	= algo_best_solution.c algo_repart_ant.c algo_register_paths.c algo_sort_path.c display_options.c display_result.c display_error.c file.c free_env.c free_graph.c \
+	parse_ants.c parse_comments.c parse_rooms.c parse_tubes.c initialize.c scan.c\
+	read_anthill.c  main.c read_options.c  translate.c  move.c \
+
+_HEAD	= lem-in.h color.h
 SRC 	= $(patsubst %, $(SRC_DIR)/%, $(_SRC))
 HEAD	= $(patsubst %, $(HEAD_DIR)/$, $(_HEAD))
 BIN	= $(patsubst %.c, $(BIN_DIR)/%.o, $(_SRC))
 LIBFT	:= $(LIB_DIR)/libft.a
 
 #==============================================================================#
-#							       MISC										    
+#							       MISC
 #==============================================================================#
 
 NB = $(words $(SRC))
 INDEX := 0
 
 #==============================================================================#
-#							       RULES									    
+#							       RULES
 #==============================================================================#
 
 
 .PHONY: all clean fclean re simple debug
 
-all: 
+all:
 	@make $(NAME)
 #	cp $(NAME) test/
 
@@ -78,7 +78,7 @@ $(BIN_DIR):
 $(BIN_DIR)/%.o: $(SRC_DIR)/%.c $(HEAD) Makefile | $(BIN_DIR)
 	@$(eval PERCENT=$(shell echo $$(($(INDEX)*100/($(NB))))))
 	@$(CC) -I $(HEAD_DIR) -I $(LIB_DIR)/$(HEAD_DIR) -o $@ -c $<
-	@printf "\033[22;35mgenerating binary.... [ %d%% ]\033[0m\r" $(PERCENT) 
+	@printf "\033[22;35mgenerating binary.... [ %d%% ]\033[0m\r" $(PERCENT)
 	@$(eval INDEX=$(shell echo $$(($(INDEX)+1))))
 
 clean:

@@ -1,17 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_tube.c                                         :+:      :+:    :+:   */
+/*   parse_tubes.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/10 17:50:41 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/15 20:17:09 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/16 19:34:38 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lemin.h"
-#include <stdlib.h>
+#include "lem-in.h"
 
 /*
 ** Malloc square int **tab
@@ -19,7 +18,7 @@
 ** Returns true for successful allocation | False otherwise
 */
 
-int		setup_room_mtrx(ENV *e, int size)
+int					setup_room_mtrx(ENV *e, int size)
 {
 	int		i;
 
@@ -38,7 +37,7 @@ int		setup_room_mtrx(ENV *e, int size)
 ** Returns index of room if found | -1 otherwise
 */
 
-static int		get_room_index(ENV *e, char *str, int n)
+static int			get_room_index(ENV *e, char *str, int n)
 {
 	int i;
 
@@ -54,16 +53,16 @@ static int		get_room_index(ENV *e, char *str, int n)
 }
 
 /*
-** Handle optional possibility to use ->, <- or <-> (= -) to indicate flow direction
-** in tube
+** Handle optional possibility to use -> <- or <-> (= -) to indicate flow
+** direction in tube
 ** Input: 2 strings for room names, pointer on way marker to set to FORWARD,
-** BACKWARD or BOTH 
+** BACKWARD or BOTH
 */
 
-static void		handle_way_spec(ENV *e, char **str1, char **str2, int *way)
+static void			handle_way_spec(ENV *e, char **str1, char **str2, int *way)
 {
 	if (!(e->options & OPT_WAY))
-		return;
+		return ;
 	if ((*str2)[0] == '>')
 	{
 		*way = FORWARD;
@@ -84,7 +83,7 @@ static void		handle_way_spec(ENV *e, char **str1, char **str2, int *way)
 ** otherwise
 */
 
-int				get_tube(ENV *e, char **str, int way, int len)
+int					get_tube(ENV *e, char **str, int way, int len)
 {
 	char		**check;
 	int			i;
@@ -93,15 +92,14 @@ int				get_tube(ENV *e, char **str, int way, int len)
 	if (!str[1] || str[2])
 	{
 		ft_free_strtab(&check);
-		return (WRNG_TUBE);
+		display_warning(e, WRNG_TUBE);
+		return (ERR_NOTUBE);
 	}
 	handle_way_spec(e, &str[0], &str[1], &way);
 	i = get_room_index(e, str[0], 0);
 	j = get_room_index(e, str[1], 0);
 	if ((i == -1 || j == -1))
-	{
 		return (display_warning(e, WRNG_TUBE_NOROOM));
-	}
 	if (i == j)
 		display_warning(e, WRNG_SAME_ROOM);
 	if ((way == FORWARD || way == BOTH) && (e->graphe->map[i][j] = len))
@@ -110,4 +108,4 @@ int				get_tube(ENV *e, char **str, int way, int len)
 		e->graphe->map[j][i] = len;
 	++e->graphe->nb_tubes;
 	return (NO_ERR);
-}	
+}
