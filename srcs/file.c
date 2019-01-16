@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/01 18:41:53 by anyahyao          #+#    #+#             */
-/*   Updated: 2019/01/16 19:38:53 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/16 20:00:47 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,7 @@ t_file			*clean_file(t_file *file, int size)
 int				removefile(t_file *file)
 {
 	if (!file)
-	{
-		ft_putstr("GROS PB impossible file null removefile\n");
 		return (-1);
-	}
 	if (file->begin >= file->end)
 		return (-1);
 	file->begin += 1;
@@ -52,10 +49,7 @@ int				removefile(t_file *file)
 int				addfile(t_file *file, int value)
 {
 	if (!file)
-	{
-		ft_putstr("GROS PB impossible file null addfile\n");
 		return (-1);
-	}
 	file->tab[file->end] = value;
 	file->end += 1;
 	return (1);
