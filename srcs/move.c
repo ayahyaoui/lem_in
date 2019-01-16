@@ -83,9 +83,9 @@ void		move_next_room(ENV *e, t_tab ***paths)
 			else
 			{
 				e->ants[j][2] = -(int)ft_abs(e->ants[j][2]);
-	//			ft_printf("piece qui bloque: %d\n", paths[e->ants[j][0]][e->ants[j][1]]->tab[e->ants[j][2]]);
-	//			ft_printf("putain de merde\n");
-				exit(0);
+				//ft_printf("piece qui bloque: %d\n", paths[e->ants[j][0]][e->ants[j][1]]->tab[e->ants[j][2]]);
+				//ft_printf("putain de merde\n");
+				//exit(0);
 			}
 
 		}

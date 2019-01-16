@@ -1,33 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   versionopti.c                                      :+:      :+:    :+:   */
+/*   algo_best_solution.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/23 16:28:04 by anyahyao          #+#    #+#             */
-/*   Updated: 2019/01/16 00:53:13 by emuckens         ###   ########.fr       */
+/*   Created: 2019/01/16 05:35:36 by anyahyao          #+#    #+#             */
+/*   Updated: 2019/01/16 06:13:41 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-int			algoopti(t_graphe *g, ENV *e)
+int			find_best_soluion(t_graphe *g, ENV *e)
 {
 	t_tab		***besttab;
 	int			res;
 
 	g->nb_paths = 0;
-	if (convert_graphe(g) == ERR_ALLOC || !(besttab = allowBestTab(PATH_SIZE)))
+	if (convert_graphe(g) == ERR_ALLOC
+		|| !(besttab = create_besttab(PATH_SIZE)))
 		return (ERR_ALLOC);
 	res = edmond_karp(g, &besttab);
 	if (res != NO_ERR && !(res == ERR_SOLUTION && g->start_next_to_end))
 		return (res);
-	if (!(besttab = registerPath(g, g->nb_paths, besttab)))
+	if (!(besttab = register_path(g, g->nb_paths, besttab)))
 		return (ERR_ALLOC);
 	g->nb_paths--;
 	besttab[g->nb_paths + 1] = 0x0;
-	//place_ant(besttab, e->ins->nb_ants, g->nb_paths);
 	e->all_paths = besttab;
 	return (NO_ERR);
 }
@@ -41,14 +41,14 @@ int			edmond_karp(t_graphe *g, t_tab ****besttab)
 	while (42)
 	{
 		g->file = clean_file(g->file, g->nb_rooms);
-		cleanNodee(g);
+		clean_node(g);
 		ft_bzero(g->color, g->nb_rooms * 4);
 		if (ajout_chemins(g) == -1)
 			break ;
 		i = g->node[g->end]->previous;
 		node = g->node[i];
 		if (is_break_path(g, i))
-			if (!(*besttab = registerPath(g, g->nb_paths, *besttab)))
+			if (!(*besttab = register_path(g, g->nb_paths, *besttab)))
 				return (ERR_ALLOC);
 		while (node->value != g->start)
 		{

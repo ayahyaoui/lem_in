@@ -6,38 +6,16 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/01 18:22:17 by anyahyao          #+#    #+#             */
-/*   Updated: 2019/01/15 19:12:47 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/16 05:05:55 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void			free_graphe(t_graphe *g);
-void			free_file(t_file **file);
-
-void			free_graphe(t_graphe *g)
+static void		free_node(t_graphe *g)
 {
 	int i;
 
-	i = -1;
-	if (g->map)
-	{
-		while ((unsigned int)++i < g->nb_rooms)
-			ft_memdel((void **)&g->map[i]);
-		ft_memdel((void **)&g->map);
-//		g->map = 0x0;
-	}
-	i = -1;
-	if (g->graph)
-	{
-		while ((unsigned int)++i < g->nb_rooms)
-			ft_memdel((void **)&g->graph[i]);
-		ft_memdel((void **)&g->graph);
-//		g->graph = 0x0;
-	}
-	ft_memdel((void**)&g->capacite);
-	ft_memdel((void**)&g->previous);
-	ft_memdel((void**)&g->color);
 	if (g->node)
 	{
 		i = -1;
@@ -45,11 +23,34 @@ void			free_graphe(t_graphe *g)
 			ft_memdel((void**)&g->node[i]);
 		ft_memdel((void **)&g->node);
 	}
-	if (g)
+}
+
+void			free_graphe(t_graphe *g)
+{
+	int i;
+
+	i = -1;
+	if (!g)
+		return ;
+	if (g->map)
 	{
-		free_file(&g->file);
-		ft_memdel((void **)&g);
+		while ((unsigned int)++i < g->nb_rooms)
+			ft_memdel((void **)&g->map[i]);
+		ft_memdel((void **)&g->map);
 	}
+	i = -1;
+	if (g->graph)
+	{
+		while ((unsigned int)++i < g->nb_rooms)
+			ft_memdel((void **)&g->graph[i]);
+		ft_memdel((void **)&g->graph);
+	}
+	free_node(g);
+	free_file(&g->file);
+	ft_memdel((void**)&g->capacite);
+	ft_memdel((void**)&g->previous);
+	ft_memdel((void**)&g->color);
+	ft_memdel((void **)&g);
 }
 
 void			free_file(t_file **file)

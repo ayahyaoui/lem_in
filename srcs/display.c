@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/20 15:04:49 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/16 01:03:49 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/16 05:02:38 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,7 +180,9 @@ int		scan_allmoves(ENV *e, int display)
 	e->turns = 0;
 
 	if (!e->all_paths)
+	{
 		return (ERR_SOLUTION);
+	}
 //	displayallpath(e->graphe, e->all_paths);
 	while (e->all_paths[nb_comb])
 	{

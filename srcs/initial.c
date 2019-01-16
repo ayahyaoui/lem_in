@@ -6,26 +6,23 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/01 18:20:23 by anyahyao          #+#    #+#             */
-/*   Updated: 2019/01/13 17:22:07 by anyahyao         ###   ########.fr       */
+/*   Updated: 2019/01/16 05:38:01 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-int				*create_tab(int taille, int val);
-char			**create_double_tab(int taille, int val);
-
-char			**create_double_tab(int taille, int val)
+int				**create_double_int_tab(int taille, int val)
 {
-	char **map;
+	int **map;
 	int i;
 	int j;
 
 	i = 0;
-	map = (char **)malloc(sizeof(char *) * taille);
+	map = (int **)ft_memalloc(sizeof(int *) * taille);
 	while (i < taille)
 	{
-		map[i] = (char *)malloc(sizeof(char) * taille);
+		map[i] = (int *)ft_memalloc(sizeof(int) * taille);
 		j = 0;
 		while (j < taille)
 		{
@@ -42,11 +39,31 @@ int				*create_tab(int taille, int val)
 	int		*tab;
 	int		i;
 
-
-	tab = (int *)malloc(sizeof(int) * taille);
+	if (!(tab = (int *)ft_memalloc(sizeof(int) * taille)))
+		return (0x0);
 	i = -1;
 	while (++i < taille)
 		tab[i] = val;
 	return (tab);
 }
 
+t_node			*create_node(int value)
+{
+	t_node *node;
+
+	if (!(node = ft_memalloc(sizeof(t_node))))
+		return (0x0);
+	node->parent = -1;
+	node->previous = -1;
+	node->value = value;
+	return (node);
+}
+
+t_tab			***create_besttab(int nb_path)
+{
+	t_tab ***besttab;
+
+	if (!(besttab = (t_tab***)ft_memalloc(sizeof(t_tab**) * (nb_path + 1))))
+		return (0x0);
+	return (besttab);
+}

@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 14:48:09 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/15 23:50:25 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/16 06:28:28 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #define __LEMIN__
 
 #include "libft.h"
-#include "lem_in.h"
 #include "color.h"
 
 # define ENV			t_environment

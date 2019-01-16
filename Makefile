@@ -6,7 +6,7 @@
 #    By: emuckens <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/20 17:52:27 by emuckens          #+#    #+#              #
-#    Updated: 2019/01/15 21:03:25 by emuckens         ###   ########.fr        #
+#    Updated: 2019/01/16 05:43:59 by anyahyao         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,9 +36,10 @@ LIB_DIR 	:= libft
 #								    FILES									   
 #==============================================================================#
 
-_SRC	= debug.c display.c env.c error.c file.c free.c \
-	get_ants.c get_comment.c  get_room.c get_tube.c initial.c  versionopti.c\
-	options.c  main.c read.c utils.c translate.c move.c repartAnt.c besttab.c\
+_SRC	= debug.c display.c env.c error.c file.c free.c algo_best_solution.c \
+	get_ants.c get_comment.c  get_room.c get_tube.c initial.c algo_repart_ant.c\
+	options.c  main.c read.c utils.c translate.c move.c algo_register_paths.c \
+	algo_sort_path.c
 
 _HEAD	= lemin.h lem_in.h color.h
 SRC 	= $(patsubst %, $(SRC_DIR)/%, $(_SRC))

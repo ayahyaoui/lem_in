@@ -6,24 +6,23 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/13 21:58:28 by anyahyao          #+#    #+#             */
-/*   Updated: 2019/01/14 23:08:13 by anyahyao         ###   ########.fr       */
+/*   Updated: 2019/01/15 17:50:42 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "lem_in.h"
 
 /*
- * ceci n'est pas optimise l'objectif est de convertir l'ancien parsing en un
- * nouveau dans un premier temp chaque element va
- * on considere que map est ne taille nb_rooms * 2
- * chaque noeud pointe non plus sur son voisin mais son voisin + nb_rooms
- * pour regler le probleme ou plusieur arrete pointes sur le meme noeud
- * et que ce dernier pointes sur plusieur autre noeud
- * mtn toute la deuxieme ^partie du graphe n'a qu'un seule voisin
- */
+** ceci n'est pas optimise l'objectif est de convertir l'ancien parsing en un
+** nouveau dans un premier temp chaque element va
+** on considere que map est ne taille nb_rooms * 2
+** chaque noeud pointe non plus sur son voisin mais son voisin + nb_rooms
+** pour regler le probleme ou plusieur arrete pointes sur le meme noeud
+** et que ce dernier pointes sur plusieur autre noeud
+** mtn toute la deuxieme ^partie du graphe n'a qu'un seule voisin
+*/
 
-void	cleanNodee(t_graphe *g)
+void		clean_node(t_graphe *g)
 {
 	unsigned int i;
 
@@ -36,31 +35,14 @@ void	cleanNodee(t_graphe *g)
 	}
 }
 
-int		**creategraph(int len)
-{
-	int **map;
-	int i;
-
-	if (!(map = (int**)malloc(sizeof(int*) * (len * 2 + 1))))
-		return (0x0);
-	i = -1;
-	while (++i < len)
-	{
-		if (!(map[i] = (int*)ft_memalloc(sizeof(int) * (len + 1))))
-			return (0x0);
-	}
-	map[i] = 0x0;
-	return map;
-}
-
 int			convert_map_to_graph(t_graphe *g)
 {
 	int room;
 	int i;
 	int j;
 
-	if (!(g->graph = creategraph(g->nb_rooms)))
-			return (ERR_ALLOC);
+	if (!(g->graph = create_double_int_tab(g->nb_rooms, 0)))
+		return (ERR_ALLOC);
 	i = -1;
 	while (++i < (int)g->nb_rooms)
 	{
@@ -73,7 +55,6 @@ int			convert_map_to_graph(t_graphe *g)
 	}
 	return (0);
 }
-
 
 int			convert_graphe(t_graphe *g)
 {
@@ -93,11 +74,7 @@ int			convert_graphe(t_graphe *g)
 		return (ERR_ALLOC);
 	i = -1;
 	while (++i < (int)g->nb_rooms)
-	{
-		g->node[i] = ft_memalloc(sizeof(t_node));
-		g->node[i]->parent = -1;
-		g->node[i]->value = (int)i;
-	}
+		g->node[i] = create_node(i);
 	if (!(g->capacite = (int*)ft_memalloc(g->nb_rooms * sizeof(int))))
 		return (ERR_ALLOC);
 	i = -1;
