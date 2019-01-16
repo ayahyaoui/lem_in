@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 14:48:52 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/16 21:40:46 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/16 22:57:15 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,12 +87,8 @@ static int			dispatch_ins(ENV *e, char **words, int nb)
 void				store_line_in_anthill(ENV *e, char *str)
 {
 	t_list	*line;
-//	char	*tmp;
 
-//	tmp = ft_strdup(*str);
 	line = ft_lstnew(str, ft_strlen(str) + 1);
-//	getleaks("after lstnew");
-//	ft_strdel(&tmp);
 	ft_lstaddend(&e->anthill, line);
 }
 

@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/16 05:08:18 by anyahyao          #+#    #+#             */
-/*   Updated: 2019/01/16 19:25:39 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/16 23:01:49 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static void		change_place_ant(t_graphe *g, int *tab)
 	}
 }
 
-int			*prediction(ENV *e, t_graphe *g)
+int				*prediction(ENV *e, t_graphe *g)
 {
 	int *best_comb;
 	int *last_comb;
@@ -98,7 +98,7 @@ int			*prediction(ENV *e, t_graphe *g)
 	return (best_comb);
 }
 
-int			try_to_place_ant(t_tab ***besttab, int *tab_fourmis)
+int				try_to_place_ant(t_tab ***besttab, int *tab_fourmis)
 {
 	int i;
 

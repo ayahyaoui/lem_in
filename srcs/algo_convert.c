@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/13 21:58:28 by anyahyao          #+#    #+#             */
-/*   Updated: 2019/01/16 20:03:52 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/16 23:02:11 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,4 +84,3 @@ int			convert_graphe(t_graphe *g)
 	g->file = new_file(g);
 	return (NO_ERR);
 }
-

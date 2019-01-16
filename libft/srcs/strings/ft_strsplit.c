@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/15 11:59:54 by emuckens          #+#    #+#             */
-/*   Updated: 2018/05/20 14:55:12 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/16 22:45:33 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ static char	**fill_tab(char **tab, char *str, size_t nb_words, int c)
 		{
 			nb_chars++;
 		}
-		tab[i] = ft_strnew(nb_chars);
+		if (!(tab[i] = ft_strnew(nb_chars)))
+			return (NULL);
 		j = 0;
 		while (nb_chars--)
 		{

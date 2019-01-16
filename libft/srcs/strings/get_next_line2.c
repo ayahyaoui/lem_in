@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/14 11:33:49 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/16 22:07:18 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/16 22:56:39 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ static int	inner_gnl(int fd, long int *ret, char **remain, char **buffer)
 			return (-1);
 		}
 		if (*ret < BUFF_SIZE)
-			*remain = ft_strjoinfree(*remain, *buffer);
+			if (!(*remain = ft_strjoinfree(*remain, *buffer)))
+				return (-1);
 		ft_bzero(*buffer, BUFF_SIZE);
 	}
 	ft_strdel(buffer);

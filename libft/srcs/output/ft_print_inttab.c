@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/16 22:25:55 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/16 22:26:04 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/16 22:38:28 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,5 @@ void		ft_print_inttab(int *tab, int len, char c)
 	if (!tab || len < 0)
 		return ;
 	while (++i < len)
-		ft_printf("%d%c", tab[i], i == len - 1 ? '\n': c);
+		ft_printf("%d%c", tab[i], i == len - 1 ? '\n' : c);
 }
