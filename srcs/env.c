@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/10 13:50:19 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/16 06:15:01 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/16 07:27:46 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,5 +88,6 @@ int			set_env(ENV *e)
 	e->graphe->map = NULL;
 	e->graphe->start = -1;
 	e->graphe->end = -1;
+	e->max_paths = -1;
 	return (1);
 }
