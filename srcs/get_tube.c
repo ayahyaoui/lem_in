@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/10 17:50:41 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/16 07:21:30 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/16 07:33:31 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,16 +94,16 @@ int				get_tube(ENV *e, char **str, int way, int len)
 	{
 		ft_free_strtab(&check);
 		display_warning(e, WRNG_TUBE);
-		ft_printf("err 1\n");
+//		ft_printf("err 1\n");
 		return (ERR_NOTUBE);
 	}
 	handle_way_spec(e, &str[0], &str[1], &way);
 	i = get_room_index(e, str[0], 0);
 	j = get_room_index(e, str[1], 0);
-	ft_printf("str 0 = %s str 1 = %s\n", str[0], str[1]);
+//	ft_printf("str 0 = %s str 1 = %s\n", str[0], str[1]);
 	if ((i == -1 || j == -1))
 	{
-		ft_printf("err 2\n");
+//		ft_printf("err 2\n");
 		return (display_warning(e, WRNG_TUBE_NOROOM));
 	}
 	if (i == j)

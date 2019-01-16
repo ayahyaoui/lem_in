@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 14:48:52 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/16 07:26:47 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/16 07:32:59 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ static int			dispatch_ins(ENV *e, char **words, int nb)
 	static int		endrooms;
 
 	ret = NO_ERR;
-	ft_printf("type = %d endroomm = %d room = %d\n", e->type, endrooms, ROOM);
 	if (nb == 1)
 	{
 		if ((ret = get_ants(e, words, e->type)))
@@ -83,7 +82,7 @@ static int			dispatch_ins(ENV *e, char **words, int nb)
 		}
 		if ((ret = get_tube(e, words, BOTH, 1)) < NO_WRNG && ret)
 		{
-			ft_printf("ret = %d\n", ret);
+//			ft_printf("ret = %d\n", ret);
 			return (endrooms == 1 ? ERR_NOTUBE : ret);//display_warning(e, ret);
 			}
 	}
@@ -137,7 +136,7 @@ int				read_instructions(ENV *e, char *str, int nbline, int ret)
 //			ft_printf("nbline = %d\n", nbline);
 			if ((ret = dispatch_ins(e, words, nbline)) > 0 )
 			{
-				ft_printf("ret dispatch = %d\n", ret);
+//				ft_printf("ret dispatch = %d\n", ret);
 				ft_free_strtab(&words);
 				ft_strdel(&str);
 				return (ret);

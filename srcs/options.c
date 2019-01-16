@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/24 14:50:47 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/16 06:03:05 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/16 07:33:48 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,5 @@ int				read_options(ENV *e, char **argv, int argc)
 			display_help(e, COL_HELP, COL_TYPES);
 		ft_printf("------------------------------------------------------\n\n");	
 	}
-	ft_printf("max paths = %d\n", e->max_paths);
 	return (NO_ERR);
 }
