@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/20 15:04:49 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/16 06:10:48 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/16 15:45:01 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@
  ** Display whole anthill on termnal
  */
 
-void		display_anthill(ENV *e, t_list *anthill)
+void		display_anthill(ENV *e)
 {
 	t_list *tmp;
 
-	tmp = anthill;
+	tmp = e->anthill;
 	while (tmp && tmp->content && e->nb_line--)
 	{
 		ft_printf("%s\n", (char *)(tmp->content));

@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/10 18:01:15 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/16 07:32:31 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/16 16:11:09 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,12 +102,14 @@ int				get_command(ENV *e, char *str, int option)
 	static char	ref[NB_COMMANDS][8] = {COMMAND_START, COMMAND_END};
 	int			i;
 
+	if (!str || str[1] != '#')
+		return (0);
 	i = 0;
 	while (i < NB_COMMANDS)
 	{
 		if (ft_strequ(str, ref[i]))
 		{
-			if (option == 0)
+			if (option == 0 && ++e->ins->nb_commands)
 				return (1);
 			break ;
 		}

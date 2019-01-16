@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/16 06:08:36 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/16 06:15:39 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/16 15:46:03 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 ** return 1 if calling function should call regular room index display instead
 */
 
-static int		display_ant_at_end(ENV *e, t_tab ***paths, int ant, int display)
+static int		display_ant_at_end(ENV *e, int ant, int display)
 {
 	int path;
 	int comb;
@@ -29,15 +29,15 @@ static int		display_ant_at_end(ENV *e, t_tab ***paths, int ant, int display)
 	comb = e->ants[ant - 1][0];
 	path = e->ants[ant - 1][1];
 	room = e->ants[ant - 1][2];
-	if (comb != -2 && paths[comb][path]->tab[room] == e->graphe->end)
+	if (comb != -2 && e->all_paths[comb][path]->tab[room] == e->graphe->end)
 	{
 		if (display && e->options & OPT_COLOR)
 			ft_printf("{CYAN}L%d-%s{EOC} ", ant,
-					e->ins->room[paths[comb][path]->tab[room]].name);
+					e->ins->room[e->all_paths[comb][path]->tab[room]].name);
 		else if (display)
 		{
 			ft_printf("L%d-%s ", ant,
-					e->ins->room[paths[comb][path]->tab[room]].name);
+					e->ins->room[e->all_paths[comb][path]->tab[room]].name);
 		}
 		e->ants[ant - 1][0] = -2;
 		return (1);
@@ -51,24 +51,24 @@ static int		display_ant_at_end(ENV *e, t_tab ***paths, int ant, int display)
 ** return number of ants arrived, to stop program when all have arrived
 */
 
-int				display_travelling(ENV *e, t_tab ***paths, int display)
+int				display_travelling(ENV *e, int display)
 {
-	int ant;
 	int arrived;
-	int	i;
+	int	j;
+	int i;
 
-	ant = -1;
+	i = -1;
 	arrived = 0;
 	++e->turns;
-	while (++ant < e->ins->nb_ants && e->ants && e->ants[ant] >= 0)
+	while (++i < e->ins->nb_ants && e->ants && e->ants[i] >= 0)
 	{
-		if ((display_ant_at_end(e, paths, ant + 1, display)))
+		if ((display_ant_at_end(e, i + 1, display)))
 			++arrived;
-		else if (e->ants[ant])
+		else if (e->ants[i])
 		{
-			i = paths[e->ants[ant][0]][e->ants[ant][1]]->tab[e->ants[ant][2]];
-			if (e->ants[ant][2] > 0 && display)
-				ft_printf("L%d-%s ", ant + 1, e->ins->room[i].name);
+			j = e->all_paths[e->ants[i][0]][e->ants[i][1]]->tab[e->ants[i][2]];
+			if (e->ants[i][2] > 0 && display)
+				ft_printf("L%d-%s ", i + 1, e->ins->room[j].name);
 		}
 	}
 	ft_printf("%s", display ? "\n" : "");

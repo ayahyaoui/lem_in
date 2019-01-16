@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/16 05:50:52 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/16 06:32:15 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/16 15:53:08 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void		display_options(ENV *e, char *col)
 ** Input: color code for help title, and for type titles
 */
 
-void			display_help(ENV *e, char *col1, char *col2)
+static void		display_instructions(char *col1, char *col2)
 {
 	ft_printf("%s%s%s%s%s\n", COLF_BGREY, col1, HELP_TITLE, COLF_OFF, COLB_OFF);
 	ft_printf("\n%s%s: %s", col2, COMMTS_NAME, COLF_OFF);
@@ -74,5 +74,17 @@ void			display_help(ENV *e, char *col1, char *col2)
 	ft_printf("%s\n", TUBE_DESCRIPTION);
 	ft_printf("%s %s %s\n", TUBE_FORWARD, TUBE_BACKWARD, TUBE_ANYWAY);
 	ft_printf("- placement: %s\n- example %s\n", TUBE_PLACEMENT, TUBE_EX);
+}
+
+void		display_help(ENV *e)
+{
+	if (!(e->options & OPT_HELP))
+		return ;
+	ft_printf("----------------------------------------------------------\n\n");
+	if (!(e->options & OPT_COLOR))
+		display_instructions(COLB_OFF, COLF_OFF);
+	else
+		display_instructions(COL_HELP, COL_TYPES);
 	display_options(e, COL_OPTIONS);
+	ft_printf("----------------------------------------------------------\n\n");
 }

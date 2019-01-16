@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/16 06:07:55 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/16 06:14:07 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/16 15:45:35 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ int		scan_allmoves(ENV *e, int display)
 	while (arrived < e->ins->nb_ants)
 	{
 		++nb_comb;
-		move_next_room(e, e->all_paths);
-		ant_enter_path(e, e->all_paths, high_comb);
-		arrived = display_travelling(e, e->all_paths, display);
+		move_next_room(e);
+		ant_enter_path(e, high_comb);
+		arrived = display_travelling(e, display);
 	}
 	display_turns(e);
 	ft_free_inttab(&e->ants, e->ins->nb_ants);

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_room.c                                         :+:      :+:    :+:   */
+/*   parse_rooms.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/10 17:40:04 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/16 07:26:49 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/16 16:33:56 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 ** Returns true if name has already been stored | false otherwise
 */
 
-int		is_dup(ENV *e, char *str, int max_index)
+int				is_dup(ENV *e, char *str, int max_index)
 {
 	int i;
 
@@ -35,15 +35,14 @@ int		is_dup(ENV *e, char *str, int max_index)
 ** link with commands if command(s) detected and unlinked
 */
 
-static int	store_room_in_tab(ENV *e, t_room **tab, t_list *anthill)
+static int		store_room_in_tab(ENV *e, t_room **tab, t_list *anthill)
 {
 	int		i;
 	char	**split;
 
 	i = 0;
-
 	while (anthill && ((unsigned int)i < e->graphe->nb_rooms))
-	{	
+	{
 		if (((char *)anthill->content)[0] != '#')
 		{
 			if (!(split = ft_strsplit((char *)anthill->content, ' ')))
@@ -55,9 +54,8 @@ static int	store_room_in_tab(ENV *e, t_room **tab, t_list *anthill)
 			ft_4vinit(&(*tab)[i].pos, ft_atoi(split[1]), ft_atoi(split[2]), 0);
 			ft_free_strtab(&split);
 			link_command(e, ROOM, i);
-			if (is_dup(e, (*tab)[i].name, i))
+			if (++i && is_dup(e, (*tab)[i].name, i))
 				return (WRNG_DUP);
-			++i;
 		}
 		else if (((char *)anthill->content)[1] == '#')
 			get_command(e, ((char *)anthill->content), 1);
@@ -71,7 +69,7 @@ static int	store_room_in_tab(ENV *e, t_room **tab, t_list *anthill)
 ** scans anthill, returns err code if error, 0 if success
 */
 
-int		store_rooms(ENV *e)
+int				store_rooms(ENV *e)
 {
 	t_list	*tmp;
 	int		rooms;
@@ -110,15 +108,19 @@ int				get_room(ENV *e, char **str)
 	if (str[1] && str[2] && !str[3])
 	{
 		if (!is_number(str[1]) || !is_number(str[2]))
-			return (WRNG_COORD);
-		if ((ret = ft_beyond_limiti(str[1])))
-			return (ret > 0 ? WRNG_INTMAX : WRNG_INTMIN);
-		if ((ret = ft_beyond_limiti(str[2])))
-			return (ret > 0 ? WRNG_INTMAX : WRNG_INTMIN);
-		if (str[0][0] == 'L')
-			return (WRNG_ROOM_CHAR);
-		++e->graphe->nb_rooms;
-		return (NO_ERR);
+			display_warning(e, WRNG_COORD);
+		else if ((ret = ft_beyond_limiti(str[1])))
+			display_warning(e, ret > 0 ? WRNG_INTMAX : WRNG_INTMIN);
+		else if ((ret = ft_beyond_limiti(str[2])))
+			display_warning(e, ret > 0 ? WRNG_INTMAX : WRNG_INTMIN);
+		else if (str[0][0] == 'L')
+			display_warning(e, WRNG_ROOM_CHAR);
+		else if (++e->graphe->nb_rooms)
+			return (NO_ERR);
+		e->nb_line *= -1;
+		return (ERR_NOTUBE);
 	}
-	return (WRNG_ROOM);
+	e->nb_line *= -1;
+	display_warning(e, WRNG_ROOM);
+	return (ERR_NOTUBE);
 }

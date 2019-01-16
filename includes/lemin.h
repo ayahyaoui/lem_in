@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 14:48:09 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/16 07:31:36 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/16 16:34:48 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -240,17 +240,15 @@ void		print_rooms(ENV *e, char **rooms);
 ** Display
 */
 
-void	display_anthill(ENV *e, t_list *anthill);
-void	display_help(ENV *e, char *col1, char *col2);
+void	display_anthill(ENV *e);
+void	display_help(ENV *e);
 int		display_error(ENV *e, int code);
 void	display_turns(ENV *e);
 int		display_warning(ENV *e, int code);
-int		display_travelling(ENV *e, t_tab ***paths, int display);
+int		display_travelling(ENV *e, int display);
 
 void		display_moves(ENV *e, int **tab, int total);
 void		printlist(ENV *e, t_list *l); //
-int		ant_enter_path(ENV *e, t_tab ***paths, int comb);
-void		move_next_room(ENV *e, t_tab ***paths);
 
 
 int			read_options(ENV *e, char **argv, int argc);
@@ -265,8 +263,8 @@ void		free_graphe(t_graphe *g);
 /*
 ** Move ants in anthill
 */
-int			ant_enter_path(ENV *e, t_tab ***paths, int comb);
-void			move_next_room(ENV *e, t_tab ***paths);
+int			ant_enter_path(ENV *e, int comb);
+void			move_next_room(ENV *e);
 
 
 /*
@@ -279,10 +277,10 @@ int			get_command(ENV *e, char *str, int option);
 int			get_room(ENV *e, char **str);
 int			get_tube(ENV *e, char **str, int way, int len);
 void			link_command(ENV *e, int type, int index);
-int			read_instructions(ENV *e, char *str, int nbline, int ret);
+int			read_instructions(ENV *e, char *str);
 char			**room_names(t_list *l, int nb_rooms, int **paths, int nb_paths);
 int			setup_room_mtrx(ENV *e, int size);
-char			sep(char *line, int *type);
+//char			sep(char *line, int *type);
 int			store_rooms(ENV *e);
 
 /*

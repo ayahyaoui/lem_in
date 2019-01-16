@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 14:58:47 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/16 06:17:13 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/16 16:11:28 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int		main(int argc, char **argv)
 	set_env(&e);
 	if ((msg = read_options(&e, argv, argc)) < NO_WRNG && msg > 0)
 		return (display_error(&e, msg));
-	if ((msg = read_instructions(&e, NULL, 0, 0)))
+	if ((msg = read_instructions(&e, NULL)))
 	{
 //		ft_printf("msg = %d\n", msg);
 		if (msg < NO_WRNG)
@@ -33,7 +33,7 @@ int		main(int argc, char **argv)
 			return (display_error(&e, msg));
 		display_warning(&e,  msg);
 	}
-	display_anthill(&e, e.anthill);
+	display_anthill(&e);
 	e.graphe->color = (int *)ft_memalloc(e.graphe->nb_rooms * sizeof(int));
 //	ft_printf("\n");
 	ft_printf("start = %d end = %d\n", e.graphe->start, e.graphe->end);
