@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 14:48:52 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/16 19:39:33 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/16 21:40:46 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,11 @@ static char			sep(char *line, int *type)
 		if (!(split = ft_strsplit(line, ' ')))
 			return (0);
 		if (line[i] == '-' && !split[1] && (*type = TUBE))
+		{
+			ft_free_strtab(&split);
 			return ('-');
+		}
+		ft_free_strtab(&split);
 	}
 	*type = ROOM;
 	return (' ');
@@ -80,14 +84,15 @@ static int			dispatch_ins(ENV *e, char **words, int nb)
 ** Input: string line
 */
 
-void				store_line_in_anthill(ENV *e, char **str)
+void				store_line_in_anthill(ENV *e, char *str)
 {
 	t_list	*line;
-	char	*tmp;
+//	char	*tmp;
 
-	tmp = ft_strdup(*str);
-	line = ft_lstnew(tmp, ft_strlen(*str) + 1);
-	ft_strdel(&tmp);
+//	tmp = ft_strdup(*str);
+	line = ft_lstnew(str, ft_strlen(str) + 1);
+//	getleaks("after lstnew");
+//	ft_strdel(&tmp);
 	ft_lstaddend(&e->anthill, line);
 }
 
@@ -140,10 +145,10 @@ int					read_instructions(ENV *e, char *str)
 	while (!ret && (gnl = get_next_line2(STDIN, &str)) >= -1 && str)
 	{
 		e->nb_line -= e->nb_line <= 0 ? 1 : 0;
-		if (!(ret = parse_significant_line(e, &str, &nbline)))
+		if ((ret = parse_significant_line(e, &str, &nbline)) == NO_ERR)
 		{
 			get_command(e, str, 0);
-			store_line_in_anthill(e, &str);
+			store_line_in_anthill(e, str);
 		}
 		ft_strdel(&str);
 	}

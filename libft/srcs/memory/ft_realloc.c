@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/16 18:22:37 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/16 18:24:08 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/16 20:56:25 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ void		*ft_realloc(void *previous, size_t t, size_t len_src)
 {
 	unsigned char *dest;
 
-	if (previous == 0x0 || t < len_src)
+	if (!previous  || t < len_src)
 		return (0x0);
-	if (!(dest = (unsigned char *)ft_memalloc(sizeof(char) * t)))
+	if (!(dest = (unsigned char *)ft_memalloc(sizeof(unsigned char) * t)))
 		return (0x0);
 	dest = ft_memcpy(dest, previous, len_src);
 	ft_memdel(&previous);

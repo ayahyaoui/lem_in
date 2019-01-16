@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/16 15:21:36 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/16 19:29:13 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/16 22:14:52 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int				ant_enter_path(ENV *e, int comb)
 	int ant;
 
 	j = -1;
-	while (++j < comb && (i = -1))
+	while (++j < comb && (i = -1) && e->all_paths[j])
 		while (e->all_paths[j][++i])
 		{
 			ant = 0;

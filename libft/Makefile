@@ -6,7 +6,7 @@
 #    By: emuckens <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/07 16:46:27 by emuckens          #+#    #+#              #
-#    Updated: 2019/01/16 18:30:35 by emuckens         ###   ########.fr        #
+#    Updated: 2019/01/16 22:05:00 by emuckens         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,7 +43,7 @@ SRCS = $(addprefix chars/, $(SRCS_CHARS)) \
 
 OBJ = $(addprefix srcs/, $(patsubst %.c, %.o, $(SRCS))) 
 
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra 
 
 all: $(NAME)
 

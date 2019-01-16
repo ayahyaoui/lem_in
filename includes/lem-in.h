@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 14:48:09 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/16 19:41:26 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/16 21:11:44 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -233,6 +233,8 @@ enum				e_display
 {
 	DISPLAY_OFF, DISPLAY_ON
 };
+
+void			getleaks(char *str);
 
 /*
 ** DISPLAY

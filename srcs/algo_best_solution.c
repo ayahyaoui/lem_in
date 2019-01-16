@@ -6,13 +6,13 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/16 05:35:36 by anyahyao          #+#    #+#             */
-/*   Updated: 2019/01/16 19:59:13 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/16 22:23:17 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem-in.h"
 
-static void		add_node_parcous(t_graphe *g, t_node *next, int value, int opt)
+static void		add_node_parcours(t_graphe *g, t_node *next, int value, int opt)
 {
 	if (next->color == WHITE)
 	{
@@ -37,14 +37,14 @@ static int		ajout_chemins(t_graphe *g)
 		if ((node = g->node[removefile(g->file)])->value == g->end)
 			return (1);
 		else if (node->parent != -1 && g->color[node->previous] == 0)
-			add_node_parcous(g, g->node[node->parent], node->value, 1);
+			add_node_parcours(g, g->node[node->parent], node->value, 1);
 		else
 			while (g->graph[node->value][i] != -1)
 			{
 				suiv = g->node[g->graph[node->value][i]];
 				if (suiv->parent == -1 ||
 					(suiv->parent >= 0 && suiv->parent != node->value))
-					add_node_parcous(g, suiv, node->value, 0);
+					add_node_parcours(g, suiv, node->value, 0);
 				i++;
 			}
 	return (-1);
@@ -100,16 +100,16 @@ int			find_best_solution(t_graphe *g, ENV *e)
 	if (!(e->graphe->color = (int *)ft_memalloc(g->nb_rooms * sizeof(int))))
 		return (ERR_ALLOC);
 	g->nb_paths = 0;
-	if (convert_graphe(g) == ERR_ALLOC
+	if ((convert_graphe(g) == ERR_ALLOC)
 		|| !(besttab = create_besttab(PATH_SIZE)))
 		return (ERR_ALLOC);
+	e->all_paths = besttab;
 	res = edmond_karp(g, &besttab, e->max_paths);
 	if (res != NO_ERR && !(res == ERR_SOLUTION && g->start_next_to_end))
 		return (res);
 	if (!(besttab = register_path(g, g->nb_paths, besttab)))
 		return (ERR_ALLOC);
 	g->nb_paths--;
-	besttab[g->nb_paths + 1] = 0x0;
 	e->all_paths = besttab;
 	try_to_place_ant(e->all_paths, prediction(e, e->graphe));
 	scan_allmoves(e, DISPLAY_ON);

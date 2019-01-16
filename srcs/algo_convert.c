@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/13 21:58:28 by anyahyao          #+#    #+#             */
-/*   Updated: 2019/01/16 19:33:22 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/16 20:03:52 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int			convert_graphe(t_graphe *g)
 		return (ERR_ALLOC);
 	if (!(g->previous = ft_memalloc(g->nb_rooms * sizeof(int))))
 		return (ERR_ALLOC);
-	if (!(g->node = malloc(sizeof(t_node*) * g->nb_rooms)))
+	if (!(g->node = ft_memalloc(sizeof(t_node*) * g->nb_rooms)))
 		return (ERR_ALLOC);
 	i = -1;
 	while (++i < (int)g->nb_rooms)

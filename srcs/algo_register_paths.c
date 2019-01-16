@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/16 05:46:18 by anyahyao          #+#    #+#             */
-/*   Updated: 2019/01/16 19:25:11 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/16 21:17:42 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,18 +57,18 @@ static t_tab	**allocate_tab(t_graphe *g, t_tab **besttab)
 {
 	int i;
 	int j;
-	int size_max;
+	int size;
 
 	j = 0;
-	get_infos_allocate_tab(g, &j, &size_max);
-	if (!(besttab = ft_memalloc(sizeof(t_tab *) * (j + 2))))
+	get_infos_allocate_tab(g, &j, &size);
+	if (!(besttab = (t_tab **)ft_memalloc(sizeof(t_tab *) * (j + 2))))
 		return (0x0);
 	i = -1;
 	while (++i < j)
 	{
 		if (!(besttab[i] = (t_tab*)ft_memalloc(sizeof(t_tab))))
 			return (0x0);
-		if (!(besttab[i]->tab = ft_memalloc(sizeof(int) * (size_max + 2))))
+		if (!(besttab[i]->tab = (int *)ft_memalloc(sizeof(int) * (size + 2))))
 			return (0x0);
 	}
 	besttab[j] = 0x0;

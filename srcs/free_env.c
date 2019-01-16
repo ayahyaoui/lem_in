@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/16 19:10:50 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/16 19:28:51 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/16 21:49:14 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,18 @@
 ** Delete anthill
 */
 
-static void		del_anthill(t_list *l)
+static void		del_anthill(t_list **l)
 {
 	t_list *tmp;
+	t_list *lcpy;
 
-	while (l)
+	lcpy = *l;
+	while (lcpy)
 	{
-		tmp = l;
-		ft_memdel((void **)tmp);
-		l = l->next;
+		tmp = lcpy;
+		lcpy = lcpy->next;
+		ft_memdel((void **)&(tmp->content));
+		ft_memdel((void **)&tmp);
 	}
 }
 
@@ -76,15 +79,17 @@ static void		free_besttab(t_tab ***best_tab)
 
 void			free_env(ENV *e)
 {
-	if (e->ins)
 		del_rooms(e, &e->ins->room);
-	if (e->graphe)
+//		getleaks("apres delrooms");
 		free_graphe(e->graphe);
+//		getleaks("apres delgraph");
 	free_besttab(e->all_paths);
+//		getleaks("apres delall paths");
 	if (e->ins)
 	{
 		ft_free_inttab(&e->ins->commands, e->ins->nb_commands);
+//		getleaks("apres delall ins");
 		ft_memdel((void **)&e->ins);
 	}
-	del_anthill(e->anthill);
+	del_anthill(&e->anthill);
 }
