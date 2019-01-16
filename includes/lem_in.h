@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/30 19:00:27 by anyahyao          #+#    #+#             */
-/*   Updated: 2019/01/14 23:55:54 by anyahyao         ###   ########.fr       */
+/*   Updated: 2019/01/15 17:48:29 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ typedef struct 		s_input					t_input;
 
 
 
+t_node			*create_node(int value);
 int			find_path_bonus(t_tab ***besttab, t_graphe *g);
 void		vielleSimulation(t_graphe *g, t_tab ***besttab, int fourmis);
 t_tab		***registerPath(t_graphe *g, int nbPath, t_tab ***besttab);
@@ -80,11 +81,11 @@ int			edmond_karp(t_graphe *g, t_tab ****t);
 void		infos_graphes(t_graphe *g);
 void		bestsimulation(t_graphe *g, t_input *infos, t_tab ***besttab);
 void		convertGraphe(t_graphe *g);
-void		cleanNodee(t_graphe *g);
 void		add_node_parcous(t_graphe *g, t_node *next, int val, int opt);
 int			convert_graphe(t_graphe *g);
 int		place_ant(t_tab ***besttab, int fourmis, int path);
 
+void					*ft_realloc(void *previous, size_t t, size_t len_src);
 
 
 int		try_to_place_ant(t_tab ***besttab, int *tab_fourmis);
@@ -104,10 +105,14 @@ void		print_lastpath(t_graphe *g, t_input *infos);
 int			edmondKarp(t_graphe *g, t_tab ***t);
 void		infos_graphes(t_graphe *g);
 void		bestsimulation(t_graphe *g, t_input *infos, t_tab ***besttab);
+
 void	convertGraphe(t_graphe *g);
-void	cleanNodee(t_graphe *g);
+void	clean_node(t_graphe *g);
 
 
+int				**creategraph(int len);
+int				*create_tab(int taille, int val);
+int			**create_double_int_tab(int taille, int val);
 
 
 
@@ -134,8 +139,6 @@ int			displayallpath(t_graphe *g, t_tab ***t);
 // new initial
 
 
-int					*create_tab(int taille, int val);
-char				**create_double_tab(int taille, int val);
 t_graphe			*new_graphe(int taille);
 
 //affiche

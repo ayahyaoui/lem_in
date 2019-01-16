@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/13 21:58:22 by anyahyao          #+#    #+#             */
-/*   Updated: 2019/01/14 23:09:39 by anyahyao         ###   ########.fr       */
+/*   Updated: 2019/01/15 17:25:08 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,17 +121,6 @@ int		SortPath(t_graphe *g)
 		}
 	}
 	return (1);
-}
-
-void					*ft_realloc(void *previous, size_t t, size_t len_src)
-{
-	unsigned char *dest;
-
-	if (!(dest = (unsigned char *)malloc(sizeof(char) * t)))
-		return (0x0);
-	dest = ft_memcpy(dest, previous, len_src);
-	ft_memdel(&previous);
-	return (dest);
 }
 
 void	ft_add_exeption(t_graphe *g, t_tab ***besttab, int nb_path)

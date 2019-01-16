@@ -6,15 +6,11 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/01 18:41:53 by anyahyao          #+#    #+#             */
-/*   Updated: 2019/01/14 20:23:35 by anyahyao         ###   ########.fr       */
+/*   Updated: 2019/01/15 18:10:56 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
-int				addfile(t_file *file, int value);
-int				removefile(t_file *file);
-t_file			*new_file(t_graphe *g);
-t_file			*clean_file(t_file *file, int size);
 
 t_file			*new_file(t_graphe *g)
 {

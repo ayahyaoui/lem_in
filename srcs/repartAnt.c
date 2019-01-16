@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/13 21:58:25 by anyahyao          #+#    #+#             */
-/*   Updated: 2019/01/14 23:53:38 by anyahyao         ###   ########.fr       */
+/*   Updated: 2019/01/15 23:10:53 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,6 @@
 #define ABS(X) (X > 0) ? X : -1 * X
 
 #include "lem_in.h"
-
-
-void		infos_graphes(t_graphe *g);
-void		move(t_graphe *g, t_tab ***besttab);
-void		add(t_graphe *g, int *tab, t_tab ***besttab);
-int			isfinish(t_graphe *g, int *tab);
-int			isfinishh(t_graphe *g, int *tab);
-void		printAnt(t_graphe *g, int res, int *tab);
-int			simulation(t_graphe *g, int *tab, t_tab ***besttab);
-int			changeTab(int *tab);
-void		addAnt(t_graphe *g, t_tab **besttab, int nbAnt);
-void		bestsimulation(t_graphe *g, t_input *infos, t_tab ***besttab);
-
 
 
 /*
@@ -63,7 +50,7 @@ int			find_path_bonus(t_tab ***besttab, t_graphe *g)
 	int isin_path;
 
 	i = -1;
-	ft_printf("je vais faire un tessssssst\n");
+	//ft_printf("je vais faire un tessssssst\n");
 	while (++i < g->nb_paths)
 	{
 		j = -1;
@@ -103,10 +90,20 @@ int			place_ant(t_tab ***besttab, int fourmis, int path)
 			{
 				pass++;
 				besttab[path][j]->tab[0]++;
+				if (fourmis - pass == 0)
+				{
+					return (i);
+				}
 			}
 		fourmis -= pass;
 		i++;
 	}
+	pass = 0;
+	for (i = 0; i < nb_chemin; i++) {
+		pass += besttab[path][i]->tab[0];
+	}
+//	if (pass > fourmis)
+//		exit(1);
 	return (i);
 }
 

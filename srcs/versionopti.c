@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/23 16:28:04 by anyahyao          #+#    #+#             */
-/*   Updated: 2019/01/14 23:04:11 by anyahyao         ###   ########.fr       */
+/*   Updated: 2019/01/15 17:49:41 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int			edmond_karp(t_graphe *g, t_tab ****besttab)
 	while (42)
 	{
 		g->file = clean_file(g->file, g->nb_rooms);
-		cleanNodee(g);
+		clean_node(g);
 		ft_bzero(g->color, g->nb_rooms * 4);
 		if (ajout_chemins(g) == -1)
 			break ;

@@ -6,14 +6,11 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/01 18:22:17 by anyahyao          #+#    #+#             */
-/*   Updated: 2019/01/13 17:26:22 by anyahyao         ###   ########.fr       */
+/*   Updated: 2019/01/15 17:54:48 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
-
-void			free_graphe(t_graphe *g);
-void			free_file(t_file **file);
 
 void			free_graphe(t_graphe *g)
 {

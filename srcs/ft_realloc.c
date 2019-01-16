@@ -1,24 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ftre.c                                             :+:      :+:    :+:   */
+/*   ft_realloc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/12/16 23:19:43 by anyahyao          #+#    #+#             */
-/*   Updated: 2019/01/13 23:18:49 by anyahyao         ###   ########.fr       */
+/*   Created: 2019/01/15 16:55:03 by anyahyao          #+#    #+#             */
+/*   Updated: 2019/01/15 17:21:44 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void					*ft_realloc(void *l, size_t t, size_t len_src)
-{
-	unsigned char *s;
+/*
+ ** ceci ne suis pas exactement le meme role que realloc
+ ** elle permet de realloue lorsque que l'on connait le nombre de caractere
+ ** que l'on veut garde (elle n'est pas securise on par du principe que 
+ ** t est > a la taille deja alloue)
+*/
 
-	if (!(s = (unsigned char *)malloc(sizeof(char) * t)))
+void					*ft_realloc(void *previous, size_t t, size_t len_src)
+{
+	unsigned char *dest;
+
+	if (previous == 0x0 || t < len_src)
 		return (0x0);
-	s = ft_memcpy(s, l, len_src);
-	ft_memdel(l);
-	return (s);
+	if (!(dest = (unsigned char *)malloc(sizeof(char) * t)))
+		return (0x0);
+	dest = ft_memcpy(dest, previous, len_src);
+	ft_memdel(&previous);
+	return (dest);
 }
