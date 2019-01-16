@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/16 05:35:36 by anyahyao          #+#    #+#             */
-/*   Updated: 2019/01/16 19:24:18 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/16 19:59:13 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,8 @@ int			find_best_solution(t_graphe *g, ENV *e)
 	t_tab		***besttab;
 	int			res;
 
-	e->graphe->color = (int *)ft_memalloc(g->nb_rooms * sizeof(int));
+	if (!(e->graphe->color = (int *)ft_memalloc(g->nb_rooms * sizeof(int))))
+		return (ERR_ALLOC);
 	g->nb_paths = 0;
 	if (convert_graphe(g) == ERR_ALLOC
 		|| !(besttab = create_besttab(PATH_SIZE)))
