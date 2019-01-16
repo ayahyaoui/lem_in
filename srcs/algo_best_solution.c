@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem-in.h"
+#include "lem_in.h"
 
 static void		add_node_parcours(t_graphe *g, t_node *next, int value, int opt)
 {

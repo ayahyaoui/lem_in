@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem-in.h"
+#include "lem_in.h"
 
 static int		add_path(t_node *node, t_graphe *g, t_tab *t)
 {

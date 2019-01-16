@@ -6,11 +6,11 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/16 05:50:52 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/16 19:27:46 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/17 00:54:07 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem-in.h"
+#include "lem_in.h"
 
 /*
 ** Display turns, i.e. number of lines of moves display
@@ -72,7 +72,6 @@ static void		display_instructions(char *col1, char *col2)
 	ft_printf("%s%s\n", ROOM_NB1, ROOM_NB2);
 	ft_printf("\n%s%s: %s", col2, TUBE_NAME, COLF_OFF);
 	ft_printf("%s\n", TUBE_DESCRIPTION);
-	ft_printf("%s %s %s\n", TUBE_FORWARD, TUBE_BACKWARD, TUBE_ANYWAY);
 	ft_printf("- placement: %s\n- example %s\n", TUBE_PLACEMENT, TUBE_EX);
 }
 

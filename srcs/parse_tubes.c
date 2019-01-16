@@ -6,11 +6,11 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/10 17:50:41 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/16 23:03:35 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/17 00:28:53 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem-in.h"
+#include "lem_in.h"
 
 /*
 ** Malloc square int **tab

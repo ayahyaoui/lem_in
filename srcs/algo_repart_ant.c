@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem-in.h"
+#include "lem_in.h"
 
 static int		place_ant(t_tab ***besttab, int fourmis, int path)
 {

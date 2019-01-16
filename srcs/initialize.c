@@ -6,11 +6,11 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/01 18:20:23 by anyahyao          #+#    #+#             */
-/*   Updated: 2019/01/16 22:59:57 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/17 00:20:32 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem-in.h"
+#include "lem_in.h"
 
 int				**create_double_int_tab(int taille, int val)
 {
@@ -75,7 +75,6 @@ t_tab			***create_besttab(int nb_path)
 
 int				set_env(ENV *e)
 {
-	ft_bzero(e, sizeof(e));
 	if (!(e->ins = (t_input *)ft_memalloc(sizeof(t_input))))
 		return (ERR_ALLOC);
 	if (!(e->graphe = (t_graphe *)ft_memalloc(sizeof(t_graphe))))

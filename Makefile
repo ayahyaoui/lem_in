@@ -6,7 +6,7 @@
 #    By: emuckens <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/20 17:52:27 by emuckens          #+#    #+#              #
-#    Updated: 2019/01/16 23:00:42 by emuckens         ###   ########.fr        #
+#    Updated: 2019/01/16 23:15:52 by emuckens         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,7 @@ _SRC	= algo_best_solution.c algo_convert.c algo_repart_ant.c algo_register_paths
 	parse_ants.c parse_comments.c parse_rooms.c parse_tubes.c initialize.c scan.c\
 	read_anthill.c  main.c read_options.c   move.c \
 
-_HEAD	= lem-in.h color.h
+_HEAD	= lem_in.h color.h
 SRC 	= $(patsubst %, $(SRC_DIR)/%, $(_SRC))
 HEAD	= $(patsubst %, $(HEAD_DIR)/$, $(_HEAD))
 BIN	= $(patsubst %.c, $(BIN_DIR)/%.o, $(_SRC))

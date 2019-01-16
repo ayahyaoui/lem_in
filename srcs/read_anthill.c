@@ -6,11 +6,11 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 14:48:52 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/16 22:57:15 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/17 00:29:54 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem-in.h"
+#include "lem_in.h"
 
 /*
 ** Determine if string should be parsed by '-' (tubes) or ' ' (rooms)
@@ -151,5 +151,5 @@ int					read_instructions(ENV *e, char *str)
 	ft_strdel(&str);
 	if (e->ins->nb_ants <= 0)
 		return (e->nb_line ? ERR_ANT_NB : ERR_NO_INS);
-	return (gnl == -1 ? ERR_LIB : NO_ERR);
+	 return (gnl == -1 ? ERR_LIB : NO_ERR);
 }

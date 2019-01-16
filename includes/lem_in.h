@@ -6,12 +6,12 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 14:48:09 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/16 23:14:22 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/17 00:54:04 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef __LEM_IN__
-# define __LEM_IN__
+#ifndef LEM_IN_H
+# define LEM_IN_H
 
 # include "libft.h"
 # include "color.h"
@@ -78,13 +78,12 @@
 ** OPTIONS
 */
 
-# define OPTION_CHARS		"chtvw0123456789"
+# define OPTION_CHARS		"chtv0123456789"
 # define OPTION_WIDTH		10
 # define OPT_VERBOSE		1 << ('v' - 'a')
 # define OPT_COLOR			1 << ('c' - 'a')
 # define OPT_TURNS			1 << ('t' - 'a')
 # define OPT_HELP			1 << ('h' - 'a')
-# define OPT_WAY			1 << ('w' - 'a')
 # define OPT_C_DESCRIPTION	"Activate colored output"
 # define OPT_H_DESCRIPTION	"Display anthill instructions and available options"
 # define OPT_T_DESCRIPTION	"Display total number of turns"
@@ -127,11 +126,8 @@
 # define ROOM_NB1			"a room name cannot start with L or #"
 # define ROOM_NB2			"forbidden character: -"
 # define TUBE_NAME			"tubes"
-# define TUBE_DESCRIPTION	"link between two existing rooms"
+# define TUBE_DESCRIPTION	"link between two existing rooms : -"
 # define TUBE_PLACEMENT		"after rooms"
-# define TUBE_FORWARD		"forward direction: ->"
-# define TUBE_BACKWARD		"backward direction: <-"
-# define TUBE_ANYWAY		"any direction: - or <->"
 # define TUBE_EX			"room1-other_room"
 
 typedef struct	s_point
@@ -180,7 +176,7 @@ typedef struct	s_room
 
 typedef struct	s_input
 {
-	int 				nb_ants;
+	int					nb_ants;
 	t_room				*room;
 	int					**commands;
 	int					nb_commands;
@@ -267,6 +263,7 @@ int				set_env(ENV *e);
 /*
 ** SCAN PATHS
 */
+
 int				ant_enter_path(ENV *e, int comb);
 void			move_next_room(ENV *e);
 
@@ -288,6 +285,7 @@ int				store_rooms(ENV *e);
 /*
 ** SOLVE
 */
+
 int				addfile(t_file *file, int value);
 int				convert_graphe(t_graphe *g);
 int				find_best_solution(t_graphe *g, ENV *e);
