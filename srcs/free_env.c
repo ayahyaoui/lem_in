@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/16 19:10:50 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/17 00:52:36 by anyahyao         ###   ########.fr       */
+/*   Updated: 2019/01/17 01:34:22 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,13 @@ static void		del_rooms(ENV *e, t_room **room)
 
 	i = 0;
 	tmp = *room;
-	while ((unsigned int)i < e->graphe->nb_rooms && tmp && tmp[i].name)
-	{
-		ft_strdel(&tmp[i].name);
-		ft_memdel((void **)&tmp[i]);
-		++i;
-	}
+	if (tmp)
+		while ((unsigned int)i < e->graphe->nb_rooms)
+		{
+			ft_strdel(&tmp[i].name);
+			ft_memdel((void **)&tmp[i]);
+			++i;
+		}
 	ft_memdel((void **)room);
 }
 
@@ -79,7 +80,6 @@ static void		free_besttab(t_tab ***best_tab)
 
 void			free_env(ENV *e)
 {
-
 	if (e->all_paths)
 		free_besttab(e->all_paths);
 	if (e->ins)

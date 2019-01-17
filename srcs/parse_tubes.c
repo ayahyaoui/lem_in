@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/10 17:50:41 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/17 00:44:15 by anyahyao         ###   ########.fr       */
+/*   Updated: 2019/01/17 01:26:15 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ static int			get_room_index(ENV *e, char *str)
 			return (i);
 	return (-1);
 }
+
 /*
 ** Read tube information, setup and fill adjacency matrix, check start and end
 ** existence

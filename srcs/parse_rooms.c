@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/10 17:40:04 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/17 00:28:46 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/17 01:25:47 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,28 @@ static int		is_dup(ENV *e, char *str, int max_index)
 	return (0);
 }
 
+static int		store_room(ENV *e, t_room **tab, t_list *anthill, int *i)
+{
+	char	**split;
+
+	if (!(split = ft_strsplit((char *)anthill->content, ' ')))
+		return (ERR_ALLOC);
+	if (!split[0])
+	{
+		display_warning(e, WRNG_INPUT);
+		return (NO_ERR);
+	}
+	if (!(e->ins->room[*i].name = (char *)ft_strdup(split[0])))
+		return (ERR_ALLOC);
+	ft_4vinit(&(*tab)[*i].pos, ft_atoi(split[1]), ft_atoi(split[2]), 0);
+	ft_free_strtab(&split);
+	link_command(e, ROOM, *i);
+	if (is_dup(e, (*tab)[*i].name, *i))
+		display_warning(e, WRNG_DUP);
+	++*i;
+	return (NO_ERR);
+}
+
 /*
 ** stores room names in char **tab, while checking if duplicate room names
 ** link with commands if command(s) detected and unlinked
@@ -36,31 +58,15 @@ static int		is_dup(ENV *e, char *str, int max_index)
 static int		store_room_in_tab(ENV *e, t_room **tab, t_list *anthill)
 {
 	int		i;
-	char	**split;
+	int		ret;
 
 	i = 0;
 	while (anthill && ((unsigned int)i < e->graphe->nb_rooms))
 	{
 		if (((char *)anthill->content)[0] != '#')
 		{
-			if (!(split = ft_strsplit((char *)anthill->content, ' ')))
-				return (ERR_ALLOC);
-			if (!split[0])
-			{	
-				display_warning(e, WRNG_INPUT);
-				return (NO_ERR);
-			}
-			if (!(e->ins->room[i].name = (char *)ft_strdup(split[0])))
-				return (ERR_ALLOC);
-			ft_4vinit(&(*tab)[i].pos, ft_atoi(split[1]), ft_atoi(split[2]), 0);
-			ft_free_strtab(&split);
-			link_command(e, ROOM, i);
-			if (is_dup(e, (*tab)[i].name, i))
-			{
-				display_warning(e, WRNG_DUP);
-				return (NO_ERR);
-			}
-			++i;
+			if ((ret = store_room(e, tab, anthill, &i)))
+				return (ret);
 		}
 		else if (((char *)anthill->content)[1] == '#')
 			get_command(e, ((char *)anthill->content), 1);
