@@ -6,11 +6,11 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/10 17:40:04 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/16 19:34:25 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/17 00:28:46 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem-in.h"
+#include "lem_in.h"
 
 /*
 ** Input: room name
@@ -46,14 +46,21 @@ static int		store_room_in_tab(ENV *e, t_room **tab, t_list *anthill)
 			if (!(split = ft_strsplit((char *)anthill->content, ' ')))
 				return (ERR_ALLOC);
 			if (!split[0])
-				return (WRNG_INPUT);
+			{	
+				display_warning(e, WRNG_INPUT);
+				return (NO_ERR);
+			}
 			if (!(e->ins->room[i].name = (char *)ft_strdup(split[0])))
 				return (ERR_ALLOC);
 			ft_4vinit(&(*tab)[i].pos, ft_atoi(split[1]), ft_atoi(split[2]), 0);
 			ft_free_strtab(&split);
 			link_command(e, ROOM, i);
-			if (++i && is_dup(e, (*tab)[i].name, i))
-				return (WRNG_DUP);
+			if (is_dup(e, (*tab)[i].name, i))
+			{
+				display_warning(e, WRNG_DUP);
+				return (NO_ERR);
+			}
+			++i;
 		}
 		else if (((char *)anthill->content)[1] == '#')
 			get_command(e, ((char *)anthill->content), 1);
@@ -89,8 +96,7 @@ int				store_rooms(ENV *e)
 		tmp = tmp->next;
 	}
 	tmp = tmp->next;
-	store_room_in_tab(e, &e->ins->room, tmp);
-	return (NO_ERR);
+	return (store_room_in_tab(e, &e->ins->room, tmp));
 }
 
 /*

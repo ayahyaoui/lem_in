@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem-in.h"
+#include "lem_in.h"
 
 int				**create_double_int_tab(int taille, int val)
 {
@@ -67,27 +67,14 @@ t_tab			***create_besttab(int nb_path)
 ** Return error code if malloc error, else return 1
 */
 
-int			set_env(ENV *e)
+int				set_env(ENV *e)
 {
-//	ft_bzero(e, sizeof(e));
 	if (!(e->ins = (t_input *)ft_memalloc(sizeof(t_input))))
 		return (ERR_ALLOC);
 	if (!(e->graphe = (t_graphe *)ft_memalloc(sizeof(t_graphe))))
 		return (ERR_ALLOC);
-	e->anthill = NULL;
-	e->all_paths = NULL;
-	e->ants = NULL;
-	e->ins->nb_ants = 0;
-	e->nb_paths = 0;
-	e->options = 0;
-	e->ins->room = NULL;
-	e->ins->commands = NULL;
-	e->turns = 0;
-	e->ins->nb_commands = 0;
-	e->graphe->map = NULL;
 	e->graphe->start = -1;
 	e->graphe->end = -1;
 	e->max_paths = -1;
-	e->nb_line = 0;
 	return (NO_ERR);
 }

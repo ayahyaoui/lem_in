@@ -6,11 +6,11 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 14:48:52 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/17 00:52:00 by anyahyao         ###   ########.fr       */
+/*   Updated: 2019/01/17 01:11:43 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem-in.h"
+#include "lem_in.h"
 
 /*
 ** Determine if string should be parsed by '-' (tubes) or ' ' (rooms)
@@ -87,12 +87,8 @@ static int			dispatch_ins(ENV *e, char **words, int nb)
 void				store_line_in_anthill(ENV *e, char *str)
 {
 	t_list	*line;
-//	char	*tmp;
 
-//	tmp = ft_strdup(*str);
 	line = ft_lstnew(str, ft_strlen(str) + 1);
-//	getleaks("after lstnew");
-//	ft_strdel(&tmp);
 	ft_lstaddend(&e->anthill, line);
 }
 

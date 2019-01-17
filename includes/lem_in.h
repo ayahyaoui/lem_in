@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef __LEM_IN__
-#define __LEM_IN__
+#ifndef LEM_IN_H
+# define LEM_IN_H
 
 # include "libft.h"
 # include "color.h"
@@ -78,13 +78,12 @@
 ** OPTIONS
 */
 
-# define OPTION_CHARS		"chtvw0123456789"
+# define OPTION_CHARS		"chtv0123456789"
 # define OPTION_WIDTH		10
 # define OPT_VERBOSE		1 << ('v' - 'a')
 # define OPT_COLOR			1 << ('c' - 'a')
 # define OPT_TURNS			1 << ('t' - 'a')
 # define OPT_HELP			1 << ('h' - 'a')
-# define OPT_WAY			1 << ('w' - 'a')
 # define OPT_C_DESCRIPTION	"Activate colored output"
 # define OPT_H_DESCRIPTION	"Display anthill instructions and available options"
 # define OPT_T_DESCRIPTION	"Display total number of turns"
@@ -127,35 +126,32 @@
 # define ROOM_NB1			"a room name cannot start with L or #"
 # define ROOM_NB2			"forbidden character: -"
 # define TUBE_NAME			"tubes"
-# define TUBE_DESCRIPTION	"link between two existing rooms"
+# define TUBE_DESCRIPTION	"link between two existing rooms : -"
 # define TUBE_PLACEMENT		"after rooms"
-# define TUBE_FORWARD		"forward direction: ->"
-# define TUBE_BACKWARD		"backward direction: <-"
-# define TUBE_ANYWAY		"any direction: - or <->"
 # define TUBE_EX			"room1-other_room"
 
-typedef struct			s_point
+typedef struct	s_point
 {
 	int					value;
 	int					len;
-}						t_point;
+}				t_point;
 
-typedef struct			s_node
+typedef struct	s_node
 {
 	int					value;
 	int					previous;
 	int					color;
 	int					parent;
-}						t_node;
+}				t_node;
 
-typedef struct			s_file
+typedef struct	s_file
 {
 	int					begin;
 	int					end;
 	int					*tab;
-}						t_file;
+}				t_file;
 
-typedef struct			s_graphe
+typedef struct	s_graphe
 {
 	unsigned int		nb_rooms;
 	unsigned int		nb_tubes;
@@ -170,34 +166,34 @@ typedef struct			s_graphe
 	int					nb_paths;
 	int					start_next_to_end;
 	t_file				*file;
-}						t_graphe;
+}				t_graphe;
 
-typedef struct			s_room
+typedef struct	s_room
 {
 	char				*name;
 	t_4vect				pos;
-}						t_room;
+}				t_room;
 
-typedef struct			s_input
+typedef struct	s_input
 {
-	int 				nb_ants;
+	int					nb_ants;
 	t_room				*room;
 	int					**commands;
 	int					nb_commands;
-}						t_input;
+}				t_input;
 
-typedef struct			s_tab
+typedef struct	s_tab
 {
 	int					*tab;
 	int					length;
-}						t_tab;
+}				t_tab;
 
-typedef struct			s_environment
+typedef struct	s_environment
 {
 	t_list				*anthill;
 	t_input				*ins;
 	t_graphe			*graphe;
-	t_tab ***			all_paths;
+	t_tab				***all_paths;
 	int					**ants;
 	int					nb_paths;
 	int					options;
@@ -207,9 +203,9 @@ typedef struct			s_environment
 	int					fd;
 	int					arrived_turn;
 	int					max_paths;
-}						t_environment;
+}				t_environment;
 
-enum					e_error
+enum			e_error
 {
 	NO_ERR, ERR_NO_INS, ERR_ANT_NB, ERR_NOTUBE, ERR_START, ERR_END, ERR_SAME,
 	ERR_LIB, ERR_ALLOC, ERR_ARG, ERR_SOLUTION,
@@ -219,17 +215,17 @@ enum					e_error
 	WRNG_FAILED_END, WRNG_DOUBLE_START, WRNG_DOUBLE_END, WRNG_SAME_ROOM,
 };
 
-enum					e_type
+enum			e_type
 {
 	TYPE, NUMBER, ANTS, ROOM, TUBE, COMMENT, COMMAND
 };
 
-enum					e_direction
+enum			e_direction
 {
 	FORWARD, BACKWARD, BOTH
 };
 
-enum				e_display
+enum			e_display
 {
 	DISPLAY_OFF, DISPLAY_ON
 };
@@ -267,6 +263,7 @@ int				set_env(ENV *e);
 /*
 ** SCAN PATHS
 */
+
 int				ant_enter_path(ENV *e, int comb);
 void			move_next_room(ENV *e);
 
@@ -274,25 +271,24 @@ void			move_next_room(ENV *e);
 ** READ AND PARSE
 */
 
-int			apply_commands(ENV *e);
-int			get_ants(ENV *e, char **str, int type);
-int			get_command(ENV *e, char *str, int option);
-int			get_room(ENV *e, char **str);
-int			get_tube(ENV *e, char **str, int way, int len);
-void		link_command(ENV *e, int type, int index);
-int			read_instructions(ENV *e, char *str);
-int			read_options(ENV *e, char **argv, int argc);
-//char		**room_names(t_list *l, int nb_rooms, int **paths, int nb_paths);
-int			setup_room_mtrx(ENV *e, int size);
-int			store_rooms(ENV *e);
+int				apply_commands(ENV *e);
+int				get_ants(ENV *e, char **str, int type);
+int				get_command(ENV *e, char *str, int option);
+int				get_room(ENV *e, char **str);
+int				get_tube(ENV *e, char **str, int way, int len);
+void			link_command(ENV *e, int type, int index);
+int				read_instructions(ENV *e, char *str);
+int				read_options(ENV *e, char **argv, int argc);
+int				setup_room_mtrx(ENV *e, int size);
+int				store_rooms(ENV *e);
 
 /*
 ** SOLVE
 */
-int				isemptyfile(t_file *file);
 int				addfile(t_file *file, int value);
 int				convert_graphe(t_graphe *g);
 int				find_best_solution(t_graphe *g, ENV *e);
+int				isemptyfile(t_file *file);
 int				*prediction(ENV *e, t_graphe *g);
 int				removefile(t_file *file);
 t_tab			***register_path(t_graphe *g, int nbpath, t_tab ***besttab);

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem-in.h"
+#include "lem_in.h"
 
 /*
 ** Delete anthill
@@ -79,20 +79,17 @@ static void		free_besttab(t_tab ***best_tab)
 
 void			free_env(ENV *e)
 {
-//		getleaks("apres delrooms");
-	if (e->graphe)
-		free_graphe(e->graphe);
-//		getleaks("apres delgraph");
+
 	if (e->all_paths)
 		free_besttab(e->all_paths);
-//		getleaks("apres delall paths");
 	if (e->ins)
 	{
 		if (e->ins->room)
 			del_rooms(e, &e->ins->room);
 		ft_free_inttab(&e->ins->commands, e->ins->nb_commands);
-//		getleaks("apres delall ins");
 		ft_memdel((void **)&e->ins);
 	}
+	if (e->graphe)
+		free_graphe(e->graphe);
 	del_anthill(&e->anthill);
 }

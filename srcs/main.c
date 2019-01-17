@@ -10,11 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem-in.h"
+#include "lem_in.h"
 
 int		main(int argc, char **argv)
 {
-	static ENV			e;
+	static ENV	e;
 	int			msg;
 
 	msg = NO_ERR;

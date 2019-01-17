@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/13 18:36:22 by emuckens          #+#    #+#             */
-/*   Updated: 2017/11/22 19:25:44 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/16 22:43:14 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int			ft_atoi(const char *nptr)
 {
 	int neg;
 	int value;
-	
+
 	value = 0;
 	while (is_special(*nptr))
 		nptr++;
@@ -32,5 +32,4 @@ int			ft_atoi(const char *nptr)
 	while (*nptr <= '9' && *nptr >= '0')
 		value = (*nptr++ - '0') + 10 * value;
 	return (neg ? -value : value);
-
 }

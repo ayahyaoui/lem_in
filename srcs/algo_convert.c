@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem-in.h"
+#include "lem_in.h"
 
 /*
 ** ceci n'est pas optimise l'objectif est de convertir l'ancien parsing en un
@@ -83,4 +83,3 @@ int			convert_graphe(t_graphe *g)
 	ft_bzero(g->color, g->nb_rooms * sizeof(int));
 	return (NO_ERR);
 }
-

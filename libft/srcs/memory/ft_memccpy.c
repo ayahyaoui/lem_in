@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/10 17:59:39 by emuckens          #+#    #+#             */
-/*   Updated: 2018/05/20 17:09:00 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/16 22:41:58 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	*ft_memccpy(void *dst, const void *src, int c, size_t n)
 	const unsigned char	*src_cpy;
 	unsigned char		*ptr_dst;
 
-	
 	src_cpy = (const unsigned char *)src;
 	ptr_dst = (unsigned char *)(unsigned long)dst;
 	if (!(char *)ft_memchr(src_cpy, (unsigned char)c, n))

@@ -6,11 +6,11 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/16 06:08:36 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/16 19:26:58 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/16 23:03:11 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem-in.h"
+#include "lem_in.h"
 
 /*
 ** At end room index, display antname in color if option actived
@@ -79,7 +79,7 @@ int				display_travelling(ENV *e, int display)
 ** Display whole anthill on termnal
 */
 
-void		display_anthill(ENV *e)
+void			display_anthill(ENV *e)
 {
 	t_list *tmp;
 

@@ -1,0 +1,8 @@
+#same room for start and end
+3
+##start
+##end
+startend 0 0
+#end
+end 1 1
+startend-end

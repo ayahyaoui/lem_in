@@ -1,0 +1,8 @@
+54
+##start
+start 0 1
+room 1 0
+##end
+end 0 1
+start-room
+room-end

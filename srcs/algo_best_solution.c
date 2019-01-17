@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem-in.h"
+#include "lem_in.h"
 
 static void		add_node_parcours(t_graphe *g, t_node *next, int value, int opt)
 {
@@ -50,7 +50,7 @@ static int		ajout_chemins(t_graphe *g)
 	return (-1);
 }
 
-static int	is_break_path(t_graphe *g, int start)
+static int		is_break_path(t_graphe *g, int start)
 {
 	t_node		*node;
 
@@ -92,7 +92,7 @@ static int		edmond_karp(t_graphe *g, t_tab ****besttab, int max_paths)
 	return ((i == -42) ? ERR_SOLUTION : NO_ERR);
 }
 
-int			find_best_solution(t_graphe *g, ENV *e)
+int				find_best_solution(t_graphe *g, ENV *e)
 {
 	t_tab		***besttab;
 	int			res;
